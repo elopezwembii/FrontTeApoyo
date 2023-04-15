@@ -83,7 +83,7 @@ export class AppService {
 
         this.user = sessionStorage.getItem('user');
         if (!this.user) {
-            this.toastr.error('No autorizado');
+            //this.toastr.error('No autorizado');
             this.logout();
         }
     }
