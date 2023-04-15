@@ -15,7 +15,7 @@ import {AppService} from '@services/app.service';
     styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit, OnDestroy {
-    @HostBinding('class') class = 'login-box';
+    @HostBinding('style') class = 'width: 90%';
     public loginForm: UntypedFormGroup;
     public isAuthLoading = false;
     public isGoogleLoading = false;

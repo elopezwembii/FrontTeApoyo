@@ -1,61 +1,118 @@
-<div class="card card-outline card-primary">
-    <div class="card-header text-center">
-        <a [routerLink]="['/']" class="h1"><b>Admin</b>LTE</a>
+<div class="row mt-5">
+    <div class="col col-12 col-lg-3 text-center">
+        <img style="float: left" width="200" src="assets/img/logo.png" alt="" />
     </div>
-    <div class="card-body">
-        <p class="login-box-msg">Inicio de sesión</p>
+    <div class="col col-12 col-lg-9">
+        <div class="row justify-content-end">
+            <a [routerLink]="['/']" class="h1 text-principal"
+                >Bienvenido a <b>TE-APOYO </b></a
+            >
+            <h5 class="h5">
+                La plataforma experta en soluciones para lograr el control de
+                tus finanzas.
+            </h5>
+        </div>
+        <div class="row">
+            <div class="col col-12 col-lg-6">
+                <div class="card card-outline card-primary">
+                    <div class="card-header text-center">
+                        <div class="h5"><b>¿Eres nuevo aquí?</b></div>
+                    </div>
+                    <div class="card-body">
+                        <p class="login-box-msg"><b></b></p>
+                        <p style="text-align: justify" class="login-box-msg">
+                            Toma nuestro test completamente gratis y descubre tu
+                            tipo de personalidad financiera. ¡Analicemos tus
+                            hábitos y mejoremos juntos tus fortalezas
+                            financieras!
+                        </p>
+                    </div>
+                    <div class="text-right pt-0 bg-white m-3">
+                        <button [type]="'button'" class="btn btn-normal">
+                            ¡Tomaré el test!
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                    <!-- /.login-card-body -->
+                </div>
+            </div>
+            <div class="col col-12 col-lg-6">
+                <div class="card card-outline card-primary">
+                    <div class="card-header text-center">
+                        <h5 [routerLink]="['/']" class="h5">
+                            <b>¿Ya tienes un perfil?</b>
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="login-box-msg">
+                            Inicia sesión con tus credenciales:
+                        </p>
 
-        <form [formGroup]="loginForm" (ngSubmit)="loginByAuth()">
-            <div class="input-group mb-3">
-                <input
-                    formControlName="email"
-                    type="email"
-                    class="form-control"
-                    placeholder="Email"
-                    ngForm
-                />
-                <div class="input-group-append">
-                    <div class="input-group-text">
-                        <span class="fas fa-envelope"></span>
+                        <form
+                            [formGroup]="loginForm"
+                            (ngSubmit)="loginByAuth()"
+                        >
+                            <div class="input-group mb-3">
+                                <input
+                                    formControlName="email"
+                                    type="email"
+                                    class="form-control"
+                                    placeholder="Email"
+                                    ngForm
+                                />
+                                <div class="input-group-append">
+                                    <div class="input-group-text">
+                                        <span class="fas fa-envelope"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="input-group mb-3">
+                                <input
+                                    formControlName="password"
+                                    type="password"
+                                    class="form-control"
+                                    placeholder="Contraseña"
+                                    ngForm
+                                />
+                                <div class="input-group-append">
+                                    <div class="input-group-text">
+                                        <span class="fas fa-lock"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-7">
+                                    <div class="icheck-primary"></div>
+                                </div>
+                                <!-- /.col -->
+                                <div class="col-5">
+                                    <button
+                                        class="btn btn-normal w-100"
+                                        [type]="'submit'"
+                                    >
+                                        Inicia sesión
+                                        <i class="fas fa-chevron-right"></i>
+                                    </button>
+                                </div>
+                                <!-- /.col -->
+                            </div>
+                        </form>
+                        <p class="mb-1">
+                            <a [routerLink]="['/forgot-password']"
+                                >Recupera tu contraseña</a
+                            >
+                        </p>
                     </div>
+                    <!-- /.login-card-body -->
                 </div>
             </div>
-            <div class="input-group mb-3">
-                <input
-                    formControlName="password"
-                    type="password"
-                    class="form-control"
-                    placeholder="Contraseña"
-                     ngForm
-                />
-                <div class="input-group-append">
-                    <div class="input-group-text">
-                        <span class="fas fa-lock"></span>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-7">
-                    <div class="icheck-primary">
-
-                    </div>
-                </div>
-                <!-- /.col -->
-                <div class="col-5">
-                    <pf-button
-                        [type]="'submit'"
-                        [block]="true"
-                        [loading]="isAuthLoading"
-                    >
-                        Inicia sesión
-                    </pf-button>
-                </div>
-                <!-- /.col -->
-            </div>
-        </form>
-        <p class="mb-1">
-            <a [routerLink]="['/forgot-password']">Recupera tu contraseña</a>
-        </p>
+        </div>
+        <div class="row justify-content-end">
+            <a [routerLink]="['/']" class="h3 w-75"
+                >Te Apoyo es la plataforma ideal para volver a tomar el control
+                sobre tus finanzas 💪
+            </a>
+            <h6 class="h6 w-100 text-right">¡Te contamos por qué!</h6>
+        </div>
     </div>
-    <!-- /.login-card-body -->
 </div>

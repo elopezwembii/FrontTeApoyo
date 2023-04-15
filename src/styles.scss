@@ -14,15 +14,14 @@
 
 @import 'ngx-toastr/toastr';
 
-$principalSidebar : #2C939E;
-$graficos: #BCEAF3;
-$filtros: #CAE9ED;
-$card: #ECECEC;
-$back: #C1C1C1;
-$graficos2: #FFD48F;
-$graficos3: #FFA629;
+$principalSidebar: #2c939e;
+$graficos: #bceaf3;
+$filtros: #cae9ed;
+$card: #ececec;
+$back: #c1c1c1;
+$graficos2: #ffd48f;
+$graficos3: #ffa629;
 $text: #333333;
-
 
 body {
     width: 100vw;
@@ -44,7 +43,6 @@ body {
 .nav .nav-item > .ng-trigger-openClose.ng-animating {
     overflow: hidden;
     display: block;
-
 }
 
 // Override original AdminLTE transform
@@ -55,15 +53,40 @@ body {
     transform: none;
 }
 
-.navbar-color{
-  background-color: $principalSidebar;
+.navbar-color {
+    background-color: $principalSidebar;
 }
 
-.navbar-link-active{
-  background-color: #fff;
-  color: $principalSidebar !important;
+.navbar-link-active {
+    background-color: #fff;
+    color: $principalSidebar !important;
 }
 
-.navbar-link-active:hover{
-  background-color: #fff !important;
+.navbar-link-active:hover {
+    background-color: #fff !important;
+}
+
+app-root {
+    background: url('assets/img/wave.svg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    height: 100vh;
+}
+
+.card-primary {
+    border-top: 4px solid $principalSidebar !important;
+}
+
+.text-principal {
+    color: $principalSidebar;
+}
+
+.btn-normal {
+    background-color: $principalSidebar;
+    color: white;
+    &:hover {
+        color: white;
+        background-color: rgba($color: $principalSidebar, $alpha: 0.8);
+    }
 }
