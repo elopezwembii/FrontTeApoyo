@@ -37,7 +37,7 @@ export class AppService {
                     );
             }); */
             const data = {access_token: "prueba", token_type: "Bearer",expires_at:"14-05-2023", role:"Administrador", name:"test", email:"test"}
-            localStorage.setItem('user', JSON.stringify(data));
+            sessionStorage.setItem('user', JSON.stringify(data));
             this.router.navigate(['/']);
             this.toastr.success('Ingreso correcto');
         } catch (error) {
@@ -81,7 +81,7 @@ export class AppService {
 
     async getProfile() {
 
-        this.user = localStorage.getItem('user');
+        this.user = sessionStorage.getItem('user');
         if (!this.user) {
             this.toastr.error('No autorizado');
             this.logout();
@@ -89,7 +89,7 @@ export class AppService {
     }
 
     logout() {
-        localStorage.removeItem('user');
+        sessionStorage.removeItem('user');
         this.user = null;
         this.router.navigate(['/login']);
     }

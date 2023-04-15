@@ -18,7 +18,7 @@ export class MenuSidebarComponent implements OnInit {
     public user;
     public menu = MENU;
     public id = 0;
-    public size = 150;
+    public size = 140;
 
     constructor(
         public appService: AppService,
@@ -31,9 +31,9 @@ export class MenuSidebarComponent implements OnInit {
         this.ui.subscribe((state: UiState) => {
             this.classes = `${BASE_CLASSES} ${state.sidebarSkin}`;
             if (state.menuSidebarCollapsed) {
-              this.size = 40;
+              this.size = 50;
             }else{
-              this.size = 150;
+              this.size = 140;
             }
         });
         this.user = JSON.parse(this.appService.user);
@@ -52,7 +52,7 @@ export const MENU = [
     },
     {
         name: 'Mis Ingresos',
-        iconClasses: 'fas fa-tachometer-alt',
+        iconClasses: 'fas fa-money-bill-wave',
         path: ['/ingresos']
         /* children: [
             {
@@ -64,44 +64,43 @@ export const MENU = [
     },
     {
         name: 'Mis Gastos',
-        iconClasses: 'fas fa-user',
+        iconClasses: 'fas fa-hand-holding-usd',
         path: ['/gastos']
     },
     {
         name: 'Presupuesto',
-        iconClasses: 'fas fa-cogs',
+        iconClasses: 'fas fa-wallet',
         path: ['/presupuesto']
         //role: 'Administrativo',
     },
     {
         name: 'Mis Deudas',
-        iconClasses: 'fas fa-cogs',
+        iconClasses: 'fas fa-credit-card',
         path: ['/deudas']
         //role: 'Administrativo',
     },
     {
         name: 'Mis Ahorros',
-        iconClasses: 'fas fa-cogs',
+        iconClasses: 'fas fa-piggy-bank',
         path: ['/ahorros']
         //role: 'Administrativo',
     },
     {
         name: 'Análisis Financiero',
-        iconClasses: 'fas fa-cogs',
+        iconClasses: 'fas fa-chart-line',
         path: ['/analisis']
         //role: 'Administrativo',
     },
     {
         name: 'Simular Crédito',
-        iconClasses: 'fas fa-cogs',
+        iconClasses: 'fas fa-money-check',
         path: ['/simular']
         //role: 'Administrativo',
     },
     {
         name: 'Aprende',
-        iconClasses: 'fas fa-cogs',
+        iconClasses: 'fas fa-graduation-cap',
         path: ['/aprende']
         //role: 'Administrativo',
-    }
-
+    },
 ];

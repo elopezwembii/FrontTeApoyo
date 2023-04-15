@@ -20,7 +20,7 @@ const routes: Routes = [
         canActivateChild: [AuthGuard],
         children: [
             {
-                path: 'profile',
+                path: 'perfil',
                 component: ProfileComponent
             },
             {

@@ -1,61 +1,87 @@
-<div class="card card-outline card-primary">
-    <div class="card-header text-center">
-        <a [routerLink]="['/']" class="h1"><b>Admin</b>LTE</a>
+<div class="row">
+    <div class="col text-center">
+        <img width="200" src="assets/img/logo.png" alt="" />
     </div>
-    <div class="card-body">
-        <p class="login-box-msg">Inicio de sesión</p>
-
-        <form [formGroup]="loginForm" (ngSubmit)="loginByAuth()">
-            <div class="input-group mb-3">
-                <input
-                    formControlName="email"
-                    type="email"
-                    class="form-control"
-                    placeholder="Email"
-                    ngForm
-                />
-                <div class="input-group-append">
-                    <div class="input-group-text">
-                        <span class="fas fa-envelope"></span>
-                    </div>
-                </div>
+    <div class="col">
+        <div class="card card-outline card-primary">
+            <div class="card-body">
+                <p class="login-box-msg"><b>¿Eres nuevo aquí?</b></p>
+                <p style="text-align: justify" class="login-box-msg">
+                    Toma nuestro test completamente gratis y descubre tu tipo de
+                    personalidad financiera. ¡Analicemos tus hábitos y mejoremos
+                    juntos tus fortalezas financieras!
+                </p>
             </div>
-            <div class="input-group mb-3">
-                <input
-                    formControlName="password"
-                    type="password"
-                    class="form-control"
-                    placeholder="Contraseña"
-                     ngForm
-                />
-                <div class="input-group-append">
-                    <div class="input-group-text">
-                        <span class="fas fa-lock"></span>
-                    </div>
-                </div>
+            <div class="card-footer text-right pt-0 bg-white">
+                <button [type]="'button'" class="btn">
+                    ¡Tomaré el test!
+                    <i class="fas fa-chevron-right"></i>
+                </button>
             </div>
-            <div class="row">
-                <div class="col-7">
-                    <div class="icheck-primary">
+            <!-- /.login-card-body -->
+        </div>
+    </div>
+    <div class="col">
+        <div class="card card-outline card-primary">
+            <div class="card-header text-center">
+                <a [routerLink]="['/']" class="h1"><b>Admin</b>LTE</a>
+            </div>
+            <div class="card-body">
+                <p class="login-box-msg">Inicio de sesión</p>
 
+                <form [formGroup]="loginForm" (ngSubmit)="loginByAuth()">
+                    <div class="input-group mb-3">
+                        <input
+                            formControlName="email"
+                            type="email"
+                            class="form-control"
+                            placeholder="Email"
+                            ngForm
+                        />
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-envelope"></span>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <!-- /.col -->
-                <div class="col-5">
-                    <pf-button
-                        [type]="'submit'"
-                        [block]="true"
-                        [loading]="isAuthLoading"
+                    <div class="input-group mb-3">
+                        <input
+                            formControlName="password"
+                            type="password"
+                            class="form-control"
+                            placeholder="Contraseña"
+                            ngForm
+                        />
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-lock"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-7">
+                            <div class="icheck-primary"></div>
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-5">
+                            <pf-button
+                                [type]="'submit'"
+                                [block]="true"
+                                [loading]="isAuthLoading"
+                            >
+                                Inicia sesión
+                            </pf-button>
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                </form>
+                <p class="mb-1">
+                    <a [routerLink]="['/forgot-password']"
+                        >Recupera tu contraseña</a
                     >
-                        Inicia sesión
-                    </pf-button>
-                </div>
-                <!-- /.col -->
+                </p>
             </div>
-        </form>
-        <p class="mb-1">
-            <a [routerLink]="['/forgot-password']">Recupera tu contraseña</a>
-        </p>
+            <!-- /.login-card-body -->
+        </div>
     </div>
-    <!-- /.login-card-body -->
 </div>
