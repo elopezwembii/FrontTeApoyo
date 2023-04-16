@@ -1,0 +1,156 @@
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-principal"><b> Mis Gastos</b></h1>
+            </div>
+            <!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item">
+                        <a [routerLink]="['']">Inicio</a>
+                    </li>
+                    <li class="breadcrumb-item">Gastos</li>
+                </ol>
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 col-sm-8">
+                <div class="card">
+                    <div class="card-body">
+                        <!-- Selector de mes -->
+                        <ul
+                            class="pagination pagination-month justify-content-center align-items-center"
+                        >
+                            <li class="page-item">
+                                <button
+                                    (click)="removeMonth()"
+                                    class="button-mes"
+                                >
+                                    <i class="fas fa-caret-left"></i>
+                                </button>
+                            </li>
+                            <li class="page-item box-shadow-int mx-3">
+                                <div class="box-shadow-int text-center">
+                                    <p class="page-month pt-2">{{ month }}</p>
+                                    <p class="page-year pb-2">{{ year }}</p>
+                                </div>
+                            </li>
+                            <li class="page-item">
+                                <button (click)="addMonth()" class="button-mes">
+                                    <i class="fas fa-caret-right"></i>
+                                </button>
+                            </li>
+                        </ul>
+                        <!-- Tabla editable -->
+
+                        <form [formGroup]="form" (ngSubmit)="update()">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Id</th>
+                                        <th scope="col">Descripción</th>
+                                        <th>
+                                            <button
+                                                type="button"
+                                                title="Add New"
+                                                class="btn btn-primary"
+                                                (click)="addUser()"
+                                            >
+                                                <i class="bi bi-plus"></i>
+                                            </button>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <ng-container
+                                        *ngFor="
+                                            let gasto of gastos;
+                                            let i = index
+                                        "
+                                    >
+                                        <tr
+                                            *ngIf="gastoSelected !== gasto"
+                                            (click)="selectUser(gasto)"
+                                        >
+                                            <td>{{ gasto.id }}</td>
+                                            <td>{{ gasto.desc }}</td>
+
+                                            <td>
+                                                <button
+                                                    class="btn btn-danger btn-sm mx-1"
+                                                    title="delete"
+                                                    type="button"
+                                                    (click)="deleteUser(i)"
+                                                >
+                                                    <i class="bi bi-trash"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+
+                                        <tr
+                                            *ngIf="gastoSelected === gasto"
+                                            class="table-primary"
+                                        >
+                                            <td>{{ gasto.id }}</td>
+                                            <td>
+                                                <input
+                                                    type="text"
+                                                    class="form-control"
+                                                    formControlName="desc"
+                                                    [value]="gasto.desc"
+                                                    title="Descipción"
+                                                />
+                                            </td>
+                                            <td>
+                                                <button
+                                                    class="btn btn-primary btn-sm mx-1"
+                                                    title="update"
+                                                    type="submit"
+                                                    [disabled]="form.invalid"
+                                                >
+                                                    <i
+                                                        class="bi bi-lightning"
+                                                    ></i>
+                                                </button>
+
+                                                <button
+                                                    class="btn btn-danger btn-sm mx-1"
+                                                    title="cancel"
+                                                    (click)="cancel()"
+                                                    type="button"
+                                                >
+                                                    <i class="bi bi-x-lg"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </ng-container>
+                                </tbody>
+                            </table>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-4">
+                <div class="card">
+                    <div class="card-body">
+                        <input type="text" id="input-editable" />
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">a</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

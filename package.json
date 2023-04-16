@@ -38,14 +38,15 @@
     "core-js": "3.25.0",
     "gatekeeper-client-sdk": "0.4.2",
     "luxon": "3.0.3",
+    "ngx-loading": "^15.0.0",
     "ngx-toastr": "16.0.1",
     "process": "0.11.10",
     "rxjs": "7.5.6",
     "summernote": "./summernote",
     "tslib": "2.4.0",
     "uuid": "8.3.2",
-    "zone.js": "~0.11.8",
-    "xlsx": "^0.18.5"
+    "xlsx": "^0.18.5",
+    "zone.js": "~0.11.8"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "15.0.1",

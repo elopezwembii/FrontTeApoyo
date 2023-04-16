@@ -31,9 +31,9 @@ export class MenuSidebarComponent implements OnInit {
         this.ui.subscribe((state: UiState) => {
             this.classes = `${BASE_CLASSES} ${state.sidebarSkin}`;
             if (state.menuSidebarCollapsed) {
-              this.size = 50;
-            }else{
-              this.size = 140;
+                this.size = 50;
+            } else {
+                this.size = 140;
             }
         });
         this.user = JSON.parse(this.appService.user);
@@ -63,12 +63,12 @@ export const MENU = [
         ] */
     },
     {
-        name: 'Mis Gastos',
+        name: 'Mis Gastos / Egresos',
         iconClasses: 'fas fa-hand-holding-usd',
         path: ['/gastos']
     },
     {
-        name: 'Presupuesto',
+        name: 'Mi Presupuesto',
         iconClasses: 'fas fa-wallet',
         path: ['/presupuesto']
         //role: 'Administrativo',
@@ -102,5 +102,5 @@ export const MENU = [
         iconClasses: 'fas fa-graduation-cap',
         path: ['/aprende']
         //role: 'Administrativo',
-    },
+    }
 ];

@@ -90,3 +90,34 @@ app-root {
         background-color: rgba($color: $principalSidebar, $alpha: 0.8);
     }
 }
+
+.glass {
+    background: rgba(255, 255, 255, 0.6);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.box-shadow-int {
+    border-radius: 1rem;
+    background-color: transparent;
+    color: black;
+    min-width: 10rem;
+    border-color: transparent;
+    box-shadow: inset 0px 0px 0.5rem 1px rgba(0, 0, 0, 0.3);
+}
+
+.button-mes {
+    background-color: transparent;
+    color: rgba(0, 0, 0, 0.3);
+    border-color: transparent;
+    font-size: xx-large;
+}
+
+@media (max-width: 790px) {
+    .text-principal {
+        color: $text;
+    }
+}

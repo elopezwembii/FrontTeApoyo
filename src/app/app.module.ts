@@ -33,6 +33,8 @@ import {uiReducer} from './store/ui/reducer';
 import {ProfabricComponentsModule} from '@profabric/angular-components';
 import {defineCustomElements} from '@profabric/web-components/loader';
 import {SidebarSearchComponent} from './components/sidebar-search/sidebar-search.component';
+import {NgxLoadingModule, ngxLoadingAnimationTypes} from 'ngx-loading';
+import { GastosComponent } from './pages/gastos/gastos.component';
 
 defineCustomElements();
 registerLocaleData(localeEn, 'en-EN');
@@ -58,11 +60,19 @@ registerLocaleData(localeEn, 'en-EN');
         SubMenuComponent,
         MenuItemComponent,
         ControlSidebarComponent,
-        SidebarSearchComponent
+        SidebarSearchComponent,
+        GastosComponent
     ],
     imports: [
+        NgxLoadingModule.forRoot({
+          animationType: ngxLoadingAnimationTypes.threeBounce,
+          backdropBackgroundColour: 'rgba(255, 255, 255, 0.5)',
+          primaryColour: '#2c939e',
+          secondaryColour: '#2c939e',
+          tertiaryColour: '#2c939e'
+        }),
         BrowserModule,
-        StoreModule.forRoot({ ui: uiReducer}),
+        StoreModule.forRoot({ui: uiReducer}),
         HttpClientModule,
         AppRoutingModule,
         ReactiveFormsModule,
