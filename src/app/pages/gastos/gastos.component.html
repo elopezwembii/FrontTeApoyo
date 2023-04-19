@@ -53,21 +53,29 @@
                             </li>
                         </ul>
                         <!-- Tabla editable -->
-
+                        <div class="text-center mb-3">
+                            <h3 class="text-principal mb-0">$ 1.000.000</h3>
+                            <small>Total ingresos {{ month }}</small>
+                        </div>
                         <form [formGroup]="form" (ngSubmit)="update()">
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th scope="col">Id</th>
                                         <th scope="col">Descripción</th>
+                                        <th>Fijar</th>
+                                        <th>Categoría</th>
+                                        <th>Sub-categoría</th>
+                                        <th>Fecha</th>
+                                        <th>Monto</th>
                                         <th>
                                             <button
                                                 type="button"
                                                 title="Add New"
                                                 class="btn btn-primary"
                                                 (click)="addUser()"
+                                                [disabled]="isAdding"
                                             >
-                                                <i class="bi bi-plus"></i>
+                                                <i class="fas fa-plus"></i>
                                             </button>
                                         </th>
                                     </tr>
@@ -83,8 +91,53 @@
                                             *ngIf="gastoSelected !== gasto"
                                             (click)="selectUser(gasto)"
                                         >
-                                            <td>{{ gasto.id }}</td>
                                             <td>{{ gasto.desc }}</td>
+                                            <td>
+                                                <div
+                                                    class="icheck-primary d-inline"
+                                                >
+                                                    <input
+                                                        type="checkbox"
+                                                        [checked]="
+                                                            gasto.recurrente
+                                                        "
+                                                    />
+                                                    <label
+                                                        for="checkboxPrimary1"
+                                                    >
+                                                    </label>
+                                                </div>
+                                            </td>
+
+                                            <td>
+                                              <span class="badge badge-success">Alimentación</span>
+                                            </td>
+
+                                            <td>
+                                                <span class="badge badge-success">Comida Rápida</span>
+                                            </td>
+
+                                            <td
+                                                *ngIf="
+                                                    gasto.dia;
+                                                    else contenidoAlternativo
+                                                "
+                                            >
+                                                {{
+                                                    gasto.dia +
+                                                        ' / ' +
+                                                        gasto.mes +
+                                                        ' / ' +
+                                                        gasto.anio
+                                                }}
+                                            </td>
+                                            <ng-template #contenidoAlternativo>
+                                                <td>-</td>
+                                            </ng-template>
+
+                                            <td>
+                                                {{ gasto.monto }}
+                                            </td>
 
                                             <td>
                                                 <button
@@ -93,7 +146,7 @@
                                                     type="button"
                                                     (click)="deleteUser(i)"
                                                 >
-                                                    <i class="bi bi-trash"></i>
+                                                    <i class="fas fa-trash"></i>
                                                 </button>
                                             </td>
                                         </tr>
@@ -102,7 +155,6 @@
                                             *ngIf="gastoSelected === gasto"
                                             class="table-primary"
                                         >
-                                            <td>{{ gasto.id }}</td>
                                             <td>
                                                 <input
                                                     type="text"
@@ -113,15 +165,33 @@
                                                 />
                                             </td>
                                             <td>
+                                                <input
+                                                    type="checkbox"
+                                                    formControlName="recurrente"
+                                                    [checked]="gasto.recurrente"
+                                                />
+                                                <label for="checkboxPrimary1">
+                                                </label>
+                                            </td>
+
+                                            <td>
+                                                <select
+                                                    class="custom-select form-control-border"
+                                                >
+                                                    <option>Value 1</option>
+                                                    <option>Value 2</option>
+                                                    <option>Value 3</option>
+                                                </select>
+                                            </td>
+
+                                            <td>
                                                 <button
                                                     class="btn btn-primary btn-sm mx-1"
                                                     title="update"
                                                     type="submit"
                                                     [disabled]="form.invalid"
                                                 >
-                                                    <i
-                                                        class="bi bi-lightning"
-                                                    ></i>
+                                                    <i class="fas fa-check"></i>
                                                 </button>
 
                                                 <button
@@ -130,7 +200,7 @@
                                                     (click)="cancel()"
                                                     type="button"
                                                 >
-                                                    <i class="bi bi-x-lg"></i>
+                                                    <i class="fas fa-ban"></i>
                                                 </button>
                                             </td>
                                         </tr>
@@ -143,12 +213,40 @@
             </div>
             <div class="col-12 col-sm-4">
                 <div class="card">
+                    <div class="card-head text-center mt-2">
+                        <h5>Título</h5>
+                    </div>
                     <div class="card-body">
-                        <input type="text" id="input-editable" />
+                        <div
+                            echarts
+                            [options]="options"
+                            class="demo-chart"
+                            style="height: 12rem"
+                        ></div>
+                    </div>
+                    <div class="card-footer text-center">
+                        <p>
+                            Tus ingresos (<b
+                                ><span class="text-success">aumentaron</span> -
+                                <span class="text-danger"
+                                    >disminuyeron</span
+                                > </b
+                            >) un x% respecto al mes anterior
+                        </p>
                     </div>
                 </div>
                 <div class="card">
-                    <div class="card-body">a</div>
+                  <div class="card-head text-center mt-2">
+                    <h5>¿Sabías qué?</h5>
+                </div>
+                <div class="card-body">
+                    <p>Si quieres pedir un crédito el banco solo tomará tus ingresos formales.</p>
+                </div>
+                <div class="card-footer text-center">
+                    <p>
+                        <b>Puedes simular tu crédito <a href="">aquí</a></b>
+                    </p>
+                </div>
                 </div>
             </div>
         </div>

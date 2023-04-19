@@ -1,12 +1,12 @@
 import {UiState} from '@/store/ui/state';
 import {Component, OnInit, Renderer2} from '@angular/core';
-import {FormBuilder, Validators} from '@angular/forms';
-import {Observable} from 'rxjs';
+import {FormBuilder, Validators, FormsModule} from '@angular/forms';
+import {EChartsOption} from 'echarts';
 
 export interface Gasto {
     id: number;
     desc: string;
-    recurrente: number;
+    recurrente: boolean;
     tipo: number;
     subtipo: number;
     dia: number;
@@ -21,12 +21,48 @@ export interface Gasto {
     styleUrls: ['./gastos.component.scss']
 })
 export class GastosComponent {
+    options: EChartsOption = {
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'shadow'
+            }
+        },
+        legend: {},
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+        },
+        xAxis: {
+            type: 'value',
+            boundaryGap: [0, 0.01]
+        },
+        yAxis: {
+            type: 'category',
+            data: ['Marzo', 'Abril']
+        },
+        series: [
+            {
+                name: 'Formales',
+                type: 'bar',
+                data: [1300000, 1400000]
+            },
+            {
+                name: 'Informales',
+                type: 'bar',
+                data: [200000, 190000]
+            }
+        ]
+    };
+
     // Mock Users Data
     gastos: Gasto[] = [
         {
             id: 1,
             desc: 'Gasto1',
-            recurrente: 1,
+            recurrente: false,
             tipo: 2,
             subtipo: 1,
             dia: null,
@@ -37,56 +73,24 @@ export class GastosComponent {
         {
             id: 2,
             desc: 'Gasto2',
-            recurrente: 1,
+            recurrente: true,
             tipo: 3,
             subtipo: 3,
             dia: null,
             mes: null,
             anio: null,
             monto: 150000
-        },
-        {
-            id: 3,
-            desc: 'Gasto3',
-            recurrente: 0,
-            tipo: 1,
-            subtipo: 5,
-            dia: 12,
-            mes: 3,
-            anio: 2023,
-            monto: 200000
-        },
-        {
-            id: 4,
-            desc: 'Gasto4',
-            recurrente: 0,
-            tipo: 4,
-            subtipo: 6,
-            dia: 5,
-            mes: 3,
-            anio: 2023,
-            monto: 45000
-        },
-        {
-            id: 5,
-            desc: 'Gasto5',
-            recurrente: 0,
-            tipo: 1,
-            subtipo: 8,
-            dia: 20,
-            mes: 3,
-            anio: 2023,
-            monto: 33000
         }
     ];
 
     gastoSelected: Gasto = {} as Gasto;
     isEditing: boolean = false;
+    isAdding: boolean = false;
 
     form = this.fb.group({
         id: [''],
         desc: ['', [Validators.required]],
-        recurrente: [''],
+        recurrente: [false],
         tipo: [''],
         subtipo: [''],
         dia: [''],
@@ -139,10 +143,10 @@ export class GastosComponent {
         if (Object.keys(this.gastoSelected).length === 0) {
             this.gastoSelected = gasto;
             this.isEditing = true;
-
+            this.isAdding = true;
             this.form.patchValue({
                 desc: gasto.desc,
-                recurrente: gasto.desc,
+                recurrente: gasto.recurrente,
                 tipo: String(gasto.tipo),
                 subtipo: String(gasto.subtipo),
                 dia: String(gasto.dia),
@@ -168,7 +172,7 @@ export class GastosComponent {
             this.gastos[0] = {
                 id: this.generateId(),
                 desc: this.form.value.desc!,
-                recurrente: parseInt(this.form.value.recurrente!),
+                recurrente: Boolean(this.form.value.recurrente!),
                 tipo: parseInt(this.form.value.tipo!),
                 subtipo: parseInt(this.form.value.subtipo!),
                 dia: parseInt(this.form.value.dia!),
@@ -184,7 +188,7 @@ export class GastosComponent {
             this.gastos[index] = {
                 id: this.gastoSelected.id,
                 desc: this.form.value.desc!,
-                recurrente: parseInt(this.form.value.recurrente!),
+                recurrente: Boolean(this.form.value.recurrente!),
                 tipo: parseInt(this.form.value.tipo!),
                 subtipo: parseInt(this.form.value.subtipo!),
                 dia: parseInt(this.form.value.dia!),
@@ -197,8 +201,8 @@ export class GastosComponent {
         // clean up
         this.gastoSelected = {} as Gasto;
         this.isEditing = false;
+        this.isAdding = false;
         this.form.reset();
-        console.log(this.gastos);
     }
 
     cancel() {
@@ -213,14 +217,15 @@ export class GastosComponent {
 
         this.gastoSelected = {} as Gasto;
         this.isEditing = false;
+        this.isAdding = false;
         this.form.reset();
     }
 
     addUser() {
         this.gastos.unshift({
             id: null,
-            desc:'',
-            recurrente: 0,
+            desc: '',
+            recurrente: false,
             tipo: 0,
             subtipo: 0,
             dia: 0,
@@ -230,6 +235,7 @@ export class GastosComponent {
         });
 
         this.gastoSelected = this.gastos[0];
+        this.isAdding = true;
     }
 
     isEmpty(obj: any) {

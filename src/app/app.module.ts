@@ -35,6 +35,7 @@ import {defineCustomElements} from '@profabric/web-components/loader';
 import {SidebarSearchComponent} from './components/sidebar-search/sidebar-search.component';
 import {NgxLoadingModule, ngxLoadingAnimationTypes} from 'ngx-loading';
 import { GastosComponent } from './pages/gastos/gastos.component';
+import { NgxEchartsModule } from 'ngx-echarts';
 
 defineCustomElements();
 registerLocaleData(localeEn, 'en-EN');
@@ -82,7 +83,10 @@ registerLocaleData(localeEn, 'en-EN');
             positionClass: 'toast-top-right',
             preventDuplicates: true
         }),
-        ProfabricComponentsModule
+        ProfabricComponentsModule,
+        NgxEchartsModule.forRoot({
+          echarts: () => import('echarts')
+        }),
     ],
     providers: [],
     bootstrap: [AppComponent]
