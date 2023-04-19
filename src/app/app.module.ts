@@ -36,6 +36,7 @@ import {SidebarSearchComponent} from './components/sidebar-search/sidebar-search
 import {NgxLoadingModule, ngxLoadingAnimationTypes} from 'ngx-loading';
 import { GastosComponent } from './pages/gastos/gastos.component';
 import { NgxEchartsModule } from 'ngx-echarts';
+import { IngresosComponent } from './pages/ingresos/ingresos.component';
 
 defineCustomElements();
 registerLocaleData(localeEn, 'en-EN');
@@ -62,7 +63,8 @@ registerLocaleData(localeEn, 'en-EN');
         MenuItemComponent,
         ControlSidebarComponent,
         SidebarSearchComponent,
-        GastosComponent
+        GastosComponent,
+        IngresosComponent
     ],
     imports: [
         NgxLoadingModule.forRoot({
