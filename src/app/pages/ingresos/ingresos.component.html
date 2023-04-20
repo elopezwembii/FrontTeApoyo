@@ -55,7 +55,7 @@
                         <!-- Tabla editable -->
                         <div class="text-center mb-3">
                             <h3 class="text-principal mb-0">
-                                {{ sumaTotal | currency: 'CLP' }}
+                                {{ sumaTotalReal | currency: 'CLP' }}
                             </h3>
                             <small>Total ingresos {{ month }}</small>
                         </div>
@@ -136,7 +136,7 @@
                                                     class="btn btn-danger btn-sm mx-1"
                                                     title="delete"
                                                     type="button"
-                                                    (click)="deleteUser(i)"
+                                                    (click)="deleteUser(ingreso,i)"
                                                 >
                                                     <i class="fas fa-trash"></i>
                                                 </button>
@@ -243,27 +243,7 @@
             </div>
             <div class="col-12 col-sm-4">
                 <div class="card">
-                    <div class="card-head text-center mt-2">
-                        <h5>Título</h5>
-                    </div>
-                    <div class="card-body">
-                        <div
-                            echarts
-                            [options]="options"
-                            class="demo-chart"
-                            style="height: 12rem"
-                        ></div>
-                    </div>
-                    <div class="card-footer text-center">
-                        <p>
-                            Tus ingresos (<b
-                                ><span class="text-success">aumentaron</span> -
-                                <span class="text-danger"
-                                    >disminuyeron</span
-                                > </b
-                            >) un x% respecto al mes anterior
-                        </p>
-                    </div>
+                  <app-grafico [fecha]="getFecha"></app-grafico>
                 </div>
                 <div class="card">
                     <div class="card-head text-center mt-2">

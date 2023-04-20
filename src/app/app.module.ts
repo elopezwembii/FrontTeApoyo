@@ -37,6 +37,7 @@ import {NgxLoadingModule, ngxLoadingAnimationTypes} from 'ngx-loading';
 import { GastosComponent } from './pages/gastos/gastos.component';
 import { NgxEchartsModule } from 'ngx-echarts';
 import { IngresosComponent } from './pages/ingresos/ingresos.component';
+import { GraficoComponent } from './components/grafico/grafico.component';
 
 defineCustomElements();
 registerLocaleData(localeEn, 'en-EN');
@@ -64,7 +65,8 @@ registerLocaleData(localeEn, 'en-EN');
         ControlSidebarComponent,
         SidebarSearchComponent,
         GastosComponent,
-        IngresosComponent
+        IngresosComponent,
+        GraficoComponent
     ],
     imports: [
         NgxLoadingModule.forRoot({

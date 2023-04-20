@@ -1,4 +1,4 @@
-import {Ingreso} from '@/interfaces/ingresos';
+import {Ingreso} from './../../interfaces/ingresos';
 import {Component, OnInit, Renderer2} from '@angular/core';
 import {Validators, FormBuilder} from '@angular/forms';
 import {IngresosService} from '@services/ingresos/ingresos.service';
@@ -11,42 +11,6 @@ import {ToastrService} from 'ngx-toastr';
     styleUrls: ['./ingresos.component.scss']
 })
 export class IngresosComponent implements OnInit {
-    options: EChartsOption = {
-        tooltip: {
-            trigger: 'axis',
-            axisPointer: {
-                type: 'shadow'
-            }
-        },
-        legend: {},
-        grid: {
-            left: '3%',
-            right: '4%',
-            bottom: '3%',
-            containLabel: true
-        },
-        xAxis: {
-            type: 'value',
-            boundaryGap: [0, 0.01]
-        },
-        yAxis: {
-            type: 'category',
-            data: ['Marzo', 'Abril']
-        },
-        series: [
-            {
-                name: 'Formales',
-                type: 'bar',
-                data: [1300000, 1400000]
-            },
-            {
-                name: 'Informales',
-                type: 'bar',
-                data: [200000, 190000]
-            }
-        ]
-    };
-
     dias: number[];
 
     generarDias(mes: number, anio: number) {
@@ -57,7 +21,7 @@ export class IngresosComponent implements OnInit {
     }
 
     ingresos: Ingreso[] = [];
-    sumaTotal: number = 0;
+    sumaTotalReal: number = 0;
 
     ingresoSelected: Ingreso = {} as Ingreso;
     isEditing: boolean = false;
@@ -95,6 +59,10 @@ export class IngresosComponent implements OnInit {
     public month: string = this.arrayMonth[this.selectionMonth];
     public year: number = this.selectionYear;
 
+    get getFecha() {
+        return `${this.year}/${this.selectionMonth+1}/01`;
+    }
+
     constructor(
         private renderer: Renderer2,
         private fb: FormBuilder,
@@ -123,13 +91,13 @@ export class IngresosComponent implements OnInit {
 
         this.ingresoService.getIngreso(fechaInicio, fechaFin).subscribe({
             next: ({
-                sumaTotal,
+                sumaTotalReal,
                 ingresos
             }: {
-                sumaTotal: number;
+                sumaTotalReal: number;
                 ingresos: Ingreso[];
             }) => {
-                this.sumaTotal = sumaTotal;
+                this.sumaTotalReal = sumaTotalReal;
                 this.ingresos = ingresos;
             },
             error: (error: any) => {
@@ -179,9 +147,15 @@ export class IngresosComponent implements OnInit {
         }
     }
 
-    deleteUser(index: number) {
+    deleteUser(ingreso: Ingreso, index: number) {
         if (confirm('Are you sure you want to delete this user?')) {
-            this.ingresos.splice(index, 1);
+            this.ingresoService.eliminarIngreso(ingreso.id).subscribe({
+                next: (resp: any) => {
+                    console.log(resp);
+                    this.obtenerIngresos();
+                    this.ingresos.splice(index, 1);
+                }
+            });
         }
     }
 
@@ -243,11 +217,11 @@ export class IngresosComponent implements OnInit {
                     }
                 });
         }
-          // clean up
-          this.ingresoSelected = {} as Ingreso;
-          this.isEditing = false;
-          this.isAdding = false;
-          this.form.reset();
+        // clean up
+        this.ingresoSelected = {} as Ingreso;
+        this.isEditing = false;
+        this.isAdding = false;
+        this.form.reset();
     }
 
     cancel() {

@@ -7,21 +7,6 @@ import {Observable, of} from 'rxjs';
     providedIn: 'root'
 })
 export class IngresosService {
-    private tipoGasto: any[] = [
-        {
-            id: 1,
-            nombre: 'Fijos'
-        },
-        {
-            id: 2,
-            nombre: 'No-fijos'
-        },
-        {
-            id: 3,
-            nombre: 'Variable'
-        }
-    ];
-
     ingreso: Ingreso[] = [
         {
             id: 1,
@@ -31,8 +16,8 @@ export class IngresosService {
             dia: 19,
             mes: 4,
             anio: 2023,
-            montoReal: 1300000,
-            montoPlanificado: 1300000
+            montoReal: 100,
+            montoPlanificado: 100
         },
         {
             id: 2,
@@ -42,8 +27,8 @@ export class IngresosService {
             dia: 12,
             mes: 4,
             anio: 2023,
-            montoReal: 300000,
-            montoPlanificado: 5000000
+            montoReal: 300,
+            montoPlanificado: 400
         },
         {
             id: 3,
@@ -53,8 +38,19 @@ export class IngresosService {
             dia: 7,
             mes: 5,
             anio: 2023,
-            montoReal: 300000,
-            montoPlanificado: 5000000
+            montoReal: 500,
+            montoPlanificado: 100
+        },
+        {
+            id: 4,
+            desc: 'ingreso4',
+            fijar: false,
+            tipo: 2,
+            dia: 12,
+            mes: 3,
+            anio: 2023,
+            montoReal: 50,
+            montoPlanificado: 70
         }
     ];
 
@@ -67,7 +63,7 @@ export class IngresosService {
     getIngreso(
         fechaInicio: string,
         fechaFin: string
-    ): Observable<{ingresos: Ingreso[]; sumaTotal: number}> {
+    ): Observable<{ingresos: Ingreso[]; sumaTotalReal: number}> {
         const fechaInicioObj = new Date(fechaInicio);
         const fechaFinObj = new Date(fechaFin);
         const ingresosFiltrados = this.ingreso.filter((ingreso: Ingreso) => {
@@ -77,16 +73,16 @@ export class IngresosService {
             );
         });
 
-        const sumaTotal = ingresosFiltrados.reduce((total, ingreso) => {
+        const sumaTotalReal = ingresosFiltrados.reduce((total, ingreso) => {
             return total + ingreso.montoReal;
         }, 0);
 
-        return of({ingresos: ingresosFiltrados, sumaTotal});
+        return of({ingresos: ingresosFiltrados, sumaTotalReal});
     }
 
     agregarIngreso(ingreso: Ingreso): Observable<string> {
-      console.log('ingreso',ingreso);
-      
+        console.log('ingreso', ingreso);
+
         return new Observable((observer) => {
             setTimeout(() => {
                 //  const exito = Math.random() > 0.5;
@@ -123,4 +119,104 @@ export class IngresosService {
             return of(`Error al actualizar el Gasto con ID ${id}`);
         }
     }
+
+    eliminarIngreso(idToDelete: number): Observable<string> {
+        const index = this.ingreso.findIndex((item) => item.id === idToDelete);
+
+        if (index !== -1) {
+            this.ingreso.splice(index, 1);
+            return of(`Eliminado!!`);
+        } else {
+            return of(`Error`);
+        }
+    }
+
+    sumarMontosPorFecha = (
+        fecha: string
+    ): Observable<{
+        sumaMontoReal: number;
+        sumaMontoPlanificado: number;
+        sumaMontoRealMesAnterior: number;
+        sumaMontoPlanificadoMesAnterior: number;
+        nombreMesActual: string;
+        nombreMesAnterior: string;
+    }> => {
+        return new Observable((observer) => {
+            const [anio, mes, dia] = fecha.split('/');
+            const fechaActual = new Date(
+                Number(anio),
+                Number(mes) - 1,
+                Number(dia)
+            );
+
+            const nombreMesActual = new Intl.DateTimeFormat('es-ES', {
+                month: 'long'
+            }).format(fechaActual);
+
+            const sumaMontoReal = this.ingreso.reduce((acc, ingreso) => {
+                if (
+                    ingreso.anio.toString() === anio &&
+                    ingreso.mes.toString() === mes
+                ) {
+                    acc += ingreso.montoReal;
+                }
+                return acc;
+            }, 0);
+            const sumaMontoPlanificado = this.ingreso.reduce((acc, ingreso) => {
+                if (
+                    ingreso.anio.toString() === anio &&
+                    ingreso.mes.toString() === mes
+                ) {
+                    acc += ingreso.montoPlanificado;
+                }
+                return acc;
+            }, 0);
+
+            const fechaMesAnterior = new Date(
+                fechaActual.getFullYear(),
+                fechaActual.getMonth() - 1,
+                1
+            );
+            const anioMesAnterior = fechaMesAnterior.getFullYear().toString();
+            const mesMesAnterior = (fechaMesAnterior.getMonth() + 1).toString();
+            const nombreMesAnterior = new Intl.DateTimeFormat('es-ES', {
+                month: 'long'
+            }).format(fechaMesAnterior);
+
+            const sumaMontoRealMesAnterior = this.ingreso.reduce(
+                (acc, ingreso) => {
+                    if (
+                        ingreso.anio.toString() === anioMesAnterior &&
+                        ingreso.mes.toString() === mesMesAnterior
+                    ) {
+                        acc += ingreso.montoReal;
+                    }
+                    return acc;
+                },
+                0
+            );
+            const sumaMontoPlanificadoMesAnterior = this.ingreso.reduce(
+                (acc, ingreso) => {
+                    if (
+                        ingreso.anio.toString() === anioMesAnterior &&
+                        ingreso.mes.toString() === mesMesAnterior
+                    ) {
+                        acc += ingreso.montoPlanificado;
+                    }
+                    return acc;
+                },
+                0
+            );
+
+            observer.next({
+                sumaMontoReal,
+                sumaMontoPlanificado,
+                sumaMontoRealMesAnterior,
+                sumaMontoPlanificadoMesAnterior,
+                nombreMesActual,
+                nombreMesAnterior
+            });
+            observer.complete();
+        });
+    };
 }
