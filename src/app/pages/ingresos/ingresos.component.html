@@ -1,1 +1,288 @@
-<p>ingresos works!</p>
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-principal"><b> Mis ingreso</b></h1>
+            </div>
+            <!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item">
+                        <a [routerLink]="['']">Inicio</a>
+                    </li>
+                    <li class="breadcrumb-item">ingreso</li>
+                </ol>
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 col-sm-8">
+                <div class="card">
+                    <div class="card-body">
+                        <!-- Selector de mes -->
+                        <ul
+                            class="pagination pagination-month justify-content-center align-items-center"
+                        >
+                            <li class="page-item">
+                                <button
+                                    (click)="removeMonth()"
+                                    class="button-mes"
+                                >
+                                    <i class="fas fa-caret-left"></i>
+                                </button>
+                            </li>
+                            <li class="page-item box-shadow-int mx-3">
+                                <div class="box-shadow-int text-center">
+                                    <p class="page-month pt-2">{{ month }}</p>
+                                    <p class="page-year pb-2">{{ year }}</p>
+                                </div>
+                            </li>
+                            <li class="page-item">
+                                <button (click)="addMonth()" class="button-mes">
+                                    <i class="fas fa-caret-right"></i>
+                                </button>
+                            </li>
+                        </ul>
+                        <!-- Tabla editable -->
+                        <div class="text-center mb-3">
+                            <h3 class="text-principal mb-0">
+                                {{ sumaTotal | currency: 'CLP' }}
+                            </h3>
+                            <small>Total ingresos {{ month }}</small>
+                        </div>
+                        <form [formGroup]="form" (ngSubmit)="update()">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Descripción</th>
+                                        <th>Fijar</th>
+                                        <th>Monto planificado</th>
+                                        <th>Monto real</th>
+                                        <th>Fecha</th>
+
+                                        <th>
+                                            <button
+                                                type="button"
+                                                title="Add New"
+                                                class="btn btn-primary"
+                                                (click)="addUser()"
+                                                [disabled]="isAdding"
+                                            >
+                                                <i class="fas fa-plus"></i>
+                                            </button>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <ng-container
+                                        *ngFor="
+                                            let ingreso of ingresos;
+                                            let i = index
+                                        "
+                                    >
+                                        <tr
+                                            *ngIf="ingresoSelected !== ingreso"
+                                            (click)="selectUser(ingreso)"
+                                        >
+                                            <td>{{ ingreso.desc }}</td>
+                                            <td>
+                                                <div
+                                                    class="icheck-primary d-inline"
+                                                >
+                                                    <input
+                                                        type="checkbox"
+                                                        [checked]="ingreso.fijar"
+                                                    />
+                                                    <label
+                                                        for="checkboxPrimary1"
+                                                    >
+                                                    </label>
+                                                </div>
+                                            </td>
+
+                                            <td>
+                                                {{
+                                                    ingreso.montoPlanificado
+                                                        | currency: 'CLP'
+                                                }}
+                                            </td>
+
+                                            <td>
+                                                {{
+                                                    ingreso.montoReal
+                                                        | currency: 'CLP'
+                                                }}
+                                            </td>
+
+                                            <ng-template #contenidoAlternativo>
+                                                <td>-</td>
+                                            </ng-template>
+
+                                            <td>
+                                                {{ ingreso.dia }}/{{ingreso.mes}}/{{ingreso.anio}}
+                                            </td>
+
+                                            <td>
+                                                <button
+                                                    class="btn btn-danger btn-sm mx-1"
+                                                    title="delete"
+                                                    type="button"
+                                                    (click)="deleteUser(i)"
+                                                >
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+
+                                        <tr
+                                            *ngIf="ingresoSelected === ingreso"
+                                            class="table-primary"
+                                        >
+                                            <td>
+                                                <input
+                                                    type="text"
+                                                    class="form-control"
+                                                    formControlName="desc"
+                                                    [value]="ingreso.desc"
+                                                    title="Descipción"
+                                                />
+                                            </td>
+                                            <td>
+                                                <input
+                                                    #fijarChk
+                                                    type="checkbox"
+                                                    formControlName="fijar"
+                                                    [checked]="ingreso.fijar"
+                                                />
+                                                <label for="checkboxPrimary1">
+                                                </label>
+                                            </td>
+
+                                            <td>
+                                                <input
+                                                    type="text"
+                                                    class="form-control"
+                                                    formControlName="montoPlanificado"
+                                                    [value]="
+                                                        ingreso.montoPlanificado
+                                                    "
+                                                    title="Monto planificado"
+                                                    (input)="
+                                                        onInput(
+                                                            $event.target.value,
+                                                            fijarChk.checked
+                                                        )
+                                                    "
+                                                />
+                                            </td>
+
+                                            <td>
+                                                <input
+                                                    type="text"
+                                                    class="form-control"
+                                                    formControlName="montoReal"
+                                                    [value]="ingreso.montoReal"
+                                                    title="Monto real"
+                                                />
+                                            </td>
+
+                                            <td>
+                                                <select
+                                                    class="form-control"
+                                                    formControlName="dia"
+                                                    [value]="ingreso.dia"
+                                                    title="Dia"
+                                                >
+                                                    <option value="">
+                                                        Seleccione un día
+                                                    </option>
+                                                    <option
+                                                        *ngFor="let dia of dias"
+                                                        [value]="dia"
+                                                    >
+                                                        {{ dia }}
+                                                    </option>
+                                                </select>
+                                            </td>
+
+                                            <td>
+                                                <button
+                                                    class="btn btn-primary btn-sm mx-1"
+                                                    title="update"
+                                                    type="submit"
+                                                    [disabled]="form.invalid"
+                                                >
+                                                    <i class="fas fa-check"></i>
+                                                </button>
+
+                                                <button
+                                                    class="btn btn-danger btn-sm mx-1"
+                                                    title="cancel"
+                                                    (click)="cancel()"
+                                                    type="button"
+                                                >
+                                                    <i class="fas fa-ban"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </ng-container>
+                                </tbody>
+                            </table>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-4">
+                <div class="card">
+                    <div class="card-head text-center mt-2">
+                        <h5>Título</h5>
+                    </div>
+                    <div class="card-body">
+                        <div
+                            echarts
+                            [options]="options"
+                            class="demo-chart"
+                            style="height: 12rem"
+                        ></div>
+                    </div>
+                    <div class="card-footer text-center">
+                        <p>
+                            Tus ingresos (<b
+                                ><span class="text-success">aumentaron</span> -
+                                <span class="text-danger"
+                                    >disminuyeron</span
+                                > </b
+                            >) un x% respecto al mes anterior
+                        </p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-head text-center mt-2">
+                        <h5>¿Sabías qué?</h5>
+                    </div>
+                    <div class="card-body">
+                        <p>
+                            Si quieres pedir un crédito el banco solo tomará tus
+                            ingresos formales.
+                        </p>
+                    </div>
+                    <div class="card-footer text-center">
+                        <p>
+                            <b>Puedes simular tu crédito <a href="">aquí</a></b>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
