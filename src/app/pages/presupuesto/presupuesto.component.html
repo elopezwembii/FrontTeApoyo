@@ -2,7 +2,7 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0 text-principal"><b> Mis ingreso</b></h1>
+                <h1 class="m-0 text-principal"><b> Mi presupuesto</b></h1>
             </div>
             <!-- /.col -->
             <div class="col-sm-6">
@@ -10,7 +10,7 @@
                     <li class="breadcrumb-item">
                         <a [routerLink]="['']">Inicio</a>
                     </li>
-                    <li class="breadcrumb-item">ingreso</li>
+                    <li class="breadcrumb-item">presupuesto</li>
                 </ol>
             </div>
             <!-- /.col -->
@@ -57,17 +57,14 @@
                             <h3 class="text-principal mb-0">
                                 {{ sumaTotalReal | currency: 'CLP' }}
                             </h3>
-                            <small>Total ingresos {{ month }}</small>
+                            <small>Total presupuestos {{ month }}</small>
                         </div>
                         <form [formGroup]="form" (ngSubmit)="update()">
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th scope="col">Descripción</th>
-                                        <th>Fijar</th>
-                                        <th>Monto planificado</th>
-                                        <th>Monto real</th>
-                                        <th>Fecha</th>
+                                        <th scope="col">Categoria</th>
+                                        <th>Monto</th>
 
                                         <th>
                                             <button
@@ -85,50 +82,23 @@
                                 <tbody>
                                     <ng-container
                                         *ngFor="
-                                            let ingreso of ingresos;
+                                            let presupuesto of presupuestos;
                                             let i = index
                                         "
                                     >
                                         <tr
-                                            *ngIf="ingresoSelected !== ingreso"
-                                            (click)="selectUser(ingreso)"
+                                            *ngIf="presupuestoSelected !== presupuesto"
+                                            (click)="selectUser(presupuesto)"
                                         >
-                                            <td>{{ ingreso.desc }}</td>
-                                            <td>
-                                                <div
-                                                    class="icheck-primary d-inline"
-                                                >
-                                                    <input
-                                                        type="checkbox"
-                                                        [checked]="ingreso.fijar"
-                                                    />
-                                                    <label
-                                                        for="checkboxPrimary1"
-                                                    >
-                                                    </label>
-                                                </div>
-                                            </td>
+                                            <td>{{ presupuesto.categoria }}</td>                                      
 
-                                            <td>
-                                                {{
-                                                    ingreso.montoPlanificado
-                                                        | currency: 'CLP'
-                                                }}
-                                            </td>
-
-                                            <td>
-                                                {{
-                                                    ingreso.montoReal
-                                                        | currency: 'CLP'
-                                                }}
-                                            </td>
 
                                             <ng-template #contenidoAlternativo>
                                                 <td>-</td>
                                             </ng-template>
 
                                             <td>
-                                                {{ ingreso.dia }}/{{ingreso.mes}}/{{ingreso.anio}}
+                                                {{ presupuesto.monto | currency:'CLP' }}
                                             </td>
 
                                             <td>
@@ -136,7 +106,7 @@
                                                     class="btn btn-danger btn-sm mx-1"
                                                     title="delete"
                                                     type="button"
-                                                    (click)="deleteUser(ingreso,i)"
+                                                    (click)="deleteUser(presupuesto,i)"
                                                 >
                                                     <i class="fas fa-trash"></i>
                                                 </button>
@@ -144,75 +114,39 @@
                                         </tr>
 
                                         <tr
-                                            *ngIf="ingresoSelected === ingreso"
+                                            *ngIf="presupuestoSelected === presupuesto"
                                             class="table-primary"
                                         >
-                                            <td>
-                                                <input
-                                                    type="text"
-                                                    class="form-control"
-                                                    formControlName="desc"
-                                                    [value]="ingreso.desc"
-                                                    title="Descipción"
-                                                />
-                                            </td>
-                                            <td>
-                                                <input
-                                                    #fijarChk
-                                                    type="checkbox"
-                                                    formControlName="fijar"
-                                                    [checked]="ingreso.fijar"
-                                                />
-                                                <label for="checkboxPrimary1">
-                                                </label>
-                                            </td>
-
-                                            <td>
-                                                <input
-                                                    type="text"
-                                                    class="form-control"
-                                                    formControlName="montoPlanificado"
-                                                    [value]="
-                                                        ingreso.montoPlanificado
-                                                    "
-                                                    title="Monto planificado"
-                                                    (input)="
-                                                        onInput(
-                                                            $event.target.value,
-                                                            fijarChk.checked
-                                                        )
-                                                    "
-                                                />
-                                            </td>
-
-                                            <td>
-                                                <input
-                                                    type="text"
-                                                    class="form-control"
-                                                    formControlName="montoReal"
-                                                    [value]="ingreso.montoReal"
-                                                    title="Monto real"
-                                                />
-                                            </td>
-
-                                            <td>
+                                                                   
+                                                              
+                                            <td>                                                
                                                 <select
                                                     class="custom-select form-control-border"
-                                                    formControlName="dia"
-                                                    [value]="ingreso.dia"
-                                                    title="Dia"
+                                                    formControlName="categoria"
+                                                    [value]="presupuesto.categoriaId"
+                                                    title="Categoria"
                                                 >
-                                                    <option value="">
-                                                        Seleccione un día
+                                                    <option value="-1">
+                                                        Seleccione una categoria
                                                     </option>
                                                     <option
-                                                        *ngFor="let dia of dias"
-                                                        [value]="dia"
+                                                        *ngFor="let categoria of categorias"
+                                                        [value]="categoria.id"
                                                     >
-                                                        {{ dia }}
+                                                        {{ categoria.descripcion }}
                                                     </option>
                                                 </select>
                                             </td>
+
+                                            <td>
+                                                <input
+                                                    type="text"
+                                                    class="form-control"
+                                                    formControlName="monto"
+                                                    [value]="presupuesto.monto"
+                                                    title="Monto"
+                                                />
+                                            </td>            
 
                                             <td>
                                                 <button
@@ -243,7 +177,7 @@
             </div>
             <div class="col-12 col-sm-4">
                 <div class="card">
-                  <app-grafico [fecha]="getFecha"></app-grafico>
+                  <!-- <app-grafico [fecha]="getFecha"></app-grafico> -->
                 </div>
                 <div class="card">
                     <div class="card-head text-center mt-2">
@@ -252,7 +186,7 @@
                     <div class="card-body">
                         <p>
                             Si quieres pedir un crédito el banco solo tomará tus
-                            ingresos formales.
+                            presupuestos formales.
                         </p>
                     </div>
                     <div class="card-footer text-center">
@@ -265,4 +199,5 @@
         </div>
     </div>
 </section>
+
 
