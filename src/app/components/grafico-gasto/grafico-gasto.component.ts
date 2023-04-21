@@ -1,50 +1,57 @@
-import {
-    Component,
-    Input,
-    OnChanges,
-    OnInit,
-    SimpleChanges
-} from '@angular/core';
-import {IngresosService} from '@services/ingresos/ingresos.service';
-import {EChartsOption} from 'echarts';
+import {Component, Input, OnChanges} from '@angular/core';
+import {GastosService} from '@services/gastos/gastos.service';
 
 @Component({
-    selector: 'app-grafico',
-    templateUrl: './grafico.component.html',
-    styleUrls: ['./grafico.component.scss']
+    selector: 'app-grafico-gasto',
+    templateUrl: './grafico-gasto.component.html',
+    styleUrls: ['./grafico-gasto.component.scss']
 })
-export class GraficoComponent implements OnChanges {
+export class GraficoGastoComponent implements OnChanges {
     @Input() fecha: string;
     @Input() change: boolean;
 
-    public porcentaje: number;
-    public infinto: number = Infinity;
-
     options: any = {
         tooltip: {
-            trigger: 'axis',
-            axisPointer: {
-                type: 'shadow'
+            trigger: 'item'
+        },
+        legend: {
+            top: '0%',
+            left: 'center'
+        },
+        series: [
+            {
+                type: 'pie',
+                radius: ['40%', '70%'],
+                avoidLabelOverlap: false,
+                label: {
+                    show: false,
+                    position: 'center'
+                },
+                emphasis: {
+                    label: {
+                        show: true,
+                        fontSize: 40,
+                        fontWeight: 'bold'
+                    }
+                },
+                labelLine: {
+                    show: false
+                },
+                data: [
+                    {value: 1048, name: 'Ingresos', itemStyle: {
+                      color: '#bceaf3'
+                  }},
+                    {value: 735, name: 'Gastos', itemStyle: {
+                      color: '#ffd48f'
+                  }},
+                ]
             }
-        },
-        legend: {},
-        grid: {
-            left: '3%',
-            right: '4%',
-            bottom: '3%',
-            containLabel: true
-        },
-        xAxis: {
-            type: 'value',
-            boundaryGap: [0, 0.01]
-        }
+        ]
     };
-
-    constructor(private ingresoService: IngresosService) {}
-
+    constructor(private gastoService: GastosService) {}
 
     ngOnChanges() {
-        this.ingresoService.sumarMontosPorFecha(this.fecha).subscribe({
+        /* this.gastoService.sumarMontosPorFecha(this.fecha).subscribe({
             next: (resp: any) => {
                 this.options = {
                     ...this.options,
@@ -77,12 +84,7 @@ export class GraficoComponent implements OnChanges {
                         }
                     ]
                 };
-                this.porcentaje = Math.abs(
-                    (resp.sumaMontoReal * 100) /
-                        resp.sumaMontoRealMesAnterior /
-                        100
-                );
             }
-        });
+        }); */
     }
 }

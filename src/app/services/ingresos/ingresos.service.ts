@@ -18,39 +18,6 @@ export class IngresosService {
             anio: 2023,
             montoReal: 100,
             montoPlanificado: 100
-        },
-        {
-            id: 2,
-            desc: 'ingreso2',
-            fijar: false,
-            tipo: 2,
-            dia: 12,
-            mes: 4,
-            anio: 2023,
-            montoReal: 300,
-            montoPlanificado: 400
-        },
-        {
-            id: 3,
-            desc: 'ingreso3',
-            fijar: false,
-            tipo: 2,
-            dia: 7,
-            mes: 5,
-            anio: 2023,
-            montoReal: 500,
-            montoPlanificado: 100
-        },
-        {
-            id: 4,
-            desc: 'ingreso4',
-            fijar: false,
-            tipo: 2,
-            dia: 12,
-            mes: 3,
-            anio: 2023,
-            montoReal: 50,
-            montoPlanificado: 70
         }
     ];
 
@@ -104,7 +71,10 @@ export class IngresosService {
         id,
         montoReal,
         montoPlanificado,
-        dia
+        dia,
+        fijar,
+        desc,
+        tipo
     }: Ingreso): Observable<string> {
         const ingresoIndex = this.ingreso.findIndex(
             (ingreso) => ingreso.id === id
@@ -114,6 +84,9 @@ export class IngresosService {
             this.ingreso[ingresoIndex].montoReal = montoReal;
             this.ingreso[ingresoIndex].montoPlanificado = montoPlanificado;
             this.ingreso[ingresoIndex].dia = dia;
+            this.ingreso[ingresoIndex].fijar = fijar;
+            this.ingreso[ingresoIndex].desc = desc;
+            this.ingreso[ingresoIndex].tipo = tipo;
             return of(`Gasto con ID ${id} actualizado exitosamente`);
         } else {
             return of(`Error al actualizar el Gasto con ID ${id}`);

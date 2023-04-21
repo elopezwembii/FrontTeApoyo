@@ -12,6 +12,18 @@ import {ToastrService} from 'ngx-toastr';
 })
 export class IngresosComponent implements OnInit {
     dias: number[];
+    change: boolean = false;
+    loading: boolean = false;
+
+    objectTipo = [
+        'Sueldo líquido',
+        'Boletas de honorarios',
+        'Arriendos',
+        'Declaración de Renta (anual)',
+        'Pensión de alimentos recibida',
+        'Reembolsos o ayudas recibidas',
+        'Otros ingresos formales o informales'
+    ];
 
     generarDias(mes: number, anio: number) {
         // calcular el número de días del mes
@@ -31,8 +43,8 @@ export class IngresosComponent implements OnInit {
         id: [''],
         desc: ['', [Validators.required]],
         fijar: [false],
-        tipo: [''],
-        dia: [''],
+        tipo: ['', [Validators.required]],
+        dia: ['', [Validators.required]],
         mes: [''],
         anio: [''],
         montoReal: ['', [Validators.required, Validators.min(0)]],
@@ -60,7 +72,11 @@ export class IngresosComponent implements OnInit {
     public year: number = this.selectionYear;
 
     get getFecha() {
-        return `${this.year}/${this.selectionMonth+1}/01`;
+        return `${this.year}/${this.selectionMonth + 1}/01`;
+    }
+
+    get getChange() {
+        return this.change;
     }
 
     constructor(
@@ -77,6 +93,7 @@ export class IngresosComponent implements OnInit {
     }
 
     obtenerIngresos() {
+        this.loading = true;
         const fechaString = `${this.selectionMonth + 1}/${this.year}`;
         const [dia, anio] = fechaString.split('/').map(Number);
         const mes = dia - 1;
@@ -99,6 +116,7 @@ export class IngresosComponent implements OnInit {
             }) => {
                 this.sumaTotalReal = sumaTotalReal;
                 this.ingresos = ingresos;
+                this.loading = false;
             },
             error: (error: any) => {
                 console.log(error);
@@ -113,8 +131,9 @@ export class IngresosComponent implements OnInit {
             this.year++;
         }
         this.month = this.arrayMonth[this.selectionMonth];
-
+        this.generarDias(this.selectionMonth, this.year);
         this.obtenerIngresos();
+        this.isAdding = false;
     }
 
     removeMonth() {
@@ -124,8 +143,9 @@ export class IngresosComponent implements OnInit {
             this.year--;
         }
         this.month = this.arrayMonth[this.selectionMonth];
-
+        this.generarDias(this.selectionMonth, this.year);
         this.obtenerIngresos();
+        this.isAdding = false;
     }
 
     selectUser(ingreso: Ingreso) {
@@ -148,7 +168,7 @@ export class IngresosComponent implements OnInit {
     }
 
     deleteUser(ingreso: Ingreso, index: number) {
-        if (confirm('Are you sure you want to delete this user?')) {
+        if (confirm('¿Estas seguro de eliminar el ingreso?')) {
             this.ingresoService.eliminarIngreso(ingreso.id).subscribe({
                 next: (resp: any) => {
                     console.log(resp);
@@ -156,14 +176,16 @@ export class IngresosComponent implements OnInit {
                     this.ingresos.splice(index, 1);
                 }
             });
+            this.change = !this.change;
         }
     }
 
     generateId() {
-        return this.ingresos.length + 1;
+        return this.ingresos.length;
     }
 
     update() {
+        this.loading = true;
         if (!this.isEditing) {
             this.ingresos[0] = {
                 id: this.generateId(),
@@ -183,6 +205,8 @@ export class IngresosComponent implements OnInit {
                 next: (resp: any) => {
                     this.toastr.success(resp);
                     this.obtenerIngresos();
+                    this.change = !this.change;
+                    this.loading = false;
                 },
                 error: (resp: any) => {
                     console.log(resp);
@@ -211,6 +235,8 @@ export class IngresosComponent implements OnInit {
                     next: (resp: any) => {
                         this.toastr.success(resp);
                         this.obtenerIngresos();
+                        this.change = !this.change;
+                        this.loading = false;
                     },
                     error: (resp: any) => {
                         console.log(resp);

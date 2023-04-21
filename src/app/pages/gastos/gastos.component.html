@@ -54,8 +54,10 @@
                         </ul>
                         <!-- Tabla editable -->
                         <div class="text-center mb-3">
-                            <h3 class="text-principal mb-0">$ 1.000.000</h3>
-                            <small>Total ingresos {{ month }}</small>
+                            <h3 class="text-principal mb-0">
+                                {{ sumaTotalReal | currency: '$ ' }}
+                            </h3>
+                            <small>Total gastos {{ month }}</small>
                         </div>
                         <form
                             [formGroup]="form"
@@ -129,14 +131,22 @@
 
                                             <td>
                                                 <span
-                                                    class="badge badge-success"
+                                                    class="badge badge-warning"
                                                     >Alimentación</span
                                                 >
                                             </td>
 
                                             <td>
                                                 <span
-                                                    class="badge badge-success"
+                                                    class="badge badge-info"
+                                                    style="
+                                                        background-color: rgba(
+                                                            255,
+                                                            0,
+                                                            0,
+                                                            0.5
+                                                        );
+                                                    "
                                                     >Comida Rápida</span
                                                 >
                                             </td>
@@ -160,7 +170,9 @@
                                             </ng-template>
 
                                             <td>
-                                                $ {{ gasto.monto }}
+                                                {{
+                                                    gasto.monto | currency: '$ '
+                                                }}
                                             </td>
 
                                             <td>
@@ -186,7 +198,6 @@
                                                     class="form-control"
                                                     formControlName="desc"
                                                     [value]="gasto.desc"
-                                                    title="Descipción"
                                                 />
                                             </td>
                                             <td>
@@ -202,32 +213,73 @@
                                             <td>
                                                 <select
                                                     class="custom-select form-control-border"
+                                                    formControlName="tipo"
+                                                    [value]="gasto.tipo"
                                                 >
-                                                    <option>Value 1</option>
-                                                    <option>Value 2</option>
-                                                    <option>Value 3</option>
+                                                    <option
+                                                        selected
+                                                        disabled
+                                                        value=""
+                                                    >
+                                                        Tipo
+                                                    </option>
+                                                    <option
+                                                        *ngFor="
+                                                            let item of objectTipo;
+                                                            let i = index
+                                                        "
+                                                        [value]="i"
+                                                    >
+                                                        {{ item }}
+                                                    </option>
                                                 </select>
                                             </td>
 
                                             <td>
                                                 <select
                                                     class="custom-select form-control-border"
+                                                    formControlName="subtipo"
+                                                    [value]="gasto.subtipo"
                                                 >
-                                                    <option>Value 1</option>
-                                                    <option>Value 2</option>
-                                                    <option>Value 3</option>
+                                                    <option
+                                                        selected
+                                                        disabled
+                                                        value=""
+                                                    >
+                                                        Subtipo
+                                                    </option>
+                                                    <option
+                                                        *ngFor="
+                                                            let item of opcionesSelect2[
+                                                                form.get('tipo')
+                                                                    .value
+                                                            ];
+                                                            let i = index
+                                                        "
+                                                        [value]="i"
+                                                    >
+                                                        {{ item }}
+                                                    </option>
                                                 </select>
                                             </td>
 
                                             <td>
-                                                <input
-                                                    autofocus
-                                                    type="text"
-                                                    class="form-control"
+                                                <select
+                                                    class="custom-select form-control-border"
                                                     formControlName="dia"
                                                     [value]="gasto.dia"
-                                                    placeholder="día"
-                                                />
+                                                    title="Dia"
+                                                >
+                                                    <option disabled value="">
+                                                        Día
+                                                    </option>
+                                                    <option
+                                                        *ngFor="let dia of dias"
+                                                        [value]="dia"
+                                                    >
+                                                        {{ dia }}
+                                                    </option>
+                                                </select>
                                             </td>
                                             <td>
                                                 <input
@@ -269,32 +321,16 @@
             </div>
             <div class="col-12 col-sm-4">
                 <div class="card">
-                    <div class="card-head text-center mt-2">
-                        <h5>Título</h5>
-                    </div>
-                    <div class="card-body">
-                        <div
-                            echarts
-                            [options]="options"
-                            class="demo-chart"
-                            style="height: 12rem"
-                        ></div>
-                    </div>
-                    <div class="card-footer text-center">
-                        <p>
-                            Tus ingresos
-                            <b><span class="text-success">aumentaron</span> </b>
-                            un
-                            <span class="text-success"><b> 30%</b></span>
-                            respecto al mes anterior
-                        </p>
-                    </div>
+                    <app-grafico-gasto
+                        [fecha]="getFecha"
+                        [change]="getChange"
+                    ></app-grafico-gasto>
                 </div>
                 <div class="card">
                     <div class="card-head text-center mt-2">
                         <h5>
                             <span class="text-principal"
-                                ><b>¿Sabías qué?</b></span
+                                ><b>¡Recuerda!</b></span
                             >
                             <span
                                 ><svg
@@ -335,13 +371,12 @@
                     </div>
                     <div class="card-body">
                         <p>
-                            Si quieres pedir un crédito el banco solo tomará tus
-                            ingresos formales.
+                            Ingresar tus datos en el mes correcto ayudará a tener un mejor seguimiento de tus finanzas.
                         </p>
                     </div>
                     <div class="card-footer text-center">
                         <p>
-                            <b>Puedes simular tu crédito <a href="">aquí</a></b>
+                            <b>Puedes leer con más detalle <a href="">aquí</a></b>
                         </p>
                     </div>
                 </div>
@@ -349,3 +384,4 @@
         </div>
     </div>
 </section>
+<ngx-loading [show]="loading"></ngx-loading>
