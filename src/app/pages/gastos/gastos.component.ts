@@ -21,41 +21,8 @@ export interface Gasto {
     styleUrls: ['./gastos.component.scss']
 })
 export class GastosComponent {
-    options: EChartsOption = {
-        tooltip: {
-            trigger: 'axis',
-            axisPointer: {
-                type: 'shadow'
-            }
-        },
-        legend: {},
-        grid: {
-            left: '3%',
-            right: '4%',
-            bottom: '3%',
-            containLabel: true
-        },
-        xAxis: {
-            type: 'value',
-            boundaryGap: [0, 0.01]
-        },
-        yAxis: {
-            type: 'category',
-            data: ['Marzo', 'Abril']
-        },
-        series: [
-            {
-                name: 'Formales',
-                type: 'bar',
-                data: [1300000, 1400000]
-            },
-            {
-                name: 'Informales',
-                type: 'bar',
-                data: [200000, 190000]
-            }
-        ]
-    };
+
+
 
     // Mock Users Data
     gastos: Gasto[] = [
@@ -65,9 +32,9 @@ export class GastosComponent {
             recurrente: false,
             tipo: 2,
             subtipo: 1,
-            dia: null,
-            mes: null,
-            anio: null,
+            dia: 2,
+            mes: 4,
+            anio: 2023,
             monto: 120000
         },
         {
@@ -87,17 +54,7 @@ export class GastosComponent {
     isEditing: boolean = false;
     isAdding: boolean = false;
 
-    form = this.fb.group({
-        id: [''],
-        desc: ['', [Validators.required]],
-        recurrente: [false],
-        tipo: [''],
-        subtipo: [''],
-        dia: [''],
-        mes: [''],
-        anio: [''],
-        monto: ['']
-    });
+
 
     public arrayMonth = [
         'Enero',
@@ -118,6 +75,62 @@ export class GastosComponent {
 
     public month: string = this.arrayMonth[this.selectionMonth];
     public year: number = this.selectionYear;
+
+
+    options: EChartsOption = {
+      tooltip: {
+          trigger: 'axis',
+          axisPointer: {
+              type: 'shadow'
+          }
+      },
+      legend: {},
+      grid: {
+          left: '3%',
+          right: '4%',
+          bottom: '3%',
+          containLabel: true
+      },
+      xAxis: {
+          type: 'value',
+          boundaryGap: [0, 0.01]
+      },
+      yAxis: {
+          type: 'category',
+          data: ['Marzo', 'Abril']
+      },
+      series: [
+          {
+              name: 'Formales',
+              type: 'bar',
+              data: [this.year, 1400000],
+              itemStyle: {
+                color:'#bceaf3'
+              }
+          },
+          {
+              name: 'Informales',
+              type: 'bar',
+              data: [200000, 190000],
+              itemStyle: {
+                color:'#ffd48f'
+              }
+          }
+      ]
+  };
+
+
+    form = this.fb.group({
+      id: [''],
+      desc: ['', [Validators.required]],
+      recurrente: [false],
+      tipo: [''],
+      subtipo: [''],
+      dia: [''],
+      mes: [(this.selectionMonth + 1)],
+      anio: [this.year],
+      monto: ['']
+  });
 
     constructor(private renderer: Renderer2, private fb: FormBuilder) {}
 
@@ -150,8 +163,8 @@ export class GastosComponent {
                 tipo: String(gasto.tipo),
                 subtipo: String(gasto.subtipo),
                 dia: String(gasto.dia),
-                mes: String(gasto.mes),
-                anio: String(gasto.anio),
+                mes: gasto.mes,
+                anio: gasto.anio,
                 monto: String(gasto.monto)
             });
         }
@@ -176,8 +189,8 @@ export class GastosComponent {
                 tipo: parseInt(this.form.value.tipo!),
                 subtipo: parseInt(this.form.value.subtipo!),
                 dia: parseInt(this.form.value.dia!),
-                mes: parseInt(this.form.value.mes!),
-                anio: parseInt(this.form.value.anio!),
+                mes: this.form.value.mes!,
+                anio: this.form.value.anio!,
                 monto: parseInt(this.form.value.monto!)
             };
         } else {
@@ -192,8 +205,8 @@ export class GastosComponent {
                 tipo: parseInt(this.form.value.tipo!),
                 subtipo: parseInt(this.form.value.subtipo!),
                 dia: parseInt(this.form.value.dia!),
-                mes: parseInt(this.form.value.mes!),
-                anio: parseInt(this.form.value.anio!),
+                mes: this.form.value.mes!,
+                anio: this.form.value.anio!,
                 monto: parseInt(this.form.value.monto!)
             };
         }
