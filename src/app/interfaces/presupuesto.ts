@@ -10,4 +10,5 @@ export interface Presupuesto {
 export interface Categoria {
     id: string;
     descripcion: string;
+    img:string,
 }

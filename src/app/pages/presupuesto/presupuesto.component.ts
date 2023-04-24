@@ -11,6 +11,8 @@ import {ToastrService} from 'ngx-toastr';
     styleUrls: ['./presupuesto.component.scss']
 })
 export class PresupuestoComponent {
+    presupuestoMonto: number = 0;
+
     categorias: Categoria[] = [];
     presupuestos: Presupuesto[] = [];
     presupuestoSelected: Presupuesto = {} as Presupuesto;
@@ -20,6 +22,8 @@ export class PresupuestoComponent {
     ingresoSelected: Ingreso = {} as Ingreso;
     isEditing: boolean = false;
     isAdding: boolean = false;
+
+    graficoDonaPresupuesto: any;
 
     form = this.fb.group({
         id: [''],
@@ -60,14 +64,27 @@ export class PresupuestoComponent {
         private toastr: ToastrService
     ) {}
 
-    ngOnInit() {
-        this.obtenerPresupuesto();
+    ngOnInit() {     
 
         this.presupuestoService.obtenerCategoria().subscribe({
             next: (resp: any) => {
                 this.categorias = resp;
             }
         });
+
+        this.obtenerDatoGrafico();
+        this.obtenerPresupuestoMensual();
+        this.obtenerPresupuesto();
+    }
+
+    obtenerDatoGrafico() {
+        this.presupuestoService
+            .obtenerDatosGrafico(this.selectionMonth + 1, this.selectionYear)
+            .subscribe({
+                next: (resp: any) => {
+                    this.graficoDonaPresupuesto = resp;
+                }
+            });
     }
 
     obtenerPresupuesto() {
@@ -75,7 +92,22 @@ export class PresupuestoComponent {
             .obtenerPresupuestos(this.selectionMonth + 1, this.selectionYear)
             .subscribe({
                 next: (resp: any) => {
-                    this.presupuestos = resp;
+                    this.presupuestoMonto = this.presupuestoMonto - resp.total;
+
+                    this.presupuestos = resp.presupuestos;
+                }
+            });
+    }
+
+    obtenerPresupuestoMensual() {
+        this.presupuestoService
+            .obtenerPresupuestoMensual(
+                this.selectionMonth + 1,
+                this.selectionYear
+            )
+            .subscribe({
+                next: (resp: any) => {
+                    this.presupuestoMonto = resp;
                 }
             });
     }
@@ -89,6 +121,8 @@ export class PresupuestoComponent {
         this.month = this.arrayMonth[this.selectionMonth];
 
         this.obtenerPresupuesto();
+        this.obtenerPresupuestoMensual();
+        this.obtenerDatoGrafico();
     }
 
     removeMonth() {
@@ -100,6 +134,8 @@ export class PresupuestoComponent {
         this.month = this.arrayMonth[this.selectionMonth];
 
         this.obtenerPresupuesto();
+        this.obtenerPresupuestoMensual();
+        this.obtenerDatoGrafico();
     }
 
     selectUser(presupuesto: Presupuesto) {
@@ -125,6 +161,7 @@ export class PresupuestoComponent {
                     next: (resp: any) => {
                         console.log(resp);
                         this.presupuestos.splice(index, 1);
+                        this.graficoDonaPresupuesto();
                     }
                 });
         }
@@ -152,6 +189,7 @@ export class PresupuestoComponent {
                 .subscribe({
                     next: (resp: any) => {
                         this.obtenerPresupuesto();
+                        this.obtenerDatoGrafico();
                         this.toastr.success(resp);
                     }
                 });
@@ -179,6 +217,7 @@ export class PresupuestoComponent {
                 .subscribe({
                     next: (resp: any) => {
                         this.obtenerPresupuesto();
+                        this.obtenerDatoGrafico();
                         this.toastr.success(resp);
                     }
                 });

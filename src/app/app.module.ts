@@ -39,6 +39,8 @@ import { NgxEchartsModule } from 'ngx-echarts';
 import { IngresosComponent } from './pages/ingresos/ingresos.component';
 import { GraficoComponent } from './components/grafico/grafico.component';
 import { PresupuestoComponent } from './pages/presupuesto/presupuesto.component';
+import { GraficoDonaComponent } from './components/grafico-dona/grafico-dona.component';
+import { GraficoBarraComponent } from './components/grafico-barra/grafico-barra.component';
 
 defineCustomElements();
 registerLocaleData(localeEn, 'en-EN');
@@ -68,7 +70,9 @@ registerLocaleData(localeEn, 'en-EN');
         GastosComponent,
         IngresosComponent,
         GraficoComponent,
-        PresupuestoComponent
+        PresupuestoComponent,
+        GraficoDonaComponent,
+        GraficoBarraComponent
     ],
     imports: [
         NgxLoadingModule.forRoot({

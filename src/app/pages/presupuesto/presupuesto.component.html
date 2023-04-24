@@ -53,12 +53,23 @@
                             </li>
                         </ul>
                         <!-- Tabla editable -->
-                        <div class="text-center mb-3">
-                            <h3 class="text-principal mb-0">
-                                {{ sumaTotalReal | currency: 'CLP' }}
-                            </h3>
-                            <small>Total presupuestos {{ month }}</small>
+                        <div class="mb-3 text-right">
+                            <h5 class="mb-0">
+                                <span class="custom-box">
+                                    <span class="custom-text-gray"
+                                        >Te queda:</span
+                                    >
+                                    <span class="custom-text-bold">$ </span
+                                    ><span class="custom-text-money">{{
+                                        presupuestoMonto | currency: 'CLP'
+                                    }}</span
+                                    ><i
+                                        class="fas fa-money-bill-wave text-principal custom-margin"
+                                    ></i>
+                                </span>
+                            </h5>
                         </div>
+
                         <form [formGroup]="form" (ngSubmit)="update()">
                             <table class="table">
                                 <thead>
@@ -87,18 +98,32 @@
                                         "
                                     >
                                         <tr
-                                            *ngIf="presupuestoSelected !== presupuesto"
+                                            *ngIf="
+                                                presupuestoSelected !==
+                                                presupuesto
+                                            "
                                             (click)="selectUser(presupuesto)"
                                         >
-                                            <td>{{ presupuesto.categoria }}</td>                                      
+                                            <td>
+                                                <i
+                                                    [class]="
+                                                        presupuesto.imgCategoria
+                                                    "
+                                                    class="icono-categoria"
+                                                ></i>
 
+                                                {{ presupuesto.categoria }}
+                                            </td>
 
                                             <ng-template #contenidoAlternativo>
                                                 <td>-</td>
                                             </ng-template>
 
                                             <td>
-                                                {{ presupuesto.monto | currency:'CLP' }}
+                                                {{
+                                                    presupuesto.monto
+                                                        | currency: 'CLP'
+                                                }}
                                             </td>
 
                                             <td>
@@ -106,7 +131,12 @@
                                                     class="btn btn-danger btn-sm mx-1"
                                                     title="delete"
                                                     type="button"
-                                                    (click)="deleteUser(presupuesto,i)"
+                                                    (click)="
+                                                        deleteUser(
+                                                            presupuesto,
+                                                            i
+                                                        )
+                                                    "
                                                 >
                                                     <i class="fas fa-trash"></i>
                                                 </button>
@@ -114,26 +144,33 @@
                                         </tr>
 
                                         <tr
-                                            *ngIf="presupuestoSelected === presupuesto"
+                                            *ngIf="
+                                                presupuestoSelected ===
+                                                presupuesto
+                                            "
                                             class="table-primary"
                                         >
-                                                                   
-                                                              
-                                            <td>                                                
+                                            <td>
                                                 <select
                                                     class="custom-select form-control-border"
                                                     formControlName="categoria"
-                                                    [value]="presupuesto.categoriaId"
+                                                    [value]="
+                                                        presupuesto.categoriaId
+                                                    "
                                                     title="Categoria"
                                                 >
                                                     <option value="-1">
                                                         Seleccione una categoria
                                                     </option>
                                                     <option
-                                                        *ngFor="let categoria of categorias"
+                                                        *ngFor="
+                                                            let categoria of categorias
+                                                        "
                                                         [value]="categoria.id"
                                                     >
-                                                        {{ categoria.descripcion }}
+                                                        {{
+                                                            categoria.descripcion
+                                                        }}
                                                     </option>
                                                 </select>
                                             </td>
@@ -146,7 +183,7 @@
                                                     [value]="presupuesto.monto"
                                                     title="Monto"
                                                 />
-                                            </td>            
+                                            </td>
 
                                             <td>
                                                 <button
@@ -171,33 +208,31 @@
                                     </ng-container>
                                 </tbody>
                             </table>
+
+                            <input type="checkbox" /> Mantener presupuesto mes
+                            anterior
                         </form>
                     </div>
                 </div>
             </div>
             <div class="col-12 col-sm-4">
                 <div class="card">
-                  <!-- <app-grafico [fecha]="getFecha"></app-grafico> -->
+                    <app-grafico-dona
+                        [data]="graficoDonaPresupuesto"
+                    ></app-grafico-dona>
                 </div>
+            </div>
+
+          
+        </div>
+
+
+        <div class="row">
+            <div class="col-12 col-sm-12">
                 <div class="card">
-                    <div class="card-head text-center mt-2">
-                        <h5>¿Sabías qué?</h5>
-                    </div>
-                    <div class="card-body">
-                        <p>
-                            Si quieres pedir un crédito el banco solo tomará tus
-                            presupuestos formales.
-                        </p>
-                    </div>
-                    <div class="card-footer text-center">
-                        <p>
-                            <b>Puedes simular tu crédito <a href="">aquí</a></b>
-                        </p>
-                    </div>
+                    <app-grafico-barra  [data]="graficoDonaPresupuesto"></app-grafico-barra>
                 </div>
             </div>
         </div>
     </div>
 </section>
-
-
