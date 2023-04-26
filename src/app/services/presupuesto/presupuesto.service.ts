@@ -114,6 +114,13 @@ export class PresupuestoService {
             mes: 4,
             year: 2023,
             monto: 350000
+        },
+        {
+            id: 6,
+            categoria: '14',
+            mes: 4,
+            year: 2023,
+            monto: 650000
         }
     ];
 

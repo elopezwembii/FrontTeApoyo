@@ -1,52 +1,80 @@
-import { Component, Input } from '@angular/core';
+import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
+import {CurrencyPipe} from '@angular/common';
 
 @Component({
-  selector: 'app-grafico-barra',
-  templateUrl: './grafico-barra.component.html',
-  styleUrls: ['./grafico-barra.component.scss']
+    selector: 'app-grafico-barra',
+    templateUrl: './grafico-barra.component.html',
+    styleUrls: ['./grafico-barra.component.scss']
 })
-export class GraficoBarraComponent {
-  @Input() data: any;
+export class GraficoBarraComponent implements OnChanges {
+    @Input() gastoReal: any = [];
+    @Input() presupuesto: any = [];
 
-  options: any = {
-    backgroundColor: '#fff',
-    title: {
-      text: 'Tu presupuesto /Gasto real',
-      left: 'center',
-      top: 10
-    },
-    tooltip: {
-      trigger: 'axis',
-      formatter: '{b}: {c}'
-    },
-    legend: {
-      orient: 'horizontal',
-      bottom: 20
-  },
-    xAxis: {
-      type: 'category',
-      data: [],
-      axisLabel: {
-        rotate: 45
-      }
-    },
-    yAxis: {
-      type: 'value'
-    },
-    series: [
-      {
-        type: 'bar',
-        data: [],
-        itemStyle: {
-          color: '#007bff'
+    options:any = {
+        xAxis: {  
+            axisLabel: {
+              rotate: 0
+            }
+          },
+        yAxis: {},
+        series: [],
+        legend: {
+            data: ['Presupuesto', 'Gasto real'],
+            orient: 'vertical',
+            right: 10,
+            top: 10,
+            title: {
+                text: 'Título de la Leyenda'
+            }
         }
-      }
-    ]
-  };
+    };
 
-  ngOnChanges() {
-    // Asignar los datos de las categorías y los valores a los ejes del gráfico
-    this.options.xAxis.data = this.data.map(item => item.name);
-    this.options.series[0].data = this.data.map(item => item.value);
-  }
+    constructor(private currencyPipe: CurrencyPipe) {}
+
+    ngOnChanges() {
+        console.log('presupuesto', this.presupuesto);
+        console.log('gasto real', this.gastoReal);
+   
+        this.options = {
+            ...this.options,
+            xAxis: {
+                data: this.presupuesto.map((item: any) => item.name),
+                axisLabel: {
+                    rotate: 30
+                  }
+            },
+            series: [
+                {
+                    label: {
+                        show: true,
+                        position: 'top',
+                        formatter: (params) => {
+                            return this.currencyPipe.transform(
+                                params.value,
+                                'USD',
+                                'symbol-narrow',
+                                '1.0-0'
+                            );
+                        },
+                        textStyle: {
+                            color: 'black',
+                            fontSize: 12
+                        }
+                    },
+                    name: 'Presupuesto',
+                    type: 'bar',
+                    data: this.presupuesto,
+                    barGap: '-50%',
+                    z: 2
+                },
+                {
+                    name: 'Gasto real',
+                    type: 'bar',
+                    data: this.gastoReal,
+                    barGap: '-50%',
+                    z: 1
+                }
+            ]
+        };
+    }
 }

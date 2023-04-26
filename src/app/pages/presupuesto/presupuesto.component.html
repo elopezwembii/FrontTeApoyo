@@ -229,10 +229,11 @@
 
         <div class="row">
             <div class="col-12 col-sm-12">
-                <div class="card">
-                    <app-grafico-barra  [data]="graficoDonaPresupuesto"></app-grafico-barra>
+                <div class="card h-100">
+                    <app-grafico-barra [presupuesto]="graficoDonaPresupuesto" [gastoReal]="graficoDonaPresupuesto" class="custom-chart"></app-grafico-barra>
                 </div>
             </div>
         </div>
+        
     </div>
 </section>

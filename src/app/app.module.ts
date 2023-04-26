@@ -18,7 +18,7 @@ import {ToastrModule} from 'ngx-toastr';
 import {MessagesComponent} from '@modules/main/header/messages/messages.component';
 import {NotificationsComponent} from '@modules/main/header/notifications/notifications.component';
 
-import {registerLocaleData} from '@angular/common';
+import {CurrencyPipe, registerLocaleData} from '@angular/common';
 import localeEn from '@angular/common/locales/en';
 import {UserComponent} from '@modules/main/header/user/user.component';
 import {ForgotPasswordComponent} from '@modules/forgot-password/forgot-password.component';
@@ -98,7 +98,10 @@ registerLocaleData(localeEn, 'en-EN');
           echarts: () => import('echarts')
         }),
     ],
-    providers: [],
+    providers: [
+      CurrencyPipe
+    ],
+    
     bootstrap: [AppComponent]
 })
 export class AppModule {}

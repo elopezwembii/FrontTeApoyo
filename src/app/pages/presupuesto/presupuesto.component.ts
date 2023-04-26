@@ -64,8 +64,7 @@ export class PresupuestoComponent {
         private toastr: ToastrService
     ) {}
 
-    ngOnInit() {     
-
+    ngOnInit() {
         this.presupuestoService.obtenerCategoria().subscribe({
             next: (resp: any) => {
                 this.categorias = resp;
@@ -159,9 +158,10 @@ export class PresupuestoComponent {
                 .eliminarPresupuesto(presupuesto.id)
                 .subscribe({
                     next: (resp: any) => {
-                        console.log(resp);
                         this.presupuestos.splice(index, 1);
-                        this.graficoDonaPresupuesto();
+                        this.obtenerDatoGrafico();
+                        this.obtenerPresupuestoMensual();
+                        this.obtenerPresupuesto();
                     }
                 });
         }
@@ -181,8 +181,6 @@ export class PresupuestoComponent {
                 year: this.selectionYear,
                 monto: parseInt(this.form.value.monto!)
             };
-
-            console.log(this.presupuestos[0]);
 
             this.presupuestoService
                 .agregarPresupuesto(this.presupuestos[0])
@@ -227,6 +225,7 @@ export class PresupuestoComponent {
         this.isEditing = false;
         this.isAdding = false;
         this.form.reset();
+        this.form.patchValue({ categoria: '-1' });
     }
 
     cancel() {
