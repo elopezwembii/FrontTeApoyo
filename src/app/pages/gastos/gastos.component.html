@@ -55,69 +55,252 @@
                         <!-- Tabla editable -->
                         <div class="text-center mb-3">
                             <h3 class="text-principal mb-0">
-                                {{ sumaTotalReal | currency: '$ ' }}
+                                $
+                                {{ sumaTotalReal | currency: 'CLP':'' }}
                             </h3>
                             <small>Total gastos {{ month }}</small>
                         </div>
-                        <form
-                            [formGroup]="form"
-                            (ngSubmit)="update()"
-                            class="table-responsive"
-                        >
-                            <table class="table text-nowrap">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Descripción</th>
-                                        <th>Fijar</th>
-                                        <th>Categoría</th>
-                                        <th>Sub-categoría</th>
-                                        <th>Fecha</th>
-                                        <th>Monto</th>
-                                        <th>Acciones</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr [hidden]="isAdding">
-                                        <td colspan="6" class="text-right">
-                                            <i
-                                                >Nuevo gasto / egreso
-                                                <i
-                                                    class="fas fa-chevron-right"
-                                                ></i>
-                                                <i
-                                                    class="fas fa-chevron-right"
-                                                ></i
-                                            ></i>
-                                        </td>
-                                        <td>
-                                            <button
-                                                type="button"
-                                                title="Add New"
-                                                class="btn btn-primary"
-                                                (click)="addUser()"
-                                                [disabled]="isAdding"
-                                            >
-                                                <i class="fas fa-plus"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <ng-container
-                                        *ngFor="
-                                            let gasto of gastos;
-                                            let i = index
-                                        "
-                                    >
-                                        <tr
-                                            *ngIf="gastoSelected !== gasto"
-                                            (click)="selectUser(gasto)"
-                                        >
-                                            <td>{{ gasto.desc }}</td>
-                                            <td>
-                                                <div
-                                                    class="icheck-primary d-inline"
+                        <form [formGroup]="form" (ngSubmit)="update()">
+                            <div class="responsive">
+                                <table class="table text-nowrap mx-2">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Descripción</th>
+                                            <th>
+                                                <span
+                                                    data-tooltip="Al fijar un gasto, este se repite mes a mes. Por lo tanto no necesitas replicarlo."
+                                                    data-flow="top"
                                                 >
+                                                    Fijar
+                                                    <i
+                                                        class="far fa-question-circle text-principal"
+                                                        style="font-size: small"
+                                                    ></i>
+                                                </span>
+                                            </th>
+                                            <th>Categoría</th>
+                                            <th>Sub-categoría</th>
+                                            <th>Monto</th>
+                                            <th>
+                                                <span
+                                                    data-tooltip="Indica la fecha que se realizó el gasto."
+                                                    data-flow="top"
+                                                    >Salida
+                                                    <i
+                                                        class="far fa-question-circle text-principal"
+                                                        style="font-size: small"
+                                                    ></i
+                                                ></span>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody *ngIf="gastos.length > 0">
+                                        <ng-container
+                                            *ngFor="
+                                                let gasto of gastos;
+                                                let i = index
+                                            "
+                                        >
+                                            <div class="separador"></div>
+                                            <ng-container class="row-table">
+                                                <tr
+                                                    class="row-table"
+                                                    *ngIf="
+                                                        gastoSelected !== gasto
+                                                    "
+                                                >
+                                                    <td>{{ gasto.desc }}</td>
+                                                    <td>
+                                                        <i
+                                                            *ngIf="
+                                                                gasto.fijar ===
+                                                                1
+                                                            "
+                                                            class="fas fa-check-circle text-principal"
+                                                        ></i>
+                                                    </td>
+
+                                                    <td>
+                                                        <span
+                                                            *ngIf="
+                                                                gasto.tipo_gasto ===
+                                                                    1 ||
+                                                                gasto.tipo_gasto ===
+                                                                    7
+                                                            "
+                                                            class="pill-gasto-tipo-1"
+                                                            ><b>{{
+                                                                objectTipo[
+                                                                    gasto.tipo_gasto -
+                                                                        1
+                                                                ]
+                                                            }}</b></span
+                                                        >
+                                                        <span
+                                                            *ngIf="
+                                                                gasto.tipo_gasto ===
+                                                                    2 ||
+                                                                gasto.tipo_gasto ===
+                                                                    8
+                                                            "
+                                                            class="pill-gasto-tipo-2"
+                                                            ><b>{{
+                                                                objectTipo[
+                                                                    gasto.tipo_gasto -
+                                                                        1
+                                                                ]
+                                                            }}</b></span
+                                                        >
+                                                        <span
+                                                            *ngIf="
+                                                                gasto.tipo_gasto ===
+                                                                    3 ||
+                                                                gasto.tipo_gasto ===
+                                                                    9
+                                                            "
+                                                            class="pill-gasto-tipo-3"
+                                                            ><b>{{
+                                                                objectTipo[
+                                                                    gasto.tipo_gasto -
+                                                                        1
+                                                                ]
+                                                            }}</b></span
+                                                        >
+                                                        <span
+                                                            *ngIf="
+                                                                gasto.tipo_gasto ===
+                                                                    4 ||
+                                                                gasto.tipo_gasto ===
+                                                                    10
+                                                            "
+                                                            class="pill-gasto-tipo-4"
+                                                            ><b>{{
+                                                                objectTipo[
+                                                                    gasto.tipo_gasto -
+                                                                        1
+                                                                ]
+                                                            }}</b></span
+                                                        >
+                                                        <span
+                                                            *ngIf="
+                                                                gasto.tipo_gasto ===
+                                                                    5 ||
+                                                                gasto.tipo_gasto ===
+                                                                    11
+                                                            "
+                                                            class="pill-gasto-tipo-5"
+                                                            ><b>{{
+                                                                objectTipo[
+                                                                    gasto.tipo_gasto -
+                                                                        1
+                                                                ]
+                                                            }}</b></span
+                                                        >
+                                                        <span
+                                                            *ngIf="
+                                                                gasto.tipo_gasto ===
+                                                                    6 ||
+                                                                gasto.tipo_gasto ===
+                                                                    12
+                                                            "
+                                                            class="pill-gasto-tipo-6"
+                                                            ><b>{{
+                                                                objectTipo[
+                                                                    gasto.tipo_gasto -
+                                                                        1
+                                                                ]
+                                                            }}</b></span
+                                                        >
+                                                        <span
+                                                            *ngIf="
+                                                                gasto.tipo_gasto ===
+                                                                    7 ||
+                                                                gasto.tipo_gasto ===
+                                                                    13
+                                                            "
+                                                            class="pill-gasto-tipo-7"
+                                                            ><b>{{
+                                                                objectTipo[
+                                                                    gasto.tipo_gasto -
+                                                                        1
+                                                                ]
+                                                            }}</b></span
+                                                        >
+                                                    </td>
+
+                                                    <td>
+                                                        <span
+                                                            class="badge badge-info"
+                                                            style="
+                                                                background-color: rgba(
+                                                                    255,
+                                                                    0,
+                                                                    0,
+                                                                    0.5
+                                                                );
+                                                            "
+                                                            >Comida Rápida</span
+                                                        >
+                                                    </td>
+
+                                                    <td>
+                                                        {{
+                                                            gasto.monto
+                                                                | currency: '$ '
+                                                        }}
+                                                    </td>
+
+                                                    <td
+                                                        *ngIf="
+                                                            ingreso.fijar === 0
+                                                        "
+                                                    >
+                                                        {{ ingreso.dia }}/{{
+                                                            ingreso.mes
+                                                        }}/{{ ingreso.anio }}
+                                                    </td>
+                                                    <td
+                                                        *ngIf="
+                                                            ingreso.fijar === 1
+                                                        "
+                                                    >
+                                                        -
+                                                    </td>
+
+                                                    <td>
+                                                        <button
+                                                            class="btn btn-danger btn-sm mx-1"
+                                                            title="delete"
+                                                            type="button"
+                                                            (click)="
+                                                                deleteUser(i)
+                                                            "
+                                                        >
+                                                            <i
+                                                                class="fas fa-trash"
+                                                            ></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </ng-container>
+
+                                            <tr
+                                                *ngIf="gastoSelected === gasto"
+                                                class="table-primary"
+                                            >
+                                                <td>
+                                                    <input
+                                                        autofocus
+                                                        type="text"
+                                                        class="form-control"
+                                                        formControlName="desc"
+                                                        [value]="gasto.desc"
+                                                    />
+                                                </td>
+                                                <td>
                                                     <input
                                                         type="checkbox"
+                                                        formControlName="recurrente"
                                                         [checked]="
                                                             gasto.recurrente
                                                         "
@@ -126,195 +309,131 @@
                                                         for="checkboxPrimary1"
                                                     >
                                                     </label>
-                                                </div>
-                                            </td>
+                                                </td>
 
-                                            <td>
-                                                <span
-                                                    class="badge badge-warning"
-                                                    >Alimentación</span
-                                                >
-                                            </td>
-
-                                            <td>
-                                                <span
-                                                    class="badge badge-info"
-                                                    style="
-                                                        background-color: rgba(
-                                                            255,
-                                                            0,
-                                                            0,
-                                                            0.5
-                                                        );
-                                                    "
-                                                    >Comida Rápida</span
-                                                >
-                                            </td>
-
-                                            <td
-                                                *ngIf="
-                                                    gasto.dia;
-                                                    else contenidoAlternativo
-                                                "
-                                            >
-                                                {{
-                                                    gasto.dia +
-                                                        ' / ' +
-                                                        gasto.mes +
-                                                        ' / ' +
-                                                        gasto.anio
-                                                }}
-                                            </td>
-                                            <ng-template #contenidoAlternativo>
-                                                <td>-</td>
-                                            </ng-template>
-
-                                            <td>
-                                                {{
-                                                    gasto.monto | currency: '$ '
-                                                }}
-                                            </td>
-
-                                            <td>
-                                                <button
-                                                    class="btn btn-danger btn-sm mx-1"
-                                                    title="delete"
-                                                    type="button"
-                                                    (click)="deleteUser(i)"
-                                                >
-                                                    <i class="fas fa-trash"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
-
-                                        <tr
-                                            *ngIf="gastoSelected === gasto"
-                                            class="table-primary"
-                                        >
-                                            <td>
-                                                <input
-                                                    autofocus
-                                                    type="text"
-                                                    class="form-control"
-                                                    formControlName="desc"
-                                                    [value]="gasto.desc"
-                                                />
-                                            </td>
-                                            <td>
-                                                <input
-                                                    type="checkbox"
-                                                    formControlName="recurrente"
-                                                    [checked]="gasto.recurrente"
-                                                />
-                                                <label for="checkboxPrimary1">
-                                                </label>
-                                            </td>
-
-                                            <td>
-                                                <select
-                                                    class="custom-select form-control-border"
-                                                    formControlName="tipo"
-                                                    [value]="gasto.tipo"
-                                                >
-                                                    <option
-                                                        selected
-                                                        disabled
-                                                        value=""
+                                                <td>
+                                                    <select
+                                                        class="custom-select form-control-border"
+                                                        formControlName="tipo"
+                                                        [value]="gasto.tipo"
                                                     >
-                                                        Tipo
-                                                    </option>
-                                                    <option
-                                                        *ngFor="
-                                                            let item of objectTipo;
-                                                            let i = index
+                                                        <option
+                                                            selected
+                                                            disabled
+                                                            value=""
+                                                        >
+                                                            Tipo
+                                                        </option>
+                                                        <option
+                                                            *ngFor="
+                                                                let item of objectTipo;
+                                                                let i = index
+                                                            "
+                                                            [value]="i"
+                                                        >
+                                                            {{ item }}
+                                                        </option>
+                                                    </select>
+                                                </td>
+
+                                                <td>
+                                                    <select
+                                                        class="custom-select form-control-border"
+                                                        formControlName="subtipo"
+                                                        [value]="gasto.subtipo"
+                                                    >
+                                                        <option
+                                                            selected
+                                                            disabled
+                                                            value=""
+                                                        >
+                                                            Subtipo
+                                                        </option>
+                                                        <option
+                                                            *ngFor="
+                                                                let item of opcionesSelect2[
+                                                                    form.get(
+                                                                        'tipo'
+                                                                    ).value
+                                                                ];
+                                                                let i = index
+                                                            "
+                                                            [value]="i"
+                                                        >
+                                                            {{ item }}
+                                                        </option>
+                                                    </select>
+                                                </td>
+
+                                                <td>
+                                                    <select
+                                                        class="custom-select form-control-border"
+                                                        formControlName="dia"
+                                                        [value]="gasto.dia"
+                                                        title="Dia"
+                                                    >
+                                                        <option
+                                                            disabled
+                                                            value=""
+                                                        >
+                                                            Día
+                                                        </option>
+                                                        <option
+                                                            *ngFor="
+                                                                let dia of dias
+                                                            "
+                                                            [value]="dia"
+                                                        >
+                                                            {{ dia }}
+                                                        </option>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <input
+                                                        autofocus
+                                                        type="text"
+                                                        class="form-control"
+                                                        formControlName="monto"
+                                                        [value]="gasto.monto"
+                                                        title="Descipción"
+                                                    />
+                                                </td>
+
+                                                <td>
+                                                    <button
+                                                        class="btn btn-primary btn-sm mx-1"
+                                                        title="update"
+                                                        type="submit"
+                                                        [disabled]="
+                                                            form.invalid
                                                         "
-                                                        [value]="i"
                                                     >
-                                                        {{ item }}
-                                                    </option>
-                                                </select>
-                                            </td>
+                                                        <i
+                                                            class="fas fa-check"
+                                                        ></i>
+                                                    </button>
 
-                                            <td>
-                                                <select
-                                                    class="custom-select form-control-border"
-                                                    formControlName="subtipo"
-                                                    [value]="gasto.subtipo"
-                                                >
-                                                    <option
-                                                        selected
-                                                        disabled
-                                                        value=""
+                                                    <button
+                                                        class="btn btn-danger btn-sm mx-1"
+                                                        title="cancel"
+                                                        (click)="cancel()"
+                                                        type="button"
                                                     >
-                                                        Subtipo
-                                                    </option>
-                                                    <option
-                                                        *ngFor="
-                                                            let item of opcionesSelect2[
-                                                                form.get('tipo')
-                                                                    .value
-                                                            ];
-                                                            let i = index
-                                                        "
-                                                        [value]="i"
-                                                    >
-                                                        {{ item }}
-                                                    </option>
-                                                </select>
-                                            </td>
-
-                                            <td>
-                                                <select
-                                                    class="custom-select form-control-border"
-                                                    formControlName="dia"
-                                                    [value]="gasto.dia"
-                                                    title="Dia"
-                                                >
-                                                    <option disabled value="">
-                                                        Día
-                                                    </option>
-                                                    <option
-                                                        *ngFor="let dia of dias"
-                                                        [value]="dia"
-                                                    >
-                                                        {{ dia }}
-                                                    </option>
-                                                </select>
-                                            </td>
-                                            <td>
-                                                <input
-                                                    autofocus
-                                                    type="text"
-                                                    class="form-control"
-                                                    formControlName="monto"
-                                                    [value]="gasto.monto"
-                                                    title="Descipción"
-                                                />
-                                            </td>
-
-                                            <td>
-                                                <button
-                                                    class="btn btn-primary btn-sm mx-1"
-                                                    title="update"
-                                                    type="submit"
-                                                    [disabled]="form.invalid"
-                                                >
-                                                    <i class="fas fa-check"></i>
-                                                </button>
-
-                                                <button
-                                                    class="btn btn-danger btn-sm mx-1"
-                                                    title="cancel"
-                                                    (click)="cancel()"
-                                                    type="button"
-                                                >
-                                                    <i class="fas fa-ban"></i>
-                                                </button>
-                                            </td>
+                                                        <i
+                                                            class="fas fa-ban"
+                                                        ></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </ng-container>
+                                    </tbody>
+                                    <tbody *ngIf="gastos.length === 0">
+                                        <tr class="text-center">
+                                            <td colspan="6">Sin datos</td>
                                         </tr>
-                                    </ng-container>
-                                </tbody>
-                            </table>
+                                    </tbody>
+                                </table>
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -371,12 +490,16 @@
                     </div>
                     <div class="card-body">
                         <p>
-                            Ingresar tus datos en el mes correcto ayudará a tener un mejor seguimiento de tus finanzas.
+                            Ingresar tus datos en el mes correcto ayudará a
+                            tener un mejor seguimiento de tus finanzas.
                         </p>
                     </div>
                     <div class="card-footer text-center">
                         <p>
-                            <b>Puedes leer con más detalle <a href="">aquí</a></b>
+                            <b
+                                >Puedes leer con más detalle
+                                <a href="">aquí</a></b
+                            >
                         </p>
                     </div>
                 </div>

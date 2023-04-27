@@ -13,7 +13,7 @@ export class GastosService {
             id: 1,
             desc: 'Gasto1',
             recurrente: false,
-            tipo: 2,
+            tipo: 1,
             subtipo: 1,
             dia: 2,
             mes: 4,

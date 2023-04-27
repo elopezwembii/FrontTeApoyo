@@ -1,5 +1,5 @@
 import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
+import {LOCALE_ID, NgModule} from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
 
 import {AppRoutingModule} from '@/app-routing.module';
@@ -34,14 +34,16 @@ import {ProfabricComponentsModule} from '@profabric/angular-components';
 import {defineCustomElements} from '@profabric/web-components/loader';
 import {SidebarSearchComponent} from './components/sidebar-search/sidebar-search.component';
 import {NgxLoadingModule, ngxLoadingAnimationTypes} from 'ngx-loading';
-import { GastosComponent } from './pages/gastos/gastos.component';
-import { NgxEchartsModule } from 'ngx-echarts';
-import { IngresosComponent } from './pages/ingresos/ingresos.component';
-import { GraficoComponent } from './components/grafico/grafico.component';
-import { GraficoGastoComponent } from './components/grafico-gasto/grafico-gasto.component';
+import {GastosComponent} from './pages/gastos/gastos.component';
+import {NgxEchartsModule} from 'ngx-echarts';
+import {IngresosComponent} from './pages/ingresos/ingresos.component';
+import {GraficoComponent} from './components/grafico/grafico.component';
+import {GraficoGastoComponent} from './components/grafico-gasto/grafico-gasto.component';
+
+import localeEs from '@angular/common/locales/es'; // Importa la configuración regional para español
 
 defineCustomElements();
-registerLocaleData(localeEn, 'en-EN');
+registerLocaleData(localeEs);
 
 @NgModule({
     declarations: [
@@ -72,11 +74,11 @@ registerLocaleData(localeEn, 'en-EN');
     ],
     imports: [
         NgxLoadingModule.forRoot({
-          animationType: ngxLoadingAnimationTypes.threeBounce,
-          backdropBackgroundColour: 'rgba(255, 255, 255, 0.5)',
-          primaryColour: '#2c939e',
-          secondaryColour: '#2c939e',
-          tertiaryColour: '#2c939e'
+            animationType: ngxLoadingAnimationTypes.threeBounce,
+            backdropBackgroundColour: 'rgba(255, 255, 255, 0.5)',
+            primaryColour: '#2c939e',
+            secondaryColour: '#2c939e',
+            tertiaryColour: '#2c939e'
         }),
         BrowserModule,
         StoreModule.forRoot({ui: uiReducer}),
@@ -91,10 +93,10 @@ registerLocaleData(localeEn, 'en-EN');
         }),
         ProfabricComponentsModule,
         NgxEchartsModule.forRoot({
-          echarts: () => import('echarts')
-        }),
+            echarts: () => import('echarts')
+        })
     ],
-    providers: [],
+    providers: [{provide: LOCALE_ID, useValue: 'ES_cl'}],
     bootstrap: [AppComponent]
 })
 export class AppModule {}

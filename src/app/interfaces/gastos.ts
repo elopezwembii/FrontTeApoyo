@@ -1,9 +1,9 @@
 export interface Gasto {
   id: number;
   desc: string;
-  recurrente: boolean;
-  tipo: number;
-  subtipo: number;
+  fijar: boolean;
+  tipo_gasto: number;
+  subtipo_gasto: number;
   dia: number;
   mes: number;
   anio: number;

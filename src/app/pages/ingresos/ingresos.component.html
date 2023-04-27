@@ -55,427 +55,466 @@
                         <!-- Tabla editable -->
                         <div class="text-center mb-3">
                             <h3 class="text-principal mb-0">
-                                {{ sumaTotalReal | currency: '$ ' }}
+                                $
+                                {{ sumaTotalReal | currency: 'CLP':'' }}
                             </h3>
                             <small>Total ingresos {{ month }}</small>
                         </div>
-                        <form
-                            class="table-responsive"
-                            [formGroup]="form"
-                            (ngSubmit)="update()"
-                        >
-                            <table class="table text-nowrap">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Descripción</th>
-                                        <th>Fijar</th>
-                                        <th>Categoría</th>
-                                        <th>Fecha</th>
-                                        <th>M. Planificado</th>
-                                        <th>M. Real</th>
-                                        <th>Acciones</th>
-                                    </tr>
-                                </thead>
-
-                                <tbody>
-                                    <tr [hidden]="isAdding">
-                                        <td colspan="6" class="text-right">
-                                            <i
-                                                >Nuevo ingreso
-                                                <i
-                                                    class="fas fa-chevron-right"
-                                                ></i>
-                                                <i
-                                                    class="fas fa-chevron-right"
-                                                ></i
-                                            ></i>
-                                        </td>
-                                        <td>
-                                            <button
-                                                type="button"
-                                                title="Add New"
-                                                class="btn btn-primary"
-                                                (click)="addUser()"
-                                                [disabled]="isAdding"
-                                            >
-                                                <i class="fas fa-plus"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <ng-container
-                                        *ngFor="
-                                            let ingreso of ingresos;
-                                            let i = index
-                                        "
-                                    >
-                                        <tr
-                                            *ngIf="ingresoSelected !== ingreso"
-                                            (click)="selectUser(ingreso)"
-                                        >
-                                            <td>{{ ingreso.desc }}</td>
-                                            <td>
-                                                <div
-                                                    class="icheck-primary d-inline"
-                                                >
-                                                    <input
-                                                        type="checkbox"
-                                                        [checked]="
-                                                            ingreso.fijar
-                                                        "
-                                                    />
-                                                    <label
-                                                        for="checkboxPrimary1"
-                                                    >
-                                                    </label>
-                                                </div>
-                                            </td>
-
-                                            <td>
+                        <form [formGroup]="form" (ngSubmit)="update()">
+                            <div class="responsive">
+                                <table class="table text-nowrap mx-2">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Descripción</th>
+                                            <th>
                                                 <span
-                                                    class="badge badge-success"
-                                                    >{{
-                                                        objectTipo[
-                                                            ingreso.tipo - 1
-                                                        ]
-                                                    }}</span
+                                                    data-tooltip="Al fijar un ingreso, este se repite mes a mes. Por lo tanto no necesitas replicarlo."
+                                                    data-flow="top"
                                                 >
-                                            </td>
-
-                                            <td>
-                                                {{ ingreso.dia }}/{{
-                                                    ingreso.mes
-                                                }}/{{ ingreso.anio }}
-                                            </td>
-
-                                            <td>
-                                                {{
-                                                    ingreso.montoPlanificado
-                                                        | currency: '$ '
-                                                }}
-                                            </td>
-
-                                            <td>
-                                                {{
-                                                    ingreso.montoReal
-                                                        | currency: '$ '
-                                                }}
-                                            </td>
-
-                                            <td>
-                                                <button
-                                                    class="btn btn-danger btn-sm mx-1"
-                                                    title="delete"
-                                                    type="button"
-                                                    (click)="
-                                                        deleteUser(ingreso, i)
-                                                    "
-                                                >
-                                                    <i class="fas fa-trash"></i>
-                                                </button>
-                                            </td>
+                                                    Fijar
+                                                    <i
+                                                        class="far fa-question-circle text-principal"
+                                                        style="font-size: small"
+                                                    ></i>
+                                                </span>
+                                            </th>
+                                            <th>Categoría</th>
+                                            <th>Monto</th>
+                                            <th>
+                                                <span
+                                                    data-tooltip="Indica la fecha que recibes el ingreso."
+                                                    data-flow="top"
+                                                    >Recepción
+                                                    <i
+                                                        class="far fa-question-circle text-principal"
+                                                        style="font-size: small"
+                                                    ></i
+                                                ></span>
+                                            </th>
                                         </tr>
+                                    </thead>
 
-                                        <tr
-                                            *ngIf="ingresoSelected === ingreso"
-                                            class="table-primary"
+                                    <tbody *ngIf="ingresos.length > 0">
+                                        <ng-container
+                                            *ngFor="
+                                                let ingreso of ingresos;
+                                                let i = index
+                                            "
                                         >
-                                            <td>
-                                                <input
-                                                    autofocus
-                                                    type="text"
-                                                    class="form-control"
-                                                    formControlName="desc"
-                                                    [value]="ingreso.desc"
-                                                />
-                                            </td>
-                                            <td>
-                                                <input
-                                                    #fijarChk
-                                                    type="checkbox"
-                                                    formControlName="fijar"
-                                                    [checked]="ingreso.fijar"
-                                                />
-                                                <label for="checkboxPrimary1">
-                                                </label>
-                                            </td>
-
-                                            <td>
-                                                <select
-                                                    class="custom-select form-control-border"
-                                                    formControlName="tipo"
-                                                    [value]="ingreso.tipo"
-                                                >
-                                                    <option
-                                                        selected
-                                                        disabled
-                                                        value=""
-                                                    >
-                                                        Tipo
-                                                    </option>
-                                                    <option [value]="1">
-                                                        Sueldo líquido
-                                                    </option>
-                                                    <option [value]="2">
-                                                        Boleta de honorarios
-                                                    </option>
-                                                    <option [value]="3">
-                                                        Arriendos
-                                                    </option>
-                                                    <option [value]="4">
-                                                        Declaración de renta
-                                                        (Anual)
-                                                    </option>
-                                                    <option [value]="5">
-                                                        Pensión de alimentos
-                                                        recibida
-                                                    </option>
-                                                    <option [value]="6">
-                                                        Reembolsos o ayudas
-                                                        recibidas
-                                                    </option>
-                                                    <option [value]="7">
-                                                        Otros ingresos formales
-                                                        o informales
-                                                    </option>
-                                                </select>
-                                            </td>
-
-                                            <td>
-                                                <select
-                                                    class="custom-select form-control-border"
-                                                    formControlName="dia"
-                                                    [value]="ingreso.dia"
-                                                    title="Dia"
-                                                >
-                                                    <option
-                                                        selected
-                                                        disabled
-                                                        value=""
-                                                    >
-                                                        Día
-                                                    </option>
-                                                    <option
-                                                        *ngFor="let dia of dias"
-                                                        [value]="dia"
-                                                    >
-                                                        {{ dia }}
-                                                    </option>
-                                                </select>
-                                            </td>
-
-                                            <td>
-                                                <input
-                                                    type="text"
-                                                    class="form-control"
-                                                    formControlName="montoPlanificado"
-                                                    [value]="
-                                                        ingreso.montoPlanificado
+                                            <div class="separador"></div>
+                                            <ng-container class="row-table">
+                                                <tr
+                                                    class="row-table"
+                                                    *ngIf="
+                                                        ingresoSelected !==
+                                                        ingreso
                                                     "
-                                                    title="Monto planificado"
-                                                    (input)="
-                                                        onInput(
-                                                            $event.target.value,
-                                                            fijarChk.checked
-                                                        )
+                                                >
+                                                    <td>{{ ingreso.desc }}</td>
+                                                    <td>
+                                                        <i
+                                                            *ngIf="
+                                                                ingreso.fijar ===
+                                                                1
+                                                            "
+                                                            class="fas fa-check-circle text-principal"
+                                                        ></i>
+                                                    </td>
+
+                                                    <td>
+                                                        <span
+                                                            *ngIf="
+                                                                ingreso.tipo_ingreso ===
+                                                                1
+                                                            "
+                                                            class="pill-ingreso-tipo-1"
+                                                            ><b>{{
+                                                                objectTipo[
+                                                                    ingreso.tipo_ingreso -
+                                                                        1
+                                                                ]
+                                                            }}</b></span
+                                                        >
+                                                        <span
+                                                            *ngIf="
+                                                                ingreso.tipo_ingreso ===
+                                                                2
+                                                            "
+                                                            class="pill-ingreso-tipo-2"
+                                                            ><b>{{
+                                                                objectTipo[
+                                                                    ingreso.tipo_ingreso -
+                                                                        1
+                                                                ]
+                                                            }}</b></span
+                                                        >
+                                                        <span
+                                                            *ngIf="
+                                                                ingreso.tipo_ingreso ===
+                                                                3
+                                                            "
+                                                            class="pill-ingreso-tipo-3"
+                                                            ><b>{{
+                                                                objectTipo[
+                                                                    ingreso.tipo_ingreso -
+                                                                        1
+                                                                ]
+                                                            }}</b></span
+                                                        >
+                                                        <span
+                                                            *ngIf="
+                                                                ingreso.tipo_ingreso ===
+                                                                4
+                                                            "
+                                                            class="pill-ingreso-tipo-4"
+                                                            ><b>{{
+                                                                objectTipo[
+                                                                    ingreso.tipo_ingreso -
+                                                                        1
+                                                                ]
+                                                            }}</b></span
+                                                        >
+                                                        <span
+                                                            *ngIf="
+                                                                ingreso.tipo_ingreso ===
+                                                                5
+                                                            "
+                                                            class="pill-ingreso-tipo-5"
+                                                            ><b>{{
+                                                                objectTipo[
+                                                                    ingreso.tipo_ingreso -
+                                                                        1
+                                                                ]
+                                                            }}</b></span
+                                                        >
+                                                        <span
+                                                            *ngIf="
+                                                                ingreso.tipo_ingreso ===
+                                                                6
+                                                            "
+                                                            class="pill-ingreso-tipo-6"
+                                                            ><b>{{
+                                                                objectTipo[
+                                                                    ingreso.tipo_ingreso -
+                                                                        1
+                                                                ]
+                                                            }}</b></span
+                                                        >
+                                                        <span
+                                                            *ngIf="
+                                                                ingreso.tipo_ingreso ===
+                                                                7
+                                                            "
+                                                            class="pill-ingreso-tipo-7"
+                                                            ><b>{{
+                                                                objectTipo[
+                                                                    ingreso.tipo_ingreso -
+                                                                        1
+                                                                ]
+                                                            }}</b></span
+                                                        >
+                                                    </td>
+
+                                                    <td class="text-right">
+                                                        $
+                                                        {{
+                                                            ingreso.monto_real
+                                                                | currency
+                                                                    : 'CLP'
+                                                                    : ''
+                                                        }}
+                                                    </td>
+
+                                                    <td
+                                                        *ngIf="
+                                                            ingreso.fijar === 0
+                                                        "
+                                                    >
+                                                        {{ ingreso.dia }}/{{
+                                                            ingreso.mes
+                                                        }}/{{ ingreso.anio }}
+                                                    </td>
+                                                    <td
+                                                        *ngIf="
+                                                            ingreso.fijar === 1
+                                                        "
+                                                    >
+                                                        -
+                                                    </td>
+
+                                                    <td>
+                                                        <i
+                                                            class="fas fa-pen button-table"
+                                                            (click)="
+                                                                selectUser(
+                                                                    ingreso
+                                                                )
+                                                            "
+                                                        ></i>
+                                                        <i
+                                                            class="fas fa-trash button-table mx-2"
+                                                            (click)="
+                                                                deleteUser(
+                                                                    ingreso
+                                                                )
+                                                            "
+                                                        ></i>
+                                                    </td>
+                                                </tr>
+                                            </ng-container>
+
+                                            <tr
+                                                *ngIf="
+                                                    ingresoSelected === ingreso
+                                                "
+                                                class="row-table-edit"
+                                            >
+                                                <td>
+                                                    <input
+                                                        autofocus
+                                                        type="text"
+                                                        class="form-control form-control-border"
+                                                        formControlName="desc"
+                                                        [value]="ingreso.desc"
+                                                    />
+                                                </td>
+                                                <td>
+                                                    <span
+                                                        data-tooltip="Replica este ingreso mes a mes si está marcado."
+                                                        data-flow="top"
+                                                    >
+                                                        <input
+                                                            #fijarChk
+                                                            class="mycheck"
+                                                            type="checkbox"
+                                                            formControlName="fijar"
+                                                            [checked]="[
+                                                                ingreso.fijar ===
+                                                                    1
+                                                            ]"
+                                                        />
+                                                    </span>
+                                                </td>
+
+                                                <td>
+                                                    <select
+                                                        class="custom-select form-control-border"
+                                                        formControlName="tipo_ingreso"
+                                                    >
+                                                        <option
+                                                            selected
+                                                            disabled
+                                                            [value]="0"
+                                                        >
+                                                            Tipo
+                                                        </option>
+                                                        <option [value]="1">
+                                                            Sueldo líquido
+                                                        </option>
+                                                        <option [value]="2">
+                                                            Boleta de honorarios
+                                                        </option>
+                                                        <option [value]="3">
+                                                            Arriendos
+                                                        </option>
+                                                        <option [value]="4">
+                                                            Declaración de renta
+                                                            (Anual)
+                                                        </option>
+                                                        <option [value]="5">
+                                                            Pensión de alimentos
+                                                            recibida
+                                                        </option>
+                                                        <option [value]="6">
+                                                            Reembolsos o ayudas
+                                                            recibidas
+                                                        </option>
+                                                        <option [value]="7">
+                                                            Otros ingresos
+                                                            formales o
+                                                            informales
+                                                        </option>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <input
+                                                        type="number"
+                                                        placeholder="$ "
+                                                        inputmode="decimal"
+                                                        class="form-control form-control-border text-right"
+                                                        formControlName="montoReal"
+                                                        [value]="
+                                                            ingreso.montoReal
+                                                        "
+                                                        title="Monto real"
+                                                    />
+                                                </td>
+
+                                                <td>
+                                                    <span
+                                                        data-tooltip="Ingresa el día que recibiste o recibirás el ingreso"
+                                                        data-flow="left"
+                                                    >
+                                                        <select
+                                                            class="custom-select form-control-border"
+                                                            formControlName="dia"
+                                                        >
+                                                            <option
+                                                                selected
+                                                                disabled
+                                                                [value]="0"
+                                                            >
+                                                                Día
+                                                            </option>
+                                                            <option
+                                                                *ngFor="
+                                                                    let dia of dias
+                                                                "
+                                                                [value]="dia"
+                                                            >
+                                                                {{ dia }}
+                                                            </option>
+                                                        </select>
+                                                    </span>
+                                                </td>
+
+                                                <td>
+                                                    <span
+                                                        *ngIf="form.invalid"
+                                                        data-tooltip="Necesitas completar todos los campos"
+                                                        data-flow="left"
+                                                        ><button
+                                                            class="boton-acept"
+                                                            type="submit"
+                                                            [disabled]="
+                                                                form.invalid
+                                                            "
+                                                        >
+                                                            <i
+                                                                class="fas fa-check"
+                                                            ></i></button
+                                                    ></span>
+
+                                                    <span *ngIf="!form.invalid"
+                                                        ><button
+                                                            class="boton-acept"
+                                                            type="submit"
+                                                            [disabled]="
+                                                                form.invalid
+                                                            "
+                                                        >
+                                                            <i
+                                                                class="fas fa-check"
+                                                            ></i></button
+                                                    ></span>
+
+                                                    <button
+                                                        class="boton-acept mx-2"
+                                                        title="cancel"
+                                                        (click)="cancel()"
+                                                        type="button"
+                                                    >
+                                                        <i
+                                                            class="fas fa-ban"
+                                                        ></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            <tr
+                                                *ngIf="
+                                                    ingresoSelected === ingreso
+                                                "
+                                            >
+                                                <td
+                                                    style="
+                                                        font-size: small;
+                                                        max-width: 3rem;
+                                                        overflow: scroll;
                                                     "
-                                                />
-                                            </td>
-
-                                            <td>
-                                                <input
-                                                    type="text"
-                                                    class="form-control"
-                                                    formControlName="montoReal"
-                                                    [value]="ingreso.montoReal"
-                                                    title="Monto real"
-                                                />
-                                            </td>
-
-                                            <td>
-                                                <button
-                                                    class="btn btn-primary btn-sm mx-1"
-                                                    title="update"
-                                                    type="submit"
-                                                    [disabled]="form.invalid"
+                                                    colspan="7"
+                                                    *ngIf="
+                                                        arrayRec[getTipo - 1]
+                                                            .length > 1
+                                                    "
                                                 >
-                                                    <i class="fas fa-check"></i>
-                                                </button>
-
-                                                <button
-                                                    class="btn btn-danger btn-sm mx-1"
-                                                    title="cancel"
-                                                    (click)="cancel()"
-                                                    type="button"
+                                                    <em
+                                                        ><b>
+                                                            {{
+                                                                arrayRec[
+                                                                    getTipo - 1
+                                                                ][0]
+                                                            }}</b
+                                                        ></em
+                                                    >
+                                                    <br />
+                                                    <em
+                                                        ><b>{{
+                                                            arrayRec[
+                                                                getTipo - 1
+                                                            ][1]
+                                                        }}</b></em
+                                                    >
+                                                    <br />
+                                                    <em
+                                                        ><b>
+                                                            {{
+                                                                arrayRec[
+                                                                    getTipo - 1
+                                                                ][2]
+                                                            }}
+                                                        </b>
+                                                    </em>
+                                                    <br />
+                                                    <em><b> </b> </em>
+                                                </td>
+                                                <td
+                                                    colspan="7"
+                                                    style="font-size: small"
+                                                    *ngIf="arrayRec[getTipo - 1].length === 1"
                                                 >
-                                                    <i class="fas fa-ban"></i>
-                                                </button>
+                                                    <em
+                                                        ><b
+                                                            >{{
+                                                                arrayRec[
+                                                                    getTipo - 1
+                                                                ][0]
+                                                            }}
+                                                        </b></em
+                                                    >
+                                                </td>
+                                            </tr>
+                                        </ng-container>
+
+                                        <tr>
+                                            <td
+                                                class="text-right pt-3"
+                                                colspan="4"
+                                            >
+                                                Total:
+                                                <b>
+                                                    $
+                                                    {{
+                                                        sumaTotalReal
+                                                            | currency: 'CLP':''
+                                                    }}</b
+                                                >
                                             </td>
                                         </tr>
-                                        <tr *ngIf="ingresoSelected === ingreso">
-                                            <td
-                                                style="font-size: small"
-                                                colspan="7"
-                                                *ngIf="
-                                                    form.get('tipo').value ===
-                                                    '1'
-                                                "
-                                            >
-                                                <em
-                                                    ><b>
-                                                        Hay dos formas que son
-                                                        las más utilizadas, para
-                                                        calcular el sueldo
-                                                        líquido.</b
-                                                    ></em
-                                                >
-                                                <br />
-                                                <em
-                                                    ><b
-                                                        >1. Calcula entre el 75%
-                                                        u 80% sobre el “total de
-                                                        haberes” de tu
-                                                        liquidación.</b
-                                                    ></em
-                                                >
-                                                <br />
-                                                <em
-                                                    ><b>
-                                                        2. Al total de haberes,
-                                                        resta los descuentos
-                                                        legales: AFP, Isapre
-                                                        (sólo el 7% legal)
-                                                    </b>
-                                                </em>
-                                                <br />
-                                                <em
-                                                    ><b>
-                                                        y el impuesto a la renta
-                                                        si es que por tramo te
-                                                        corresponde el
-                                                        descuento.
-                                                    </b>
-                                                </em>
-                                            </td>
-                                            <td
-                                                colspan="7"
-                                                style="font-size: small"
-                                                *ngIf="
-                                                    form.get('tipo').value ===
-                                                    '2'
-                                                "
-                                            >
-                                                <em
-                                                    ><b>
-                                                        Se promedian al menos 6
-                                                        meses de boletas,
-                                                        descontando la retención
-                                                        correspondiente.</b
-                                                    ></em
-                                                >
-                                            </td>
-                                            <td
-                                                colspan="7"
-                                                style="font-size: small"
-                                                *ngIf="
-                                                    form.get('tipo').value ===
-                                                    '3'
-                                                "
-                                            >
-                                                <em
-                                                    ><b>
-                                                        Normalmente se considera
-                                                        el 100% del canon de
-                                                        arriendo.</b
-                                                    ></em
-                                                >
-                                            </td>
-                                            <td
-                                                colspan="7"
-                                                style="font-size: small"
-                                                *ngIf="
-                                                    form.get('tipo').value ===
-                                                    '4'
-                                                "
-                                            >
-                                                <em
-                                                    ><b>
-                                                        Considera el valor de la
-                                                        línea 170 (Base
-                                                        Imponible Anual) y se le
-                                                        resta el impuesto a
-                                                        pagar, línea 93 (Total a
-                                                        pagar).</b
-                                                    ></em
-                                                >
-                                                <br />
-                                                <em
-                                                    ><b>
-                                                        El resultado se divide
-                                                        por los 12, para hacer
-                                                        el promedio mensual de
-                                                        ingreso.</b
-                                                    ></em
-                                                >
-                                                <br />
-                                                <em
-                                                    ><b>
-                                                        Si consideras la
-                                                        Declaración, no puedes
-                                                        ingresar sueldo, ni
-                                                        boletas, al estar ya
-                                                        incluidos en ésta.</b
-                                                    ></em
-                                                >
-                                            </td>
-                                            <td
-                                                colspan="7"
-                                                style="font-size: small"
-                                                *ngIf="
-                                                    form.get('tipo').value ===
-                                                    '5'
-                                                "
-                                            >
-                                                <em
-                                                    ><b>
-                                                        Considera el total del
-                                                        valor.</b
-                                                    ></em
-                                                >
-                                            </td>
-                                            <td
-                                                colspan="7"
-                                                style="font-size: small"
-                                                *ngIf="
-                                                    form.get('tipo').value ===
-                                                    '6'
-                                                "
-                                            >
-                                                <em
-                                                    ><b>
-                                                        Considera el total del
-                                                        valor.</b
-                                                    ></em
-                                                >
-                                            </td>
-                                            <td
-                                                colspan="7"
-                                                style="font-size: small"
-                                                *ngIf="
-                                                    form.get('tipo').value ===
-                                                    '7'
-                                                "
-                                            >
-                                                <em
-                                                    ><b>
-                                                        Considera el total del
-                                                        valor.</b
-                                                    ></em
-                                                >
-                                            </td>
-                                        </tr>
-                                    </ng-container>
-                                </tbody>
-                            </table>
+                                    </tbody>
+                                    <tbody *ngIf="ingresos.length === 0">
+                                      <tr class="text-center">
+                                        <td colspan="5">Sin datos</td>
+                                      </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <button
+                                [disabled]="isAdding"
+                                class="boton-add"
+                                (click)="addUser()"
+                            >
+                                <b>+ Agregar ingreso al mes actual</b>
+                            </button>
                         </form>
                     </div>
                 </div>
@@ -483,7 +522,8 @@
             <div class="col-12 col-sm-4">
                 <div class="card">
                     <app-grafico
-                        [fecha]="getFecha"
+                        [mes]="getMes"
+                        [anio]="getAnio"
                         [change]="getChange"
                     ></app-grafico>
                 </div>
