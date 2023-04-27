@@ -470,7 +470,10 @@
                                                 <td
                                                     colspan="7"
                                                     style="font-size: small"
-                                                    *ngIf="arrayRec[getTipo - 1].length === 1"
+                                                    *ngIf="
+                                                        arrayRec[getTipo - 1]
+                                                            .length === 1
+                                                    "
                                                 >
                                                     <em
                                                         ><b
@@ -502,9 +505,9 @@
                                         </tr>
                                     </tbody>
                                     <tbody *ngIf="ingresos.length === 0">
-                                      <tr class="text-center">
-                                        <td colspan="5">Sin datos</td>
-                                      </tr>
+                                        <tr class="text-center">
+                                            <td colspan="5">Sin datos</td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>

@@ -14,6 +14,12 @@ export class IngresosComponent implements OnInit {
     dias: number[];
     change: boolean = false;
     loading: boolean = false;
+    ingresos: Ingreso[] = [];
+    sumaTotalReal: number = 0;
+
+    ingresoSelected: Ingreso = {} as Ingreso;
+    isEditing: boolean = false;
+    isAdding: boolean = false;
 
     objectTipo = [
         'Sueldo líquido',
@@ -32,12 +38,7 @@ export class IngresosComponent implements OnInit {
         this.dias = Array.from({length: diasEnMes}, (_, i) => i + 1);
     }
 
-    ingresos: Ingreso[] = [];
-    sumaTotalReal: number = 0;
 
-    ingresoSelected: Ingreso = {} as Ingreso;
-    isEditing: boolean = false;
-    isAdding: boolean = false;
 
     form = this.fb.group({
         id: [''],
@@ -300,7 +301,6 @@ export class IngresosComponent implements OnInit {
                 monto_real: parseInt(this.form.value.montoReal!),
                 montoPlanificado: parseInt(this.form.value.montoPlanificado!)
             };
-            console.log(this.ingresos[index]);
             try {
                 await this.ingresoService.actualizarIngreso(
                     this.ingresos[index]

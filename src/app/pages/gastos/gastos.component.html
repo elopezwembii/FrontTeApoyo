@@ -126,7 +126,7 @@
                                                                 gasto.tipo_gasto ===
                                                                     1 ||
                                                                 gasto.tipo_gasto ===
-                                                                    7
+                                                                    8
                                                             "
                                                             class="pill-gasto-tipo-1"
                                                             ><b>{{
@@ -141,7 +141,7 @@
                                                                 gasto.tipo_gasto ===
                                                                     2 ||
                                                                 gasto.tipo_gasto ===
-                                                                    8
+                                                                    9
                                                             "
                                                             class="pill-gasto-tipo-2"
                                                             ><b>{{
@@ -156,7 +156,7 @@
                                                                 gasto.tipo_gasto ===
                                                                     3 ||
                                                                 gasto.tipo_gasto ===
-                                                                    9
+                                                                    10
                                                             "
                                                             class="pill-gasto-tipo-3"
                                                             ><b>{{
@@ -171,7 +171,7 @@
                                                                 gasto.tipo_gasto ===
                                                                     4 ||
                                                                 gasto.tipo_gasto ===
-                                                                    10
+                                                                    11
                                                             "
                                                             class="pill-gasto-tipo-4"
                                                             ><b>{{
@@ -186,7 +186,7 @@
                                                                 gasto.tipo_gasto ===
                                                                     5 ||
                                                                 gasto.tipo_gasto ===
-                                                                    11
+                                                                    12
                                                             "
                                                             class="pill-gasto-tipo-5"
                                                             ><b>{{
@@ -201,7 +201,7 @@
                                                                 gasto.tipo_gasto ===
                                                                     6 ||
                                                                 gasto.tipo_gasto ===
-                                                                    12
+                                                                    13
                                                             "
                                                             class="pill-gasto-tipo-6"
                                                             ><b>{{
@@ -216,7 +216,7 @@
                                                                 gasto.tipo_gasto ===
                                                                     7 ||
                                                                 gasto.tipo_gasto ===
-                                                                    13
+                                                                    14
                                                             "
                                                             class="pill-gasto-tipo-7"
                                                             ><b>{{
@@ -229,109 +229,145 @@
                                                     </td>
 
                                                     <td>
-                                                        <span
-                                                            class="badge badge-info"
-                                                            style="
-                                                                background-color: rgba(
-                                                                    255,
-                                                                    0,
-                                                                    0,
-                                                                    0.5
-                                                                );
-                                                            "
-                                                            >Comida Rápida</span
-                                                        >
+                                                        <span class="badge">{{
+                                                            loading
+                                                                ? null
+                                                                : gasto.get_sub_tipo.nombre
+                                                        }}</span>
                                                     </td>
 
-                                                    <td>
+                                                    <td class="text-right">
+                                                        $
                                                         {{
                                                             gasto.monto
-                                                                | currency: '$ '
+                                                                | currency
+                                                                    : 'CLP'
+                                                                    : ''
                                                         }}
                                                     </td>
 
                                                     <td
                                                         *ngIf="
-                                                            ingreso.fijar === 0
+                                                            gasto.fijar === 0
                                                         "
                                                     >
-                                                        {{ ingreso.dia }}/{{
-                                                            ingreso.mes
-                                                        }}/{{ ingreso.anio }}
+                                                        {{ gasto.dia }}/{{
+                                                            gasto.mes
+                                                        }}/{{ gasto.anio }}
                                                     </td>
                                                     <td
                                                         *ngIf="
-                                                            ingreso.fijar === 1
+                                                            gasto.fijar === 1
                                                         "
                                                     >
                                                         -
                                                     </td>
 
                                                     <td>
-                                                        <button
-                                                            class="btn btn-danger btn-sm mx-1"
-                                                            title="delete"
-                                                            type="button"
+                                                        <i
+                                                            class="fas fa-pen button-table"
                                                             (click)="
-                                                                deleteUser(i)
+                                                                selectUser(
+                                                                    gasto
+                                                                )
                                                             "
-                                                        >
-                                                            <i
-                                                                class="fas fa-trash"
-                                                            ></i>
-                                                        </button>
+                                                        ></i>
+                                                        <i
+                                                            class="fas fa-trash button-table mx-2"
+                                                            (click)="
+                                                                deleteUser(
+                                                                    gasto
+                                                                )
+                                                            "
+                                                        ></i>
                                                     </td>
                                                 </tr>
                                             </ng-container>
 
                                             <tr
                                                 *ngIf="gastoSelected === gasto"
-                                                class="table-primary"
+                                                class="row-table-edit"
                                             >
                                                 <td>
                                                     <input
                                                         autofocus
                                                         type="text"
-                                                        class="form-control"
+                                                        class="form-control form-control-border"
                                                         formControlName="desc"
                                                         [value]="gasto.desc"
                                                     />
                                                 </td>
                                                 <td>
-                                                    <input
-                                                        type="checkbox"
-                                                        formControlName="recurrente"
-                                                        [checked]="
-                                                            gasto.recurrente
-                                                        "
-                                                    />
-                                                    <label
-                                                        for="checkboxPrimary1"
+                                                    <span
+                                                        data-tooltip="Replica este gasto mes a mes si está marcado."
+                                                        data-flow="top"
                                                     >
-                                                    </label>
+                                                        <input
+                                                            #fijarChk
+                                                            class="mycheck"
+                                                            type="checkbox"
+                                                            formControlName="fijar"
+                                                            [checked]="[
+                                                                gasto.fijar ===
+                                                                    1
+                                                            ]"
+                                                        />
+                                                    </span>
                                                 </td>
 
                                                 <td>
                                                     <select
                                                         class="custom-select form-control-border"
-                                                        formControlName="tipo"
-                                                        [value]="gasto.tipo"
+                                                        formControlName="tipo_gasto"
                                                     >
                                                         <option
                                                             selected
                                                             disabled
-                                                            value=""
+                                                            [value]="0"
                                                         >
                                                             Tipo
                                                         </option>
-                                                        <option
-                                                            *ngFor="
-                                                                let item of objectTipo;
-                                                                let i = index
-                                                            "
-                                                            [value]="i"
-                                                        >
-                                                            {{ item }}
+                                                        <option [value]="1">
+                                                            Hogar
+                                                        </option>
+                                                        <option [value]="2">
+                                                            Servicios básicos
+                                                        </option>
+                                                        <option [value]="3">
+                                                            Alimentos y comida
+                                                        </option>
+                                                        <option [value]="4">
+                                                            Entretenimiento
+                                                        </option>
+                                                        <option [value]="5">
+                                                            Salud y Belleza
+                                                        </option>
+                                                        <option [value]="6">
+                                                            Auto y Transporte
+                                                        </option>
+                                                        <option [value]="7">
+                                                            Educación y trabajo
+                                                        </option>
+                                                        <option [value]="8">
+                                                            Regalos y ayudas
+                                                        </option>
+                                                        <option [value]="9">
+                                                            Viajes
+                                                        </option>
+                                                        <option [value]="10">
+                                                            Créditos
+                                                        </option>
+                                                        <option [value]="11">
+                                                            Ropa y Calzado
+                                                        </option>
+                                                        <option [value]="12">
+                                                            Personal
+                                                        </option>
+                                                        <option [value]="13">
+                                                            Compras Online
+                                                        </option>
+                                                        <option [value]="14">
+                                                            Ahorro e Inversiones
                                                         </option>
                                                     </select>
                                                 </td>
@@ -339,22 +375,22 @@
                                                 <td>
                                                     <select
                                                         class="custom-select form-control-border"
-                                                        formControlName="subtipo"
-                                                        [value]="gasto.subtipo"
+                                                        formControlName="subtipo_gasto"
+                                                        [value]="
+                                                            gasto.subtipo_gasto
+                                                        "
                                                     >
                                                         <option
                                                             selected
                                                             disabled
-                                                            value=""
+                                                            value="0"
                                                         >
                                                             Subtipo
                                                         </option>
                                                         <option
                                                             *ngFor="
                                                                 let item of opcionesSelect2[
-                                                                    form.get(
-                                                                        'tipo'
-                                                                    ).value
+                                                                    getTipo
                                                                 ];
                                                                 let i = index
                                                             "
@@ -366,55 +402,77 @@
                                                 </td>
 
                                                 <td>
-                                                    <select
-                                                        class="custom-select form-control-border"
-                                                        formControlName="dia"
-                                                        [value]="gasto.dia"
-                                                        title="Dia"
-                                                    >
-                                                        <option
-                                                            disabled
-                                                            value=""
-                                                        >
-                                                            Día
-                                                        </option>
-                                                        <option
-                                                            *ngFor="
-                                                                let dia of dias
-                                                            "
-                                                            [value]="dia"
-                                                        >
-                                                            {{ dia }}
-                                                        </option>
-                                                    </select>
-                                                </td>
-                                                <td>
                                                     <input
-                                                        autofocus
-                                                        type="text"
-                                                        class="form-control"
+                                                        type="number"
+                                                        placeholder="$ "
+                                                        inputmode="decimal"
+                                                        class="form-control form-control-border text-right"
                                                         formControlName="monto"
                                                         [value]="gasto.monto"
-                                                        title="Descipción"
+                                                        title="Monto"
                                                     />
                                                 </td>
 
                                                 <td>
-                                                    <button
-                                                        class="btn btn-primary btn-sm mx-1"
-                                                        title="update"
-                                                        type="submit"
-                                                        [disabled]="
-                                                            form.invalid
-                                                        "
+                                                    <span
+                                                        data-tooltip="Ingresa el día que realizaste el gasto/egreso"
+                                                        data-flow="left"
                                                     >
-                                                        <i
-                                                            class="fas fa-check"
-                                                        ></i>
-                                                    </button>
+                                                        <select
+                                                            class="custom-select form-control-border"
+                                                            formControlName="dia"
+                                                        >
+                                                            <option
+                                                                selected
+                                                                disabled
+                                                                [value]="0"
+                                                            >
+                                                                Día
+                                                            </option>
+                                                            <option
+                                                                *ngFor="
+                                                                    let dia of dias
+                                                                "
+                                                                [value]="dia"
+                                                            >
+                                                                {{ dia }}
+                                                            </option>
+                                                        </select>
+                                                    </span>
+                                                </td>
+
+                                                <td>
+                                                    <span
+                                                        *ngIf="form.invalid"
+                                                        data-tooltip="Necesitas completar todos los campos"
+                                                        data-flow="left"
+                                                        ><button
+                                                            class="boton-acept"
+                                                            type="submit"
+                                                            [disabled]="
+                                                                form.invalid
+                                                            "
+                                                        >
+                                                            <i
+                                                                class="fas fa-check"
+                                                            ></i></button
+                                                    ></span>
+
+                                                    <span *ngIf="!form.invalid"
+                                                        ><button
+                                                            class="boton-acept"
+                                                            type="submit"
+                                                            [disabled]="
+                                                                form.invalid
+                                                            "
+                                                        >
+                                                            <i
+                                                                class="fas fa-check"
+                                                            ></i></button
+                                                    ></span>
 
                                                     <button
-                                                        class="btn btn-danger btn-sm mx-1"
+                                                        class="boton-acept mx-2"
                                                         title="cancel"
                                                         (click)="cancel()"
                                                         type="button"
@@ -426,6 +484,21 @@
                                                 </td>
                                             </tr>
                                         </ng-container>
+                                        <tr>
+                                            <td
+                                                class="text-right pt-3"
+                                                colspan="4"
+                                            >
+                                                Total:
+                                                <b>
+                                                    $
+                                                    {{
+                                                        sumaTotalReal
+                                                            | currency: 'CLP':''
+                                                    }}</b
+                                                >
+                                            </td>
+                                        </tr>
                                     </tbody>
                                     <tbody *ngIf="gastos.length === 0">
                                         <tr class="text-center">
@@ -434,16 +507,20 @@
                                     </tbody>
                                 </table>
                             </div>
+                            <button
+                                [disabled]="isAdding"
+                                class="boton-add"
+                                (click)="addUser()"
+                            >
+                                <b>+ Agregar gasto/egreso al mes actual</b>
+                            </button>
                         </form>
                     </div>
                 </div>
             </div>
             <div class="col-12 col-sm-4">
                 <div class="card">
-                    <app-grafico-gasto
-                        [fecha]="getFecha"
-                        [change]="getChange"
-                    ></app-grafico-gasto>
+                    <app-grafico-gasto [change]="getChange" [mes]="getMes" [anio]="getAnio" [totalGastos]="getSumaTotal"></app-grafico-gasto>
                 </div>
                 <div class="card">
                     <div class="card-head text-center mt-2">

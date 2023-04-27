@@ -10,11 +10,7 @@
 </div>
 <div class="card-footer text-center bg-white">
   <p>
-      Tus ingresos (<b
-          ><span class="text-success">aumentaron</span> -
-          <span class="text-danger"
-              >disminuyeron</span
-          > </b
-      >) un x% respecto al mes anterior
+      Has gastado el <b>{{ porcentaje.toFixed(2) }}%</b> de tus ingresos.
   </p>
 </div>
+<ngx-loading [show]="loading"></ngx-loading>
