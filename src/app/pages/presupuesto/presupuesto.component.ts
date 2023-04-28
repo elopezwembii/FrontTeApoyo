@@ -1,6 +1,6 @@
 import {Ingreso} from '@/interfaces/ingresos';
 import {Categoria, Presupuesto} from '@/interfaces/presupuesto';
-import {Component, Renderer2} from '@angular/core';
+import {Component, ElementRef, Renderer2, ViewChild} from '@angular/core';
 import {Validators, FormBuilder} from '@angular/forms';
 import {PresupuestoService} from '@services/presupuesto/presupuesto.service';
 import {ToastrService} from 'ngx-toastr';
@@ -11,6 +11,7 @@ import {ToastrService} from 'ngx-toastr';
     styleUrls: ['./presupuesto.component.scss']
 })
 export class PresupuestoComponent {
+    @ViewChild('chbMantener') chbMantener: ElementRef;
     presupuestoMonto: number = 0;
 
     categorias: Categoria[] = [];
@@ -122,6 +123,7 @@ export class PresupuestoComponent {
         this.obtenerPresupuesto();
         this.obtenerPresupuestoMensual();
         this.obtenerDatoGrafico();
+        this.chbMantener.nativeElement.checked = false;
     }
 
     removeMonth() {
@@ -135,6 +137,7 @@ export class PresupuestoComponent {
         this.obtenerPresupuesto();
         this.obtenerPresupuestoMensual();
         this.obtenerDatoGrafico();
+        this.chbMantener.nativeElement.checked = false;
     }
 
     selectUser(presupuesto: Presupuesto) {
@@ -225,7 +228,7 @@ export class PresupuestoComponent {
         this.isEditing = false;
         this.isAdding = false;
         this.form.reset();
-        this.form.patchValue({ categoria: '-1' });
+        this.form.patchValue({categoria: '-1'});
     }
 
     cancel() {
@@ -260,5 +263,50 @@ export class PresupuestoComponent {
 
     isEmpty(obj: any) {
         return Object.keys(obj).length === 0;
+    }
+
+    mantenerPresupuestoMes(event: any) {
+        const {checked} = event.target;
+
+        if (checked) {
+            this.presupuestoService
+                .obtenerPresupuestos(this.selectionMonth, this.selectionYear)
+                .subscribe({
+                    next: (resp: any) => {
+                        const {presupuestos: data} = resp;
+
+                        if (data.length === 0) {
+                            this.toastr.info(
+                                `No existe presupuestos en el mes anterior`
+                            );
+                            this.chbMantener.nativeElement.checked = false;
+                            return;
+                        }
+
+                        const presupuestosNuevo = data.map((p: any) => {
+                            return {
+                                ...p,
+                                categoria: p.categoriaId,
+                                mes: this.selectionMonth + 1,
+                                year: this.selectionYear
+                            };
+                        });
+
+                        this.presupuestos = presupuestosNuevo;
+                        this.toastr.success(`Periodo replicado correctamente`);
+
+                        presupuestosNuevo.forEach((element: any) => {
+                            this.presupuestoService
+                                .agregarPresupuesto(element)
+                                .subscribe({
+                                    next: (resp: any) => {
+                                        this.obtenerPresupuesto();
+                                        this.obtenerDatoGrafico();
+                                    }
+                                });
+                        });
+                    }
+                });
+        }
     }
 }

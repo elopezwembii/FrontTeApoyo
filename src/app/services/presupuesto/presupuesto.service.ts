@@ -185,7 +185,8 @@ export class PresupuestoService {
     };
 
     agregarPresupuesto(nuevoPresupuesto: Presupuesto): Observable<string> {
-        return new Observable<string>((observer) => {
+        return new Observable<string>((observer) => {            
+
             this.presupuestos.push(nuevoPresupuesto);
             observer.next(`Presupuesto agregado correctamente`);
             observer.complete();

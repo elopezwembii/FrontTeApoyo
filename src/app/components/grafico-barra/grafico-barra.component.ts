@@ -32,8 +32,6 @@ export class GraficoBarraComponent implements OnChanges {
     constructor(private currencyPipe: CurrencyPipe) {}
 
     ngOnChanges() {
-        console.log('presupuesto', this.presupuesto);
-        console.log('gasto real', this.gastoReal);
    
         this.options = {
             ...this.options,

@@ -209,8 +209,9 @@
                                 </tbody>
                             </table>
 
-                            <input type="checkbox" /> Mantener presupuesto mes
+                            <input #chbMantener type="checkbox" (click)="mantenerPresupuestoMes($event)"/> Mantener presupuesto mes
                             anterior
+                        
                         </form>
                     </div>
                 </div>
@@ -237,3 +238,4 @@
         
     </div>
 </section>
+

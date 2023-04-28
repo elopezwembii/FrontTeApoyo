@@ -14,6 +14,7 @@ import {SubMenuComponent} from '@pages/main-menu/sub-menu/sub-menu.component';
 import { GastosComponent } from '@pages/gastos/gastos.component';
 import { IngresosComponent } from '@pages/ingresos/ingresos.component';
 import { PresupuestoComponent } from '@pages/presupuesto/presupuesto.component';
+import { AhorrosComponent } from '@pages/ahorros/ahorros.component';
 
 const routes: Routes = [
     {
@@ -37,6 +38,10 @@ const routes: Routes = [
             {
                 path: 'gastos',
                 component: GastosComponent
+            },
+            {
+                path: 'ahorros',
+                component: AhorrosComponent
             },
             {
                 path: '',

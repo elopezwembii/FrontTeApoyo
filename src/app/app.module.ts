@@ -41,6 +41,7 @@ import { GraficoComponent } from './components/grafico/grafico.component';
 import { PresupuestoComponent } from './pages/presupuesto/presupuesto.component';
 import { GraficoDonaComponent } from './components/grafico-dona/grafico-dona.component';
 import { GraficoBarraComponent } from './components/grafico-barra/grafico-barra.component';
+import { AhorrosComponent } from './pages/ahorros/ahorros.component';
 
 defineCustomElements();
 registerLocaleData(localeEn, 'en-EN');
@@ -72,7 +73,8 @@ registerLocaleData(localeEn, 'en-EN');
         GraficoComponent,
         PresupuestoComponent,
         GraficoDonaComponent,
-        GraficoBarraComponent
+        GraficoBarraComponent,
+        AhorrosComponent
     ],
     imports: [
         NgxLoadingModule.forRoot({
