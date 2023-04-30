@@ -7,6 +7,7 @@ import {
 } from '@angular/core';
 import {IngresosService} from '@services/ingresos/ingresos.service';
 import {EChartsOption} from 'echarts';
+import echarts from 'echarts/types/dist/echarts';
 
 @Component({
     selector: 'app-grafico',
@@ -14,13 +15,38 @@ import {EChartsOption} from 'echarts';
     styleUrls: ['./grafico.component.scss']
 })
 export class GraficoComponent implements OnChanges {
-    @Input() fecha: string;
+    @Input() change: boolean;
+    @Input() mes: number;
+    @Input() anio: number;
+
+    public arrayMonth = [
+        'Enero',
+        'Febrero',
+        'Marzo',
+        'Abril',
+        'Mayo',
+        'Junio',
+        'Julio',
+        'Agosto',
+        'Septiembre',
+        'Octubre',
+        'Noviembre',
+        'Diciembre'
+    ];
+
+    public porcentaje: any;
+    public infinto: number = Infinity;
+    public nan: number = NaN;
+    public loading: boolean = false;
 
     options: any = {
         tooltip: {
             trigger: 'axis',
             axisPointer: {
-                type: 'shadow'
+                type: 'shadow',
+                label: {
+                    show: true
+                }
             }
         },
         legend: {},
@@ -32,15 +58,120 @@ export class GraficoComponent implements OnChanges {
         },
         xAxis: {
             type: 'value',
-            boundaryGap: [0, 0.01]
+            boundaryGap: [0, 0.01],
+            axisLabel: {
+                rotate: 45,
+                formatter: (params: any) => {
+                    return (
+                        '$' +
+                        params.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+                    );
+                }
+            }
         }
     };
 
     constructor(private ingresoService: IngresosService) {}
 
-    ngOnChanges() {
-        this.ingresoService.sumarMontosPorFecha(this.fecha).subscribe({
+    async ngOnChanges() {
+        this.loading = true;
+        (
+            await this.ingresoService.sumaMontoActual(this.mes, this.anio)
+        ).subscribe(async (actual) => {
+            (
+                await this.ingresoService.sumaMontoActual(
+                    this.mes - 1,
+                    this.anio
+                )
+            ).subscribe((anterior) => {
+                this.options = {
+                    ...this.options,
+                    yAxis: {
+                        type: 'category',
+                        data: [
+                            this.arrayMonth[this.mes - 2],
+                            this.arrayMonth[this.mes - 1]
+                        ]
+                    },
+                    series: [
+                        {
+                            name: 'Ingreso fijo',
+                            type: 'bar',
+                            data: [
+                                anterior.totalVariableFijo,
+                                actual.totalVariableFijo
+                            ],
+                            barGap: '30%',
+                            barCategoryGap: '30%',
+                            itemStyle: {
+                                color: '#bceaf3',
+                                borderRadius: [0, 5, 5, 0],
+
+                            },
+                            label: {
+                                show: true,
+                                formatter: (params: any) => {
+                                    return (
+                                        '$' +
+                                        params.value
+                                            .toString()
+                                            .replace(
+                                                /\B(?=(\d{3})+(?!\d))/g,
+                                                '.'
+                                            )
+                                    );
+                                }
+                            }
+                        },
+                        {
+                            name: 'Ingreso variable',
+                            type: 'bar',
+                            data: [
+                                anterior.totalVariableActual,
+                                actual.totalVariableActual
+                            ],
+                            itemStyle: {
+                                color: '#ffd48f',
+                                borderRadius: [0, 5, 5, 0]
+                            },
+                            label: {
+                                show: true,
+
+                                formatter: (params: any) => {
+                                    return (
+                                        '$' +
+                                        params.value
+                                            .toString()
+                                            .replace(
+                                                /\B(?=(\d{3})+(?!\d))/g,
+                                                '.'
+                                            )
+                                    );
+                                }
+                            }
+                        }
+                    ]
+                };
+                let sumaActual =
+                    actual.totalVariableActual + actual.totalVariableFijo;
+                let sumaAnterior =
+                    anterior.totalVariableActual + anterior.totalVariableFijo;
+                if (sumaActual - sumaAnterior > 0) {
+                  //aumenta
+                    this.porcentaje =
+                        ((sumaActual - sumaAnterior) / sumaAnterior) * 100;
+                } else {
+                  //disminuye
+                    this.porcentaje =
+                        (((sumaAnterior - sumaActual) / sumaAnterior) * 100)*-1;
+                }
+                this.loading = false;
+                console.log(this.porcentaje);
+            });
+        });
+        /* this.ingresoService.sumarMontosPorFecha(this.fecha).subscribe({
             next: (resp: any) => {
+
                 this.options = {
                     ...this.options,
                     yAxis: {
@@ -49,24 +180,64 @@ export class GraficoComponent implements OnChanges {
                     },
                     series: [
                         {
-                            name: 'monto planificado',
+                            name: 'Ingreso fijo',
                             type: 'bar',
                             data: [
                                 resp.sumaMontoPlanificadoMesAnterior,
                                 resp.sumaMontoPlanificado
-                            ]
+                            ],
+                            barGap: '30%',
+                            barCategoryGap: '30%',
+                            itemStyle: {
+                                color: '#bceaf3',
+                                borderRadius: [0, 5, 5, 0]
+                            },
+                            label: {
+                                show: true,
+                                formatter: (params: any) => {
+                                    return (
+                                        '$' +
+                                        params.value
+                                            .toString()
+                                            .replace(
+                                                /\B(?=(\d{3})+(?!\d))/g,
+                                                '.'
+                                            )
+                                    );
+                                }
+                            }
                         },
                         {
-                            name: 'monto real',
+                            name: 'Ingreso variable',
                             type: 'bar',
                             data: [
                                 resp.sumaMontoRealMesAnterior,
                                 resp.sumaMontoReal
-                            ]
+                            ],
+                            itemStyle: {
+                                color: '#ffd48f',
+                                borderRadius: [0, 5, 5, 0]
+                            },
+                            label: {
+                                show: true,
+
+                                formatter: (params: any) => {
+                                    return (
+                                        '$' +
+                                        params.value
+                                            .toString()
+                                            .replace(
+                                                /\B(?=(\d{3})+(?!\d))/g,
+                                                '.'
+                                            )
+                                    );
+                                }
+                            }
                         }
                     ]
                 };
+
             }
-        });
+        }); */
     }
 }

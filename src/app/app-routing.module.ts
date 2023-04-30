@@ -11,10 +11,13 @@ import {ForgotPasswordComponent} from '@modules/forgot-password/forgot-password.
 import {RecoverPasswordComponent} from '@modules/recover-password/recover-password.component';
 import {MainMenuComponent} from '@pages/main-menu/main-menu.component';
 import {SubMenuComponent} from '@pages/main-menu/sub-menu/sub-menu.component';
+
 import { GastosComponent } from '@pages/gastos/gastos.component';
 import { IngresosComponent } from '@pages/ingresos/ingresos.component';
 import { PresupuestoComponent } from '@pages/presupuesto/presupuesto.component';
 import { AhorrosComponent } from '@pages/ahorros/ahorros.component';
+import { DeudasComponent } from '@pages/deudas/deudas.component';
+
 
 const routes: Routes = [
     {
@@ -42,6 +45,14 @@ const routes: Routes = [
             {
                 path: 'ahorros',
                 component: AhorrosComponent
+            },
+            {
+                path: 'presupuesto',
+                component: PresupuestoComponent
+            },
+            {
+                path: 'deudas',
+                component: DeudasComponent
             },
             {
                 path: '',

@@ -1,8 +1,8 @@
 import {Ingreso} from './../../interfaces/ingresos';
-import {Component, OnInit, Renderer2} from '@angular/core';
+import {Component, OnInit, Renderer2, ElementRef} from '@angular/core';
 import {Validators, FormBuilder} from '@angular/forms';
+import {NavigationEnd, Router} from '@angular/router';
 import {IngresosService} from '@services/ingresos/ingresos.service';
-import {EChartsOption} from 'echarts';
 import {ToastrService} from 'ngx-toastr';
 
 @Component({
@@ -12,6 +12,24 @@ import {ToastrService} from 'ngx-toastr';
 })
 export class IngresosComponent implements OnInit {
     dias: number[];
+    change: boolean = false;
+    loading: boolean = false;
+    ingresos: Ingreso[] = [];
+    sumaTotalReal: number = 0;
+
+    ingresoSelected: Ingreso = {} as Ingreso;
+    isEditing: boolean = false;
+    isAdding: boolean = false;
+
+    objectTipo = [
+        'Sueldo líquido',
+        'Boletas de honorarios',
+        'Arriendos',
+        'Declaración de Renta (anual)',
+        'Pensión de alimentos recibida',
+        'Reembolsos o ayudas recibidas',
+        'Otros ingresos formales o informales'
+    ];
 
     generarDias(mes: number, anio: number) {
         // calcular el número de días del mes
@@ -20,23 +38,16 @@ export class IngresosComponent implements OnInit {
         this.dias = Array.from({length: diasEnMes}, (_, i) => i + 1);
     }
 
-    ingresos: Ingreso[] = [];
-    sumaTotalReal: number = 0;
-
-    ingresoSelected: Ingreso = {} as Ingreso;
-    isEditing: boolean = false;
-    isAdding: boolean = false;
-
     form = this.fb.group({
         id: [''],
-        desc: ['', [Validators.required]],
-        fijar: [false],
-        tipo: [''],
-        dia: [''],
+        desc: [''],
+        fijar: [0],
+        tipo_ingreso: [0, [Validators.required]],
+        dia: [0, [Validators.required]],
         mes: [''],
         anio: [''],
         montoReal: ['', [Validators.required, Validators.min(0)]],
-        montoPlanificado: ['', [Validators.required, Validators.min(0)]]
+        montoPlanificado: ['']
     });
 
     public arrayMonth = [
@@ -60,15 +71,68 @@ export class IngresosComponent implements OnInit {
     public year: number = this.selectionYear;
 
     get getFecha() {
-        return `${this.year}/${this.selectionMonth+1}/01`;
+        return `${this.year}/${this.selectionMonth + 1}/01`;
     }
+
+    get getMes() {
+        return this.selectionMonth + 1;
+    }
+
+    get getAnio() {
+        return this.year;
+    }
+
+    get getChange() {
+        return this.change;
+    }
+
+    public arrayRec = [
+        [
+            'Hay dos formas que son las más utilizadas, para calcular el sueldo líquido.',
+            "1. Calcula entre el 75% u 80% sobre el 'total de haberes' de tu liquidación.",
+            '2. Al total de haberes, resta los descuentos legales: AFP, Isapre (sólo el 7% legal) y el impuesto a la renta si es que por tramo te corresponde el descuento.'
+        ],
+        [
+            'Se promedian al menos 6 meses de boletas, descontando la retención correspondiente.'
+        ],
+        ['Normalmente se considera el 100% del canon de arriendo.'],
+        [
+            'Considera el valor de la línea 170 (Base Imponible Anual) y se le resta el impuesto a pagar, línea 93 (Total a pagar).',
+            'El resultado se divide por los 12, para hacer el promedio mensual de ingreso.',
+            'Si consideras la Declaración, no puedes ingresar sueldo, ni boletas, al estar ya incluidos en ésta.'
+        ],
+        ['Considera el total del valor.'],
+        ['Considera el total del valor.'],
+        ['Considera el total del valor.']
+    ];
+
+    get getTipo() {
+        return this.form.get('tipo_ingreso').value;
+    }
+
+    windowSize: number;
 
     constructor(
         private renderer: Renderer2,
         private fb: FormBuilder,
         private ingresoService: IngresosService,
-        private toastr: ToastrService
-    ) {}
+        private toastr: ToastrService,
+        private router: Router
+    ) {
+        this.router.events.subscribe((evt) => {
+            if (evt instanceof NavigationEnd) {
+                this.windowSize = window.innerWidth;
+            }
+        });
+
+        this.renderer.listen('window', 'load', (evt) => {
+            this.windowSize = window.innerWidth;
+        });
+        this.renderer.listen('window', 'resize', (evt) => {
+            this.windowSize = window.innerWidth;
+            console.log(window.innerWidth);
+        });
+    }
 
     ngOnInit() {
         this.obtenerIngresos();
@@ -76,20 +140,14 @@ export class IngresosComponent implements OnInit {
         this.generarDias(this.selectionMonth, this.selectionYear);
     }
 
-    obtenerIngresos() {
-        const fechaString = `${this.selectionMonth + 1}/${this.year}`;
-        const [dia, anio] = fechaString.split('/').map(Number);
-        const mes = dia - 1;
-        const primerDia = new Date(anio, mes, 1);
-        const fechaInicio = `${primerDia.getFullYear()}-${
-            primerDia.getMonth() + 1
-        }-${primerDia.getDate()}`;
-        const ultimoDia = new Date(anio, mes + 1, 0);
-        const fechaFin = `${ultimoDia.getFullYear()}-${
-            ultimoDia.getMonth() + 1
-        }-${ultimoDia.getDate()}`;
-
-        this.ingresoService.getIngreso(fechaInicio, fechaFin).subscribe({
+    async obtenerIngresos() {
+        this.loading = true;
+        (
+            await this.ingresoService.getIngreso(
+                this.selectionMonth + 1,
+                this.year
+            )
+        ).subscribe({
             next: ({
                 sumaTotalReal,
                 ingresos
@@ -97,8 +155,11 @@ export class IngresosComponent implements OnInit {
                 sumaTotalReal: number;
                 ingresos: Ingreso[];
             }) => {
+                console.log(ingresos);
                 this.sumaTotalReal = sumaTotalReal;
                 this.ingresos = ingresos;
+                this.change = !this.change;
+                this.loading = false;
             },
             error: (error: any) => {
                 console.log(error);
@@ -113,8 +174,9 @@ export class IngresosComponent implements OnInit {
             this.year++;
         }
         this.month = this.arrayMonth[this.selectionMonth];
-
+        this.generarDias(this.selectionMonth, this.year);
         this.obtenerIngresos();
+        this.isAdding = false;
     }
 
     removeMonth() {
@@ -124,70 +186,94 @@ export class IngresosComponent implements OnInit {
             this.year--;
         }
         this.month = this.arrayMonth[this.selectionMonth];
-
+        this.generarDias(this.selectionMonth, this.year);
         this.obtenerIngresos();
+        this.isAdding = false;
     }
 
     selectUser(ingreso: Ingreso) {
         if (Object.keys(this.ingresoSelected).length === 0) {
             this.ingresoSelected = ingreso;
+            console.log(ingreso);
             this.isEditing = true;
             this.isAdding = true;
             this.form.patchValue({
                 id: String(ingreso.id),
                 desc: ingreso.desc,
                 fijar: ingreso.fijar,
-                tipo: String(ingreso.tipo),
-                dia: String(ingreso.dia),
-                mes: String(ingreso.mes),
-                anio: String(ingreso.anio),
-                montoReal: String(ingreso.montoReal),
+                tipo_ingreso: ingreso.tipo_ingreso,
+                dia: ingreso.dia,
+                mes: String(this.selectionMonth + 1),
+                anio: String(this.year),
+                montoReal: String(ingreso.monto_real),
                 montoPlanificado: String(ingreso.montoPlanificado)
             });
+            this.abrirModal();
         }
     }
 
-    deleteUser(ingreso: Ingreso, index: number) {
-        if (confirm('Are you sure you want to delete this user?')) {
-            this.ingresoService.eliminarIngreso(ingreso.id).subscribe({
-                next: (resp: any) => {
-                    console.log(resp);
-                    this.obtenerIngresos();
-                    this.ingresos.splice(index, 1);
-                }
-            });
+    async deleteUser(ingreso: Ingreso) {
+        if (confirm('¿Estas seguro de eliminar el ingreso?')) {
+            await this.ingresoService.eliminarIngreso(ingreso.id);
+            this.obtenerIngresos();
+            this.toastr.info('Ingreso eliminado con éxito.');
         }
     }
 
-    generateId() {
-        return this.ingresos.length + 1;
+    modal: HTMLElement;
+
+    abrirModal() {
+        if (this.windowSize <= 1000) {
+            this.modal = document.getElementById('exampleModal');
+            this.modal.classList.add('show');
+            this.modal.style.display = 'block';
+        }
     }
 
-    update() {
+    cerrarModal() {
+        if (this.windowSize <= 1000) {
+            this.modal.classList.remove('show');
+            this.modal.style.display = 'none';
+            this.ingresoSelected = {} as Ingreso;
+            this.isEditing = false;
+            this.isAdding = false;
+            this.form.reset();
+            this.toastr.info('No se realizaron cambios...');
+        }
+    }
+
+    async update() {
+        this.loading = true;
         if (!this.isEditing) {
             this.ingresos[0] = {
-                id: this.generateId(),
+                id: 0,
                 desc: this.form.value.desc!,
-                fijar: Boolean(this.form.value.fijar!),
-                tipo: parseInt(this.form.value.tipo!),
-                dia: parseInt(this.form.value.dia!),
+                fijar: Boolean(this.form.value.fijar!) ? 1 : 0,
+                tipo_ingreso: this.form.value.tipo_ingreso!,
+                dia: this.form.value.dia!,
                 mes: this.selectionMonth + 1,
-                anio: this.selectionYear,
-                montoReal: parseInt(this.form.value.montoReal!),
+                anio: this.year,
+                monto_real: parseInt(this.form.value.montoReal!),
                 montoPlanificado: parseInt(this.form.value.montoPlanificado!)
             };
 
-            console.log(this.ingresos[0]);
-
-            this.ingresoService.agregarIngreso(this.ingresos[0]).subscribe({
-                next: (resp: any) => {
-                    this.toastr.success(resp);
-                    this.obtenerIngresos();
-                },
-                error: (resp: any) => {
-                    console.log(resp);
+            try {
+                const res = await this.ingresoService.agregarIngreso(
+                    this.ingresos[0]
+                );
+                if (this.windowSize <= 1000) {
+                    this.modal.classList.remove('show');
+                    this.modal.style.display = 'none';
                 }
-            });
+                if (res) {
+                    this.obtenerIngresos();
+                    this.change = !this.change;
+                    this.toastr.success('Ingreso agregado con éxito.');
+                } else {
+                    this.toastr.error('Error al agregar un nuevo ingreso.');
+                    this.loading = false;
+                }
+            } catch (error) {}
         } else {
             let index = this.ingresos
                 .map((u) => u.id)
@@ -196,26 +282,28 @@ export class IngresosComponent implements OnInit {
             this.ingresos[index] = {
                 id: parseInt(this.form.value.id),
                 desc: this.form.value.desc!,
-                fijar: Boolean(this.form.value.fijar!),
-                tipo: parseInt(this.form.value.tipo!),
-                dia: parseInt(this.form.value.dia!),
-                mes: parseInt(this.form.value.mes!),
-                anio: parseInt(this.form.value.anio!),
-                montoReal: parseInt(this.form.value.montoReal!),
+                fijar: this.form.value.fijar!,
+                tipo_ingreso: this.form.value.tipo_ingreso!,
+                dia: this.form.value.dia!,
+                mes: this.selectionMonth + 1,
+                anio: this.year,
+                monto_real: parseInt(this.form.value.montoReal!),
                 montoPlanificado: parseInt(this.form.value.montoPlanificado!)
             };
-
-            this.ingresoService
-                .actualizarIngreso(this.ingresos[index])
-                .subscribe({
-                    next: (resp: any) => {
-                        this.toastr.success(resp);
-                        this.obtenerIngresos();
-                    },
-                    error: (resp: any) => {
-                        console.log(resp);
-                    }
-                });
+            try {
+                await this.ingresoService.actualizarIngreso(
+                    this.ingresos[index],
+                    this.selectionMonth + 1,
+                    this.year
+                );
+                if (this.windowSize <= 1000) {
+                    this.modal.classList.remove('show');
+                    this.modal.style.display = 'none';
+                }
+                this.obtenerIngresos();
+                this.change = !this.change;
+                this.toastr.success('Ingreso editado con éxito.');
+            } catch (error) {}
         }
         // clean up
         this.ingresoSelected = {} as Ingreso;
@@ -225,48 +313,35 @@ export class IngresosComponent implements OnInit {
     }
 
     cancel() {
-        if (
-            !this.isEditing &&
-            confirm(
-                'All unsaved changes will be removed. Are you sure you want to cancel?'
-            )
-        ) {
-            this.ingresos.splice(0, 1);
+        if (!this.isEditing) {
+            this.ingresos.pop();
         }
 
         this.ingresoSelected = {} as Ingreso;
         this.isEditing = false;
         this.isAdding = false;
         this.form.reset();
+        this.toastr.info('No se realizaron cambios...');
     }
 
     addUser() {
-        this.ingresos.unshift({
+        this.ingresos.push({
             id: null,
             desc: '',
-            fijar: false,
-            tipo: 0,
+            fijar: 0,
+            tipo_ingreso: 0,
             dia: 0,
             mes: 0,
             anio: 0,
-            montoReal: 0,
+            monto_real: 0,
             montoPlanificado: 0
         });
 
-        this.ingresoSelected = this.ingresos[0];
+        this.ingresoSelected = this.ingresos[this.ingresos.length - 1];
         this.isAdding = true;
     }
 
     isEmpty(obj: any) {
         return Object.keys(obj).length === 0;
-    }
-
-    onInput(monto: string, ischecked: boolean) {
-        if (ischecked) {
-            this.form.patchValue({
-                ...this.form.value,
-                montoReal: monto
-            });
-        }
     }
 }

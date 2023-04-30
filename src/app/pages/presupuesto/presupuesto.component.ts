@@ -12,6 +12,7 @@ import {ToastrService} from 'ngx-toastr';
 })
 export class PresupuestoComponent {
     @ViewChild('chbMantener') chbMantener: ElementRef;
+
     presupuestoMonto: number = 0;
 
     categorias: Categoria[] = [];
@@ -124,6 +125,7 @@ export class PresupuestoComponent {
         this.obtenerPresupuestoMensual();
         this.obtenerDatoGrafico();
         this.chbMantener.nativeElement.checked = false;
+
     }
 
     removeMonth() {
@@ -138,6 +140,7 @@ export class PresupuestoComponent {
         this.obtenerPresupuestoMensual();
         this.obtenerDatoGrafico();
         this.chbMantener.nativeElement.checked = false;
+
     }
 
     selectUser(presupuesto: Presupuesto) {
@@ -228,7 +231,8 @@ export class PresupuestoComponent {
         this.isEditing = false;
         this.isAdding = false;
         this.form.reset();
-        this.form.patchValue({categoria: '-1'});
+        this.form.patchValue({ categoria: '-1' });
+
     }
 
     cancel() {
@@ -264,7 +268,6 @@ export class PresupuestoComponent {
     isEmpty(obj: any) {
         return Object.keys(obj).length === 0;
     }
-
     mantenerPresupuestoMes(event: any) {
         const {checked} = event.target;
 

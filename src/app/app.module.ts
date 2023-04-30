@@ -1,6 +1,6 @@
 import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
-import {HttpClientModule} from '@angular/common/http';
+import {LOCALE_ID, NgModule} from '@angular/core';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 
 import {AppRoutingModule} from '@/app-routing.module';
 import {AppComponent} from './app.component';
@@ -34,17 +34,22 @@ import {ProfabricComponentsModule} from '@profabric/angular-components';
 import {defineCustomElements} from '@profabric/web-components/loader';
 import {SidebarSearchComponent} from './components/sidebar-search/sidebar-search.component';
 import {NgxLoadingModule, ngxLoadingAnimationTypes} from 'ngx-loading';
-import { GastosComponent } from './pages/gastos/gastos.component';
-import { NgxEchartsModule } from 'ngx-echarts';
-import { IngresosComponent } from './pages/ingresos/ingresos.component';
-import { GraficoComponent } from './components/grafico/grafico.component';
-import { PresupuestoComponent } from './pages/presupuesto/presupuesto.component';
-import { GraficoDonaComponent } from './components/grafico-dona/grafico-dona.component';
-import { GraficoBarraComponent } from './components/grafico-barra/grafico-barra.component';
+
+import {GastosComponent} from './pages/gastos/gastos.component';
+import {NgxEchartsModule} from 'ngx-echarts';
+import {IngresosComponent} from './pages/ingresos/ingresos.component';
+import {GraficoComponent} from './components/grafico/grafico.component';
+import {GraficoGastoComponent} from './components/grafico-gasto/grafico-gasto.component';
 import { AhorrosComponent } from './pages/ahorros/ahorros.component';
+import localeEs from '@angular/common/locales/es'; // Importa la configuración regional para español
+import { PresupuestoComponent } from '@pages/presupuesto/presupuesto.component';
+import { GraficoDonaComponent } from '@components/grafico-dona/grafico-dona.component';
+import { GraficoBarraComponent } from '@components/grafico-barra/grafico-barra.component';
+import { CorsInterceptor } from './cors.interceptor';
+import { DeudasComponent } from './pages/deudas/deudas.component';
 
 defineCustomElements();
-registerLocaleData(localeEn, 'en-EN');
+registerLocaleData(localeEs);
 
 @NgModule({
     declarations: [
@@ -74,15 +79,21 @@ registerLocaleData(localeEn, 'en-EN');
         PresupuestoComponent,
         GraficoDonaComponent,
         GraficoBarraComponent,
+        GraficoGastoComponent,
+        PresupuestoComponent,
+        GraficoDonaComponent,
+        GraficoBarraComponent,
         AhorrosComponent
+        DeudasComponent
+
     ],
     imports: [
         NgxLoadingModule.forRoot({
-          animationType: ngxLoadingAnimationTypes.threeBounce,
-          backdropBackgroundColour: 'rgba(255, 255, 255, 0.5)',
-          primaryColour: '#2c939e',
-          secondaryColour: '#2c939e',
-          tertiaryColour: '#2c939e'
+            animationType: ngxLoadingAnimationTypes.threeBounce,
+            backdropBackgroundColour: 'rgba(255, 255, 255, 0.5)',
+            primaryColour: '#2c939e',
+            secondaryColour: '#2c939e',
+            tertiaryColour: '#2c939e'
         }),
         BrowserModule,
         StoreModule.forRoot({ui: uiReducer}),
@@ -97,13 +108,11 @@ registerLocaleData(localeEn, 'en-EN');
         }),
         ProfabricComponentsModule,
         NgxEchartsModule.forRoot({
-          echarts: () => import('echarts')
-        }),
+            echarts: () => import('echarts')
+        })
     ],
-    providers: [
-      CurrencyPipe
-    ],
-    
+    providers: [{provide: LOCALE_ID, useValue: 'ES_cl'},{ provide: HTTP_INTERCEPTORS, useClass: CorsInterceptor, multi: true },CurrencyPipe],
+
     bootstrap: [AppComponent]
 })
 export class AppModule {}

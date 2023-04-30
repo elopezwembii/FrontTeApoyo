@@ -1,11 +1,14 @@
 export interface Ingreso {
     id: number;
     desc: string;
-    fijar: boolean;
-    tipo: number;
-    dia: number;
-    mes: number;
-    anio: number;
-    montoReal: number;
-    montoPlanificado: number;
+    fijar: number;
+    tipo_ingreso: number;
+    dia?: number;
+    mes?: number;
+    anio?: number;
+    monto_real: number;
+    montoPlanificado?: number;
+    created_at?: string;
+    id_usuario?: number;
+    update_at?: string;
 }

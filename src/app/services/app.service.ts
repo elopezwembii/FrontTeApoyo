@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {Router} from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
 import {HttpClient} from '@angular/common/http';
+import { environment } from 'environments/environment';
 
 @Injectable({
     providedIn: 'root'
@@ -17,10 +18,10 @@ export class AppService {
 
     async loginByAuth({email, password}) {
         try {
-            /* const data: any = await new Promise((resolve, reject) => {
+            const data: any = await new Promise((resolve, reject) => {
                 this._http
                     .post(
-                        'url login',
+                        environment.uri_api + 'login',
                         {
                             email,
                             password
@@ -35,8 +36,7 @@ export class AppService {
                             reject(error);
                         }
                     );
-            }); */
-            const data = {access_token: "prueba", token_type: "Bearer",expires_at:"14-05-2023", role:"Administrador", name:"test", email:"test"}
+            });
             sessionStorage.setItem('user', JSON.stringify(data));
             this.router.navigate(['/']);
             this.toastr.success('Ingreso correcto');
