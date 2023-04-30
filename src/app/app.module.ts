@@ -1,6 +1,6 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {LOCALE_ID, NgModule} from '@angular/core';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 
 import {AppRoutingModule} from '@/app-routing.module';
 import {AppComponent} from './app.component';
@@ -41,6 +41,10 @@ import {GraficoComponent} from './components/grafico/grafico.component';
 import {GraficoGastoComponent} from './components/grafico-gasto/grafico-gasto.component';
 
 import localeEs from '@angular/common/locales/es'; // Importa la configuración regional para español
+import { PresupuestoComponent } from '@pages/presupuesto/presupuesto.component';
+import { GraficoDonaComponent } from '@components/grafico-dona/grafico-dona.component';
+import { GraficoBarraComponent } from '@components/grafico-barra/grafico-barra.component';
+import { CorsInterceptor } from './cors.interceptor';
 
 defineCustomElements();
 registerLocaleData(localeEs);
@@ -70,7 +74,10 @@ registerLocaleData(localeEs);
         GastosComponent,
         IngresosComponent,
         GraficoComponent,
-        GraficoGastoComponent
+        GraficoGastoComponent,
+        PresupuestoComponent,
+        GraficoDonaComponent,
+        GraficoBarraComponent
     ],
     imports: [
         NgxLoadingModule.forRoot({
@@ -96,7 +103,7 @@ registerLocaleData(localeEs);
             echarts: () => import('echarts')
         })
     ],
-    providers: [{provide: LOCALE_ID, useValue: 'ES_cl'}],
+    providers: [{provide: LOCALE_ID, useValue: 'ES_cl'},{ provide: HTTP_INTERCEPTORS, useClass: CorsInterceptor, multi: true }],
     bootstrap: [AppComponent]
 })
 export class AppModule {}

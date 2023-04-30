@@ -83,7 +83,7 @@ export class GastosService {
         } catch (error) {}
     }
 
-    async agregarGasto(gasto: Gasto) {
+    async agregarGasto(gasto: Gasto): Promise<boolean> {
         try {
             const res = await new Promise((resolve, reject) => {
                 this._http
@@ -94,9 +94,9 @@ export class GastosService {
                             monto: gasto.monto,
                             fijar: gasto.fijar,
                             tipo_gasto: gasto.tipo_gasto,
-                            subtipo_gasto: `${gasto.tipo_gasto}${
-                                ++gasto.subtipo_gasto
-                            }`,
+                            subtipo_gasto: `${
+                                gasto.tipo_gasto
+                            }${++gasto.subtipo_gasto}`,
                             dia: gasto.dia,
                             mes: gasto.mes,
                             anio: gasto.anio
@@ -120,11 +120,17 @@ export class GastosService {
                         }
                     );
             });
-            console.log(res);
-        } catch (error) {}
+            return true;
+        } catch (error) {
+            return false;
+        }
     }
 
-    async actualizarGasto(gasto: Gasto) {
+    async actualizarGasto(
+        gasto: Gasto,
+        mesSelect: number,
+        anioSelect: number
+    ): Promise<boolean> {
         try {
             const res = await new Promise((resolve, reject) => {
                 this._http
@@ -135,10 +141,12 @@ export class GastosService {
                             monto: gasto.monto,
                             fijar: gasto.fijar,
                             tipo_gasto: gasto.tipo_gasto,
-                            subtipo_gasto:  `${gasto.tipo_gasto}${
-                              ++gasto.subtipo_gasto
-                          }`,
-                            dia: gasto.dia
+                            subtipo_gasto: `${
+                                gasto.tipo_gasto
+                            }${++gasto.subtipo_gasto}`,
+                            dia: gasto.dia,
+                            mesSelect: mesSelect,
+                            anioSelect: anioSelect
                         },
                         {
                             headers: {
@@ -160,7 +168,10 @@ export class GastosService {
                     );
             });
             console.log(res);
-        } catch (error) {}
+            return true;
+        } catch (error) {
+            return false;
+        }
     }
 
     async eliminarGasto(idToDelete: number) {

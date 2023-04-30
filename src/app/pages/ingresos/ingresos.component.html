@@ -62,14 +62,21 @@
                         </div>
                         <form [formGroup]="form" (ngSubmit)="update()">
                             <div class="responsive">
-                                <table class="table text-nowrap mx-2">
+                                <table class="table text-nowrap">
                                     <thead>
                                         <tr>
-                                            <th scope="col">Descripción</th>
+                                            <th
+                                                data-toggle="tooltip"
+                                                data-placement="top"
+                                                title="Tooltip on top"
+                                                scope="col"
+                                            >
+                                                Descripción
+                                            </th>
                                             <th>
                                                 <span
                                                     data-tooltip="Al fijar un ingreso, este se repite mes a mes. Por lo tanto no necesitas replicarlo."
-                                                    data-flow="top"
+                                                    data-flow="bottom"
                                                 >
                                                     Fijar
                                                     <i
@@ -83,7 +90,7 @@
                                             <th>
                                                 <span
                                                     data-tooltip="Indica la fecha que recibes el ingreso."
-                                                    data-flow="top"
+                                                    data-flow="bottom"
                                                     >Recepción
                                                     <i
                                                         class="far fa-question-circle text-principal"
@@ -420,9 +427,249 @@
                                                     </button>
                                                 </td>
                                             </tr>
+                                            <!-- Modal -->
+                                            <div
+                                                class="modal fade"
+                                                id="exampleModal"
+                                                tabindex="-1"
+                                                aria-labelledby="exampleModalLabel"
+                                                aria-hidden="true"
+                                            >
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div
+                                                            class="modal-header"
+                                                        >
+                                                            <h5
+                                                                class="modal-title"
+                                                                id="exampleModalLabel"
+                                                            >
+                                                                Ingreso
+                                                            </h5>
+                                                            <button
+                                                                type="button"
+                                                                class="close"
+                                                                (click)="
+                                                                    cerrarModal()
+                                                                "
+                                                            >
+                                                                <span
+                                                                    aria-hidden="true"
+                                                                    >&times;</span
+                                                                >
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <div
+                                                                class="form-group"
+                                                            >
+                                                                <label
+                                                                    for="desc"
+                                                                    >Descripción
+                                                                    (opcional)</label
+                                                                >
+                                                                <input
+                                                                    autofocus
+                                                                    type="text"
+                                                                    class="form-control form-control-border"
+                                                                    formControlName="desc"
+                                                                    [value]="
+                                                                        ingreso.desc
+                                                                    "
+                                                                />
+                                                            </div>
+                                                            <div
+                                                                class="form-group"
+                                                            >
+                                                                <p>
+                                                                    <b
+                                                                        >Categoría</b
+                                                                    >
+                                                                </p>
+                                                                <select
+                                                                    class="custom-select form-control-border"
+                                                                    formControlName="tipo_ingreso"
+                                                                >
+                                                                    <option
+                                                                        selected
+                                                                        disabled
+                                                                        [value]="
+                                                                            0
+                                                                        "
+                                                                    >
+                                                                        Tipo
+                                                                    </option>
+                                                                    <option
+                                                                        [value]="
+                                                                            1
+                                                                        "
+                                                                    >
+                                                                        Sueldo
+                                                                        líquido
+                                                                    </option>
+                                                                    <option
+                                                                        [value]="
+                                                                            2
+                                                                        "
+                                                                    >
+                                                                        Boleta
+                                                                        de
+                                                                        honorarios
+                                                                    </option>
+                                                                    <option
+                                                                        [value]="
+                                                                            3
+                                                                        "
+                                                                    >
+                                                                        Arriendos
+                                                                    </option>
+                                                                    <option
+                                                                        [value]="
+                                                                            4
+                                                                        "
+                                                                    >
+                                                                        Declaración
+                                                                        de renta
+                                                                        (Anual)
+                                                                    </option>
+                                                                    <option
+                                                                        [value]="
+                                                                            5
+                                                                        "
+                                                                    >
+                                                                        Pensión
+                                                                        de
+                                                                        alimentos
+                                                                        recibida
+                                                                    </option>
+                                                                    <option
+                                                                        [value]="
+                                                                            6
+                                                                        "
+                                                                    >
+                                                                        Reembolsos
+                                                                        o ayudas
+                                                                        recibidas
+                                                                    </option>
+                                                                    <option
+                                                                        [value]="
+                                                                            7
+                                                                        "
+                                                                    >
+                                                                        Otros
+                                                                        ingresos
+                                                                        formales
+                                                                        o
+                                                                        informales
+                                                                    </option>
+                                                                </select>
+                                                            </div>
+                                                            <div
+                                                                class="form-group"
+                                                            >
+                                                                <label
+                                                                    for="montoReal"
+                                                                    >Monto</label
+                                                                >
+                                                                <input
+                                                                    type="number"
+                                                                    placeholder="$ "
+                                                                    inputmode="decimal"
+                                                                    class="form-control form-control-border text-right"
+                                                                    formControlName="montoReal"
+                                                                    [value]="
+                                                                        ingreso.montoReal
+                                                                    "
+                                                                    title="Monto real"
+                                                                />
+                                                            </div>
+                                                            <div
+                                                                class="form-group"
+                                                            >
+                                                                <p>
+                                                                    <b>Día</b>
+                                                                </p>
+
+                                                                <select
+                                                                    class="custom-select form-control-border"
+                                                                    formControlName="dia"
+                                                                >
+                                                                    <option
+                                                                        selected
+                                                                        disabled
+                                                                        [value]="
+                                                                            0
+                                                                        "
+                                                                    >
+                                                                        Día
+                                                                    </option>
+                                                                    <option
+                                                                        *ngFor="
+                                                                            let dia of dias
+                                                                        "
+                                                                        [value]="
+                                                                            dia
+                                                                        "
+                                                                    >
+                                                                        {{
+                                                                            dia
+                                                                        }}
+                                                                    </option>
+                                                                </select>
+                                                            </div>
+                                                            <div
+                                                                class="form-group"
+                                                            >
+                                                                <input
+                                                                    #fijarChk
+                                                                    class="mycheck ml-3"
+                                                                    type="checkbox"
+                                                                    formControlName="fijar"
+                                                                    [checked]="[
+                                                                        ingreso.fijar ===
+                                                                            1
+                                                                    ]"
+                                                                />
+                                                                <label
+                                                                    for="fijar"
+                                                                    >Marca si
+                                                                    deseas
+                                                                    replicar
+                                                                    este
+                                                                    ingreso*</label
+                                                                >
+                                                            </div>
+                                                        </div>
+                                                        <div
+                                                            class="modal-footer"
+                                                        >
+                                                            <button
+                                                                type="button"
+                                                                class="btn btn-secondary"
+                                                                (click)="
+                                                                    cerrarModal()
+                                                                "
+                                                            >
+                                                                Cerrar
+                                                            </button>
+                                                            <button
+                                                                [disabled]="
+                                                                    form.invalid
+                                                                "
+                                                                data-tooltip="Necesitas completar todos los campos"
+                                                                data-flow="left"
+                                                                type="submit"
+                                                                class="btn btn-primary"
+                                                            >
+                                                                Guardar
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                             <tr
                                                 *ngIf="
-                                                    ingresoSelected === ingreso
+                                                    ingresoSelected === ingreso && windowSize > 1000 && getTipo > 0
                                                 "
                                             >
                                                 <td
@@ -464,8 +711,6 @@
                                                             }}
                                                         </b>
                                                     </em>
-                                                    <br />
-                                                    <em><b> </b> </em>
                                                 </td>
                                                 <td
                                                     colspan="7"
@@ -512,9 +757,20 @@
                                 </table>
                             </div>
                             <button
+                                *ngIf="windowSize > 1000"
                                 [disabled]="isAdding"
                                 class="boton-add"
                                 (click)="addUser()"
+                                type="button"
+                            >
+                                <b>+ Agregar ingreso al mes actual</b>
+                            </button>
+                            <button
+                                *ngIf="windowSize <= 1000"
+                                [disabled]="isAdding"
+                                type="button"
+                                class="boton-add"
+                                (click)="abrirModal()"
                             >
                                 <b>+ Agregar ingreso al mes actual</b>
                             </button>
@@ -589,4 +845,5 @@
         </div>
     </div>
 </section>
+
 <ngx-loading [show]="loading"></ngx-loading>

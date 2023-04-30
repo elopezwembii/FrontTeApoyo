@@ -1,16 +1,44 @@
-<div class="card-head text-center mt-2">
-</div>
+<div class="card-head text-center mt-2"></div>
 <div class="card-body">
-  <div
-      echarts
-      [options]="options"
-      class="demo-chart"
-      style="height: 14rem"
-  ></div>
+    <div
+        *ngIf="!loading"
+        echarts
+        [options]="options"
+        class="demo-chart"
+        style="height: 14rem"
+    ></div>
 </div>
-<div class="card-footer text-center bg-white">
-  <p>
-      Has gastado el <b>{{ porcentaje.toFixed(2) }}%</b> de tus ingresos.
-  </p>
+<div *ngIf="!loading">
+    <div
+        *ngIf="porcentaje !== infinity"
+        class="card-footer text-center bg-white"
+    >
+        <p *ngIf="porcentaje < 80">
+            Has gastado el <b>{{ porcentaje.toFixed(2) }}%</b> de tus ingresos.
+        </p>
+        <p class="text-danger" *ngIf="porcentaje >= 80 && porcentaje < 100">
+            Has gastado el <b>{{ porcentaje.toFixed(2) }}%</b> de tus ingresos.
+            <br />
+            ¡Cuidado! estás llegando al 100%
+        </p>
+        <p class="text-danger" *ngIf="porcentaje >= 100">
+            Has gastado el <b>{{ porcentaje.toFixed(2) }}%</b> de tus ingresos.
+            <br />
+            <b
+                >Necesitas ayuda urgente de Luca$ nuestro chatbot que organiza
+                tus gastos.</b
+            >
+        </p>
+    </div>
+    <div
+        *ngIf="porcentaje === infinity"
+        class="card-footer text-center bg-white"
+    >
+        <p class="text-danger">No tienes ingresos registrados en éste mes.</p>
+        <p>Registra tus ingresos en <a href="/ingresos">Mis Ingresos</a></p>
+    </div>
+    <div *ngIf="porcentaje === nan">
+        <p>Registra tus ingresos en <a href="/ingresos">Mis Ingresos</a></p>
+    </div>
 </div>
 <ngx-loading [show]="loading"></ngx-loading>

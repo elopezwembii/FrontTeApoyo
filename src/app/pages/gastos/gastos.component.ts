@@ -1,9 +1,9 @@
 import {Gasto} from '@/interfaces/gastos';
-import {UiState} from '@/store/ui/state';
 import {Component, OnInit, Renderer2} from '@angular/core';
-import {FormBuilder, Validators, FormsModule} from '@angular/forms';
+import {FormBuilder, Validators} from '@angular/forms';
+import {NavigationEnd, Router} from '@angular/router';
 import {GastosService} from '@services/gastos/gastos.service';
-import {EChartsOption} from 'echarts';
+
 import {ToastrService} from 'ngx-toastr';
 
 @Component({
@@ -161,8 +161,8 @@ export class GastosComponent implements OnInit {
         id: [''],
         desc: [''],
         fijar: [0],
-        tipo_gasto: [0, [Validators.required]],
-        subtipo_gasto: [0, [Validators.required]],
+        tipo_gasto: [0, [Validators.required,Validators.min(1)]],
+        subtipo_gasto: [0, [Validators.required,Validators.min(1)]],
         dia: [''],
         mes: [''],
         anio: [''],
@@ -185,17 +185,19 @@ export class GastosComponent implements OnInit {
         return this.form.get('tipo_gasto').value;
     }
 
-    get getSumaTotal(){
-      return this.sumaTotalReal;
+    get getSumaTotal() {
+        return this.sumaTotalReal;
     }
 
     objectTipo;
+    windowSize: number;
 
     constructor(
         private renderer: Renderer2,
         private fb: FormBuilder,
         private gastoService: GastosService,
-        private toastr: ToastrService
+        private toastr: ToastrService,
+        private router: Router
     ) {
         this.objectTipo = [
             'Hogar',
@@ -213,6 +215,20 @@ export class GastosComponent implements OnInit {
             'Compras Online',
             'Ahorro e Inversiones'
         ];
+
+        this.router.events.subscribe((evt) => {
+            if (evt instanceof NavigationEnd) {
+                this.windowSize = window.innerWidth;
+            }
+        });
+
+        this.renderer.listen('window', 'load', (evt) => {
+            this.windowSize = window.innerWidth;
+        });
+        this.renderer.listen('window', 'resize', (evt) => {
+            this.windowSize = window.innerWidth;
+            console.log(window.innerWidth);
+        });
     }
 
     ngOnInit() {
@@ -276,12 +292,13 @@ export class GastosComponent implements OnInit {
                 desc: gasto.desc,
                 fijar: gasto.fijar,
                 tipo_gasto: gasto.tipo_gasto,
-                subtipo_gasto: gasto.subtipo_gasto,
+                subtipo_gasto: 0,
                 dia: String(gasto.dia),
-                mes: String(gasto.mes),
-                anio: String(gasto.anio),
+                mes: String(this.selectionMonth + 1),
+                anio: String(this.year),
                 monto: String(gasto.monto)
             });
+            this.abrirModal();
         }
     }
 
@@ -289,6 +306,29 @@ export class GastosComponent implements OnInit {
         if (confirm('¿Estas seguro de eliminar el gasto?')) {
             await this.gastoService.eliminarGasto(gasto.id);
             this.obtenerGastos();
+            this.toastr.info('Gasto eliminado con éxito');
+        }
+    }
+
+    modal: HTMLElement;
+
+    abrirModal() {
+        if (this.windowSize <= 1000) {
+            this.modal = document.getElementById('exampleModal');
+            this.modal.classList.add('show');
+            this.modal.style.display = 'block';
+        }
+    }
+
+    cerrarModal() {
+        if (this.windowSize <= 1000) {
+            this.modal.classList.remove('show');
+            this.modal.style.display = 'none';
+            this.gastoSelected = {} as Gasto;
+            this.isEditing = false;
+            this.isAdding = false;
+            this.form.reset();
+            this.toastr.info('No se realizaron cambios...');
         }
     }
 
@@ -308,9 +348,21 @@ export class GastosComponent implements OnInit {
             };
 
             try {
-                await this.gastoService.agregarGasto(this.gastos[0]);
-                this.change = !this.change;
-                this.obtenerGastos();
+                const res = await this.gastoService.agregarGasto(
+                    this.gastos[0]
+                );
+                if (this.windowSize <= 1000) {
+                    this.modal.classList.remove('show');
+                    this.modal.style.display = 'none';
+                }
+                if (res) {
+                    this.change = !this.change;
+                    this.obtenerGastos();
+                    this.toastr.info('Gasto agregado con éxito');
+                } else {
+                    this.toastr.error('Error al agregar un nuevo gasto.');
+                    this.loading = false;
+                }
             } catch (error) {}
         } else {
             let index = this.gastos
@@ -325,14 +377,27 @@ export class GastosComponent implements OnInit {
                 subtipo_gasto: this.form.value.subtipo_gasto!,
                 dia: parseInt(this.form.value.dia!),
                 mes: this.selectionMonth + 1,
-                anio: this.selectionYear,
+                anio: this.year,
                 monto: parseInt(this.form.value.monto!)
             };
+            console.log(this.gastos[index]);
 
             try {
-                await this.gastoService.actualizarGasto(this.gastos[index]);
-                this.change = !this.change;
-                this.obtenerGastos();
+                const res = await this.gastoService.actualizarGasto(
+                    this.gastos[index], this.selectionMonth + 1, this.year
+                );
+                if (this.windowSize <= 1000) {
+                  this.modal.classList.remove('show');
+                  this.modal.style.display = 'none';
+                }
+                if (res) {
+                    this.change = !this.change;
+                    this.obtenerGastos();
+                    this.toastr.info('Gasto editado con éxito');
+                } else {
+                    this.toastr.error('Error al editar un gasto.');
+                    this.loading = false;
+                }
             } catch (error) {}
         }
 
@@ -345,10 +410,7 @@ export class GastosComponent implements OnInit {
     }
 
     cancel() {
-        if (
-            !this.isEditing &&
-            confirm('¿Desea continuar sin guardar los cambios?')
-        ) {
+        if (!this.isEditing) {
             this.gastos.pop();
         }
 

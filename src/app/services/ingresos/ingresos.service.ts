@@ -16,26 +16,6 @@ export class IngresosService {
 
     constructor(private _http: HttpClient) {}
 
-    /* getIngreso(
-      fechaInicio: string,
-      fechaFin: string
-  ): Observable<{ingresos: Ingreso[]; sumaTotalReal: number}> {
-      const fechaInicioObj = new Date(fechaInicio);
-      const fechaFinObj = new Date(fechaFin);
-      const ingresosFiltrados = this.ingreso.filter((ingreso: Ingreso) => {
-          return (
-              this.getFecha(ingreso) >= fechaInicioObj &&
-              this.getFecha(ingreso) <= fechaFinObj
-          );
-      });
-
-      const sumaTotalReal = ingresosFiltrados.reduce((total, ingreso) => {
-          return total + ingreso.montoReal;
-      }, 0);
-
-      return of({ingresos: ingresosFiltrados, sumaTotalReal});
-  } */
-
     async getIngreso(mes: number, anio: number) {
         try {
             const data: any = await new Promise((resolve, reject) => {
@@ -101,7 +81,8 @@ export class IngresosService {
         } catch (error) {}
     }
 
-    async agregarIngreso(ingreso: Ingreso) {
+    async agregarIngreso(ingreso: Ingreso): Promise<boolean> {
+        console.log(ingreso);
         try {
             const res = await new Promise((resolve, reject) => {
                 this._http
@@ -135,27 +116,17 @@ export class IngresosService {
                         }
                     );
             });
-            console.log(res);
-        } catch (error) {}
-
-        /* return new Observable((observer) => {
-      setTimeout(() => {
-        //  const exito = Math.random() > 0.5;
-
-        if (true) {
-          this.ingreso.push(ingreso);
-          observer.next(
-            `Ingreso con ${ingreso.id}  agregado exitosamente`
-          );
-          observer.complete();
-        } else {
-          observer.error(`Error al actualizar el servicio con ID`);
+            return true;
+        } catch (error) {
+            return false;
         }
-      }, 2000);
-    }); */
     }
 
-    async actualizarIngreso(ingreso: Ingreso) {
+    async actualizarIngreso(
+        ingreso: Ingreso,
+        mesSelect: number,
+        anioSelect: number
+    ) {
         try {
             const res = await new Promise((resolve, reject) => {
                 this._http
@@ -166,7 +137,9 @@ export class IngresosService {
                             montoReal: ingreso.monto_real,
                             fijar: ingreso.fijar,
                             tipo: ingreso.tipo_ingreso,
-                            dia: ingreso.dia
+                            dia: ingreso.dia,
+                            mesSelect: mesSelect,
+                            anioSelect: anioSelect
                         },
                         {
                             headers: {

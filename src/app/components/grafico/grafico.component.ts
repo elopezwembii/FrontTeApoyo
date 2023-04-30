@@ -36,6 +36,7 @@ export class GraficoComponent implements OnChanges {
 
     public porcentaje: any;
     public infinto: number = Infinity;
+    public nan: number = NaN;
     public loading: boolean = false;
 
     options: any = {
@@ -48,7 +49,6 @@ export class GraficoComponent implements OnChanges {
                 }
             }
         },
-
         legend: {},
         grid: {
             left: '3%',
@@ -105,7 +105,8 @@ export class GraficoComponent implements OnChanges {
                             barCategoryGap: '30%',
                             itemStyle: {
                                 color: '#bceaf3',
-                                borderRadius: [0, 5, 5, 0]
+                                borderRadius: [0, 5, 5, 0],
+
                             },
                             label: {
                                 show: true,

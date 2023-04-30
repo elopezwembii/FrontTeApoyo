@@ -62,7 +62,7 @@
                         </div>
                         <form [formGroup]="form" (ngSubmit)="update()">
                             <div class="responsive">
-                                <table class="table text-nowrap mx-2">
+                                <table class="table text-nowrap">
                                     <thead>
                                         <tr>
                                             <th scope="col">Descripción</th>
@@ -228,11 +228,13 @@
                                                         >
                                                     </td>
 
-                                                    <td>
+                                                    <td class="text-center">
                                                         <span class="badge">{{
                                                             loading
                                                                 ? null
-                                                                : gasto.get_sub_tipo.nombre
+                                                                : gasto
+                                                                      .get_sub_tipo
+                                                                      .nombre
                                                         }}</span>
                                                     </td>
 
@@ -483,6 +485,330 @@
                                                     </button>
                                                 </td>
                                             </tr>
+                                            <!-- Modal -->
+                                            <div
+                                                class="modal fade"
+                                                id="exampleModal"
+                                                tabindex="-1"
+                                                aria-labelledby="exampleModalLabel"
+                                                aria-hidden="true"
+                                            >
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div
+                                                            class="modal-header"
+                                                        >
+                                                            <h5
+                                                                class="modal-title"
+                                                                id="exampleModalLabel"
+                                                            >
+                                                                Gasto
+                                                            </h5>
+                                                            <button
+                                                                type="button"
+                                                                class="close"
+                                                                (click)="
+                                                                    cerrarModal()
+                                                                "
+                                                            >
+                                                                <span
+                                                                    aria-hidden="true"
+                                                                    >&times;</span
+                                                                >
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <div
+                                                                class="form-group"
+                                                            >
+                                                                <label
+                                                                    for="desc"
+                                                                    >Descripción
+                                                                    (opcional)</label
+                                                                >
+                                                                <input
+                                                                    autofocus
+                                                                    type="text"
+                                                                    class="form-control form-control-border"
+                                                                    formControlName="desc"
+                                                                    [value]="
+                                                                        gasto.desc
+                                                                    "
+                                                                />
+                                                            </div>
+                                                            <div
+                                                                class="form-group"
+                                                            >
+                                                                <p>
+                                                                    <b
+                                                                        >Categoría</b
+                                                                    >
+                                                                </p>
+                                                                <select
+                                                                    class="custom-select form-control-border"
+                                                                    formControlName="tipo_gasto"
+                                                                >
+                                                                    <option
+                                                                        selected
+                                                                        disabled
+                                                                        [value]="
+                                                                            0
+                                                                        "
+                                                                    >
+                                                                        Tipo
+                                                                    </option>
+                                                                    <option
+                                                                        [value]="
+                                                                            1
+                                                                        "
+                                                                    >
+                                                                        Hogar
+                                                                    </option>
+                                                                    <option
+                                                                        [value]="
+                                                                            2
+                                                                        "
+                                                                    >
+                                                                        Servicios
+                                                                        básicos
+                                                                    </option>
+                                                                    <option
+                                                                        [value]="
+                                                                            3
+                                                                        "
+                                                                    >
+                                                                        Alimentos
+                                                                        y comida
+                                                                    </option>
+                                                                    <option
+                                                                        [value]="
+                                                                            4
+                                                                        "
+                                                                    >
+                                                                        Entretenimiento
+                                                                    </option>
+                                                                    <option
+                                                                        [value]="
+                                                                            5
+                                                                        "
+                                                                    >
+                                                                        Salud y
+                                                                        Belleza
+                                                                    </option>
+                                                                    <option
+                                                                        [value]="
+                                                                            6
+                                                                        "
+                                                                    >
+                                                                        Auto y
+                                                                        Transporte
+                                                                    </option>
+                                                                    <option
+                                                                        [value]="
+                                                                            7
+                                                                        "
+                                                                    >
+                                                                        Educación
+                                                                        y
+                                                                        trabajo
+                                                                    </option>
+                                                                    <option
+                                                                        [value]="
+                                                                            8
+                                                                        "
+                                                                    >
+                                                                        Regalos
+                                                                        y ayudas
+                                                                    </option>
+                                                                    <option
+                                                                        [value]="
+                                                                            9
+                                                                        "
+                                                                    >
+                                                                        Viajes
+                                                                    </option>
+                                                                    <option
+                                                                        [value]="
+                                                                            10
+                                                                        "
+                                                                    >
+                                                                        Créditos
+                                                                    </option>
+                                                                    <option
+                                                                        [value]="
+                                                                            11
+                                                                        "
+                                                                    >
+                                                                        Ropa y
+                                                                        Calzado
+                                                                    </option>
+                                                                    <option
+                                                                        [value]="
+                                                                            12
+                                                                        "
+                                                                    >
+                                                                        Personal
+                                                                    </option>
+                                                                    <option
+                                                                        [value]="
+                                                                            13
+                                                                        "
+                                                                    >
+                                                                        Compras
+                                                                        Online
+                                                                    </option>
+                                                                    <option
+                                                                        [value]="
+                                                                            14
+                                                                        "
+                                                                    >
+                                                                        Ahorro e
+                                                                        Inversiones
+                                                                    </option>
+                                                                </select>
+                                                            </div>
+                                                            <div
+                                                                class="form-group"
+                                                            >
+                                                                <p>
+                                                                    <b
+                                                                        >Sub-Categoría</b
+                                                                    >
+                                                                </p>
+                                                                <select
+                                                                    class="custom-select form-control-border"
+                                                                    formControlName="subtipo_gasto"
+                                                                    [value]="
+                                                                        gasto.subtipo_gasto
+                                                                    "
+                                                                >
+                                                                    <option
+                                                                        selected
+                                                                        disabled
+                                                                        value="0"
+                                                                    >
+                                                                        Subtipo
+                                                                    </option>
+                                                                    <option
+                                                                        *ngFor="
+                                                                            let item of opcionesSelect2[
+                                                                                getTipo
+                                                                            ];
+                                                                            let i = index
+                                                                        "
+                                                                        [value]="
+                                                                            i
+                                                                        "
+                                                                    >
+                                                                        {{
+                                                                            item
+                                                                        }}
+                                                                    </option>
+                                                                </select>
+                                                            </div>
+                                                            <div
+                                                                class="form-group"
+                                                            >
+                                                                <label
+                                                                    for="montoReal"
+                                                                    >Monto</label
+                                                                >
+                                                                <input
+                                                                    type="number"
+                                                                    placeholder="$ "
+                                                                    inputmode="decimal"
+                                                                    class="form-control form-control-border text-right"
+                                                                    formControlName="monto"
+                                                                    [value]="
+                                                                        gasto.monto
+                                                                    "
+                                                                    title="Monto"
+                                                                />
+                                                            </div>
+                                                            <div
+                                                                class="form-group"
+                                                            >
+                                                                <p>
+                                                                    <b>Día</b>
+                                                                </p>
+
+                                                                <select
+                                                                    class="custom-select form-control-border"
+                                                                    formControlName="dia"
+                                                                >
+                                                                    <option
+                                                                        selected
+                                                                        disabled
+                                                                        [value]="
+                                                                            0
+                                                                        "
+                                                                    >
+                                                                        Día
+                                                                    </option>
+                                                                    <option
+                                                                        *ngFor="
+                                                                            let dia of dias
+                                                                        "
+                                                                        [value]="
+                                                                            dia
+                                                                        "
+                                                                    >
+                                                                        {{
+                                                                            dia
+                                                                        }}
+                                                                    </option>
+                                                                </select>
+                                                            </div>
+                                                            <div
+                                                                class="form-group"
+                                                            >
+                                                                <input
+                                                                    #fijarChk
+                                                                    class="mycheck"
+                                                                    type="checkbox"
+                                                                    formControlName="fijar"
+                                                                    [checked]="[
+                                                                        gasto.fijar ===
+                                                                            1
+                                                                    ]"
+                                                                />
+                                                                <label
+                                                                    for="fijar"
+                                                                    > Marca si
+                                                                    deseas
+                                                                    replicar
+                                                                    este
+                                                                    ingreso*</label
+                                                                >
+                                                            </div>
+                                                        </div>
+                                                        <div
+                                                            class="modal-footer"
+                                                        >
+                                                            <button
+                                                                type="button"
+                                                                class="btn btn-secondary"
+                                                                (click)="
+                                                                    cerrarModal()
+                                                                "
+                                                            >
+                                                                Cerrar
+                                                            </button>
+                                                            <button
+                                                                [disabled]="
+                                                                    form.invalid
+                                                                "
+                                                                data-tooltip="Necesitas completar todos los campos"
+                                                                data-flow="left"
+                                                                type="submit"
+                                                                class="btn btn-primary"
+                                                            >
+                                                                Guardar
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </ng-container>
                                         <tr>
                                             <td
@@ -508,11 +834,22 @@
                                 </table>
                             </div>
                             <button
+                                *ngIf="windowSize > 1000"
                                 [disabled]="isAdding"
                                 class="boton-add"
                                 (click)="addUser()"
+                                type="button"
                             >
-                                <b>+ Agregar gasto/egreso al mes actual</b>
+                                <b>+ Agregar gasto al mes actual</b>
+                            </button>
+                            <button
+                                *ngIf="windowSize <= 1000"
+                                [disabled]="isAdding"
+                                type="button"
+                                class="boton-add"
+                                (click)="abrirModal()"
+                            >
+                                <b>+ Agregar gasto al mes actual</b>
                             </button>
                         </form>
                     </div>
@@ -520,7 +857,12 @@
             </div>
             <div class="col-12 col-sm-4">
                 <div class="card">
-                    <app-grafico-gasto [change]="getChange" [mes]="getMes" [anio]="getAnio" [totalGastos]="getSumaTotal"></app-grafico-gasto>
+                    <app-grafico-gasto
+                        [change]="getChange"
+                        [mes]="getMes"
+                        [anio]="getAnio"
+                        [totalGastos]="getSumaTotal"
+                    ></app-grafico-gasto>
                 </div>
                 <div class="card">
                     <div class="card-head text-center mt-2">

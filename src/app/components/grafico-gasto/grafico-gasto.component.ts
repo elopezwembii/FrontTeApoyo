@@ -14,6 +14,8 @@ export class GraficoGastoComponent implements OnChanges {
     public loading: boolean = false;
     @Input() totalGastos: number;
     public porcentaje: number = 0;
+    public infinity: number = Infinity;
+    public nan: number = NaN;
 
     options: any = {
         tooltip: {
@@ -31,53 +33,93 @@ export class GraficoGastoComponent implements OnChanges {
         (
             await this.ingresoService.sumaMontoActual(this.mes, this.anio)
         ).subscribe((actual) => {
-            this.options = {
-                ...this.options,
-                series: [
-                    {
-                        type: 'pie',
-                        radius: ['40%', '70%'],
-                        avoidLabelOverlap: false,
-                        label: {
-                            show: false,
-                            position: 'center'
-                        },
-                        emphasis: {
+            let sumaIngreso =
+                actual.totalVariableActual + actual.totalVariableFijo;
+            this.porcentaje = (this.totalGastos * 100) / sumaIngreso;
+            if (sumaIngreso < this.totalGastos) {
+                this.options = {
+                    ...this.options,
+                    series: [
+                        {
+                            type: 'pie',
+                            radius: ['40%', '70%'],
+                            avoidLabelOverlap: false,
                             label: {
-                                show: true,
-                                fontSize: 40
-                            }
-                        },
-                        labelLine: {
-                            show: false
-                        },
-                        data: [
-                            {
-                                value:
-                                    actual.totalVariableActual +
-                                    actual.totalVariableFijo,
-                                name: 'Ingresos',
-                                itemStyle: {
-                                    color: '#bceaf3'
+                                show: false,
+                                position: 'center'
+                            },
+                            emphasis: {
+                                label: {
+                                    show: true,
+                                    fontSize: 40
                                 }
                             },
-                            {
-                                value: this.totalGastos,
-                                name: 'Gastos',
-                                itemStyle: {
-                                    color: '#ffd48f'
+                            labelLine: {
+                                show: false
+                            },
+                            data: [
+                                {
+                                    value: 0,
+                                    name: 'Ingresos',
+                                    itemStyle: {
+                                        color: '#bceaf3'
+                                    }
+                                },
+                                {
+                                    value: 100,
+                                    name: 'Gastos',
+                                    itemStyle: {
+                                        color: '#ffd48f'
+                                    }
                                 }
-                            }
-                        ]
-                    }
-                ]
-            };
-            let suma =
-                actual.totalVariableActual +
-                actual.totalVariableFijo +
-                this.totalGastos;
-            this.porcentaje = (this.totalGastos * 100) / suma;
+                            ]
+                        }
+                    ]
+                };
+            } else {
+                this.options = {
+                    ...this.options,
+                    series: [
+                        {
+                            type: 'pie',
+                            radius: ['40%', '70%'],
+                            avoidLabelOverlap: false,
+                            label: {
+                                show: false,
+                                position: 'center'
+                            },
+                            emphasis: {
+                                label: {
+                                    show: true,
+                                    fontSize: 40
+                                }
+                            },
+                            labelLine: {
+                                show: false
+                            },
+                            data: [
+                                {
+                                    value: (100 - this.porcentaje).toFixed(2),
+                                    name: 'Ingresos',
+                                    itemStyle: {
+                                        color: '#bceaf3'
+                                    }
+                                },
+                                {
+                                    value: this.porcentaje.toFixed(2),
+                                    name: 'Gastos',
+                                    itemStyle: {
+                                        color: '#ffd48f'
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                };
+            }
+
             this.loading = false;
+            console.log(this.porcentaje);
         });
     }
 }

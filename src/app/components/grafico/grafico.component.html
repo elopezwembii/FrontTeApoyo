@@ -1,41 +1,49 @@
 <div class="card-head text-center mt-2"></div>
 <div class="card-body">
     <div
+        *ngIf="!loading"
         echarts
         [options]="options"
         class="demo-chart"
         style="height: 14rem"
+    ></div>
+</div>
+<div *ngIf="!loading">
+    <div
+        *ngIf="porcentaje !== 0 && porcentaje !== infinto && porcentaje !== nan"
+        class="card-footer text-center bg-white"
     >
-  </div>
-</div>
-<div *ngIf="porcentaje !== 0 && porcentaje !== infinto" class="card-footer text-center bg-white">
-    <p>
-        Tus ingresos
-        <b
-            ><span *ngIf="porcentaje > 0" class="text-success">aumentaron</span>
-            <span *ngIf="porcentaje < 0" class="text-danger">disminuyeron</span>
-        </b>
-        un
-        <span class="text-danger" *ngIf="porcentaje < 0">{{
-            porcentaje.toFixed(2) * -1
-        }}</span>
-        <span class="text-success" *ngIf="porcentaje > 1">{{
-          porcentaje.toFixed(2)
-      }}</span>
-        % respecto al mes anterior
-    </p>
-</div>
+        <p>
+            Tus ingresos
+            <b
+                ><span *ngIf="porcentaje > 0" class="text-success"
+                    >aumentaron</span
+                >
+                <span *ngIf="porcentaje < 0" class="text-danger"
+                    >disminuyeron</span
+                >
+            </b>
+            un
+            <span class="text-danger" *ngIf="porcentaje < 0">{{
+                porcentaje.toFixed(2) * -1
+            }}</span>
+            <span class="text-success" *ngIf="porcentaje > 1">{{
+                porcentaje.toFixed(2)
+            }}</span>
+            % respecto al mes anterior
+        </p>
+    </div>
 
-<div *ngIf="porcentaje === infinto" class="card-footer text-center bg-white">
-  <p>
-      No existen datos del mes anterior para realizar la comparativa.
-  </p>
-</div>
+    <div
+        *ngIf="porcentaje === infinto"
+        class="card-footer text-center bg-white"
+    >
+        <p>No existen datos del mes anterior para realizar la comparativa.</p>
+    </div>
 
-<div *ngIf="porcentaje === 0" class="card-footer text-center bg-white">
-  <p>
-      Tus ingresos se mantuvieron constantes respecto del mes anterior.
-  </p>
+    <div *ngIf="porcentaje === 0" class="card-footer text-center bg-white">
+        <p>Tus ingresos se mantuvieron constantes respecto del mes anterior.</p>
+    </div>
 </div>
 
 <ngx-loading [show]="loading"></ngx-loading>

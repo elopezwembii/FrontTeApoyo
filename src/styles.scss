@@ -2,7 +2,7 @@
 // @import '~bootstrap/scss/bootstrap';
 
 /* Importing Bootstrap SCSS file. */
-// @import '~bootstrap/scss/bootstrap';
+/* @import 'node_modules/bootstrap/scss/bootstrap.scss'; */
 
 @import url('https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css');
 @import url('https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.3.0/css/flag-icon.min.css');
@@ -241,8 +241,11 @@ input[type=number] {
   position: relative;
   cursor: pointer;
 
-  z-index: 9999;
+  z-index: 1100;
 }
+
+
+
 [data-tooltip]:before,
 [data-tooltip]:after {
   line-height: 1;
@@ -258,7 +261,7 @@ input[type=number] {
 [data-tooltip]:before {
   content: "";
   border: 5px solid transparent;
-  z-index: 9999;
+  z-index: 1100;
 }
 [data-tooltip]:after {
   content: attr(data-tooltip);
@@ -271,7 +274,21 @@ input[type=number] {
   border-radius: 3px;
   background: $principalSidebar;
   color: #FFFFFF;
-  z-index: 9999;
+  z-index: 1100;
+}
+
+@media (max-width: 1290px) {
+  [data-tooltip]{
+    z-index: 100;
+  }
+
+  [data-tooltip]:before{
+    z-index: 100;
+  }
+
+  [data-tooltip]:after{
+    z-index: 100;
+  }
 }
 [data-tooltip]:hover:before,
 [data-tooltip]:hover:after {
