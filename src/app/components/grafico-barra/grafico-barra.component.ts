@@ -34,6 +34,7 @@ export class GraficoBarraComponent implements OnChanges {
     ngOnChanges() {
         console.log('presupuesto', this.presupuesto);
         console.log('gasto real', this.gastoReal);
+
    
         this.options = {
             ...this.options,

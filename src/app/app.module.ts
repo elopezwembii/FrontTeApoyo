@@ -18,7 +18,7 @@ import {ToastrModule} from 'ngx-toastr';
 import {MessagesComponent} from '@modules/main/header/messages/messages.component';
 import {NotificationsComponent} from '@modules/main/header/notifications/notifications.component';
 
-import {registerLocaleData} from '@angular/common';
+import {CurrencyPipe, registerLocaleData} from '@angular/common';
 import localeEn from '@angular/common/locales/en';
 import {UserComponent} from '@modules/main/header/user/user.component';
 import {ForgotPasswordComponent} from '@modules/forgot-password/forgot-password.component';
@@ -34,12 +34,13 @@ import {ProfabricComponentsModule} from '@profabric/angular-components';
 import {defineCustomElements} from '@profabric/web-components/loader';
 import {SidebarSearchComponent} from './components/sidebar-search/sidebar-search.component';
 import {NgxLoadingModule, ngxLoadingAnimationTypes} from 'ngx-loading';
+
 import {GastosComponent} from './pages/gastos/gastos.component';
 import {NgxEchartsModule} from 'ngx-echarts';
 import {IngresosComponent} from './pages/ingresos/ingresos.component';
 import {GraficoComponent} from './components/grafico/grafico.component';
 import {GraficoGastoComponent} from './components/grafico-gasto/grafico-gasto.component';
-
+import { AhorrosComponent } from './pages/ahorros/ahorros.component';
 import localeEs from '@angular/common/locales/es'; // Importa la configuración regional para español
 import { PresupuestoComponent } from '@pages/presupuesto/presupuesto.component';
 import { GraficoDonaComponent } from '@components/grafico-dona/grafico-dona.component';
@@ -75,11 +76,16 @@ registerLocaleData(localeEs);
         GastosComponent,
         IngresosComponent,
         GraficoComponent,
+        PresupuestoComponent,
+        GraficoDonaComponent,
+        GraficoBarraComponent,
         GraficoGastoComponent,
         PresupuestoComponent,
         GraficoDonaComponent,
         GraficoBarraComponent,
+        AhorrosComponent
         DeudasComponent
+
     ],
     imports: [
         NgxLoadingModule.forRoot({
@@ -105,7 +111,8 @@ registerLocaleData(localeEs);
             echarts: () => import('echarts')
         })
     ],
-    providers: [{provide: LOCALE_ID, useValue: 'ES_cl'},{ provide: HTTP_INTERCEPTORS, useClass: CorsInterceptor, multi: true }],
+    providers: [{provide: LOCALE_ID, useValue: 'ES_cl'},{ provide: HTTP_INTERCEPTORS, useClass: CorsInterceptor, multi: true },CurrencyPipe],
+
     bootstrap: [AppComponent]
 })
 export class AppModule {}

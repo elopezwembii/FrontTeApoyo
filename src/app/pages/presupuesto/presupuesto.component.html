@@ -209,8 +209,10 @@
                                 </tbody>
                             </table>
 
-                            <input type="checkbox" /> Mantener presupuesto mes
+                            <input #chbMantener type="checkbox" (click)="mantenerPresupuestoMes($event)"/> Mantener presupuesto mes
                             anterior
+                        
+
                         </form>
                     </div>
                 </div>
@@ -222,18 +224,15 @@
                     ></app-grafico-dona>
                 </div>
             </div>
-
-
         </div>
 
 
         <div class="row">
             <div class="col-12 col-sm-12">
                 <div class="card h-100">
-                   <!--  <app-grafico-barra [presupuesto]="graficoDonaPresupuesto" [gastoReal]="graficoDonaPresupuesto" class="custom-chart"></app-grafico-barra> -->
+                    <app-grafico-barra [presupuesto]="graficoDonaPresupuesto" [gastoReal]="graficoDonaPresupuesto" class="custom-chart"></app-grafico-barra>
                 </div>
             </div>
         </div>
-
     </div>
 </section>
