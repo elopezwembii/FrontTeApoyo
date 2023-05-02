@@ -47,6 +47,8 @@ import { GraficoDonaComponent } from '@components/grafico-dona/grafico-dona.comp
 import { GraficoBarraComponent } from '@components/grafico-barra/grafico-barra.component';
 import { CorsInterceptor } from './cors.interceptor';
 import { DeudasComponent } from './pages/deudas/deudas.component';
+import { GraficoLineaComponent } from './components/grafico-linea/grafico-linea.component';
+import { ModalAhorroComponent } from './components/modal-ahorro/modal-ahorro.component';
 
 defineCustomElements();
 registerLocaleData(localeEs);
@@ -84,7 +86,9 @@ registerLocaleData(localeEs);
         GraficoDonaComponent,
         GraficoBarraComponent,
         AhorrosComponent,
-        DeudasComponent
+        DeudasComponent,
+        GraficoLineaComponent,
+        ModalAhorroComponent
 
     ],
     imports: [

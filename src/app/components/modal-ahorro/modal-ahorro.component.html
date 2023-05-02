@@ -1,0 +1,43 @@
+<div class="modal fade" id="modalAhorro" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Agregar ahorro</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+         
+            <form [formGroup]="form" (ngSubmit)="submit()">
+              <div class="mb-3">
+                <label for="nombre" class="form-label">Nombre</label>
+                <input autocomplete="off" formControlName="nombre" type="text" class="form-control" placeholder="Nombre del ahorro">
+              </div>
+              <div class="mb-3">
+                <label for="monto" class="form-label">Monto mensual</label>
+                <input autocomplete="off" formControlName="monto" type="number" class="form-control" placeholder="Monto mensual del ahorro">
+              </div>
+              <div class="mb-3">
+                <label for="fechaLimite" class="form-label">Fecha límite</label>
+                <input autocomplete="off" formControlName="fechaLimite" type="date" class="form-control" placeholder="Fecha límite del ahorro">
+              </div>
+              <div class="mb-3">
+                <label for="recaudado" class="form-label">Recaudado</label>
+                <input autocomplete="off" formControlName="recaudado" type="number" class="form-control" placeholder="Cantidad recaudada hasta ahora">
+              </div>
+              <div class="mb-3">
+                <label for="meta" class="form-label">Meta</label>
+                <input autocomplete="off" formControlName="meta" type="number" class="form-control" placeholder="Meta del ahorro">
+              </div>
+              <div class="modal-footer">
+                <button  type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <button [disabled]="!form.valid" type="submit" class="btn btn-primary">Guardar cambios</button>
+              </div>
+            </form>
+          </div>
+      
+      </div>
+    </div>
+  </div>
+  
