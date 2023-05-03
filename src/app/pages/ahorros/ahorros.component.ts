@@ -29,16 +29,9 @@ export class AhorrosComponent implements OnInit {
         });
     }
 
-    editarAhorro(ahorro: Ahorro) {
-        this.ahorroService.editarAhorro(ahorro).subscribe({
-            next: (value: boolean) => {
-                console.log(value);
-            }
-        });
-    }
     eliminarAhorro(ahorro: Ahorro) {
         this.ahorroService.eliminarAhorro(ahorro).subscribe({
-            next: (value: boolean) => {
+            complete: () => {
                 this.toastr.success(`Eliminado correctamente`);
             },
             error: (value: any) => {
@@ -47,7 +40,7 @@ export class AhorrosComponent implements OnInit {
         });
     }
 
-    openModal() {
-        this.modalAhorro.openModal();
+    openModal(ahorro: Ahorro = null) {
+        this.modalAhorro.openModal(ahorro);
     }
 }

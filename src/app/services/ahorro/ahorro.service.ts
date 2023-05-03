@@ -6,30 +6,29 @@ import {Observable, of} from 'rxjs';
     providedIn: 'root'
 })
 export class AhorroService {
-    ahorroHistorial =  [
+    ahorroHistorial = [
         {
-          year: 2018,
-          amount: 1200
+            year: 2018,
+            amount: 1200
         },
         {
-          year: 2019,
-          amount: 1500
+            year: 2019,
+            amount: 1500
         },
         {
-          year: 2020,
-          amount: 1800
+            year: 2020,
+            amount: 1800
         },
         {
-          year: 2021,
-          amount: 2000
+            year: 2021,
+            amount: 2000
         }
-      ];
+    ];
 
     private ahorros: Ahorro[] = [
         {
             id: 'AH1',
             nombre: 'Ahorro casa nueva',
-            progreso: 50,
             monto: 195000,
             fechaLimite: new Date(2023, 11, 31, 10, 30, 0, 0),
             recaudado: 1750000,
@@ -39,7 +38,6 @@ export class AhorroService {
         {
             id: 'AH2',
             nombre: 'Ahorro viaje al caribe',
-            progreso: 58,
             monto: 80000,
             fechaLimite: new Date(2024, 1, 1, 10, 30, 0, 0),
             recaudado: 880000,
@@ -51,7 +49,12 @@ export class AhorroService {
     constructor() {}
 
     obtenerAhorros(): Observable<Ahorro[]> {
-        return of(this.ahorros);
+        this.ahorros.forEach((ahorro: Ahorro) => {
+            ahorro.progreso = Math.round(
+                (ahorro.recaudado / ahorro.meta) * 100
+            );
+        });
+        return of(this.ahorros);;
     }
 
     eliminarAhorro(ahorro: Ahorro): Observable<boolean> {
@@ -81,6 +84,6 @@ export class AhorroService {
     }
 
     obtenerAhorroHistorial() {
-        return of(this.ahorroHistorial);
+      return of(this.ahorroHistorial);
     }
 }

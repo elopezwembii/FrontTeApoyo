@@ -2,7 +2,7 @@
 export interface Ahorro {
     id?:string,
     nombre:string,
-    progreso:number,
+    progreso?:number,
     monto:number,
     fechaLimite:Date,
     recaudado:number,

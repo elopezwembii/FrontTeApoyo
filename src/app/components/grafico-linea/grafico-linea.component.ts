@@ -25,14 +25,14 @@ export class GraficoLineaComponent implements OnInit {
         legend: {
             orient: 'horizontal',
             bottom: 0,
-            data: ['2018', '2019']
         }
     };
 
     constructor(private ahorroServicio: AhorroService) {}
     ngOnInit() {
         this.ahorroServicio.obtenerAhorroHistorial().subscribe({
-            next: (data: any) => {
+            next: (data: any) => {                
+
                 this.options = {
                     ...this.options,
                     xAxis: {
@@ -47,7 +47,6 @@ export class GraficoLineaComponent implements OnInit {
                             color: '#BCEAF3'
                         }
                       }]
-
                 };
             }
         });

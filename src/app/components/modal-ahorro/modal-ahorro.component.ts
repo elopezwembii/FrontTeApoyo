@@ -1,3 +1,4 @@
+import {Ahorro} from './../../interfaces/ahorro';
 import {Component} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AhorroService} from '@services/ahorro/ahorro.service';
@@ -10,9 +11,11 @@ import {ToastrService} from 'ngx-toastr';
     styleUrls: ['./modal-ahorro.component.scss']
 })
 export class ModalAhorroComponent {
+    titulo = 'Agregar ahorro';
     myModal: any;
 
     form: FormGroup = this.fb.group({
+        id: [,],
         nombre: [, [Validators.required]],
         fechaLimite: [, [Validators.required]],
         monto: [, [Validators.required]],
@@ -33,17 +36,36 @@ export class ModalAhorroComponent {
         );
     }
 
-    openModal() {
+    openModal(ahorro: Ahorro = null) {
+        this.setFormValues(ahorro);
         this.myModal.show();
     }
 
-    submit() {
-        if (!this.form.valid) return;
+    setFormValues(ahorro: Ahorro) {
+        this.titulo = 'Agregar ahorro';
+        if (!ahorro) {
+            this.form.reset();
+        } else {
+            this.titulo = 'Editar ahorro';
 
-        const {value: ahorro} = this.form;
+            const fechaISO = ahorro.fechaLimite;
+            const fecha = new Date(fechaISO);
+            const fechaFormateada = fecha.toISOString().split('T')[0];
 
+            this.form.patchValue({
+                id: ahorro.id,
+                nombre: ahorro.nombre,
+                fechaLimite: fechaFormateada,
+                monto: ahorro.monto,
+                meta: ahorro.meta,
+                recaudado: ahorro.recaudado
+            });
+        }
+    }
+
+    guardarAhorro(ahorro: Ahorro) {
         this.ahorroService.agregarAhorro(ahorro).subscribe({
-            next: (resp: any) => {
+            complete: () => {
                 this.toastr.success(`Ahorro correctamente`);
                 this.myModal.hide();
             },
@@ -52,5 +74,31 @@ export class ModalAhorroComponent {
                 console.error(resp);
             }
         });
+    }
+
+    editarAhorro(ahorro: Ahorro) {
+        this.ahorroService.editarAhorro(ahorro).subscribe({
+            complete: () => {
+                this.toastr.success(`Ahorro editado correctamente`);
+                this.myModal.hide();
+            },
+            error: (resp: any) => {
+                this.toastr.error('Error');
+                console.error(resp);
+            }
+        });
+    }
+
+    submit() {
+        if (!this.form.valid) return;
+
+        const {value: ahorro} = this.form;
+
+        if (ahorro.id) {
+            this.editarAhorro(ahorro);
+        } else {
+            this.guardarAhorro(ahorro);
+        }
+        this.ahorroService.obtenerAhorros().subscribe();
     }
 }

@@ -22,7 +22,6 @@
 <!-- /.content-header -->
 
 <!-- Main content -->
-
 <section class="content">
     <div class="container-fluid">
         <div class="row">
@@ -42,16 +41,16 @@
 
                 <div *ngFor="let item of ahorros">
                     <div class="d-flex justify-content-between">
-                        <h6>{{ item.nombre }}</h6>
+                        <h6><strong>{{ item.nombre }}</strong></h6>
                         <div>
                             <button
-                                (click)="editarAhorro(item)"
+                                (click)="openModal(item)" title="Editar ahorro"
                                 class="btn btn-link cursor-pointer"
                             >
                                 <i class="fas fa-pencil-alt edit"></i>
                             </button>
                             <button
-                                (click)="eliminarAhorro(item)"
+                                (click)="eliminarAhorro(item)" title="Eliminar ahorro"
                                 class="btn btn-link cursor-pointer"
                             >
                                 <i class="fas fa-trash edit"></i>
