@@ -83,7 +83,7 @@ registerLocaleData(localeEs);
         PresupuestoComponent,
         GraficoDonaComponent,
         GraficoBarraComponent,
-        AhorrosComponent
+        AhorrosComponent,
         DeudasComponent
 
     ],

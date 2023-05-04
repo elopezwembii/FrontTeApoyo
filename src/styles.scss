@@ -207,6 +207,23 @@ td {
   color: rgba(0, 0, 0, 0.3);
 }
 
+.boton-acept-deuda {
+  border: none;
+  color: rgba(0, 0, 0, 0.3);
+  background-color: transparent;
+  text-decoration: none;
+  display: inline-block;
+  padding: 0;
+}
+
+.boton-acept-deuda:hover {
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.boton-acept-deuda:disabled{
+  color: rgba(0, 0, 0, 0.3);
+}
+
 .mycheck {
   cursor: pointer;
   background-color: #fff;

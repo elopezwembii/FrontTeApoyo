@@ -105,11 +105,12 @@ export class GraficoComponent implements OnChanges {
                             barCategoryGap: '30%',
                             itemStyle: {
                                 color: '#bceaf3',
-                                borderRadius: [0, 5, 5, 0],
-
+                                borderRadius: [0, 5, 5, 0]
                             },
                             label: {
                                 show: true,
+                                position: 'right',
+                                valueAnimation: true,
                                 formatter: (params: any) => {
                                     return (
                                         '$' +
@@ -136,7 +137,8 @@ export class GraficoComponent implements OnChanges {
                             },
                             label: {
                                 show: true,
-
+                                position: 'right',
+                                valueAnimation: true,
                                 formatter: (params: any) => {
                                     return (
                                         '$' +
@@ -157,87 +159,17 @@ export class GraficoComponent implements OnChanges {
                 let sumaAnterior =
                     anterior.totalVariableActual + anterior.totalVariableFijo;
                 if (sumaActual - sumaAnterior > 0) {
-                  //aumenta
+                    //aumenta
                     this.porcentaje =
                         ((sumaActual - sumaAnterior) / sumaAnterior) * 100;
                 } else {
-                  //disminuye
+                    //disminuye
                     this.porcentaje =
-                        (((sumaAnterior - sumaActual) / sumaAnterior) * 100)*-1;
+                        ((sumaAnterior - sumaActual) / sumaAnterior) * 100 * -1;
                 }
                 this.loading = false;
                 console.log(this.porcentaje);
             });
         });
-        /* this.ingresoService.sumarMontosPorFecha(this.fecha).subscribe({
-            next: (resp: any) => {
-
-                this.options = {
-                    ...this.options,
-                    yAxis: {
-                        type: 'category',
-                        data: [resp.nombreMesAnterior, resp.nombreMesActual]
-                    },
-                    series: [
-                        {
-                            name: 'Ingreso fijo',
-                            type: 'bar',
-                            data: [
-                                resp.sumaMontoPlanificadoMesAnterior,
-                                resp.sumaMontoPlanificado
-                            ],
-                            barGap: '30%',
-                            barCategoryGap: '30%',
-                            itemStyle: {
-                                color: '#bceaf3',
-                                borderRadius: [0, 5, 5, 0]
-                            },
-                            label: {
-                                show: true,
-                                formatter: (params: any) => {
-                                    return (
-                                        '$' +
-                                        params.value
-                                            .toString()
-                                            .replace(
-                                                /\B(?=(\d{3})+(?!\d))/g,
-                                                '.'
-                                            )
-                                    );
-                                }
-                            }
-                        },
-                        {
-                            name: 'Ingreso variable',
-                            type: 'bar',
-                            data: [
-                                resp.sumaMontoRealMesAnterior,
-                                resp.sumaMontoReal
-                            ],
-                            itemStyle: {
-                                color: '#ffd48f',
-                                borderRadius: [0, 5, 5, 0]
-                            },
-                            label: {
-                                show: true,
-
-                                formatter: (params: any) => {
-                                    return (
-                                        '$' +
-                                        params.value
-                                            .toString()
-                                            .replace(
-                                                /\B(?=(\d{3})+(?!\d))/g,
-                                                '.'
-                                            )
-                                    );
-                                }
-                            }
-                        }
-                    ]
-                };
-
-            }
-        }); */
     }
 }
