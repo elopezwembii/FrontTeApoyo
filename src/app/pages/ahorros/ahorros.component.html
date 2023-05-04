@@ -26,70 +26,130 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-12 col-sm-8">
+                <div
+                    class="d-flex justify-content-end"
+                    style="margin-bottom: 20px"
+                >
+                    <button
+                        type="button"
+                        (click)="openModal()"
+                        class="btn btn-light rounded-pill shadow"
+                    >
+                        Agregar ahorro
+                    </button>
+                </div>
+
                 <div *ngFor="let item of ahorros">
-                    <h6>{{ item.nombre }}</h6>
+                    <div class="d-flex justify-content-between">
+                        <h6><strong>{{ item.nombre }}</strong></h6>
+                        <div>
+                            <button
+                                (click)="openModal(item)" title="Editar ahorro"
+                                class="btn btn-link cursor-pointer"
+                            >
+                                <i class="fas fa-pencil-alt edit"></i>
+                            </button>
+                            <button
+                                (click)="eliminarAhorro(item)" title="Eliminar ahorro"
+                                class="btn btn-link cursor-pointer"
+                            >
+                                <i class="fas fa-trash edit"></i>
+                            </button>
+                        </div>
+                    </div>
+
                     <div class="card">
                         <div class="card-body">
                             <div class="row align-items-center">
-                                <div class="col-2">
-                                    <i class="fas fa-piggy-bank fa-3x text-success"></i>
+                                <div class="col-3">
+                                    <img
+                                        [src]="item.img"
+                                        alt="Icono de ahorro"
+                                        class="img-fluid"
+                                    />
                                 </div>
-                                <div class="col-10">
-                                 
+                                <div class="col-9">
+                                    <div class="text-right mt-2">
+                                        Meta
+                                        <strong class="big-text">{{
+                                            item.meta
+                                                | currency: '$':'symbol':'1.0-0'
+                                        }}</strong>
+                                    </div>
                                     <div class="row mt-2">
-                                        <div class="col-4">
-                                            <p>Monto Mensual:</p>
+                                        <div class="col-4 text-left">
+                                            <strong class="medium-text">{{
+                                                item.monto
+                                                    | currency
+                                                        : '$'
+                                                        : 'symbol'
+                                                        : '1.0-0'
+                                            }}</strong
+                                            ><br />Monto Mensual
                                         </div>
-                                        <div class="col-4">
-                                            <p>Fecha Límite:</p>
+                                        <div class="col-4 text-center">
+                                            <strong class="medium-text">{{
+                                                item.fechaLimite
+                                                    | date: 'dd/MM/yyyy'
+                                            }}</strong
+                                            ><br />Fecha Límite
                                         </div>
-                                        <div class="col-4">
-                                            <p>Recaudado:</p>
+                                        <div class="col-4 text-right">
+                                            <strong class="medium-text">{{
+                                                item.recaudado
+                                                    | currency
+                                                        : '$'
+                                                        : 'symbol'
+                                                        : '1.0-0'
+                                            }}</strong
+                                            ><br />Recaudado
                                         </div>
                                     </div>
-
                                     <div class="progress">
-                                        <div class="progress-bar bg-success" role="progressbar" [style.width.%]="item.progreso">
-                                            <div class="progress-label">{{ item.progreso }}%</div>
+                                        <div
+                                            class="progress-bar progress-bar-custom"
+                                            role="progressbar"
+                                            [style.width.%]="item.progreso"
+                                        >
+                                            <div class="progress-label">
+                                                {{ item.progreso }}%
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                               
                             </div>
                         </div>
                     </div>
                 </div>
-                
-                  
-                  
-                
             </div>
             <div class="col-12 col-sm-4">
                 <div class="card">
                     <div class="card-body">
-                        <form>
-                            Lorem ipsum dolor sit amet consectetur adipisicing
-                            elit. Itaque similique commodi minima
-                            exercitationem, tempora ratione totam pariatur,
-                            eius, vel consequatur eos sint praesentium? A in
-                            minima repellendus sapiente qui ipsum!
-                        </form>
+                        <app-grafico-linea></app-grafico-linea>
                     </div>
                 </div>
-
                 <div class="card">
+                    <div class="card-head text-center mt-2">
+                        <h5>¡Recuerda!</h5>
+                    </div>
                     <div class="card-body">
-                        <form>
-                            Lorem ipsum dolor sit amet consectetur adipisicing
-                            elit. Itaque similique commodi minima
-                            exercitationem, tempora ratione totam pariatur,
-                            eius, vel consequatur eos sint praesentium? A in
-                            minima repellendus sapiente qui ipsum!
-                        </form>
+                        <p>
+                            Disminuye tus gastos hormigas para aumentar tus
+                            ahorros y alcanzar tus metas mas rápido
+                        </p>
+                    </div>
+                    <div class="card-footer text-center">
+                        <p>
+                            <b
+                                >Puedes ver tus gastos hormiga
+                                <a href="">aquí</a></b
+                            >
+                        </p>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
 </section>
+
+<app-modal-ahorro #modalAhorro></app-modal-ahorro>
