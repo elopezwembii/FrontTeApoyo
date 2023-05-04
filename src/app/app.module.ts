@@ -89,7 +89,6 @@ registerLocaleData(localeEs);
         DeudasComponent,
         GraficoLineaComponent,
         ModalAhorroComponent
-
     ],
     imports: [
         NgxLoadingModule.forRoot({
