@@ -49,6 +49,7 @@ import { CorsInterceptor } from './cors.interceptor';
 import { DeudasComponent } from './pages/deudas/deudas.component';
 import { GraficoLineaComponent } from './components/grafico-linea/grafico-linea.component';
 import { ModalAhorroComponent } from './components/modal-ahorro/modal-ahorro.component';
+import { GraficoDonaMayoresGastosComponent } from './components/grafico-dona-mayores-gastos/grafico-dona-mayores-gastos.component';
 
 defineCustomElements();
 registerLocaleData(localeEs);
@@ -88,7 +89,8 @@ registerLocaleData(localeEs);
         AhorrosComponent,
         DeudasComponent,
         GraficoLineaComponent,
-        ModalAhorroComponent
+        ModalAhorroComponent,
+        GraficoDonaMayoresGastosComponent
     ],
     imports: [
         NgxLoadingModule.forRoot({

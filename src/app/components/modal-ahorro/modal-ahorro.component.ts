@@ -1,4 +1,4 @@
-import {Ahorro} from './../../interfaces/ahorro';
+import {Ahorro, TipoAhorro} from './../../interfaces/ahorro';
 import {Component} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AhorroService} from '@services/ahorro/ahorro.service';
@@ -13,9 +13,11 @@ import {ToastrService} from 'ngx-toastr';
 export class ModalAhorroComponent {
     titulo = 'Agregar ahorro';
     myModal: any;
+    tipoAhorro: TipoAhorro[] = [];
 
     form: FormGroup = this.fb.group({
         id: [,],
+        img: [],
         nombre: [, [Validators.required]],
         fechaLimite: [, [Validators.required]],
         monto: [, [Validators.required]],
@@ -34,17 +36,22 @@ export class ModalAhorroComponent {
             document.getElementById('modalAhorro'),
             {}
         );
+
+        this.obtenerTipoAhorro();
     }
 
     openModal(ahorro: Ahorro = null) {
-        this.setFormValues(ahorro);
         this.myModal.show();
+        this.setFormValues(ahorro);
     }
 
     setFormValues(ahorro: Ahorro) {
         this.titulo = 'Agregar ahorro';
         if (!ahorro) {
             this.form.reset();
+            this.form.patchValue({
+                nombre: '-1'
+            });
         } else {
             this.titulo = 'Editar ahorro';
 
@@ -54,7 +61,7 @@ export class ModalAhorroComponent {
 
             this.form.patchValue({
                 id: ahorro.id,
-                nombre: ahorro.nombre,
+                nombre: ahorro.tipoAhorro.id,
                 fechaLimite: fechaFormateada,
                 monto: ahorro.monto,
                 meta: ahorro.meta,
@@ -89,10 +96,28 @@ export class ModalAhorroComponent {
         });
     }
 
+    obtenerTipoAhorro() {
+        this.ahorroService.obtenerTipoAhorro().subscribe({
+            next: (tipoAhorro: TipoAhorro[]) => {
+                this.tipoAhorro = tipoAhorro;
+            }
+        });
+    }
+
     submit() {
+        const {value: idAhorro} = this.form.get('nombre');
+        const tipoAhorro = this.tipoAhorro.find((tipo) => tipo.id == idAhorro);
+
+        console.log(tipoAhorro);
+
         if (!this.form.valid) return;
 
-        const {value: ahorro} = this.form;
+        let {value: ahorro} = this.form;
+
+        ahorro = {
+            ...ahorro,
+            tipoAhorro
+        };
 
         if (ahorro.id) {
             this.editarAhorro(ahorro);

@@ -10,12 +10,18 @@ export class GraficoBarraComponent implements OnChanges {
     @Input() gastoReal: any = [];
     @Input() presupuesto: any = [];
 
-    options:any = {
-        xAxis: {  
-            axisLabel: {
-              rotate: 0
+    options: any = {
+        seriesDefaults: {
+            bar: {
+                barBorderRadius: [10, 10, 0, 0]
             }
-          },
+        },
+
+        xAxis: {
+            axisLabel: {
+                rotate: 0
+            }
+        },
         yAxis: {},
         series: [],
         legend: {
@@ -35,45 +41,51 @@ export class GraficoBarraComponent implements OnChanges {
         console.log('presupuesto', this.presupuesto);
         console.log('gasto real', this.gastoReal);
 
-   
         this.options = {
             ...this.options,
+
             xAxis: {
                 data: this.presupuesto.map((item: any) => item.name),
                 axisLabel: {
                     rotate: 30
-                  }
+                }
             },
+            color: ['#BCEAF3', '#FFD48F'],
             series: [
                 {
-                    label: {
-                        show: true,
-                        position: 'top',
-                        formatter: (params) => {
-                            return this.currencyPipe.transform(
-                                params.value,
-                                'USD',
-                                'symbol-narrow',
-                                '1.0-0'
-                            );
-                        },
-                        textStyle: {
-                            color: 'black',
-                            fontSize: 12
-                        }
-                    },
                     name: 'Presupuesto',
                     type: 'bar',
                     data: this.presupuesto,
                     barGap: '-50%',
-                    z: 2
+                    z: 2,
+                    itemStyle: {
+                        barBorderRadius: [10, 10, 0, 0]
+                    }
                 },
-                {
+                {  label: {
+                    show: true,
+                    position: 'top',
+                    formatter: (params) => {
+                        return '$' + this.currencyPipe.transform(
+                          params.value,
+                          'USD',
+                          '',
+                          '1.0-0'
+                        );
+                      },
+                    textStyle: {
+                        color: 'black',
+                        fontSize: 12
+                    }
+                },
                     name: 'Gasto real',
                     type: 'bar',
                     data: this.gastoReal,
                     barGap: '-50%',
-                    z: 1
+                    z: 1,
+                    itemStyle: {
+                        barBorderRadius: [10, 10, 0, 0]
+                    }
                 }
             ]
         };

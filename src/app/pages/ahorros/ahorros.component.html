@@ -41,7 +41,7 @@
 
                 <div *ngFor="let item of ahorros">
                     <div class="d-flex justify-content-between">
-                        <h6><strong>{{ item.nombre }}</strong></h6>
+                        <h6><strong>{{ item.tipoAhorro.descripcion }}</strong></h6>
                         <div>
                             <button
                                 (click)="openModal(item)" title="Editar ahorro"
@@ -63,7 +63,7 @@
                             <div class="row align-items-center">
                                 <div class="col-3">
                                     <img
-                                        [src]="item.img"
+                                        [src]="item.tipoAhorro.img"
                                         alt="Icono de ahorro"
                                         class="img-fluid"
                                     />
