@@ -219,7 +219,7 @@
             <div class="col-12 col-sm-4">
                 <div class="card">
                     <app-grafico-dona
-                        [data]="graficoDonaPresupuesto"
+                        [data]="presupuesto"
                     ></app-grafico-dona>
                 </div>
             </div>
@@ -231,7 +231,7 @@
         <div class="row">
             <div class="col-12 col-sm-12">
                 <div class="card h-100">
-                    <app-grafico-barra [presupuesto]="graficoDonaPresupuesto" [gastoReal]="graficoDonaPresupuesto" class="custom-chart"></app-grafico-barra>
+                    <app-grafico-barra [presupuesto]="presupuesto" [gastoReal]="gastoReal" class="custom-chart"></app-grafico-barra>
                 </div>
             </div>
         </div>

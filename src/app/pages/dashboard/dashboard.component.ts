@@ -1,6 +1,11 @@
+import {Ahorro} from './../../interfaces/ahorro';
 import {Component, OnInit} from '@angular/core';
+import {AhorroService} from '@services/ahorro/ahorro.service';
+import {AppService} from '@services/app.service';
+import {GastosService} from '@services/gastos/gastos.service';
 import {PresupuestoService} from '@services/presupuesto/presupuesto.service';
 import {ToastrService} from 'ngx-toastr';
+import {forkJoin} from 'rxjs';
 
 @Component({
     selector: 'app-dashboard',
@@ -8,50 +13,82 @@ import {ToastrService} from 'ngx-toastr';
     styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
-    usuario: string = 'Carla Soto';
-    graficoDonaPresupuesto: any;
-
-    gastoReal=[
-        {
-            "name": "Créditos",
-            "value": 800000
-        },
-        {
-            "name": "Servicios básicos",
-            "value": 400000
-        },
-        {
-            "name": "Alimento y comida",
-            "value": 500000
-        },
-        {
-            "name": "Entretenimiento",
-            "value": 870000
-        },
-        {
-            "name": "Salud y belleza",
-            "value": 750000
-        },
-        {
-            "name": "Ahorro e inversiones",
-            "value": 850000
-        }
-    ]
+    usuario: any;
+    presupuesto: any;
+    gastoReal: any;
+    gastosHormigas: any = [];
+    ahorros: Ahorro[] = [];
+    posibleAhorro: number;
+    nivel: string;
+    siguienteNivel: string;
+    ahorroSiguienteNivel: number;
 
     constructor(
         private presupuestoService: PresupuestoService,
-        private toastr: ToastrService
+        private ahorroService: AhorroService,
+        private gastosService: GastosService,
+        private appService: AppService
     ) {}
     ngOnInit(): void {
         this.obtenerDatoGrafico();
+        this.obtenerAhorro();
+        this.obtenerGastoHormiga();
+        this.obtenerUsuario();
+    }
+
+    obtenerAhorro() {
+        this.ahorroService.obtenerAhorros().subscribe({
+            next: (ahorro: any) => {
+                this.ahorros = ahorro;
+            }
+        });
+    }
+
+    obtenerGastoHormiga() {
+        this.gastosService.obtenerGastoHormiga().subscribe({
+            next: (gastoHormiga: any) => {
+                this.gastosHormigas = gastoHormiga;
+            }
+        });
     }
 
     obtenerDatoGrafico() {
-        this.presupuestoService.obtenerDatosGrafico(4, 2023).subscribe({
-            next: (resp: any) => {
-                this.graficoDonaPresupuesto = resp;
-                console.log({resp});
-                
+        const today = new Date();
+        const month = today.getMonth() + 1;
+        const year = today.getFullYear();
+        const presupuesto$ = this.presupuestoService.obtenerPresupuesto(
+            month,
+            year
+        );
+        const gastoReal$ = this.presupuestoService.obtenerGastoReal(
+            month,
+            year
+        );
+
+        forkJoin([presupuesto$, gastoReal$]).subscribe({
+            next: ([presupuesto, gastoReal]) => {
+                this.presupuesto = presupuesto;
+                this.gastoReal = gastoReal;
+            },
+            error: (error) => {
+                console.error(error);
+            }
+        });
+    }
+
+    obtenerUsuario() {
+        this.usuario = JSON.parse(this.appService.user);
+        this.ahorroService.obtenerNivelAhorroUsuario().subscribe({
+            next: ({
+                posibleAhorro,
+                nivel,
+                siguienteNivel,
+                ahorroSiguienteNivel
+            }: any) => {
+                this.posibleAhorro = posibleAhorro;
+                this.nivel = nivel;
+                this.siguienteNivel = siguienteNivel;
+                this.ahorroSiguienteNivel = ahorroSiguienteNivel;
             }
         });
     }

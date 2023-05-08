@@ -6,7 +6,7 @@ import {Observable, of} from 'rxjs';
     providedIn: 'root'
 })
 export class PresupuestoService {
-    categoria: Categoria[] = [
+    private categoria: Categoria[] = [
         {
             id: '1',
             descripcion: 'Hogar',
@@ -79,52 +79,97 @@ export class PresupuestoService {
         }
     ];
 
-    presupuestos: Presupuesto[] = [
+    private presupuestos: Presupuesto[] = [
         {
             id: 1,
             categoria: '10',
-            mes: 4,
+            mes: 5,
             year: 2023,
             monto: 500000
         },
         {
             id: 2,
             categoria: '2',
-            mes: 4,
+            mes: 5,
             year: 2023,
             monto: 300000
         },
         {
             id: 3,
             categoria: '3',
-            mes: 4,
+            mes: 5,
             year: 2023,
             monto: 200000
         },
         {
             id: 4,
             categoria: '4',
-            mes: 4,
+            mes: 5,
             year: 2023,
             monto: 800000
         },
         {
             id: 5,
             categoria: '5',
-            mes: 4,
+            mes: 5,
             year: 2023,
             monto: 350000
         },
         {
             id: 6,
             categoria: '14',
-            mes: 4,
+            mes: 5,
             year: 2023,
             monto: 650000
         }
     ];
 
-    presupuestoMensual: any[] = [
+    private gastoReal: Presupuesto[] = [
+        {
+            id: 1,
+            categoria: '10',
+            mes: 5,
+            year: 2023,
+            monto: 700000
+        },
+        {
+            id: 2,
+            categoria: '2',
+            mes: 5,
+            year: 2023,
+            monto: 450000
+        },
+        {
+            id: 3,
+            categoria: '3',
+            mes: 5,
+            year: 2023,
+            monto: 300000
+        },
+        {
+            id: 4,
+            categoria: '4',
+            mes: 5,
+            year: 2023,
+            monto: 900000
+        },
+        {
+            id: 5,
+            categoria: '5',
+            mes: 5,
+            year: 2023,
+            monto: 400000
+        },
+        {
+            id: 6,
+            categoria: '14',
+            mes: 5,
+            year: 2023,
+            monto: 750000
+        }
+    ];
+
+    private presupuestoMensual: any[] = [
         {
             mes: 4,
             anio: 2023,
@@ -185,7 +230,7 @@ export class PresupuestoService {
     };
 
     agregarPresupuesto(nuevoPresupuesto: Presupuesto): Observable<string> {
-        return new Observable<string>((observer) => {            
+        return new Observable<string>((observer) => {
             this.presupuestos.push(nuevoPresupuesto);
             observer.next(`Presupuesto agregado correctamente`);
             observer.complete();
@@ -232,8 +277,8 @@ export class PresupuestoService {
         });
     }
 
-    obtenerDatosGrafico(mes: number, anio: number): Observable<any> {
-        const datosGrafico = this.presupuestos
+    obtenerPresupuesto(mes: number, anio: number): Observable<any> {
+        const presupuesto = this.presupuestos
             .filter(
                 (presupuesto) =>
                     presupuesto.mes === mes && presupuesto.year === anio
@@ -248,7 +293,25 @@ export class PresupuestoService {
                 };
             });
 
-        return of(datosGrafico);
+        return of(presupuesto);
+    }
+
+    obtenerGastoReal(mes: number, anio: number): Observable<any> {
+        const gastoReal = this.gastoReal
+            .filter(
+                (gastoReal) => gastoReal.mes === mes && gastoReal.year === anio
+            )
+            .map((gastoReal) => {
+                const categoria = this.categoria.find(
+                    (categoria) => categoria.id === gastoReal.categoria
+                );
+                return {
+                    name: categoria ? categoria.descripcion : 'Desconocido',
+                    value: gastoReal.monto
+                };
+            });
+
+        return of(gastoReal);
     }
 
     obtenerPresupuestoMensual(mes: number, anio: number): Observable<number> {

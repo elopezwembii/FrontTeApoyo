@@ -105,6 +105,12 @@ export class AhorroService {
         }
     ];
 
+    private nivelUsuario: any = {
+        posibleAhorro: 85000,
+        nivel: 'Money Wizard',
+        siguienteNivel: 'Budget Boss',
+        ahorroSiguienteNivel: 100000
+    };
     constructor() {}
 
     obtenerAhorros(): Observable<Ahorro[]> {
@@ -147,5 +153,9 @@ export class AhorroService {
 
     obtenerTipoAhorro() {
         return of(this.tiposAhorro);
+    }
+
+    obtenerNivelAhorroUsuario() {
+        return of(this.nivelUsuario);
     }
 }

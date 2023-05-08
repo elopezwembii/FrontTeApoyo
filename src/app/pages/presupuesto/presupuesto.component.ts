@@ -4,6 +4,7 @@ import {Component, ElementRef, Renderer2, ViewChild} from '@angular/core';
 import {Validators, FormBuilder} from '@angular/forms';
 import {PresupuestoService} from '@services/presupuesto/presupuesto.service';
 import {ToastrService} from 'ngx-toastr';
+import {forkJoin} from 'rxjs';
 
 @Component({
     selector: 'app-presupuesto',
@@ -24,7 +25,8 @@ export class PresupuestoComponent {
     isEditing: boolean = false;
     isAdding: boolean = false;
 
-    graficoDonaPresupuesto: any;
+    presupuesto: any;
+    gastoReal: any;
 
     form = this.fb.group({
         id: [''],
@@ -78,13 +80,24 @@ export class PresupuestoComponent {
     }
 
     obtenerDatoGrafico() {
-        this.presupuestoService
-            .obtenerDatosGrafico(this.selectionMonth + 1, this.selectionYear)
-            .subscribe({
-                next: (resp: any) => {
-                    this.graficoDonaPresupuesto = resp;
-                }
-            });
+        const presupuesto$ = this.presupuestoService.obtenerPresupuesto(
+            this.selectionMonth + 1,
+            this.selectionYear
+        );
+        const gastoReal$ = this.presupuestoService.obtenerGastoReal(
+            this.selectionMonth + 1,
+            this.selectionYear
+        );
+
+        forkJoin([presupuesto$, gastoReal$]).subscribe({
+            next: ([presupuesto, gastoReal]) => {
+                this.presupuesto = presupuesto;
+                this.gastoReal = gastoReal;
+            },
+            error: (error) => {
+                console.error(error);
+            }
+        });
     }
 
     obtenerPresupuesto() {

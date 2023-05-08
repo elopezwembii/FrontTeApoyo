@@ -63,6 +63,24 @@
     font-size: 18px;
 }
 
-.card {  
+.card {
     border-radius: 30px;
+    margin-bottom: 0rem;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(269deg)
+        brightness(107%) contrast(107%);
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+    color: red;
+    width: 5%;
+}
+
+.money-wizard {
+    font-size: 28px;
+    font-weight: bold;
 }
