@@ -12,12 +12,12 @@ import {RecoverPasswordComponent} from '@modules/recover-password/recover-passwo
 import {MainMenuComponent} from '@pages/main-menu/main-menu.component';
 import {SubMenuComponent} from '@pages/main-menu/sub-menu/sub-menu.component';
 
-import { GastosComponent } from '@pages/gastos/gastos.component';
-import { IngresosComponent } from '@pages/ingresos/ingresos.component';
-import { PresupuestoComponent } from '@pages/presupuesto/presupuesto.component';
-import { AhorrosComponent } from '@pages/ahorros/ahorros.component';
-import { DeudasComponent } from '@pages/deudas/deudas.component';
-
+import {GastosComponent} from '@pages/gastos/gastos.component';
+import {IngresosComponent} from '@pages/ingresos/ingresos.component';
+import {PresupuestoComponent} from '@pages/presupuesto/presupuesto.component';
+import {AhorrosComponent} from '@pages/ahorros/ahorros.component';
+import {DeudasComponent} from '@pages/deudas/deudas.component';
+import {AnalisisComponent} from '@pages/analisis/analisis.component';
 
 const routes: Routes = [
     {
@@ -53,6 +53,10 @@ const routes: Routes = [
             {
                 path: 'deudas',
                 component: DeudasComponent
+            },
+            {
+                path: 'analisis',
+                component: AnalisisComponent
             },
             {
                 path: '',

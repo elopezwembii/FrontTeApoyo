@@ -1,5 +1,11 @@
-import {Categoria, Presupuesto} from '@/interfaces/presupuesto';
+import {
+    Categoria,
+    ItemPresupuesto,
+    Presupuesto
+} from '@/interfaces/presupuesto';
+import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
+import {environment} from 'environments/environment';
 import {Observable, of} from 'rxjs';
 
 @Injectable({
@@ -8,241 +14,218 @@ import {Observable, of} from 'rxjs';
 export class PresupuestoService {
     private categoria: Categoria[] = [
         {
-            id: '1',
+            id: 1,
             descripcion: 'Hogar',
             img: 'fas fa-home'
         },
         {
-            id: '2',
+            id: 2,
             descripcion: 'Servicios básicos',
             img: 'fas fa-wrench'
         },
         {
-            id: '3',
+            id: 3,
             descripcion: 'Alimento y comida',
             img: 'fas fa-utensils'
         },
         {
-            id: '4',
+            id: 4,
             descripcion: 'Entretenimiento',
             img: 'fas fa-gamepad'
         },
         {
-            id: '5',
+            id: 5,
             descripcion: 'Salud y belleza',
             img: 'fas fa-heart'
         },
         {
-            id: '6',
+            id: 6,
             descripcion: 'Auto y transporte',
             img: 'fas fa-car'
         },
         {
-            id: '7',
+            id: 7,
             descripcion: 'Educación y trabajo',
             img: 'fas fa-graduation-cap'
         },
         {
-            id: '8',
+            id: 8,
             descripcion: 'Regalo y ayudas',
             img: 'fas fa-gift'
         },
         {
-            id: '9',
+            id: 9,
             descripcion: 'Viajes',
             img: 'fas fa-plane'
         },
         {
-            id: '10',
+            id: 10,
             descripcion: 'Créditos',
             img: 'fas fa-credit-card'
         },
         {
-            id: '11',
+            id: 11,
             descripcion: 'Ropa y calzado',
             img: 'fas fa-tshirt'
         },
         {
-            id: '12',
+            id: 12,
             descripcion: 'Personal',
             img: 'fas fa-user'
         },
         {
-            id: '13',
+            id: 13,
             descripcion: 'Compras Online',
             img: 'fas fa-shopping-cart'
         },
         {
-            id: '14',
+            id: 14,
             descripcion: 'Ahorro e inversiones',
             img: 'fas fa-piggy-bank'
         }
     ];
 
-    private presupuestos: Presupuesto[] = [
-        {
-            id: 1,
-            categoria: '10',
-            mes: 5,
-            year: 2023,
-            monto: 500000
-        },
-        {
-            id: 2,
-            categoria: '2',
-            mes: 5,
-            year: 2023,
-            monto: 300000
-        },
-        {
-            id: 3,
-            categoria: '3',
-            mes: 5,
-            year: 2023,
-            monto: 200000
-        },
-        {
-            id: 4,
-            categoria: '4',
-            mes: 5,
-            year: 2023,
-            monto: 800000
-        },
-        {
-            id: 5,
-            categoria: '5',
-            mes: 5,
-            year: 2023,
-            monto: 350000
-        },
-        {
-            id: 6,
-            categoria: '14',
-            mes: 5,
-            year: 2023,
-            monto: 650000
-        }
-    ];
+    presupuestoMensual: Presupuesto = {} as Presupuesto;
 
-    private gastoReal: Presupuesto[] = [
-        {
-            id: 1,
-            categoria: '10',
-            mes: 5,
-            year: 2023,
-            monto: 700000
-        },
-        {
-            id: 2,
-            categoria: '2',
-            mes: 5,
-            year: 2023,
-            monto: 450000
-        },
-        {
-            id: 3,
-            categoria: '3',
-            mes: 5,
-            year: 2023,
-            monto: 300000
-        },
-        {
-            id: 4,
-            categoria: '4',
-            mes: 5,
-            year: 2023,
-            monto: 900000
-        },
-        {
-            id: 5,
-            categoria: '5',
-            mes: 5,
-            year: 2023,
-            monto: 400000
-        },
-        {
-            id: 6,
-            categoria: '14',
-            mes: 5,
-            year: 2023,
-            monto: 750000
-        }
-    ];
-
-    private presupuestoMensual: any[] = [
-        {
-            mes: 4,
-            anio: 2023,
-            presupuesto: 11500000
-        },
-        {
-            mes: 5,
-            anio: 2023,
-            presupuesto: 11000000
-        },
-        {
-            mes: 6,
-            anio: 2023,
-            presupuesto: 11100000
-        }
-    ];
-
-    constructor() {}
+    constructor(private _http: HttpClient) {}
 
     obtenerCategoria = (): Observable<Categoria[]> => {
         return of(this.categoria);
     };
 
-    obtenerPresupuestos = (
-        mes: number,
-        anio: number
-    ): Observable<{presupuestos: Presupuesto[]; total: number}> => {
-        return new Observable<{presupuestos: Presupuesto[]; total: number}>(
-            (observer) => {
-                const presupuestosFiltrados = this.presupuestos.filter(
-                    (p) => p.mes === mes && p.year === anio
-                );
-                const presupuestosConDescripcionCategoria =
-                    presupuestosFiltrados.map((p) => {
-                        const categoria = this.categoria.find(
-                            (c) => c.id === p.categoria
-                        );
-                        const categoriaId = categoria ? categoria.id : null;
-                        const imgCategoria = categoria ? categoria.img : null;
-                        return {
-                            ...p,
-                            categoria: categoria ? categoria.descripcion : '',
-                            categoriaId,
-                            imgCategoria
-                        };
-                    });
-                const total = presupuestosFiltrados.reduce(
-                    (acc, p) => acc + p.monto,
-                    0
-                );
-                observer.next({
-                    presupuestos: presupuestosConDescripcionCategoria,
-                    total
-                });
-                observer.complete();
-            }
-        );
-    };
+    async getPresupuesto(mes: number, anio: number) {
+        try {
+            const data: any = await new Promise((resolve, reject) => {
+                this._http
+                    .get(
+                        environment.uri_api +
+                            'presupuesto_por_mes?mes=' +
+                            mes +
+                            '&anio=' +
+                            anio +
+                            '&id_usuario=' +
+                            JSON.parse(sessionStorage.getItem('user')).user.id,
+                        {
+                            headers: {
+                                Authorization:
+                                    'Bearer ' +
+                                    JSON.parse(sessionStorage.getItem('user'))
+                                        .access_token
+                            }
+                        }
+                    )
+                    .subscribe(
+                        (response) => {
+                            resolve(response);
+                        },
+                        (error) => {
+                            console.error(error);
+                            reject(error);
+                        }
+                    );
+            });
+            this.presupuestoMensual = data.presupuesto[0];
+            this.presupuestoMensual.presupuesto = data.ingreso;
+            return of({presupuesto: this.presupuestoMensual});
+        } catch (error) {}
+    }
 
-    agregarPresupuesto(nuevoPresupuesto: Presupuesto): Observable<string> {
+    async agregarPresupuesto(
+        itemPresupuesto: ItemPresupuesto
+    ): Promise<boolean> {
+        console.log(itemPresupuesto);
+        try {
+            const res = await new Promise((resolve, reject) => {
+                this._http
+                    .post(
+                        environment.uri_api + 'agregar_item_presupuesto',
+                        {
+                            tipo_gasto: itemPresupuesto.tipo_gasto,
+                            monto: itemPresupuesto.monto,
+                            id_presupuesto: itemPresupuesto.id_presupuesto
+                        },
+                        {
+                            headers: {
+                                Authorization:
+                                    'Bearer ' +
+                                    JSON.parse(sessionStorage.getItem('user'))
+                                        .access_token
+                            }
+                        }
+                    )
+                    .subscribe(
+                        (response) => {
+                            resolve(response);
+                        },
+                        (error) => {
+                            console.error(error);
+                            reject(error);
+                        }
+                    );
+            });
+            return true;
+        } catch (error) {
+            return false;
+        }
+    }
+
+    async replicarPresupuesto(
+        mes_actual: number,
+        anio_actual: number,
+        mes_anterior: number,
+        anio_anterior: number
+    ): Promise<boolean> {
+        try {
+            const res = await new Promise((resolve, reject) => {
+                this._http
+                    .post(
+                        environment.uri_api +
+                            'mantener_presupuesto_mes_anterior',
+                        {
+                            mes_actual,
+                            anio_actual,
+                            mes_anterior,
+                            anio_anterior
+                        },
+                        {
+                            headers: {
+                                Authorization:
+                                    'Bearer ' +
+                                    JSON.parse(sessionStorage.getItem('user'))
+                                        .access_token
+                            }
+                        }
+                    )
+                    .subscribe(
+                        (response) => {
+                            resolve(response);
+                        },
+                        (error) => {
+                            console.error(error);
+                            reject(error);
+                        }
+                    );
+            });
+            return true;
+        } catch (error) {
+            return false;
+        }
+    }
+
+    /* agregarPresupuesto(nuevoPresupuesto: Presupuesto): Observable<string> {
         return new Observable<string>((observer) => {
             this.presupuestos.push(nuevoPresupuesto);
             observer.next(`Presupuesto agregado correctamente`);
             observer.complete();
         });
-    }
+    } */
 
-    getCategoriaDescripcion(id: string): string {
+    getCategoriaDescripcion(id: number): string {
         const categoriaEncontrada = this.categoria.find((c) => c.id === id);
         return categoriaEncontrada ? categoriaEncontrada.descripcion : '';
     }
 
-    actualizarPresupuesto(
+    /* actualizarPresupuesto(
         presupuestoActualizado: Presupuesto
     ): Observable<string> {
         return new Observable<string>((observer) => {
@@ -258,9 +241,9 @@ export class PresupuestoService {
                 observer.error('Presupuesto no encontrado');
             }
         });
-    }
+    } */
 
-    eliminarPresupuesto(presupuestoId: number): Observable<String> {
+    /* eliminarPresupuesto(presupuestoId: number): Observable<String> {
         return new Observable<String>((observer) => {
             const index = this.presupuestos.findIndex(
                 (p) => p.id === presupuestoId
@@ -275,13 +258,41 @@ export class PresupuestoService {
                 observer.error('Presupuesto no encontrado');
             }
         });
-    }
+    } */
 
-    obtenerPresupuesto(mes: number, anio: number): Observable<any> {
-        const presupuesto = this.presupuestos
+    async eliminarItem(idToDelete: number) {
+      try {
+          const res = await new Promise((resolve, reject) => {
+              this._http
+                  .delete(
+                      environment.uri_api + 'item_presupuesto/' + idToDelete,
+                      {
+                          headers: {
+                              Authorization:
+                                  'Bearer ' +
+                                  JSON.parse(sessionStorage.getItem('user'))
+                                      .access_token
+                          }
+                      }
+                  )
+                  .subscribe(
+                      (response) => {
+                          resolve(response);
+                      },
+                      (error) => {
+                          console.error(error);
+                          reject(error);
+                      }
+                  );
+          });
+      } catch (error) {}
+  }
+
+    /* obtenerDatosGrafico(mes: number, anio: number): Observable<any> {
+        const datosGrafico = this.presupuestoMensual
             .filter(
                 (presupuesto) =>
-                    presupuesto.mes === mes && presupuesto.year === anio
+                    presupuesto.mes === mes && presupuesto.anio === anio
             )
             .map((presupuesto) => {
                 const categoria = this.categoria.find(
@@ -292,33 +303,14 @@ export class PresupuestoService {
                     value: presupuesto.monto
                 };
             });
+        return of(datosGrafico);
+    } */
 
-        return of(presupuesto);
-    }
-
-    obtenerGastoReal(mes: number, anio: number): Observable<any> {
-        const gastoReal = this.gastoReal
-            .filter(
-                (gastoReal) => gastoReal.mes === mes && gastoReal.year === anio
-            )
-            .map((gastoReal) => {
-                const categoria = this.categoria.find(
-                    (categoria) => categoria.id === gastoReal.categoria
-                );
-                return {
-                    name: categoria ? categoria.descripcion : 'Desconocido',
-                    value: gastoReal.monto
-                };
-            });
-
-        return of(gastoReal);
-    }
-
-    obtenerPresupuestoMensual(mes: number, anio: number): Observable<number> {
+    /* obtenerPresupuestoMensual(mes: number, anio: number): Observable<number> {
         const presupuesto = this.presupuestoMensual.find(
             (presupuesto) =>
                 presupuesto.mes === mes && presupuesto.anio === anio
         );
         return of(presupuesto ? presupuesto.presupuesto : 0);
-    }
+    } */
 }

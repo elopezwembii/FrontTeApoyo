@@ -28,6 +28,7 @@ export class GraficoDonaComponent {
     constructor() {}
 
     ngOnChanges() {
+      console.log(this.data);
         this.options = {
             ...this.options,
             series: [

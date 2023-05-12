@@ -1,0 +1,94 @@
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-principal"><b> Análisis Financiero</b></h1>
+            </div>
+            <!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item">
+                        <a [routerLink]="['']">Inicio</a>
+                    </li>
+                    <li class="breadcrumb-item">Análisis financiero</li>
+                </ol>
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 col-sm-7">
+                <div class="card">
+                    <div class="card-header">Carga financiera</div>
+                    <div class="tab-content">
+                        <div id="corto" class="container tab-pane active">
+                            <div class="row">
+                                <div class="col-12 col-sm-8"><app-grafico-dona [data]="data"></app-grafico-dona></div>
+                                <div class="col-12 col-sm-4">corto</div>
+                            </div>
+                        </div>
+                        <div id="largo" class="container tab-pane">
+                          <div class="row">
+                              <div class="col-12 col-sm-8"><app-grafico-dona></app-grafico-dona></div>
+                              <div class="col-12 col-sm-4">largo</div>
+                          </div>
+                      </div>
+                      <div id="total" class="container tab-pane">
+                        <div class="row">
+                            <div class="col-12 col-sm-8"><app-grafico-dona></app-grafico-dona></div>
+                            <div class="col-12 col-sm-4">total</div>
+                        </div>
+                    </div>
+                    </div>
+                    <ul class="nav nav-pills" role="tablist">
+                        <li class="nav-item">
+                            <a
+                                class="nav-link active"
+                                data-toggle="pill"
+                                href="#corto"
+                                >Corto plazo</a
+                            >
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="pill" href="#largo"
+                                >Largo plazo</a
+                            >
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="pill" href="#total"
+                                >Total</a
+                            >
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-12 col-sm-5">
+                <div class="card">
+                    <div class="card-body"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 col-sm-7">
+                <div class="card">
+                    <div class="card-body"></div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-5">
+                <div class="card">
+                    <div class="card-body"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- <ngx-loading [show]="loading"></ngx-loading> -->

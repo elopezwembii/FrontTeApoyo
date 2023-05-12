@@ -1,7 +1,19 @@
+import {Gasto} from '@/interfaces/gastos';
 import {Ingreso} from '@/interfaces/ingresos';
-import {Categoria, Presupuesto} from '@/interfaces/presupuesto';
-import {Component, ElementRef, Renderer2, ViewChild} from '@angular/core';
+import {
+    Categoria,
+    ItemPresupuesto,
+    Presupuesto
+} from '@/interfaces/presupuesto';
+import {
+    Component,
+    ElementRef,
+    OnInit,
+    Renderer2,
+    ViewChild
+} from '@angular/core';
 import {Validators, FormBuilder} from '@angular/forms';
+import {GastosService} from '@services/gastos/gastos.service';
 import {PresupuestoService} from '@services/presupuesto/presupuesto.service';
 import {ToastrService} from 'ngx-toastr';
 import {forkJoin} from 'rxjs';
@@ -11,28 +23,27 @@ import {forkJoin} from 'rxjs';
     templateUrl: './presupuesto.component.html',
     styleUrls: ['./presupuesto.component.scss']
 })
-export class PresupuestoComponent {
+export class PresupuestoComponent implements OnInit {
     @ViewChild('chbMantener') chbMantener: ElementRef;
     presupuestoMonto: number = 0;
 
     categorias: Categoria[] = [];
-    presupuestos: Presupuesto[] = [];
-    presupuestoSelected: Presupuesto = {} as Presupuesto;
+    presupuesto: Presupuesto = {} as Presupuesto;
+    itemsPresupuesto: ItemPresupuesto[] = [];
+    presupuestoSelected: ItemPresupuesto = {} as ItemPresupuesto;
+    loading: boolean = false;
 
     sumaTotalReal: number = 0;
 
-    ingresoSelected: Ingreso = {} as Ingreso;
     isEditing: boolean = false;
     isAdding: boolean = false;
+    graficoDonaPresupuesto: any;
+    gastosGraficoBarra: any;
 
-    presupuesto: any;
-    gastoReal: any;
 
     form = this.fb.group({
         id: [''],
-        categoria: ['-1', [Validators.required]],
-        mes: [''],
-        anio: [''],
+        tipo_gasto: [0, [Validators.required]],
         monto: ['', [Validators.required, Validators.min(0)]]
     });
 
@@ -64,55 +75,78 @@ export class PresupuestoComponent {
         private renderer: Renderer2,
         private fb: FormBuilder,
         private presupuestoService: PresupuestoService,
+        private gastoService: GastosService,
         private toastr: ToastrService
     ) {}
 
-    ngOnInit() {
+    async ngOnInit() {
         this.presupuestoService.obtenerCategoria().subscribe({
             next: (resp: any) => {
                 this.categorias = resp;
             }
         });
 
-        this.obtenerDatoGrafico();
-        this.obtenerPresupuestoMensual();
+        /* this.obtenerDatoGrafico(); */
         this.obtenerPresupuesto();
     }
-
-    obtenerDatoGrafico() {
-        const presupuesto$ = this.presupuestoService.obtenerPresupuesto(
-            this.selectionMonth + 1,
-            this.selectionYear
-        );
-        const gastoReal$ = this.presupuestoService.obtenerGastoReal(
-            this.selectionMonth + 1,
-            this.selectionYear
-        );
-
-        forkJoin([presupuesto$, gastoReal$]).subscribe({
-            next: ([presupuesto, gastoReal]) => {
+    async obtenerPresupuesto() {
+        this.loading = true;
+        this.presupuestoMonto = 0;
+        (
+            await this.presupuestoService.getPresupuesto(
+                this.selectionMonth + 1,
+                this.year
+            )
+        ).subscribe({
+            next: ({presupuesto}: {presupuesto: Presupuesto}) => {
                 this.presupuesto = presupuesto;
-                this.gastoReal = gastoReal;
+                this.sumaTotalReal = presupuesto.presupuesto;
+                this.itemsPresupuesto = this.presupuesto.get_items;
+                this.presupuesto.get_items.map(
+                    (item) => (this.presupuestoMonto += item.monto)
+                );
+                this.graficoDonaPresupuesto = this.presupuesto.get_items.map(
+                    (item) => {
+                        return {
+                            name: this.categorias[item.tipo_gasto - 1]
+                                .descripcion,
+                            value: item.monto
+                        };
+                    }
+                );
+
+
+                this.loading = false;
             },
-            error: (error) => {
-                console.error(error);
+            error: (error: any) => {
+                console.log(error);
+            }
+        });
+        (
+            await this.gastoService.getGasto(this.selectionMonth + 1, this.year)
+        ).subscribe({
+            next: ({
+                gastos,
+                sumaTotalReal
+            }: {
+                gastos: Gasto[];
+                sumaTotalReal: number;
+            }) => {
+                this.gastosGraficoBarra = gastos.map((gasto) => {
+                    return {
+                        name: this.categorias[gasto.tipo_gasto - 1].descripcion,
+                        value: gasto.monto
+                    };
+                });
+                console.log(gastos);
+            },
+            error: (error: any) => {
+                console.log(error);
             }
         });
     }
 
-    obtenerPresupuesto() {
-        this.presupuestoService
-            .obtenerPresupuestos(this.selectionMonth + 1, this.selectionYear)
-            .subscribe({
-                next: (resp: any) => {
-                    this.presupuestoMonto = this.presupuestoMonto - resp.total;
-
-                    this.presupuestos = resp.presupuestos;
-                }
-            });
-    }
-
-    obtenerPresupuestoMensual() {
+    /* obtenerPresupuestoMensual() {
         this.presupuestoService
             .obtenerPresupuestoMensual(
                 this.selectionMonth + 1,
@@ -123,7 +157,7 @@ export class PresupuestoComponent {
                     this.presupuestoMonto = resp;
                 }
             });
-    }
+    } */
 
     addMonth() {
         this.selectionMonth++;
@@ -134,8 +168,8 @@ export class PresupuestoComponent {
         this.month = this.arrayMonth[this.selectionMonth];
 
         this.obtenerPresupuesto();
-        this.obtenerPresupuestoMensual();
-        this.obtenerDatoGrafico();
+        this.isAdding = false;
+        /* this.obtenerDatoGrafico(); */
         this.chbMantener.nativeElement.checked = false;
     }
 
@@ -148,100 +182,89 @@ export class PresupuestoComponent {
         this.month = this.arrayMonth[this.selectionMonth];
 
         this.obtenerPresupuesto();
-        this.obtenerPresupuestoMensual();
-        this.obtenerDatoGrafico();
+        this.isAdding = false;
+        /* this.obtenerDatoGrafico(); */
         this.chbMantener.nativeElement.checked = false;
     }
 
-    selectUser(presupuesto: Presupuesto) {
+    selectUser(itemPresupuesto: ItemPresupuesto) {
         if (Object.keys(this.presupuestoSelected).length === 0) {
-            this.presupuestoSelected = presupuesto;
+            this.presupuestoSelected = itemPresupuesto;
             this.isEditing = true;
             this.isAdding = true;
             this.form.patchValue({
-                id: String(presupuesto.id),
-                categoria: presupuesto.categoriaId,
-                mes: String(presupuesto.mes),
-                anio: String(presupuesto.year),
-                monto: String(presupuesto.monto)
+                id: String(itemPresupuesto.id),
+                tipo_gasto: itemPresupuesto.tipo_gasto,
+                monto: String(itemPresupuesto.monto)
             });
         }
     }
 
-    deleteUser(presupuesto: Presupuesto, index: number) {
-        if (confirm('Are you sure you want to delete this user?')) {
-            this.presupuestoService
-                .eliminarPresupuesto(presupuesto.id)
-                .subscribe({
-                    next: (resp: any) => {
-                        this.presupuestos.splice(index, 1);
-                        this.obtenerDatoGrafico();
-                        this.obtenerPresupuestoMensual();
-                        this.obtenerPresupuesto();
-                    }
-                });
+    async deleteUser(itemPresupuesto: ItemPresupuesto, index: number) {
+        if (confirm('¿Estas seguro de eliminar el item?')) {
+            await this.presupuestoService.eliminarItem(itemPresupuesto.id);
+            this.obtenerPresupuesto();
+            this.toastr.info('Ítem eliminado con éxito');
         }
     }
 
     generateId() {
-        return this.presupuestos.length + 1;
+        return this.itemsPresupuesto.length + 1;
     }
 
-    update() {
+    async update() {
+        this.loading = true;
         if (!this.isEditing) {
-            this.presupuestos[0] = {
+            this.itemsPresupuesto[0] = {
                 id: this.generateId(),
-                categoriaId: this.form.value.categoria,
-                categoria: this.form.value.categoria,
-                mes: this.selectionMonth + 1,
-                year: this.selectionYear,
-                monto: parseInt(this.form.value.monto!)
+                tipo_gasto: this.form.value.tipo_gasto,
+                monto: parseInt(this.form.value.monto!),
+                id_presupuesto: this.presupuesto.id
             };
 
-            this.presupuestoService
-                .agregarPresupuesto(this.presupuestos[0])
-                .subscribe({
-                    next: (resp: any) => {
-                        this.obtenerPresupuesto();
-                        this.obtenerDatoGrafico();
-                        this.toastr.success(resp);
-                    }
-                });
+            try {
+                const res = await this.presupuestoService.agregarPresupuesto(
+                    this.itemsPresupuesto[0]
+                );
+                if (res) {
+                    this.obtenerPresupuesto();
+                    this.toastr.success('Presupuesto agregado con éxito.');
+                } else {
+                    this.toastr.error('Error al agregar presupuesto.');
+                    this.loading = false;
+                }
+            } catch (error) {}
         } else {
-            let index = this.presupuestos
+            let index = this.itemsPresupuesto
                 .map((u) => u.id)
                 .indexOf(this.presupuestoSelected.id);
 
-            const descripcionCategoria =
-                this.presupuestoService.getCategoriaDescripcion(
-                    this.form.value.categoria
-                );
-
-            this.presupuestos[index] = {
+            this.itemsPresupuesto[index] = {
                 id: parseInt(this.form.value.id),
-                categoriaId: this.form.value.categoria,
-                categoria: this.form.value.categoria,
-                mes: this.selectionMonth + 1,
-                year: this.selectionYear,
-                monto: parseInt(this.form.value.monto!)
+                tipo_gasto: this.form.value.tipo_gasto,
+                monto: parseInt(this.form.value.monto!),
+                id_presupuesto: this.presupuesto.id
             };
 
-            this.presupuestoService
-                .actualizarPresupuesto(this.presupuestos[index])
-                .subscribe({
-                    next: (resp: any) => {
-                        this.obtenerPresupuesto();
-                        this.obtenerDatoGrafico();
-                        this.toastr.success(resp);
-                    }
-                });
+            try {
+                const res = await this.presupuestoService.agregarPresupuesto(
+                    this.itemsPresupuesto[index]
+                );
+                if (res) {
+                    this.obtenerPresupuesto();
+                    this.toastr.success('Presupuesto editado con éxito.');
+                } else {
+                    this.toastr.error('Error al editar presupuesto.');
+                    this.loading = false;
+                }
+            } catch (error) {}
         }
         // clean up
-        this.presupuestoSelected = {} as Presupuesto;
+        this.presupuestoSelected = {} as ItemPresupuesto;
         this.isEditing = false;
         this.isAdding = false;
         this.form.reset();
-        this.form.patchValue({categoria: '-1'});
+        this.form.patchValue({tipo_gasto: 0});
     }
 
     cancel() {
@@ -251,26 +274,25 @@ export class PresupuestoComponent {
                 'All unsaved changes will be removed. Are you sure you want to cancel?'
             )
         ) {
-            this.presupuestos.splice(0, 1);
+            this.itemsPresupuesto.splice(0, 1);
         }
 
-        this.presupuestoSelected = {} as Presupuesto;
+        this.presupuestoSelected = {} as ItemPresupuesto;
         this.isEditing = false;
         this.isAdding = false;
         this.form.reset();
     }
 
     addUser() {
-        this.presupuestos.unshift({
+        this.itemsPresupuesto.push({
             id: null,
-            categoria: null,
-            categoriaId: null,
-            mes: null,
-            year: null,
-            monto: null
+            tipo_gasto: null,
+            monto: null,
+            id_presupuesto: null
         });
 
-        this.presupuestoSelected = this.presupuestos[0];
+        this.presupuestoSelected =
+            this.itemsPresupuesto[this.itemsPresupuesto.length - 1];
         this.isAdding = true;
     }
 
@@ -278,48 +300,38 @@ export class PresupuestoComponent {
         return Object.keys(obj).length === 0;
     }
 
-    mantenerPresupuestoMes(event: any) {
+    async mantenerPresupuestoMes(event: any) {
         const {checked} = event.target;
-
+        let mes_actual = this.selectionMonth + 1;
+        let anio_actual = this.selectionYear;
+        let mes_anterior, anio_anterior;
+        if (mes_actual === 1) {
+            mes_anterior = 12;
+            anio_anterior = anio_actual - 1;
+        } else {
+            mes_anterior = mes_actual - 1;
+            anio_anterior = anio_actual;
+        }
+        this.loading = true;
         if (checked) {
-            this.presupuestoService
-                .obtenerPresupuestos(this.selectionMonth, this.selectionYear)
-                .subscribe({
-                    next: (resp: any) => {
-                        const {presupuestos: data} = resp;
-
-                        if (data.length === 0) {
-                            this.toastr.info(
-                                `No existe presupuestos en el mes anterior`
-                            );
-                            this.chbMantener.nativeElement.checked = false;
-                            return;
-                        }
-
-                        const presupuestosNuevo = data.map((p: any) => {
-                            return {
-                                ...p,
-                                categoria: p.categoriaId,
-                                mes: this.selectionMonth + 1,
-                                year: this.selectionYear
-                            };
-                        });
-
-                        this.presupuestos = presupuestosNuevo;
-                        this.toastr.success(`Periodo replicado correctamente`);
-
-                        presupuestosNuevo.forEach((element: any) => {
-                            this.presupuestoService
-                                .agregarPresupuesto(element)
-                                .subscribe({
-                                    next: (resp: any) => {
-                                        this.obtenerPresupuesto();
-                                        this.obtenerDatoGrafico();
-                                    }
-                                });
-                        });
-                    }
-                });
+            try {
+                const res = await this.presupuestoService.replicarPresupuesto(
+                    mes_actual,
+                    anio_actual,
+                    mes_anterior,
+                    anio_anterior
+                );
+                if (res) {
+                    this.obtenerPresupuesto();
+                    this.toastr.success('Presupuesto clonado con éxito.');
+                } else {
+                    this.toastr.error('Error al clonar presupuesto.');
+                    this.loading = false;
+                }
+            } catch (error) {
+                this.toastr.error('Error al clonar presupuesto.');
+                this.loading = false;
+            }
         }
     }
 }
