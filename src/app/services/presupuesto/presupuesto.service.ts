@@ -12,7 +12,7 @@ import {Observable, of} from 'rxjs';
     providedIn: 'root'
 })
 export class PresupuestoService {
-    categoria: Categoria[] = [
+    private categoria: Categoria[] = [
         {
             id: 1,
             descripcion: 'Hogar',
@@ -126,7 +126,6 @@ export class PresupuestoService {
             });
             this.presupuestoMensual = data.presupuesto[0];
             this.presupuestoMensual.presupuesto = data.ingreso;
-
             return of({presupuesto: this.presupuestoMensual});
         } catch (error) {}
     }
@@ -267,7 +266,6 @@ export class PresupuestoService {
               this._http
                   .delete(
                       environment.uri_api + 'item_presupuesto/' + idToDelete,
-
                       {
                           headers: {
                               Authorization:
@@ -305,7 +303,6 @@ export class PresupuestoService {
                     value: presupuesto.monto
                 };
             });
-
         return of(datosGrafico);
     } */
 

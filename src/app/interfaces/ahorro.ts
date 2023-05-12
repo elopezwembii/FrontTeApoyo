@@ -1,11 +1,15 @@
-
 export interface Ahorro {
-    id?:string,
-    nombre:string,
-    progreso?:number,
-    monto:number,
-    fechaLimite:Date,
-    recaudado:number,
-    meta:number,
-    img:string,
+    id?: string;
+    progreso?: number;
+    monto: number;
+    fechaLimite: Date;
+    recaudado: number;
+    meta: number;
+    tipoAhorro:TipoAhorro;
+}
+
+export interface TipoAhorro {
+    id: number;
+    descripcion: string;
+    img: string;
 }

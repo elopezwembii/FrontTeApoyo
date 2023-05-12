@@ -25,6 +25,8 @@ export class AhorrosComponent implements OnInit {
         this.ahorroService.obtenerAhorros().subscribe({
             next: (ahorro: Ahorro[]) => {
                 this.ahorros = ahorro;
+                console.log(this.ahorros);
+                
             }
         });
     }

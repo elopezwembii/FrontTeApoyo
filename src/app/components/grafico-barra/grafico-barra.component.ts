@@ -13,6 +13,11 @@ export class GraficoBarraComponent implements OnChanges {
     @Input() presupuesto: any = [];
 
     options: any = {
+        seriesDefaults: {
+            bar: {
+                barBorderRadius: [10, 10, 0, 0]
+            }
+        },
       title: {
         text: 'Comparativa gasto real v/s presupuesto',
         left: 'center',
@@ -87,12 +92,14 @@ export class GraficoBarraComponent implements OnChanges {
 
         this.options = {
             ...this.options,
+
             xAxis: {
                 data: SinRepetidos.map((item) => item.name),
                 axisLabel: {
                     rotate: 20
                 }
             },
+            color: ['#BCEAF3', '#FFD48F'],
             series: [
                 {
                     label: {
@@ -120,7 +127,6 @@ export class GraficoBarraComponent implements OnChanges {
                     data: arregloPresupuesto,
                     z: 2
                 },
-                {
                     name: 'Gasto real',
                     type: 'bar',
                     data: arregloGasto,

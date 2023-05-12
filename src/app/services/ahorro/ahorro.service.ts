@@ -1,4 +1,4 @@
-import {Ahorro} from '@/interfaces/ahorro';
+import {Ahorro, TipoAhorro} from '@/interfaces/ahorro';
 import {Injectable} from '@angular/core';
 import {Observable, of} from 'rxjs';
 
@@ -6,7 +6,60 @@ import {Observable, of} from 'rxjs';
     providedIn: 'root'
 })
 export class AhorroService {
-    ahorroHistorial = [
+    private tiposAhorro: TipoAhorro[] = [
+        {
+            id: 1,
+            descripcion: 'Ahorro celebraciones',
+            img: 'assets/icons/ahorro1.png'
+        },
+        {
+            id: 2,
+            descripcion: 'Ahorro cumpleaños',
+            img: 'assets/icons/ahorro1.png'
+        },
+        {
+            id: 3,
+            descripcion: 'Ahorro Educación',
+            img: 'assets/icons/ahorro1.png'
+        },
+        {
+            id: 4,
+            descripcion: 'Ahorro fiestas patrias',
+            img: 'assets/icons/ahorro1.png'
+        },
+        {
+            id: 5,
+            descripcion: 'Ahorro fin de semana largo',
+            img: 'assets/icons/ahorro1.png'
+        },
+        {
+            id: 6,
+            descripcion: 'Ahorro navidad/año nuevo',
+            img: 'assets/icons/ahorro1.png'
+        },
+        {
+            id: 7,
+            descripcion: 'Ahorro viajes/vacaciones',
+            img: 'assets/icons/ahorro1.png'
+        },
+        {
+            id: 8,
+            descripcion: 'Fondo de emergencia',
+            img: 'assets/icons/ahorro1.png'
+        },
+        {
+            id: 9,
+            descripcion: 'Ahorro general (varios)',
+            img: 'assets/icons/ahorro1.png'
+        },
+        {
+            id: 10,
+            descripcion: 'Inversiones y Acciones',
+            img: 'assets/icons/ahorro1.png'
+        }
+    ];
+
+    private ahorroHistorial = [
         {
             year: 2018,
             amount: 1200
@@ -28,24 +81,36 @@ export class AhorroService {
     private ahorros: Ahorro[] = [
         {
             id: 'AH1',
-            nombre: 'Ahorro casa nueva',
             monto: 195000,
             fechaLimite: new Date(2023, 11, 31, 10, 30, 0, 0),
             recaudado: 1750000,
             meta: 3500000,
-            img: 'assets/icons/ahorro1.png'
+            tipoAhorro: {
+                id: 10,
+                descripcion: 'Inversiones y Acciones',
+                img: 'assets/icons/ahorro1.png'
+            }
         },
         {
             id: 'AH2',
-            nombre: 'Ahorro viaje al caribe',
             monto: 80000,
             fechaLimite: new Date(2024, 1, 1, 10, 30, 0, 0),
             recaudado: 880000,
             meta: 3500000,
-            img: 'assets/icons/ahorro2.png'
+            tipoAhorro: {
+                id: 1,
+                descripcion: 'Ahorro celebraciones',
+                img: 'assets/icons/ahorro1.png'
+            }
         }
     ];
 
+    private nivelUsuario: any = {
+        posibleAhorro: 85000,
+        nivel: 'Money Wizard',
+        siguienteNivel: 'Budget Boss',
+        ahorroSiguienteNivel: 100000
+    };
     constructor() {}
 
     obtenerAhorros(): Observable<Ahorro[]> {
@@ -54,7 +119,7 @@ export class AhorroService {
                 (ahorro.recaudado / ahorro.meta) * 100
             );
         });
-        return of(this.ahorros);;
+        return of(this.ahorros);
     }
 
     eliminarAhorro(ahorro: Ahorro): Observable<boolean> {
@@ -77,13 +142,20 @@ export class AhorroService {
 
     agregarAhorro(ahorro: Ahorro): Observable<Ahorro[]> {
         const id = 'AH' + (this.ahorros.length + 1);
-        const img = 'assets/icons/ahorro1.png';
-        const nuevoAhorro = {...ahorro, id, img};
+        const nuevoAhorro = {...ahorro, id};
         this.ahorros.push(nuevoAhorro);
         return of(this.ahorros);
     }
 
     obtenerAhorroHistorial() {
-      return of(this.ahorroHistorial);
+        return of(this.ahorroHistorial);
+    }
+
+    obtenerTipoAhorro() {
+        return of(this.tiposAhorro);
+    }
+
+    obtenerNivelAhorroUsuario() {
+        return of(this.nivelUsuario);
     }
 }

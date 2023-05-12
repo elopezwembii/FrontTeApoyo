@@ -16,6 +16,7 @@ import {Validators, FormBuilder} from '@angular/forms';
 import {GastosService} from '@services/gastos/gastos.service';
 import {PresupuestoService} from '@services/presupuesto/presupuesto.service';
 import {ToastrService} from 'ngx-toastr';
+import {forkJoin} from 'rxjs';
 
 @Component({
     selector: 'app-presupuesto',
@@ -36,9 +37,9 @@ export class PresupuestoComponent implements OnInit {
 
     isEditing: boolean = false;
     isAdding: boolean = false;
-
     graficoDonaPresupuesto: any;
     gastosGraficoBarra: any;
+
 
     form = this.fb.group({
         id: [''],
@@ -88,7 +89,6 @@ export class PresupuestoComponent implements OnInit {
         /* this.obtenerDatoGrafico(); */
         this.obtenerPresupuesto();
     }
-
     async obtenerPresupuesto() {
         this.loading = true;
         this.presupuestoMonto = 0;
@@ -114,6 +114,7 @@ export class PresupuestoComponent implements OnInit {
                         };
                     }
                 );
+
 
                 this.loading = false;
             },
