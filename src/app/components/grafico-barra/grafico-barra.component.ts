@@ -1,5 +1,7 @@
 import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {CurrencyPipe} from '@angular/common';
+import {ItemPresupuesto} from '@/interfaces/presupuesto';
+import {Gasto} from '@/interfaces/gastos';
 
 @Component({
     selector: 'app-grafico-barra',
@@ -10,12 +12,17 @@ export class GraficoBarraComponent implements OnChanges {
     @Input() gastoReal: any = [];
     @Input() presupuesto: any = [];
 
-    options:any = {
-        xAxis: {  
+    options: any = {
+      title: {
+        text: 'Comparativa gasto real v/s presupuesto',
+        left: 'center',
+        top: 10
+    },
+        xAxis: {
             axisLabel: {
-              rotate: 0
+                rotate: 0
             }
-          },
+        },
         yAxis: {},
         series: [],
         legend: {
@@ -32,29 +39,71 @@ export class GraficoBarraComponent implements OnChanges {
     constructor(private currencyPipe: CurrencyPipe) {}
 
     ngOnChanges() {
-        console.log('presupuesto', this.presupuesto);
-        console.log('gasto real', this.gastoReal);
+        const concatenado = this.presupuesto.concat(this.gastoReal);
+        const SinRepetidos = concatenado.filter((titulo, indice, arreglo) => {
+            const primerIndice = arreglo.findIndex(
+                (p) => p.name === titulo.name
+            );
+            if (primerIndice === indice) {
+                return true;
+            }
+            return false;
+        });
+        let arregloPresupuesto = [],
+            arregloGasto = [];
+        if (SinRepetidos.length > 0) {
+            SinRepetidos.map((item) => {
+                let auxGasto = false;
+                let auxPre = false;
+                for (const gasto of this.gastoReal) {
+                    if (gasto.name === item.name) {
+                        arregloGasto.push(gasto.value);
+                        auxGasto = true;
+                        break;
+                    } else {
+                        auxGasto = false;
+                    }
+                }
+                for (const pre of this.presupuesto) {
+                    if (pre.name === item.name) {
+                        arregloPresupuesto.push(pre.value);
+                        auxPre = true;
+                        break;
+                    } else {
+                        auxPre = false;
+                    }
+                }
+                if (!auxGasto) {
+                    arregloGasto.push(0);
+                }
+                if (!auxPre) {
+                    arregloPresupuesto.push(0);
+                }
+            });
+        }
 
-   
+        console.log(arregloPresupuesto);
+        console.log(arregloGasto);
+
         this.options = {
             ...this.options,
             xAxis: {
-                data: this.presupuesto.map((item: any) => item.name),
+                data: SinRepetidos.map((item) => item.name),
                 axisLabel: {
-                    rotate: 30
-                  }
+                    rotate: 20
+                }
             },
             series: [
                 {
                     label: {
                         show: true,
                         position: 'top',
-                        formatter: (params) => {
-                            return this.currencyPipe.transform(
-                                params.value,
-                                'USD',
-                                'symbol-narrow',
-                                '1.0-0'
+                        formatter: (params: any) => {
+                            return (
+                                '$ ' +
+                                params.value
+                                    .toString()
+                                    .replace(/\B(?=(\d{3})+(?!\d))/g, '.')
                             );
                         },
                         textStyle: {
@@ -62,18 +111,40 @@ export class GraficoBarraComponent implements OnChanges {
                             fontSize: 12
                         }
                     },
+                    itemStyle: {
+                        color: '#bceaf3',
+                        borderRadius: [5, 5, 0, 0]
+                    },
                     name: 'Presupuesto',
                     type: 'bar',
-                    data: this.presupuesto,
-                    barGap: '-50%',
+                    data: arregloPresupuesto,
                     z: 2
                 },
                 {
                     name: 'Gasto real',
                     type: 'bar',
-                    data: this.gastoReal,
-                    barGap: '-50%',
-                    z: 1
+                    data: arregloGasto,
+                    z: 1,
+                    itemStyle: {
+                        color: '#ffd48f',
+                        borderRadius: [5, 5, 0, 0]
+                    },
+                    label: {
+                        show: true,
+                        position: 'top',
+                        formatter: (params: any) => {
+                            return (
+                                '$ ' +
+                                params.value
+                                    .toString()
+                                    .replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+                            );
+                        },
+                        textStyle: {
+                            color: 'black',
+                            fontSize: 12
+                        }
+                    }
                 }
             ]
         };

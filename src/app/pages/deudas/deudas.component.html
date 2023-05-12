@@ -27,165 +27,170 @@
             <div class="col-12 col-sm-8">
                 <div class="text-right">
                     <button
-                        (click)="abrirModal()"
+                        (click)="abrirModal(true, null)"
                         class="btn btn-light elevation-2 rounded-pill"
                     >
                         Nueva deuda
                     </button>
                 </div>
-
-                <div *ngFor="let deuda of deudas">
-                    <div class="row mt-3">
-                        <div class="col col-8">
-                            <h4>{{ deuda.nombre }}</h4>
-                        </div>
-                        <div
-                            class="col col-4 text-right"
-                            style="font-size: larger"
-                        >
-                            <button class="boton-acept-deuda">
-                                <i class="fas fa-pen"></i>
-                            </button>
-
-                            <button
-                                class="boton-acept-deuda mx-3"
-                                title="cancel"
-                                type="button"
+                <form [formGroup]="form" (ngSubmit)="update()">
+                    <div *ngFor="let deuda of deudas">
+                        <div class="row mt-3">
+                            <div class="col col-8">
+                                <h4>
+                                    {{ tipos_deuda[deuda.id_tipo_deuda - 1] }}
+                                </h4>
+                            </div>
+                            <div
+                                class="col col-4 text-right"
+                                style="font-size: larger"
                             >
-                                <i class="fas fa-trash"></i>
-                            </button>
+                                <button
+                                    type="button"
+                                    (click)="abrirModal(false, deuda)"
+                                    class="boton-acept-deuda"
+                                >
+                                    <i class="fas fa-pen"></i>
+                                </button>
+
+                                <button
+                                    class="boton-acept-deuda mx-3"
+                                    title="cancel"
+                                    type="button"
+                                    (click)="deleteDeuda(deuda)"
+                                >
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
                         </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="row">
-                                <div
-                                    class="col-12 col-sm-4 text-center"
-                                    *ngIf="deuda.nombre === 'Crédito consumo'"
-                                >
-                                    <img
-                                        height="25"
-                                        src="../../../assets/img/bancos/banco_falabella.png"
-                                        alt=""
-                                    />
-                                    <img
-                                        height="110"
-                                        src="../../../assets/img/credito consumo.png"
-                                        alt=""
-                                    />
-                                </div>
-                                <div
-                                    class="col-12 col-sm-4 text-center"
-                                    *ngIf="
-                                        deuda.nombre === 'Crédito automotriz'
-                                    "
-                                >
-                                    <img
-                                        height="25"
-                                        src="../../../assets/img/bancos/banco_estado.png"
-                                        alt=""
-                                    />
-                                    <img
-                                        height="110"
-                                        src="../../../assets/img/credito automotriz.svg"
-                                        alt=""
-                                    />
-                                </div>
-                                <div class="col-12 col-sm-8">
-                                    <div class="row mt-2">
-                                        <div class="col-6">
-                                            <small class="text-bold"
-                                                >Costo total:
-                                                <h3
-                                                    class="text-danger text-bold mb-0"
-                                                >
-                                                    $
-                                                    {{
-                                                        deuda.monto_total
-                                                            | currency: 'CLP':''
-                                                    }}
-                                                </h3></small
-                                            >
-                                        </div>
-                                        <div class="col-6">
-                                            <small class="text-bold"
-                                                >Llevas:
-                                                <h3
-                                                    class="text-success text-bold mb-0"
-                                                >
-                                                    $
-                                                    {{
-                                                        deuda.cuotas_pagadas *
-                                                            deuda.pago_mensual
-                                                            | currency: 'CLP':''
-                                                    }}
-                                                </h3></small
-                                            >
-                                        </div>
-                                    </div>
-                                    <div class="row mt-0">
-                                        <div class="col-4">
-                                            <small
-                                                >Valor cuota: $
-                                                {{
-                                                    deuda.pago_mensual
-                                                        | currency: 'CLP':''
-                                                }}</small
-                                            >
-                                        </div>
-                                        <div class="col-4">
-                                            <small
-                                                >Cuotas pagadas:
-                                                {{
-                                                    deuda.cuotas_pagadas
-                                                }}</small
-                                            >
-                                        </div>
-                                        <div class="col-4">
-                                            <small
-                                                >Cuotas pendientes:
-                                                {{
-                                                    deuda.cuotas_totales -
-                                                        deuda.cuotas_pagadas
-                                                }}</small
-                                            >
-                                        </div>
-                                    </div>
-                                    <div class="progress">
-                                        <div
-                                            [class]="
-                                                (deuda.cuotas_pagadas * 100) /
-                                                    deuda.cuotas_totales >
-                                                80
-                                                    ? 'progress-bar bg-success'
-                                                    : (deuda.cuotas_pagadas *
-                                                          100) /
-                                                          deuda.cuotas_totales >
-                                                      40
-                                                    ? 'progress-bar bg-warning'
-                                                    : 'progress-bar bg-danger'
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-12 col-sm-4 text-center">
+                                        <img
+                                            height="25"
+                                            [src]="
+                                                '../../../assets/img/bancos/' +
+                                                deuda.id_banco +
+                                                '.png'
                                             "
-                                            role="progressbar"
-                                            [style.width.%]="
-                                                (deuda.cuotas_pagadas * 100) /
-                                                deuda.cuotas_totales
+                                            alt=""
+                                        />
+                                        <img
+                                            height="110"
+                                            [src]="
+                                                '../../../assets/img/deudas/' +
+                                                deuda.id_tipo_deuda +
+                                                '.svg'
                                             "
-                                        >
-                                            <div class="progress-label">
-                                                {{
-                                                    (deuda.cuotas_pagadas *
-                                                        100) /
-                                                        deuda.cuotas_totales
-                                                        | number: '0.1-1'
-                                                }} %
+                                            alt=""
+                                        />
+                                    </div>
+                                    <div class="col-12 col-sm-8">
+                                        <div class="row mt-2">
+                                            <div class="col-6">
+                                                <small class="text-bold"
+                                                    >Costo total:
+                                                    <h3
+                                                        class="text-danger text-bold mb-0"
+                                                    >
+                                                        $
+                                                        {{
+                                                            deuda.costo_total
+                                                                | currency
+                                                                    : 'CLP'
+                                                                    : ''
+                                                        }}
+                                                    </h3></small
+                                                >
+                                            </div>
+                                            <div class="col-6">
+                                                <small class="text-bold"
+                                                    >Llevas:
+                                                    <h3
+                                                        class="text-success text-bold mb-0"
+                                                    >
+                                                        $
+                                                        {{
+                                                            deuda.cuotas_pagadas *
+                                                                deuda.pago_mensual
+                                                                | currency
+                                                                    : 'CLP'
+                                                                    : ''
+                                                        }}
+                                                    </h3></small
+                                                >
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="text-right">
-                                        <small
-                                            >Total cuotas:
-                                            {{ deuda.cuotas_totales }}</small
-                                        >
+                                        <div class="row mt-0">
+                                            <div class="col-4">
+                                                <small
+                                                    >Valor cuota: $
+                                                    {{
+                                                        deuda.pago_mensual
+                                                            | currency: 'CLP':''
+                                                    }}</small
+                                                >
+                                            </div>
+                                            <div class="col-4">
+                                                <small
+                                                    >Cuotas pagadas:
+                                                    {{
+                                                        deuda.cuotas_pagadas
+                                                    }}</small
+                                                >
+                                            </div>
+                                            <div class="col-4">
+                                                <small
+                                                    >Cuotas pendientes:
+                                                    {{
+                                                        deuda.cuotas_totales -
+                                                            deuda.cuotas_pagadas
+                                                    }}</small
+                                                >
+                                            </div>
+                                        </div>
+                                        <div class="progress">
+                                            <div
+                                                [class]="
+                                                    (deuda.cuotas_pagadas *
+                                                        100) /
+                                                        deuda.cuotas_totales >
+                                                    80
+                                                        ? 'progress-bar bg-success'
+                                                        : (deuda.cuotas_pagadas *
+                                                              100) /
+                                                              deuda.cuotas_totales >
+                                                          30
+                                                        ? 'progress-bar bg-warning'
+                                                        : 'progress-bar bg-danger'
+                                                "
+                                                role="progressbar"
+                                                [style.width.%]="
+                                                    (deuda.cuotas_pagadas *
+                                                        100) /
+                                                    deuda.cuotas_totales
+                                                "
+                                            >
+                                                <div class="progress-label">
+                                                    {{
+                                                        (deuda.cuotas_pagadas *
+                                                            100) /
+                                                            deuda.cuotas_totales
+                                                            | number: '0.1-1'
+                                                    }}
+                                                    %
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="text-right">
+                                            <small
+                                                >Total cuotas:
+                                                {{
+                                                    deuda.cuotas_totales
+                                                }}</small
+                                            >
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -206,7 +211,7 @@
                                         class="modal-title"
                                         id="exampleModalLabel"
                                     >
-                                        Ingreso
+                                        Deuda
                                     </h5>
                                     <button
                                         type="button"
@@ -218,44 +223,155 @@
                                 </div>
                                 <div class="modal-body">
                                     <div class="form-group">
-                                        <p>
-                                            <b>Tipo deuda</b>
-                                        </p>
-                                        <select
-                                            class="custom-select form-control-border"
-                                            formControlName="tipo_ingreso"
-                                        >
-                                            <option
-                                                selected
-                                                disabled
-                                                [value]="0"
-                                            >
-                                                Tipo
-                                            </option>
-                                            <option [value]="1">
-                                                Crédito de consumo
-                                            </option>
-                                            <option [value]="2">
-                                                Crédito hipotecario
-                                            </option>
-                                            <option [value]="3">
-                                                Crédito automotriz
-                                            </option>
-                                            <option [value]="4">
-                                                Compras a crédito
-                                            </option>
-                                        </select>
+                                        <div class="row">
+                                            <div class="col-12 col-sm-6">
+                                                <p>
+                                                    <b>Tipo deuda</b>
+                                                </p>
+                                                <select
+                                                    class="custom-select form-control-border"
+                                                    formControlName="id_tipo_deuda"
+                                                >
+                                                    <option
+                                                        selected
+                                                        disabled
+                                                        [value]="0"
+                                                    >
+                                                        Tipo
+                                                    </option>
+                                                    <option [value]="1">
+                                                        Crédito de consumo
+                                                    </option>
+                                                    <option [value]="2">
+                                                        Crédito hipotecario
+                                                    </option>
+                                                    <option [value]="3">
+                                                        Crédito automotriz
+                                                    </option>
+                                                    <option [value]="4">
+                                                        Compras a crédito
+                                                    </option>
+                                                </select>
+                                            </div>
+                                            <div class="col-12 col-sm-6">
+                                                <p>
+                                                    <b>Banco</b>
+                                                </p>
+                                                <select
+                                                    class="custom-select form-control-border"
+                                                    formControlName="id_banco"
+                                                >
+                                                    <option
+                                                        selected
+                                                        disabled
+                                                        [value]="0"
+                                                    >
+                                                        Seleccione
+                                                    </option>
+                                                    <option
+                                                        *ngFor="
+                                                            let banco of bancos;
+                                                            let i = index
+                                                        "
+                                                        [value]="i + 1"
+                                                    >
+                                                        {{ banco }}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="form-group">
-                                      <label for="montoReal">Monto total</label>
-                                      <input
-                                          type="number"
-                                          placeholder="$ "
-                                          inputmode="decimal"
-                                          class="form-control form-control-border text-right"
-                                          title="Monto real"
-                                      />
-                                  </div>
+                                        <div class="row">
+                                            <div class="col-12 col-sm-5">
+                                                <label for="montoReal"
+                                                    >Costo total Deuda</label
+                                                >
+                                                <input
+                                                    type="number"
+                                                    placeholder="$ "
+                                                    inputmode="decimal"
+                                                    class="form-control form-control-border text-right"
+                                                    formControlName="costo_total"
+                                                />
+                                            </div>
+                                            <div class="col-12 col-sm-5">
+                                                <label for="montoReal"
+                                                    >Monto Pendiente por
+                                                    pagar</label
+                                                >
+                                                <input
+                                                    type="number"
+                                                    placeholder="$ "
+                                                    inputmode="decimal"
+                                                    class="form-control form-control-border text-right"
+                                                    formControlName="deuda_pendiente"
+                                                />
+                                            </div>
+                                            <div class="col-12 col-sm-2">
+                                                <p class="mb-2">
+                                                    <b>Día pago</b>
+                                                </p>
+                                                <select
+                                                    class="custom-select form-control-border"
+                                                    formControlName="dia_pago"
+                                                >
+                                                    <option
+                                                        selected
+                                                        disabled
+                                                        [value]="0"
+                                                    >
+                                                        Día
+                                                    </option>
+                                                    <option
+                                                        *ngFor="let dia of dias"
+                                                        [value]="dia"
+                                                    >
+                                                        {{ dia }}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-12 col-sm-3">
+                                                <label for="cuotas_totales"
+                                                    >Total de cuotas</label
+                                                >
+                                                <input
+                                                    type="number"
+                                                    inputmode="decimal"
+                                                    class="form-control form-control-border text-right"
+                                                    formControlName="cuotas_totales"
+                                                />
+                                            </div>
+                                            <div class="col-12 col-sm-3">
+                                                <label for="cuotas_totales"
+                                                    >Cuotas pagadas</label
+                                                >
+                                                <input
+                                                    type="number"
+                                                    inputmode="decimal"
+                                                    class="form-control form-control-border text-right"
+                                                    formControlName="cuotas_pagadas"
+                                                />
+                                            </div>
+                                            <div class="col-12 col-sm-6">
+                                                <label for="montoReal"
+                                                    >Pago mensual</label
+                                                >
+                                                <input
+                                                    type="number"
+                                                    placeholder="$ "
+                                                    inputmode="decimal"
+                                                    class="form-control form-control-border text-right"
+                                                    formControlName="pago_mensual"
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group"></div>
                                 </div>
 
                                 <div class="modal-footer">
@@ -267,7 +383,12 @@
                                         Cerrar
                                     </button>
                                     <button
-                                        data-tooltip="Necesitas completar todos los campos"
+                                        [disabled]="form.invalid"
+                                        [attr.data-tooltip]="
+                                            form.invalid
+                                                ? 'Necesitas completar todos los campos'
+                                                : null
+                                        "
                                         data-flow="left"
                                         type="submit"
                                         class="btn btn-primary"
@@ -278,7 +399,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </form>
             </div>
             <div class="col-12 col-sm-4">
                 <div class="card table-responsive">
@@ -294,6 +415,7 @@
                                 class="boton-acept-deuda"
                                 title="cancel"
                                 type="button"
+                                (click)="abrirModal2(true, null)"
                             >
                                 <i class="fas fa-plus"></i> Agregar
                             </button>
@@ -301,73 +423,253 @@
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body p-0" style="font-size: small">
-                        <table class="table table-sm mb-3">
-                            <thead>
-                                <tr>
-                                    <th></th>
-                                    <th>Total</th>
-                                    <th>Utilizado</th>
-                                    <th>Disponible</th>
-                                    <th style="width: 50px">Banco</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td class="text-center text-principal">
-                                        <i class="fab fa-cc-visa"></i>
-                                    </td>
-                                    <td class="text-success">
-                                        <b>$5.000.000</b>
-                                    </td>
-                                    <td class="text-danger"><b>$0</b></td>
-                                    <td class="text-success">
-                                        <b>$5.000.000</b>
-                                    </td>
-                                    <td>
-                                        <img
-                                            width="50"
-                                            src="../../../assets/img/bancos/banco_estado.png"
-                                            alt=""
-                                        />
-                                    </td>
-                                    <td style="font-size: smaller">
-                                        <i class="fas fa-pen button-table"></i>
-                                        <i
-                                            class="fas fa-trash button-table mx-2"
-                                        ></i>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="text-center text-principal">
-                                        <i class="fas fa-money-check-alt"></i>
-                                    </td>
-                                    <td class="text-success">
-                                        <b>$1.300.000</b>
-                                    </td>
-                                    <td class="text-danger"><b>$250.000</b></td>
-                                    <td class="text-success">
-                                        <b>$1.050.000</b>
-                                    </td>
-                                    <td>
-                                        <img
-                                            width="50"
-                                            src="../../../assets/img/bancos/santander.png"
-                                            alt=""
-                                        />
-                                    </td>
-                                    <td style="font-size: smaller">
-                                        <i class="fas fa-pen button-table"></i>
-                                        <i
-                                            class="fas fa-trash button-table mx-2"
-                                        ></i>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <form [formGroup]="form2" (ngSubmit)="update2()">
+                            <table class="table table-sm mb-3">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Total</th>
+                                        <th>Utilizado</th>
+                                        <th>Disponible</th>
+                                        <th style="width: 50px">Banco</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let tarjeta of tarjetas">
+                                        <td class="text-center text-principal">
+                                            <i
+                                                [class]="
+                                                    tarjeta.tipo ===
+                                                    'Tarjeta de crédito'
+                                                        ? 'fab fa-cc-visa'
+                                                        : 'fas fa-money-check-alt'
+                                                "
+                                            ></i>
+                                        </td>
+                                        <td class="text-success">
+                                            <b>{{ tarjeta.total }}</b>
+                                        </td>
+                                        <td class="text-danger">
+                                            <b>{{ tarjeta.utilizado }}</b>
+                                        </td>
+                                        <td class="text-success">
+                                            <b
+                                                >${{
+                                                    tarjeta.total -
+                                                        tarjeta.utilizado
+                                                }}</b
+                                            >
+                                        </td>
+                                        <td>
+                                            <img
+                                                width="50"
+                                                [src]="
+                                                    '../../../assets/img/bancos/' +
+                                                    tarjeta.id_banco +
+                                                    '.png'
+                                                "
+                                                alt=""
+                                            />
+                                        </td>
+                                        <td style="font-size: smaller">
+                                            <button
+                                                type="button"
+                                                (click)="
+                                                    abrirModal2(false, tarjeta)
+                                                "
+                                                class="boton-acept-deuda"
+                                            >
+                                                <i class="fas fa-pen"></i>
+                                            </button>
+
+                                            <button
+                                                class="boton-acept-deuda mx-3"
+                                                title="cancel"
+                                                type="button"
+                                                (click)="deleteTarjeta(tarjeta)"
+                                            >
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <!-- Modal -->
+                            <div
+                                class="modal fade"
+                                id="exampleModal2"
+                                tabindex="-1"
+                                aria-labelledby="exampleModalLabel"
+                                aria-hidden="true"
+                            >
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5
+                                                class="modal-title"
+                                                id="exampleModalLabel"
+                                            >
+                                                Tarjeta
+                                            </h5>
+                                            <button
+                                                type="button"
+                                                class="close"
+                                                (click)="cerrarModal2()"
+                                            >
+                                                <span aria-hidden="true"
+                                                    >&times;</span
+                                                >
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div
+                                                        class="col-12 col-sm-6"
+                                                    >
+                                                        <p>
+                                                            <b>Tipo</b>
+                                                        </p>
+                                                        <select
+                                                            class="custom-select form-control-border"
+                                                            formControlName="tipo"
+                                                        >
+                                                            <option
+                                                                selected
+                                                                disabled
+                                                                [value]="'0'"
+                                                            >
+                                                                Tipo
+                                                            </option>
+                                                            <option
+                                                                [value]="
+                                                                    'Línea de crédito'
+                                                                "
+                                                            >
+                                                                Línea de crédito
+                                                            </option>
+                                                            <option
+                                                                [value]="
+                                                                    'Tarjeta de crédito'
+                                                                "
+                                                            >
+                                                                Tarjeta de
+                                                                crédito
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                    <div
+                                                        class="col-12 col-sm-6"
+                                                    >
+                                                        <p>
+                                                            <b>Banco</b>
+                                                        </p>
+                                                        <select
+                                                            class="custom-select form-control-border"
+                                                            formControlName="id_banco"
+                                                        >
+                                                            <option
+                                                                selected
+                                                                disabled
+                                                                [value]="0"
+                                                            >
+                                                                Seleccione
+                                                            </option>
+                                                            <option
+                                                                *ngFor="
+                                                                    let banco of bancos;
+                                                                    let i = index
+                                                                "
+                                                                [value]="i + 1"
+                                                            >
+                                                                {{ banco }}
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div
+                                                        class="col-12 col-sm-6"
+                                                    >
+                                                        <label for="montoReal"
+                                                            >Total</label
+                                                        >
+                                                        <input
+                                                            type="number"
+                                                            placeholder="$ "
+                                                            inputmode="decimal"
+                                                            class="form-control form-control-border text-right"
+                                                            formControlName="total"
+                                                        />
+                                                    </div>
+                                                    <div
+                                                        class="col-12 col-sm-6"
+                                                    >
+                                                        <label for="montoReal"
+                                                            >Utilizado</label
+                                                        >
+                                                        <input
+                                                            type="number"
+                                                            placeholder="$ "
+                                                            inputmode="decimal"
+                                                            class="form-control form-control-border text-right"
+                                                            formControlName="utilizado"
+                                                        />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="modal-footer">
+                                            <button
+                                                type="button"
+                                                class="btn btn-secondary"
+                                                (click)="cerrarModal2()"
+                                            >
+                                                Cerrar
+                                            </button>
+                                            <button
+                                                [disabled]="form2.invalid"
+                                                [attr.data-tooltip]="
+                                                    form2.invalid
+                                                        ? 'Necesitas completar todos los campos'
+                                                        : null
+                                                "
+                                                data-flow="left"
+                                                type="submit"
+                                                class="btn btn-primary"
+                                            >
+                                                Guardar
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                     <!-- /.card-body -->
                 </div>
                 <!-- /.card -->
+                <div class="card">
+                    <div class="card-head text-center mt-2">
+                        <h5>
+                            <span class="text-principal"><b>¡Cuidado!</b></span>
+                        </h5>
+                        <img src="../../../assets/img/cuidado.svg" alt="" />
+                    </div>
+                    <div class="card-body text-center">
+                        <p>
+                            Tus deudas están sobre el <b>30%</b> de tus ingresos.
+                        </p>
+                    </div>
+                    <div class="card-footer text-center">
+                        <p>
+                            <b>Lee otras recomendaciones <a href="">aquí</a></b>
+                        </p>
+                    </div>
+                </div>
 
                 <div class="card">
                     <div class="card-head text-center mt-2">
@@ -429,3 +731,5 @@
         </div>
     </div>
 </section>
+
+<ngx-loading [show]="loading"></ngx-loading>

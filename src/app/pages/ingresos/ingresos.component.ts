@@ -136,7 +136,6 @@ export class IngresosComponent implements OnInit {
 
     ngOnInit() {
         this.obtenerIngresos();
-
         this.generarDias(this.selectionMonth, this.selectionYear);
     }
 
@@ -194,7 +193,6 @@ export class IngresosComponent implements OnInit {
     selectUser(ingreso: Ingreso) {
         if (Object.keys(this.ingresoSelected).length === 0) {
             this.ingresoSelected = ingreso;
-            console.log(ingreso);
             this.isEditing = true;
             this.isAdding = true;
             this.form.patchValue({
