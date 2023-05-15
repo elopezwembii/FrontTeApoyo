@@ -80,7 +80,6 @@ export class AppService {
     }
 
     async getProfile() {
-
         this.user = sessionStorage.getItem('user');
         if (!this.user) {
             //this.toastr.error('No autorizado');

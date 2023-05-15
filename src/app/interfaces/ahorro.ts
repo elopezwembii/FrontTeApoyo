@@ -1,11 +1,10 @@
 export interface Ahorro {
-    id?: string;
+    id?: number;
     progreso?: number;
-    monto: number;
-    fechaLimite: Date;
-    recaudado: number;
     meta: number;
-    tipoAhorro:TipoAhorro;
+    fecha_limite:Date;
+    recaudado: number;
+    tipo_ahorro:TipoAhorro;
 }
 
 export interface TipoAhorro {

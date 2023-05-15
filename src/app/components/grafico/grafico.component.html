@@ -11,7 +11,7 @@
 <div *ngIf="!loading">
     <div
         *ngIf="porcentaje !== 0 && porcentaje !== infinto && porcentaje !== nan"
-        class="card-footer text-center bg-white"
+        class="card-body text-center"
     >
         <p>
             Tus ingresos
@@ -36,7 +36,7 @@
 
     <div
         *ngIf="porcentaje === infinto"
-        class="card-footer text-center bg-white"
+        class="card-body text-center"
     >
         <p>No existen datos del mes anterior para realizar la comparativa.</p>
     </div>

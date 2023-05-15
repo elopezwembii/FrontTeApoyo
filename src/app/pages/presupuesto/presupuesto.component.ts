@@ -40,7 +40,6 @@ export class PresupuestoComponent implements OnInit {
     graficoDonaPresupuesto: any;
     gastosGraficoBarra: any;
 
-
     form = this.fb.group({
         id: [''],
         tipo_gasto: [0, [Validators.required]],
@@ -115,7 +114,6 @@ export class PresupuestoComponent implements OnInit {
                     }
                 );
 
-
                 this.loading = false;
             },
             error: (error: any) => {
@@ -132,13 +130,37 @@ export class PresupuestoComponent implements OnInit {
                 gastos: Gasto[];
                 sumaTotalReal: number;
             }) => {
-                this.gastosGraficoBarra = gastos.map((gasto) => {
+              let gastosNoRepetido
+                gastosNoRepetido = gastos.reduce(
+                    (acumulador, valorActual) => {
+                        const elementoYaExiste = acumulador.find(
+                            (elemento) => elemento.tipo_gasto === valorActual.tipo_gasto
+                        );
+                        if (elementoYaExiste) {
+                            return acumulador.map((elemento) => {
+                                if (elemento.tipo_gasto === valorActual.tipo_gasto) {
+                                    return {
+                                        ...elemento,
+                                        monto:
+                                            elemento.monto + valorActual.monto
+                                    };
+                                }
+
+                                return elemento;
+                            });
+                        }
+
+                        return [...acumulador, valorActual];
+                    },
+                    []
+                );
+                this.gastosGraficoBarra = gastosNoRepetido.map((gasto) => {
+
                     return {
                         name: this.categorias[gasto.tipo_gasto - 1].descripcion,
                         value: gasto.monto
                     };
                 });
-                console.log(gastos);
             },
             error: (error: any) => {
                 console.log(error);

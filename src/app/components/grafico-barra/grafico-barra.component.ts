@@ -18,11 +18,6 @@ export class GraficoBarraComponent implements OnChanges {
                 barBorderRadius: [10, 10, 0, 0]
             }
         },
-      title: {
-        text: 'Comparativa gasto real v/s presupuesto',
-        left: 'center',
-        top: 10
-    },
         xAxis: {
             axisLabel: {
                 rotate: 0
@@ -127,6 +122,7 @@ export class GraficoBarraComponent implements OnChanges {
                     data: arregloPresupuesto,
                     z: 2
                 },
+                {
                     name: 'Gasto real',
                     type: 'bar',
                     data: arregloGasto,

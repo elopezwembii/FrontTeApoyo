@@ -14,8 +14,8 @@ import {forkJoin} from 'rxjs';
 })
 export class DashboardComponent implements OnInit {
     usuario: any;
-    presupuesto: any;
-    gastoReal: any;
+    presupuesto: any = [{value:100, name:"prueba"}];
+    gastoReal: any = [{value:100, name:"prueba"}];
     gastosHormigas: any = [];
     ahorros: Ahorro[] = [];
     posibleAhorro: number;
@@ -30,19 +30,21 @@ export class DashboardComponent implements OnInit {
         private appService: AppService
     ) {}
     ngOnInit(): void {
-        this.obtenerDatoGrafico();
-        this.obtenerAhorro();
+        /* this.obtenerDatoGrafico(); */
+        this.obtenerAhorros();
         this.obtenerGastoHormiga();
         this.obtenerUsuario();
     }
 
-    obtenerAhorro() {
-        this.ahorroService.obtenerAhorros().subscribe({
-            next: (ahorro: any) => {
-                this.ahorros = ahorro;
-            }
-        });
-    }
+    async obtenerAhorros() {
+
+      (await this.ahorroService.obtenerAhorros()).subscribe({
+          next: ({ahorros}: {ahorros: any}) => {
+              this.ahorros = ahorros;
+          },
+          error: (error: any) => {}
+      });
+  }
 
     obtenerGastoHormiga() {
         this.gastosService.obtenerGastoHormiga().subscribe({
@@ -56,19 +58,19 @@ export class DashboardComponent implements OnInit {
         const today = new Date();
         const month = today.getMonth() + 1;
         const year = today.getFullYear();
-        const presupuesto$ = this.presupuestoService.obtenerPresupuesto(
+        const presupuesto$ = this.presupuestoService.getPresupuesto(
             month,
             year
         );
-        const gastoReal$ = this.presupuestoService.obtenerGastoReal(
+        const gastoReal$ = this.gastosService.getGasto(
             month,
             year
         );
 
-        forkJoin([presupuesto$, gastoReal$]).subscribe({
-            next: ([presupuesto, gastoReal]) => {
+        forkJoin([presupuesto$,gastoReal$]).subscribe({
+            next: ([presupuesto,gastoReal]) => {
                 this.presupuesto = presupuesto;
-                this.gastoReal = gastoReal;
+                this.gastoReal = gastoReal
             },
             error: (error) => {
                 console.error(error);
@@ -77,7 +79,8 @@ export class DashboardComponent implements OnInit {
     }
 
     obtenerUsuario() {
-        this.usuario = JSON.parse(this.appService.user);
+        this.usuario = JSON.parse(this.appService.user).user;
+        console.log(this.usuario);
         this.ahorroService.obtenerNivelAhorroUsuario().subscribe({
             next: ({
                 posibleAhorro,

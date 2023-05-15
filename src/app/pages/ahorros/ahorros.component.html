@@ -41,7 +41,7 @@
 
                 <div *ngFor="let item of ahorros">
                     <div class="d-flex justify-content-between">
-                        <h6><strong>{{ item.tipoAhorro.descripcion }}</strong></h6>
+                        <h6><strong>{{ tiposAhorro[item.tipo_ahorro - 1 ].descripcion }}</strong></h6>
                         <div>
                             <button
                                 (click)="openModal(item)" title="Editar ahorro"
@@ -63,7 +63,7 @@
                             <div class="row align-items-center">
                                 <div class="col-3">
                                     <img
-                                        [src]="item.tipoAhorro.img"
+                                        [src]="tiposAhorro[item.tipo_ahorro - 1 ].img"
                                         alt="Icono de ahorro"
                                         class="img-fluid"
                                     />
@@ -123,12 +123,12 @@
                 </div>
             </div>
             <div class="col-12 col-sm-4">
-                <div class="card">
+                <div class="card mb-3">
                     <div class="card-body">
                         <app-grafico-linea></app-grafico-linea>
                     </div>
                 </div>
-                <div class="card">
+                <div class="card mb-3s">
                     <div class="card-head text-center mt-2">
                         <h5>¡Recuerda!</h5>
                     </div>
@@ -137,14 +137,12 @@
                             Disminuye tus gastos hormigas para aumentar tus
                             ahorros y alcanzar tus metas mas rápido
                         </p>
-                    </div>
-                    <div class="card-footer text-center">
                         <p>
-                            <b
-                                >Puedes ver tus gastos hormiga
-                                <a href="">aquí</a></b
-                            >
-                        </p>
+                          <b
+                              >Puedes ver tus gastos hormiga
+                              <a href="">aquí</a></b
+                          >
+                      </p>
                     </div>
                 </div>
             </div>
@@ -152,4 +150,4 @@
     </div>
 </section>
 
-<app-modal-ahorro #modalAhorro></app-modal-ahorro>
+<app-modal-ahorro #modalAhorro [ahorro]="ahorros" (ahorroMod)="actualizarAhorro($event)"></app-modal-ahorro>
