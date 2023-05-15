@@ -56,11 +56,12 @@ export class DashboardComponent implements OnInit {
         const today = new Date();
         const month = today.getMonth() + 1;
         const year = today.getFullYear();
-        const presupuesto$ = this.presupuestoService.obtenerPresupuesto(
+        
+        const presupuesto$ = this.presupuestoService.getPresupuesto(
             month,
             year
         );
-        const gastoReal$ = this.presupuestoService.obtenerGastoReal(
+        const gastoReal$ = this.gastosService.getGasto(
             month,
             year
         );
