@@ -35,8 +35,9 @@
                             </h5>
 
                             <app-grafico-barra
-                                [presupuesto]="presupuesto"
-                                [gastoReal]="gastoReal"
+                                [presupuesto]="graficoDonaPresupuesto"
+                                [gastoReal]="gastosGraficoBarraTotal"
+                                class="custom-chart"
                             ></app-grafico-barra>
                         </div>
                     </div>
@@ -66,7 +67,10 @@
                             <div *ngFor="let ahorro of ahorros">
                                 <div class="row my-3">
                                     <div class="col text-center">
-                                        {{ ahorro.tipoAhorro.descripcion }}
+                                        {{
+                                            tiposAhorro[ahorro.tipo_ahorro - 1]
+                                                .descripcion
+                                        }}
                                     </div>
                                 </div>
                                 <div class="row">
@@ -76,11 +80,21 @@
                                                 class="progress-bar progress-bar-custom"
                                                 role="progressbar"
                                                 [style.width.%]="
-                                                    ahorro.progreso
+                                                    (
+                                                        (ahorro.recaudado *
+                                                            100) /
+                                                        ahorro.meta
+                                                    ).toFixed(2)
                                                 "
                                             >
                                                 <div class="progress-label">
-                                                    {{ ahorro.progreso }}%
+                                                    {{
+                                                        (
+                                                            (ahorro.recaudado *
+                                                                100) /
+                                                            ahorro.meta
+                                                        ).toFixed(0)
+                                                    }}%
                                                 </div>
                                             </div>
                                         </div>
@@ -100,20 +114,640 @@
                 </div>
             </div>
         </div>
-        <!-- Fila 2 -->
+
+        <!-- Fila 3 -->
         <div class="col-md-12 mb-3">
             <div class="row">
-                <div class="col-md-5">
+                <div class="col-md-6">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="text-principal">
+                                <strong> Agregar gastos</strong>
+                            </h5>
+                            <p class="text-principal m-0 p-0">
+                              <strong> <i>* Últimos 3 gastos realizados. </i></strong>
+                          </p>
+                            <form [formGroup]="form" (ngSubmit)="update()">
+                                <div class="responsive">
+                                    <table class="table text-nowrap">
+                                        <thead>
+                                            <tr>
+                                                <th>Categoría</th>
+                                                <th>Sub-categoría</th>
+                                                <th>Monto</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody *ngIf="gastos.length > 0">
+                                            <ng-container
+                                                *ngFor="
+                                                    let gasto of gastos;
+                                                    let i = index
+                                                "
+                                            >
+                                                <div class="separador"></div>
+                                                <ng-container class="row-table">
+                                                    <tr
+                                                        class="row-table"
+                                                        *ngIf="
+                                                            gastoSelected !==
+                                                            gasto
+                                                        "
+                                                    >
+                                                        <td>
+                                                            <span
+                                                                *ngIf="
+                                                                    gasto.tipo_gasto ===
+                                                                        1 ||
+                                                                    gasto.tipo_gasto ===
+                                                                        8
+                                                                "
+                                                                class="pill-gasto-tipo-1"
+                                                                ><b>{{
+                                                                    objectTipo[
+                                                                        gasto.tipo_gasto -
+                                                                            1
+                                                                    ]
+                                                                }}</b></span
+                                                            >
+                                                            <span
+                                                                *ngIf="
+                                                                    gasto.tipo_gasto ===
+                                                                        2 ||
+                                                                    gasto.tipo_gasto ===
+                                                                        9
+                                                                "
+                                                                class="pill-gasto-tipo-2"
+                                                                ><b>{{
+                                                                    objectTipo[
+                                                                        gasto.tipo_gasto -
+                                                                            1
+                                                                    ]
+                                                                }}</b></span
+                                                            >
+                                                            <span
+                                                                *ngIf="
+                                                                    gasto.tipo_gasto ===
+                                                                        3 ||
+                                                                    gasto.tipo_gasto ===
+                                                                        10
+                                                                "
+                                                                class="pill-gasto-tipo-3"
+                                                                ><b>{{
+                                                                    objectTipo[
+                                                                        gasto.tipo_gasto -
+                                                                            1
+                                                                    ]
+                                                                }}</b></span
+                                                            >
+                                                            <span
+                                                                *ngIf="
+                                                                    gasto.tipo_gasto ===
+                                                                        4 ||
+                                                                    gasto.tipo_gasto ===
+                                                                        11
+                                                                "
+                                                                class="pill-gasto-tipo-4"
+                                                                ><b>{{
+                                                                    objectTipo[
+                                                                        gasto.tipo_gasto -
+                                                                            1
+                                                                    ]
+                                                                }}</b></span
+                                                            >
+                                                            <span
+                                                                *ngIf="
+                                                                    gasto.tipo_gasto ===
+                                                                        5 ||
+                                                                    gasto.tipo_gasto ===
+                                                                        12
+                                                                "
+                                                                class="pill-gasto-tipo-5"
+                                                                ><b>{{
+                                                                    objectTipo[
+                                                                        gasto.tipo_gasto -
+                                                                            1
+                                                                    ]
+                                                                }}</b></span
+                                                            >
+                                                            <span
+                                                                *ngIf="
+                                                                    gasto.tipo_gasto ===
+                                                                        6 ||
+                                                                    gasto.tipo_gasto ===
+                                                                        13
+                                                                "
+                                                                class="pill-gasto-tipo-6"
+                                                                ><b>{{
+                                                                    objectTipo[
+                                                                        gasto.tipo_gasto -
+                                                                            1
+                                                                    ]
+                                                                }}</b></span
+                                                            >
+                                                            <span
+                                                                *ngIf="
+                                                                    gasto.tipo_gasto ===
+                                                                        7 ||
+                                                                    gasto.tipo_gasto ===
+                                                                        14
+                                                                "
+                                                                class="pill-gasto-tipo-7"
+                                                                ><b>{{
+                                                                    objectTipo[
+                                                                        gasto.tipo_gasto -
+                                                                            1
+                                                                    ]
+                                                                }}</b></span
+                                                            >
+                                                        </td>
+
+                                                        <td class="text-center">
+                                                            <span
+                                                                class="badge"
+                                                                >{{
+                                                                    loading
+                                                                        ? null
+                                                                        : gasto
+                                                                              .get_sub_tipo
+                                                                              .nombre
+                                                                }}</span
+                                                            >
+                                                        </td>
+
+                                                        <td class="text-right">
+                                                            $
+                                                            {{
+                                                                gasto.monto
+                                                                    | currency
+                                                                        : 'CLP'
+                                                                        : ''
+                                                            }}
+                                                        </td>
+                                                        <td
+                                                            *ngIf="
+                                                                gasto.fijar ===
+                                                                1
+                                                            "
+                                                        >
+                                                            -
+                                                        </td>
+
+                                                        <td>
+                                                            <i
+                                                                class="fas fa-trash button-table mx-2"
+                                                                (click)="
+                                                                    deleteUser(
+                                                                        gasto
+                                                                    )
+                                                                "
+                                                            ></i>
+                                                        </td>
+                                                    </tr>
+                                                </ng-container>
+
+                                                <tr
+                                                    *ngIf="
+                                                        gastoSelected === gasto
+                                                    "
+                                                    class="row-table-edit"
+                                                >
+                                                    <td>
+                                                        <select
+                                                            class="custom-select form-control-border"
+                                                            formControlName="tipo_gasto"
+                                                        >
+                                                            <option
+                                                                selected
+                                                                disabled
+                                                                [value]="0"
+                                                            >
+                                                                Tipo
+                                                            </option>
+                                                            <option [value]="1">
+                                                                Hogar
+                                                            </option>
+                                                            <option [value]="2">
+                                                                Servicios
+                                                                básicos
+                                                            </option>
+                                                            <option [value]="3">
+                                                                Alimentos y
+                                                                comida
+                                                            </option>
+                                                            <option [value]="4">
+                                                                Entretenimiento
+                                                            </option>
+                                                            <option [value]="5">
+                                                                Salud y Belleza
+                                                            </option>
+                                                            <option [value]="6">
+                                                                Auto y
+                                                                Transporte
+                                                            </option>
+                                                            <option [value]="7">
+                                                                Educación y
+                                                                trabajo
+                                                            </option>
+                                                            <option [value]="8">
+                                                                Regalos y ayudas
+                                                            </option>
+                                                            <option [value]="9">
+                                                                Viajes
+                                                            </option>
+                                                            <option
+                                                                [value]="10"
+                                                            >
+                                                                Créditos
+                                                            </option>
+                                                            <option
+                                                                [value]="11"
+                                                            >
+                                                                Ropa y Calzado
+                                                            </option>
+                                                            <option
+                                                                [value]="12"
+                                                            >
+                                                                Personal
+                                                            </option>
+                                                            <option
+                                                                [value]="13"
+                                                            >
+                                                                Compras Online
+                                                            </option>
+                                                            <option
+                                                                [value]="14"
+                                                            >
+                                                                Ahorro e
+                                                                Inversiones
+                                                            </option>
+                                                        </select>
+                                                    </td>
+
+                                                    <td>
+                                                        <select
+                                                            class="custom-select form-control-border"
+                                                            formControlName="subtipo_gasto"
+                                                            [value]="
+                                                                gasto.subtipo_gasto
+                                                            "
+                                                        >
+                                                            <option
+                                                                selected
+                                                                disabled
+                                                                value="0"
+                                                            >
+                                                                Subtipo
+                                                            </option>
+                                                            <option
+                                                                *ngFor="
+                                                                    let item of opcionesSelect2[
+                                                                        getTipo
+                                                                    ];
+                                                                    let i = index
+                                                                "
+                                                                [value]="i"
+                                                            >
+                                                                {{ item }}
+                                                            </option>
+                                                        </select>
+                                                    </td>
+
+                                                    <td>
+                                                        <input
+                                                            type="number"
+                                                            placeholder="$ "
+                                                            inputmode="decimal"
+                                                            class="form-control form-control-border text-right"
+                                                            formControlName="monto"
+                                                            [value]="
+                                                                gasto.monto
+                                                            "
+                                                            title="Monto"
+                                                        />
+                                                    </td>
+                                                    <td>
+                                                        <span
+                                                            *ngIf="form.invalid"
+                                                            data-tooltip="Necesitas completar todos los campos"
+                                                            data-flow="left"
+                                                            ><button
+                                                                class="boton-acept"
+                                                                type="submit"
+                                                                [disabled]="
+                                                                    form.invalid
+                                                                "
+                                                            >
+                                                                <i
+                                                                    class="fas fa-check"
+                                                                ></i></button
+                                                        ></span>
+
+                                                        <span
+                                                            *ngIf="
+                                                                !form.invalid
+                                                            "
+                                                            ><button
+                                                                class="boton-acept"
+                                                                type="submit"
+                                                                [disabled]="
+                                                                    form.invalid
+                                                                "
+                                                            >
+                                                                <i
+                                                                    class="fas fa-check"
+                                                                ></i></button
+                                                        ></span>
+
+                                                        <button
+                                                            class="boton-acept mx-2"
+                                                            title="cancel"
+                                                            (click)="cancel()"
+                                                            type="button"
+                                                        >
+                                                            <i
+                                                                class="fas fa-ban"
+                                                            ></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                                <!-- Modal -->
+                                                <div
+                                                    class="modal fade"
+                                                    id="exampleModal"
+                                                    tabindex="-1"
+                                                    aria-labelledby="exampleModalLabel"
+                                                    aria-hidden="true"
+                                                >
+                                                    <div class="modal-dialog">
+                                                        <div
+                                                            class="modal-content"
+                                                        >
+                                                            <div
+                                                                class="modal-header"
+                                                            >
+                                                                <h5
+                                                                    class="modal-title"
+                                                                    id="exampleModalLabel"
+                                                                >
+                                                                    Gasto
+                                                                </h5>
+                                                                <button
+                                                                    type="button"
+                                                                    class="close"
+                                                                    (click)="
+                                                                        cerrarModal()
+                                                                    "
+                                                                >
+                                                                    <span
+                                                                        aria-hidden="true"
+                                                                        >&times;</span
+                                                                    >
+                                                                </button>
+                                                            </div>
+                                                            <div
+                                                                class="modal-body"
+                                                            >
+                                                                <div
+                                                                    class="form-group"
+                                                                >
+                                                                    <p>
+                                                                        <b
+                                                                            >Categoría</b
+                                                                        >
+                                                                    </p>
+                                                                    <select
+                                                                        class="custom-select form-control-border"
+                                                                        formControlName="tipo_gasto"
+                                                                    >
+                                                                        <option
+                                                                            selected
+                                                                            disabled
+                                                                            [value]="
+                                                                                0
+                                                                            "
+                                                                        >
+                                                                            Tipo
+                                                                        </option>
+                                                                        <option
+                                                                            [value]="
+                                                                                1
+                                                                            "
+                                                                        >
+                                                                            Hogar
+                                                                        </option>
+                                                                        <option
+                                                                            [value]="
+                                                                                2
+                                                                            "
+                                                                        >
+                                                                            Servicios
+                                                                            básicos
+                                                                        </option>
+                                                                        <option
+                                                                            [value]="
+                                                                                3
+                                                                            "
+                                                                        >
+                                                                            Alimentos
+                                                                            y
+                                                                            comida
+                                                                        </option>
+                                                                        <option
+                                                                            [value]="
+                                                                                4
+                                                                            "
+                                                                        >
+                                                                            Entretenimiento
+                                                                        </option>
+                                                                        <option
+                                                                            [value]="
+                                                                                5
+                                                                            "
+                                                                        >
+                                                                            Salud
+                                                                            y
+                                                                            Belleza
+                                                                        </option>
+                                                                        <option
+                                                                            [value]="
+                                                                                6
+                                                                            "
+                                                                        >
+                                                                            Auto
+                                                                            y
+                                                                            Transporte
+                                                                        </option>
+                                                                        <option
+                                                                            [value]="
+                                                                                7
+                                                                            "
+                                                                        >
+                                                                            Educación
+                                                                            y
+                                                                            trabajo
+                                                                        </option>
+                                                                        <option
+                                                                            [value]="
+                                                                                8
+                                                                            "
+                                                                        >
+                                                                            Regalos
+                                                                            y
+                                                                            ayudas
+                                                                        </option>
+                                                                        <option
+                                                                            [value]="
+                                                                                9
+                                                                            "
+                                                                        >
+                                                                            Viajes
+                                                                        </option>
+                                                                        <option
+                                                                            [value]="
+                                                                                10
+                                                                            "
+                                                                        >
+                                                                            Créditos
+                                                                        </option>
+                                                                        <option
+                                                                            [value]="
+                                                                                11
+                                                                            "
+                                                                        >
+                                                                            Ropa
+                                                                            y
+                                                                            Calzado
+                                                                        </option>
+                                                                        <option
+                                                                            [value]="
+                                                                                12
+                                                                            "
+                                                                        >
+                                                                            Personal
+                                                                        </option>
+                                                                        <option
+                                                                            [value]="
+                                                                                13
+                                                                            "
+                                                                        >
+                                                                            Compras
+                                                                            Online
+                                                                        </option>
+                                                                        <option
+                                                                            [value]="
+                                                                                14
+                                                                            "
+                                                                        >
+                                                                            Ahorro
+                                                                            e
+                                                                            Inversiones
+                                                                        </option>
+                                                                    </select>
+                                                                </div>
+
+                                                                <div
+                                                                    class="form-group"
+                                                                >
+                                                                    <label
+                                                                        for="montoReal"
+                                                                        >Monto</label
+                                                                    >
+                                                                    <input
+                                                                        type="number"
+                                                                        placeholder="$ "
+                                                                        inputmode="decimal"
+                                                                        class="form-control form-control-border text-right"
+                                                                        formControlName="monto"
+                                                                        [value]="
+                                                                            gasto.monto
+                                                                        "
+                                                                        title="Monto"
+                                                                    />
+                                                                </div>
+                                                            </div>
+                                                            <div
+                                                                class="modal-footer"
+                                                            >
+                                                                <button
+                                                                    type="button"
+                                                                    class="btn btn-secondary"
+                                                                    (click)="
+                                                                        cerrarModal()
+                                                                    "
+                                                                >
+                                                                    Cerrar
+                                                                </button>
+                                                                <button
+                                                                    [disabled]="
+                                                                        form.invalid
+                                                                    "
+                                                                    data-tooltip="Necesitas completar todos los campos"
+                                                                    data-flow="left"
+                                                                    type="submit"
+                                                                    class="btn btn-primary"
+                                                                >
+                                                                    Guardar
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </ng-container>
+                                            <tr>
+                                                <td
+                                                    class="text-right pt-3"
+                                                    colspan="4"
+                                                >
+                                                    Total de todos tus gastos:
+                                                    <b>
+                                                        $
+                                                        {{
+                                                            sumaTotalReal
+                                                                | currency
+                                                                    : 'CLP'
+                                                                    : ''
+                                                        }}</b
+                                                    >
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                        <tbody *ngIf="gastos.length === 0">
+                                            <tr class="text-center">
+                                                <td colspan="6">Sin datos</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <button
+                                    [disabled]="isAdding"
+                                    class="boton-add"
+                                    (click)="addUser()"
+                                    type="button"
+                                >
+                                    <b>+ Agregar gasto al mes actual</b>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
                     <div class="card h-100">
                         <div class="card-body">
                             <h5 class="text-principal">
                                 <strong> Mayores gastos del mes</strong>
                             </h5>
-                            <app-grafico-dona-mayores-gastos></app-grafico-dona-mayores-gastos>
+                            <app-grafico-dona-mayores-gastos
+                                [data]="gastosGraficoBarra"
+                            ></app-grafico-dona-mayores-gastos>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-7">
+            </div>
+        </div>
+        <!-- Fila 2 -->
+        <div class="col-md-12 mb-3">
+            <div class="row">
+                <div class="col-md-6">
                     <div class="card h-100">
                         <div class="card-body d-flex flex-column">
                             <h5 class="text-principal">
@@ -121,20 +755,11 @@
                             </h5>
                             <div class="row flex-grow-1">
                                 <div
-                                    class="col-4 d-flex flex-column justify-content-center"
-                                >
-                                    <img
-                                        class="img-fluid mb-3 w-auto rounded"
-                                        src="assets/icons/malcolm.gif"
-                                    />
-                                </div>
-
-                                <div
-                                    class="col-8 d-flex flex-column justify-content-center"
+                                    class="col-12 d-flex flex-column justify-content-center"
                                 >
                                     <p>
-                                        En febrero tus mayores gastos Hormigas
-                                        fueron:
+                                        En {{ arrayMonth[actualMonth] }} tus
+                                        mayores gastos Hormigas fueron:
                                     </p>
                                     <div class="row">
                                         <div class="col-12">
@@ -152,10 +777,10 @@
                                                                 *ngFor="
                                                                     let gh of gastosHormigas.slice(
                                                                         0,
-                                                                        3
+                                                                        4
                                                                     )
                                                                 "
-                                                                class="col-4 d-flex flex-column justify-content-center"
+                                                                class="col-3 d-flex flex-column justify-content-center"
                                                             >
                                                                 <div
                                                                     class="gasto-icon-container text-center"
@@ -193,11 +818,11 @@
                                                             <div
                                                                 *ngFor="
                                                                     let gh of gastosHormigas.slice(
-                                                                        3,
-                                                                        6
+                                                                        4,
+                                                                        8
                                                                     )
                                                                 "
-                                                                class="col-4 d-flex flex-column justify-content-center"
+                                                                class="col-3 d-flex flex-column justify-content-center"
                                                             >
                                                                 <div
                                                                     class="gasto-icon-container text-center"
@@ -266,8 +891,7 @@
                                         Pudiste haber ahorrado
                                         <strong
                                             >${{
-                                                posibleAhorro
-                                                    | currency: 'CLP':''
+                                                0 | currency: 'CLP':''
                                             }}</strong
                                         >
                                     </p>
@@ -276,26 +900,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        <!-- Fila 3 -->
-        <div class="col-md-12 mb-3">
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <h5 class="text-principal">
-                                <strong> Agregar gastos</strong>
-                            </h5>
-                            Lorem ipsum dolor sit amet, consectetur adipisicing
-                            elit. Et, quibusdam error amet corrupti hic, fuga
-                            perferendis nobis dignissimos esse sunt voluptate
-                            tenetur fugiat voluptas, odit autem iste ipsam
-                            explicabo doloremque.
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <div class="card h-100">
                         <div class="card-head text-center mt-2">
                             <h5>
@@ -343,15 +948,15 @@
                         <div class="card-body">
                             <p>
                                 Registrar las
-                                <strong>fechas y categorias</strong>
+                                <strong>fechas y categorías</strong>
                                 correctamente te ayudara a obtener
-                                <strong>mejores recomedaciones.</strong>
+                                <strong>mejores recomendaciones.</strong>
                             </p>
                         </div>
                     </div>
                 </div>
 
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <div class="card h-100">
                         <div class="card-body d-flex flex-column">
                             <div class="row">
@@ -393,3 +998,4 @@
         </div>
     </div>
 </div>
+<ngx-loading [show]="loading"></ngx-loading>

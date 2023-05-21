@@ -1,4 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {
+    Component,
+    Input,
+    OnChanges,
+    OnInit,
+    SimpleChanges
+} from '@angular/core';
 import {AhorroService} from '@services/ahorro/ahorro.service';
 
 @Component({
@@ -6,49 +12,51 @@ import {AhorroService} from '@services/ahorro/ahorro.service';
     templateUrl: './grafico-linea.component.html',
     styleUrls: ['./grafico-linea.component.scss']
 })
-export class GraficoLineaComponent implements OnInit {
+export class GraficoLineaComponent implements OnChanges {
+    @Input() historial: any;
+    @Input() change: boolean;
     options = {
-        title: {
-            text: '¡Wow!',
-            left: 'center',
-            top: 10
-        },
         xAxis: {
             type: 'category',
             data: []
         },
         yAxis: {
-            type: 'value'
+            type: 'value',
+            axisLabel: {
+                inside: true
+            }
         },
         series: [],
 
         legend: {
             orient: 'horizontal',
-            bottom: 0,
+            bottom: 0
+        },
+        tooltip: {
+            trigger: 'axis'
         }
     };
 
-    constructor(private ahorroServicio: AhorroService) {}
-    ngOnInit() {
-        this.ahorroServicio.obtenerAhorroHistorial().subscribe({
-            next: (data: any) => {                
+    constructor() {}
 
-                this.options = {
-                    ...this.options,
-                    xAxis: {
-                        type: 'category',
-                        data: data.map(d => d.year)
-                      },
-                      
-                      series: [{
-                        data: data.map(d => d.amount),
-                        type: 'line',
-                        itemStyle: {
-                            color: '#BCEAF3'
-                        }
-                      }]
-                };
-            }
-        });
+    ngOnChanges() {
+        this.change = !this.change;
+        this.options = {
+            ...this.options,
+            xAxis: {
+                type: 'category',
+                data: this.historial.map((d) => d.year)
+            },
+
+            series: [
+                {
+                    data: this.historial.map((d) => d.amount),
+                    type: 'line',
+                    itemStyle: {
+                        color: '#BCEAF3'
+                    }
+                }
+            ]
+        };
     }
 }

@@ -1,0 +1,273 @@
+<div class="col-12">
+    <div class="text-right">
+        <button
+            (click)="abrirModal(true, null)"
+            class="btn btn-light elevation-2 rounded-pill"
+        >
+            Nuevo Bien
+        </button>
+    </div>
+    <form [formGroup]="form" (ngSubmit)="update()">
+        <div *ngFor="let deuda of deudas">
+            <div class="row mt-3">
+                <div class="col col-12 text-right" style="font-size: larger">
+                    <button
+                        type="button"
+                        (click)="abrirModal(false, deuda)"
+                        class="boton-acept-deuda"
+                    >
+                        <i class="fas fa-pen"></i>
+                    </button>
+
+                    <button
+                        class="boton-acept-deuda mx-3"
+                        title="cancel"
+                        type="button"
+                        (click)="deleteDeuda(deuda)"
+                    >
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12 col-sm-4 text-center">
+                            <img
+                                height="25"
+                                [src]="
+                                    '../../../assets/img/bancos/' +
+                                    deuda.id_banco +
+                                    '.png'
+                                "
+                                alt=""
+                            />
+                            <img
+                                height="110"
+                                [src]="
+                                    '../../../assets/img/deudas/' +
+                                    deuda.id_tipo_deuda +
+                                    '.svg'
+                                "
+                                alt=""
+                            />
+                        </div>
+                        <div class="col-12 col-sm-8">
+                            <div class="row mt-2">
+                                <div class="col-6">
+                                    <small class="text-bold"
+                                        >Costo total:
+                                        <h3 class="text-danger text-bold mb-0">
+                                            $
+                                            {{
+                                                deuda.costo_total
+                                                    | currency: 'CLP':''
+                                            }}
+                                        </h3></small
+                                    >
+                                </div>
+                                <div class="col-6">
+                                    <small class="text-bold"
+                                        >Llevas:
+                                        <h3 class="text-success text-bold mb-0">
+                                            $
+                                            {{
+                                                deuda.cuotas_pagadas *
+                                                    deuda.pago_mensual
+                                                    | currency: 'CLP':''
+                                            }}
+                                        </h3></small
+                                    >
+                                </div>
+                            </div>
+                            <div class="row mt-0">
+                                <div class="col-4">
+                                    <small
+                                        >Valor cuota: $
+                                        {{
+                                            deuda.pago_mensual
+                                                | currency: 'CLP':''
+                                        }}</small
+                                    >
+                                </div>
+                                <div class="col-4">
+                                    <small
+                                        >Cuotas pagadas:
+                                        {{ deuda.cuotas_pagadas }}</small
+                                    >
+                                </div>
+                                <div class="col-4">
+                                    <small
+                                        >Cuotas pendientes:
+                                        {{
+                                            deuda.cuotas_totales -
+                                                deuda.cuotas_pagadas
+                                        }}</small
+                                    >
+                                </div>
+                            </div>
+                            <div class="progress">
+                                <div
+                                    [class]="
+                                        (deuda.cuotas_pagadas * 100) /
+                                            deuda.cuotas_totales >
+                                        80
+                                            ? 'progress-bar bg-success'
+                                            : (deuda.cuotas_pagadas * 100) /
+                                                  deuda.cuotas_totales >
+                                              30
+                                            ? 'progress-bar bg-warning'
+                                            : 'progress-bar bg-danger'
+                                    "
+                                    role="progressbar"
+                                    [style.width.%]="
+                                        (deuda.cuotas_pagadas * 100) /
+                                        deuda.cuotas_totales
+                                    "
+                                >
+                                    <div class="progress-label">
+                                        {{
+                                            (deuda.cuotas_pagadas * 100) /
+                                                deuda.cuotas_totales
+                                                | number: '0.1-1'
+                                        }}
+                                        %
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <small
+                                    >Total cuotas:
+                                    {{ deuda.cuotas_totales }}</small
+                                >
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal -->
+        <div
+            class="modal fade"
+            id="exampleModal"
+            tabindex="-1"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+        >
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">
+                            Bienes
+                        </h5>
+                        <button
+                            type="button"
+                            class="close"
+                            (click)="cerrarModal()"
+                        >
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-12 col-sm-5">
+                                    <label for="desc">Descripción</label>
+                                    <input
+                                        type="text"
+                                        class="form-control form-control-border"
+                                        formControlName="desc"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-12">
+                                    <label for="valorizado">Valorizado</label>
+                                    <input
+                                        type="number"
+                                        placeholder="$ "
+                                        inputmode="decimal"
+                                        class="form-control form-control-border text-right"
+                                        formControlName="valorado"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-12 col-sm-6">
+                                    <p class="mb-2">
+                                        <b>Tipo de Bien</b>
+                                    </p>
+                                    <select
+                                        class="custom-select form-control-border"
+                                        formControlName="tipo_bien"
+                                    >
+                                        <option selected disabled [value]="0">
+                                            Seleccione
+                                        </option>
+                                        <option [value]="1">
+                                            Ahorro e Inversiones
+                                        </option>
+                                        <option [value]="2">
+                                            Participacion en sociedades
+                                        </option>
+                                        <option [value]="3">Propiedades</option>
+                                        <option [value]="4">Vehículos</option>
+                                    </select>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <p class="mb-2">
+                                        <b>Tipo de Valorización</b>
+                                    </p>
+                                    <select
+                                        class="custom-select form-control-border"
+                                        formControlName="tipo_valorizacion"
+                                    >
+                                        <option selected disabled [value]="0">
+                                            Seleccione
+                                        </option>
+                                        <option [value]="1">
+                                            Avalúo Fiscal
+                                        </option>
+                                        <option [value]="2">
+                                            Precio de compraventa
+                                        </option>
+                                        <option [value]="3">Tasación</option>
+                                        <option [value]="4">Valor promedio</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group"></div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button
+                            type="button"
+                            class="btn btn-secondary"
+                            (click)="cerrarModal()"
+                        >
+                            Cerrar
+                        </button>
+                        <button
+                            [disabled]="form.invalid"
+                            [attr.data-tooltip]="
+                                form.invalid
+                                    ? 'Necesitas completar todos los campos'
+                                    : null
+                            "
+                            data-flow="left"
+                            type="submit"
+                            class="btn btn-primary"
+                        >
+                            Guardar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

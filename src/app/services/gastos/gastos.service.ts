@@ -9,28 +9,7 @@ import {Observable, of} from 'rxjs';
     providedIn: 'root'
 })
 export class GastosService {
-    private gastosHormigas = [
-        {
-            titulo: 'Comida rápida',
-            precio: 50000,
-            img: 'assets/icons/gasto1.png'
-        },
-        {
-            titulo: 'Cafeteria',
-            precio: 20000,
-            img: 'assets/icons/gasto2.png'
-        },
-        {
-            titulo: 'Cigarros',
-            precio: 15000,
-            img: 'assets/icons/gasto3.png'
-        },
-        {
-            titulo: 'Cigarros2',
-            precio: 15000,
-            img: 'assets/icons/gasto3.png'
-        }
-    ];
+    private gastosHormigas = [];
 
     // Mock Users Data
     gastos: Gasto[] = [];

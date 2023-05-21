@@ -39,18 +39,24 @@
                     </button>
                 </div>
 
-                <div *ngFor="let item of ahorros">
+                <div class="mb-3" *ngFor="let item of ahorros">
                     <div class="d-flex justify-content-between">
-                        <h6><strong>{{ tiposAhorro[item.tipo_ahorro - 1 ].descripcion }}</strong></h6>
+                        <h6>
+                            <strong>{{
+                                tiposAhorro[item.tipo_ahorro - 1].descripcion
+                            }}</strong>
+                        </h6>
                         <div>
                             <button
-                                (click)="openModal(item)" title="Editar ahorro"
+                                (click)="openModal(item)"
+                                title="Editar ahorro"
                                 class="btn btn-link cursor-pointer"
                             >
                                 <i class="fas fa-pencil-alt edit"></i>
                             </button>
                             <button
-                                (click)="eliminarAhorro(item)" title="Eliminar ahorro"
+                                (click)="eliminarAhorro(item)"
+                                title="Eliminar ahorro"
                                 class="btn btn-link cursor-pointer"
                             >
                                 <i class="fas fa-trash edit"></i>
@@ -61,35 +67,43 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="row align-items-center">
-                                <div class="col-3">
+                                <div class="col-3 text-center">
                                     <img
-                                        [src]="tiposAhorro[item.tipo_ahorro - 1 ].img"
+                                        [src]="
+                                            tiposAhorro[item.tipo_ahorro - 1]
+                                                .img
+                                        "
                                         alt="Icono de ahorro"
                                         class="img-fluid"
+                                        height="200"
                                     />
                                 </div>
                                 <div class="col-9">
                                     <div class="text-right mt-2">
                                         Meta
-                                        <strong class="big-text">{{
-                                            item.meta
-                                                | currency: '$':'symbol':'1.0-0'
-                                        }}</strong>
+                                        <strong class="big-text"
+                                            >$
+                                            {{
+                                                item.meta | currency: 'CLP':''
+                                            }}</strong
+                                        >
                                     </div>
                                     <div class="row mt-2">
                                         <div class="col-4 text-left">
-                                            <strong class="medium-text">{{
-                                                item.monto
-                                                    | currency
-                                                        : '$'
-                                                        : 'symbol'
-                                                        : '1.0-0'
-                                            }}</strong
+                                            <strong class="medium-text"
+                                                >$
+                                                {{
+                                                    calculoMontoMensual(
+                                                        item.fecha_limite,
+                                                        item.meta,
+                                                        item.recaudado
+                                                    ).toFixed(0) | currency:'CLP':''
+                                                }}</strong
                                             ><br />Monto Mensual
                                         </div>
                                         <div class="col-4 text-center">
                                             <strong class="medium-text">{{
-                                                item.fechaLimite
+                                                item.fecha_limite
                                                     | date: 'dd/MM/yyyy'
                                             }}</strong
                                             ><br />Fecha Límite
@@ -109,10 +123,10 @@
                                         <div
                                             class="progress-bar progress-bar-custom"
                                             role="progressbar"
-                                            [style.width.%]="item.progreso"
+                                            [style.width.%]="((item.recaudado * 100) / item.meta).toFixed(2)"
                                         >
                                             <div class="progress-label">
-                                                {{ item.progreso }}%
+                                                {{ ((item.recaudado * 100) / item.meta).toFixed(0) }}%
                                             </div>
                                         </div>
                                     </div>
@@ -125,7 +139,13 @@
             <div class="col-12 col-sm-4">
                 <div class="card mb-3">
                     <div class="card-body">
-                        <app-grafico-linea></app-grafico-linea>
+                        <h5 class="text-principal">
+                            <strong> Evolución de tus ahorros por año</strong>
+                        </h5>
+                        <app-grafico-linea
+                            [historial]="historial"
+                            [change]="change"
+                        ></app-grafico-linea>
                     </div>
                 </div>
                 <div class="card mb-3s">
@@ -138,11 +158,11 @@
                             ahorros y alcanzar tus metas mas rápido
                         </p>
                         <p>
-                          <b
-                              >Puedes ver tus gastos hormiga
-                              <a href="">aquí</a></b
-                          >
-                      </p>
+                            <b
+                                >Puedes ver tus gastos hormiga
+                                <a href="">aquí</a></b
+                            >
+                        </p>
                     </div>
                 </div>
             </div>
@@ -150,4 +170,10 @@
     </div>
 </section>
 
-<app-modal-ahorro #modalAhorro [ahorro]="ahorros" (ahorroMod)="actualizarAhorro($event)"></app-modal-ahorro>
+<app-modal-ahorro
+    #modalAhorro
+    [ahorro]="ahorros"
+    (ahorroMod)="actualizarAhorro($event)"
+    (loading)="actualizarCarga($event)"
+></app-modal-ahorro>
+<ngx-loading [show]="loading"></ngx-loading>

@@ -99,6 +99,7 @@ export class PresupuestoComponent implements OnInit {
         ).subscribe({
             next: ({presupuesto}: {presupuesto: Presupuesto}) => {
                 this.presupuesto = presupuesto;
+                console.log(presupuesto);
                 this.sumaTotalReal = presupuesto.presupuesto;
                 this.itemsPresupuesto = this.presupuesto.get_items;
                 this.presupuesto.get_items.map(
@@ -130,32 +131,30 @@ export class PresupuestoComponent implements OnInit {
                 gastos: Gasto[];
                 sumaTotalReal: number;
             }) => {
-              let gastosNoRepetido
-                gastosNoRepetido = gastos.reduce(
-                    (acumulador, valorActual) => {
-                        const elementoYaExiste = acumulador.find(
-                            (elemento) => elemento.tipo_gasto === valorActual.tipo_gasto
-                        );
-                        if (elementoYaExiste) {
-                            return acumulador.map((elemento) => {
-                                if (elemento.tipo_gasto === valorActual.tipo_gasto) {
-                                    return {
-                                        ...elemento,
-                                        monto:
-                                            elemento.monto + valorActual.monto
-                                    };
-                                }
+                let gastosNoRepetido;
+                gastosNoRepetido = gastos.reduce((acumulador, valorActual) => {
+                    const elementoYaExiste = acumulador.find(
+                        (elemento) =>
+                            elemento.tipo_gasto === valorActual.tipo_gasto
+                    );
+                    if (elementoYaExiste) {
+                        return acumulador.map((elemento) => {
+                            if (
+                                elemento.tipo_gasto === valorActual.tipo_gasto
+                            ) {
+                                return {
+                                    ...elemento,
+                                    monto: elemento.monto + valorActual.monto
+                                };
+                            }
 
-                                return elemento;
-                            });
-                        }
+                            return elemento;
+                        });
+                    }
 
-                        return [...acumulador, valorActual];
-                    },
-                    []
-                );
+                    return [...acumulador, valorActual];
+                }, []);
                 this.gastosGraficoBarra = gastosNoRepetido.map((gasto) => {
-
                     return {
                         name: this.categorias[gasto.tipo_gasto - 1].descripcion,
                         value: gasto.monto

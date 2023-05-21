@@ -16,6 +16,7 @@ export class ModalAhorroComponent {
     tipo_ahorro: TipoAhorro[] = [];
     @Input() ahorro: Ahorro[];
     @Output() ahorroMod: EventEmitter<any[]> = new EventEmitter();
+    @Output() loading: EventEmitter<boolean> = new EventEmitter();
 
     form: FormGroup = this.fb.group({
         id: [,],
@@ -71,6 +72,7 @@ export class ModalAhorroComponent {
     }
 
     async guardarAhorro(ahorro: Ahorro) {
+        this.loading.emit(true);
         /* this.ahorroService.agregarAhorro(ahorro).subscribe({
             complete: () => {
                 this.toastr.success(`Ahorro correctamente`);
@@ -83,25 +85,30 @@ export class ModalAhorroComponent {
         }); */
         try {
             const res = await this.ahorroService.agregarAhorro(ahorro);
-            this.toastr.success(`Ahorro correctamente`);
+            this.toastr.success(`Ahorro guardado correctamente`);
             this.obtenerAhorros();
-
             this.myModal.hide();
-        } catch (error) {}
+        } catch (error) {
+            this.loading.emit(false);
+        }
     }
 
     async obtenerAhorros() {
         (await this.ahorroService.obtenerAhorros()).subscribe({
             next: ({ahorros}: {ahorros: any}) => {
-              this.ahorro = ahorros;
-              this.ahorroMod.emit(this.ahorro);
+                this.ahorro = ahorros;
+                this.ahorroMod.emit(this.ahorro);
+                this.loading.emit(false);
             },
-            error: (error: any) => {}
+            error: (error: any) => {
+                this.loading.emit(false);
+            }
         });
     }
 
-    editarAhorro(ahorro: Ahorro) {
-        this.ahorroService.editarAhorro(ahorro).subscribe({
+    async editarAhorro(ahorro: Ahorro) {
+        this.loading.emit(true);
+        /* (await this.ahorroService.editarAhorro(ahorro)).subscribe({
             complete: () => {
                 this.toastr.success(`Ahorro editado correctamente`);
                 this.myModal.hide();
@@ -110,7 +117,15 @@ export class ModalAhorroComponent {
                 this.toastr.error('Error');
                 console.error(resp);
             }
-        });
+        }); */
+        const res = await this.ahorroService.editarAhorro(ahorro);
+        if (res) {
+            this.toastr.success(`Ahorro editado correctamente`);
+            this.obtenerAhorros();
+            this.myModal.hide();
+        } else {
+            this.toastr.error('Error');
+        }
     }
 
     obtenerTipoAhorro() {
@@ -135,7 +150,6 @@ export class ModalAhorroComponent {
             ...ahorro,
             tipo_ahorro
         };
-
 
         if (ahorro.id) {
             this.editarAhorro(ahorro);

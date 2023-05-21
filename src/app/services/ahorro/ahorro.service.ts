@@ -61,24 +61,7 @@ export class AhorroService {
         }
     ];
 
-    private ahorroHistorial = [
-        {
-            year: 2018,
-            amount: 1200
-        },
-        {
-            year: 2019,
-            amount: 1500
-        },
-        {
-            year: 2020,
-            amount: 1800
-        },
-        {
-            year: 2021,
-            amount: 2000
-        }
-    ];
+    private ahorroHistorial = [];
 
     private ahorros: Ahorro[] = [];
 
@@ -113,39 +96,70 @@ export class AhorroService {
                     );
             });
             this.ahorros = data;
+            this.ahorros.forEach((ahorro) => {
+                const fecha = new Date(ahorro.fecha_limite).getFullYear();
+                const monto = ahorro.recaudado;
 
-            return of({ahorros: this.ahorros});
+                // Verificar si ya existe un objeto en el acumulador con la misma fecha
+                const objetoExistente = this.ahorroHistorial.find(
+                    (objeto) => objeto.year === fecha
+                );
+
+                if (objetoExistente) {
+                    // Si ya existe, sumar el monto al objeto existente
+                    objetoExistente.amount += monto;
+                } else {
+                    // Si no existe, crear un nuevo objeto y agregarlo al acumulador
+                    const nuevoObjeto = {year: fecha, amount: monto};
+                    this.ahorroHistorial.push(nuevoObjeto);
+                }
+            });
+            return of({ahorros: this.ahorros, historial: this.ahorroHistorial});
         } catch (error) {}
     }
 
-    eliminarAhorro(ahorro: Ahorro): Observable<boolean> {
-        const index = this.ahorros.findIndex((a) => a === ahorro);
-        if (index !== -1) {
-            this.ahorros.splice(index, 1);
-            return of(true);
+    async eliminarAhorro(ahorro: Ahorro) {
+        try {
+            const res = await new Promise((resolve, reject) => {
+                this._http
+                    .delete(
+                        environment.uri_api + 'ahorro/' + ahorro.id,
+
+                        {
+                            headers: {
+                                Authorization:
+                                    'Bearer ' +
+                                    JSON.parse(sessionStorage.getItem('user'))
+                                        .access_token
+                            }
+                        }
+                    )
+                    .subscribe(
+                        (response) => {
+                            resolve(response);
+                        },
+                        (error) => {
+                            console.error(error);
+                            reject(error);
+                        }
+                    );
+            });
+            return true;
+        } catch (error) {
+            return false;
         }
-        return of(false);
     }
 
-    editarAhorro(ahorro: Ahorro): Observable<boolean> {
-        const index = this.ahorros.findIndex((a) => a.id === ahorro.id);
-        if (index === -1) {
-            return of(false);
-        }
-        this.ahorros[index] = {...this.ahorros[index], ...ahorro};
-        return of(true);
-    }
-
-    async agregarAhorro(ahorro: Ahorro) {
+    async editarAhorro(ahorro: Ahorro) {
         try {
             const res = await new Promise((resolve, reject) => {
                 this._http
                     .post(
-                        environment.uri_api + 'agregar_ahorro',
+                        environment.uri_api + 'ahorro/' + ahorro.id,
                         {
                             meta: ahorro.meta,
                             recaudado: ahorro.recaudado,
-                            fecha_limite:ahorro.fecha_limite,
+                            fecha_limite: ahorro.fecha_limite,
                             tipo_ahorro: ahorro.tipo_ahorro.id
                         },
                         {
@@ -173,7 +187,44 @@ export class AhorroService {
         }
     }
 
-    obtenerAhorroHistorial() {
+    async agregarAhorro(ahorro: Ahorro) {
+        try {
+            const res = await new Promise((resolve, reject) => {
+                this._http
+                    .post(
+                        environment.uri_api + 'agregar_ahorro',
+                        {
+                            meta: ahorro.meta,
+                            recaudado: ahorro.recaudado,
+                            fecha_limite: ahorro.fecha_limite,
+                            tipo_ahorro: ahorro.tipo_ahorro.id
+                        },
+                        {
+                            headers: {
+                                Authorization:
+                                    'Bearer ' +
+                                    JSON.parse(sessionStorage.getItem('user'))
+                                        .access_token
+                            }
+                        }
+                    )
+                    .subscribe(
+                        (response) => {
+                            resolve(response);
+                        },
+                        (error) => {
+                            console.error(error);
+                            reject(error);
+                        }
+                    );
+            });
+            return true;
+        } catch (error) {
+            return false;
+        }
+    }
+
+    async obtenerAhorroHistorial() {
         return of(this.ahorroHistorial);
     }
 
