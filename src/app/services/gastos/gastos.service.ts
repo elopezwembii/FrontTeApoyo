@@ -86,6 +86,7 @@ export class GastosService {
     }
 
     async agregarGasto(gasto: Gasto): Promise<boolean> {
+
         try {
             const res = await new Promise((resolve, reject) => {
                 this._http
@@ -207,6 +208,6 @@ export class GastosService {
     }
 
     obtenerGastoHormiga() {
-        return of(this.gastosHormigas);
+        return of(this.gastos);
     }
 }

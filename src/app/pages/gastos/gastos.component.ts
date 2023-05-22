@@ -161,12 +161,12 @@ export class GastosComponent implements OnInit {
         id: [''],
         desc: [''],
         fijar: [0],
-        tipo_gasto: [0],
-        subtipo_gasto: [0],
+        tipo_gasto: [0, [Validators.required]],
+        subtipo_gasto: [0,[Validators.required]],
         dia: [''],
         mes: [''],
         anio: [''],
-        monto: ['']
+        monto: ['',[Validators.required]]
     });
 
     get getMes() {

@@ -125,8 +125,12 @@
                                 <strong> Agregar gastos</strong>
                             </h5>
                             <p class="text-principal m-0 p-0">
-                              <strong> <i>* Últimos 3 gastos realizados. </i></strong>
-                          </p>
+                                <strong>
+                                    <i
+                                        >* Últimos 3 gastos realizados.
+                                    </i></strong
+                                >
+                            </p>
                             <form [formGroup]="form" (ngSubmit)="update()">
                                 <div class="responsive">
                                     <table class="table text-nowrap">
@@ -796,7 +800,7 @@
                                                                     >
                                                                         $
                                                                         {{
-                                                                            gh.precio
+                                                                            gh.monto
                                                                                 | currency
                                                                                     : 'CLP'
                                                                                     : ''
@@ -806,14 +810,24 @@
                                                                         class="mb-0"
                                                                     >
                                                                         {{
-                                                                            gh.titulo
+                                                                            loading
+                                                                                ? null
+                                                                                : gh
+                                                                                      .get_sub_tipo
+                                                                                      .nombre
                                                                         }}
                                                                     </p>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="carousel-item">
+                                                    <div
+                                                        class="carousel-item"
+                                                        *ngIf="
+                                                            gastosHormigas.length >
+                                                            4
+                                                        "
+                                                    >
                                                         <div class="row">
                                                             <div
                                                                 *ngFor="
@@ -838,7 +852,7 @@
                                                                     >
                                                                         $
                                                                         {{
-                                                                            gh.precio
+                                                                            gh.monto
                                                                                 | currency
                                                                                     : 'CLP'
                                                                                     : ''
@@ -847,9 +861,13 @@
                                                                     <p
                                                                         class="mb-0"
                                                                     >
-                                                                        {{
-                                                                            gh.titulo
-                                                                        }}
+                                                                    {{
+                                                                      loading
+                                                                          ? null
+                                                                          : gh
+                                                                                .get_sub_tipo
+                                                                                .nombre
+                                                                  }}
                                                                     </p>
                                                                 </div>
                                                             </div>
@@ -891,7 +909,7 @@
                                         Pudiste haber ahorrado
                                         <strong
                                             >${{
-                                                0 | currency: 'CLP':''
+                                                sumaGH | currency: 'CLP':''
                                             }}</strong
                                         >
                                     </p>

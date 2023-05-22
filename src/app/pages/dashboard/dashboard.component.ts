@@ -31,6 +31,7 @@ export class DashboardComponent implements OnInit {
     nivel: string;
     siguienteNivel: string;
     ahorroSiguienteNivel: number;
+    sumaGH: number = 0;
     presupuesto: Presupuesto = {} as Presupuesto;
     loading: boolean = false;
     categorias: Categoria[];
@@ -141,7 +142,6 @@ export class DashboardComponent implements OnInit {
         });
         this.renderer.listen('window', 'resize', (evt) => {
             this.windowSize = window.innerWidth;
-            console.log(window.innerWidth);
         });
     }
     async ngOnInit() {
@@ -409,16 +409,97 @@ export class DashboardComponent implements OnInit {
                 sumaTotalReal: number;
                 gastos: Gasto[];
             }) => {
+                this.sumaGH = 0;
+                this.gastosHormigas = gastos.filter(
+                    (gasto) =>
+                        gasto.subtipo_gasto === 34 ||
+                        gasto.subtipo_gasto === 35 ||
+                        gasto.subtipo_gasto === 36 ||
+                        gasto.subtipo_gasto === 41 ||
+                        gasto.subtipo_gasto === 42 ||
+                        gasto.subtipo_gasto === 55 ||
+                        gasto.subtipo_gasto === 62 ||
+                        gasto.subtipo_gasto === 65 ||
+                        gasto.subtipo_gasto === 67 ||
+                        gasto.subtipo_gasto === 81 ||
+                        gasto.subtipo_gasto === 125 ||
+                        gasto.subtipo_gasto === 126 ||
+                        gasto.subtipo_gasto === 131 ||
+                        gasto.subtipo_gasto === 132 ||
+                        gasto.subtipo_gasto === 133
+                );
+                this.gastosHormigas = this.gastosHormigas.reduce(
+                    (acumulador, valorActual) => {
+                        const elementoYaExiste = acumulador.find(
+                            (elemento) =>
+                                elemento.subtipo_gasto ===
+                                valorActual.subtipo_gasto
+                        );
+                        if (elementoYaExiste) {
+                            return acumulador.map((elemento) => {
+                                if (
+                                    elemento.subtipo_gasto ===
+                                    valorActual.subtipo_gasto
+                                ) {
+                                    return {
+                                        ...elemento,
+                                        monto:
+                                            elemento.monto + valorActual.monto
+                                    };
+                                }
+
+                                return elemento;
+                            });
+                        }
+
+                        return [...acumulador, valorActual];
+                    },
+                    []
+                );
+                this.gastosHormigas.forEach((gh) => {
+                    if (
+                        gh.subtipo_gasto === 34 ||
+                        gh.subtipo_gasto === 35 ||
+                        gh.subtipo_gasto === 36
+                    ) {
+                        gh.img = 'assets/img/hormiga/34.svg';
+                    }
+                    if (gh.subtipo_gasto === 41 || gh.subtipo_gasto === 42) {
+                        gh.img = 'assets/img/hormiga/41.svg';
+                    }
+                    if (gh.subtipo_gasto === 55) {
+                        gh.img = 'assets/img/hormiga/55.svg';
+                    }
+                    if (gh.subtipo_gasto === 62 || gh.subtipo_gasto === 67) {
+                        gh.img = 'assets/img/hormiga/67.svg';
+                    }
+                    if (gh.subtipo_gasto === 65) {
+                        gh.img = 'assets/img/hormiga/65.svg';
+                    }
+                    if (gh.subtipo_gasto === 81) {
+                        gh.img = 'assets/img/hormiga/81.svg';
+                    }
+                    if (gh.subtipo_gasto === 125) {
+                        gh.img = 'assets/img/hormiga/125.svg';
+                    }
+                    if (gh.subtipo_gasto === 126) {
+                        gh.img = 'assets/img/hormiga/126.svg';
+                    }
+                    if (gh.subtipo_gasto === 131 || gh.subtipo_gasto === 132) {
+                        gh.img = 'assets/img/hormiga/131.svg';
+                    }
+                    if (gh.subtipo_gasto === 132) {
+                        gh.img = 'assets/img/hormiga/132.svg';
+                    }
+                    this.sumaGH += gh.monto;
+                });
                 this.sumaTotalReal = sumaTotalReal;
                 gastos = gastos.reverse();
                 if (gastos.length > 3) gastos.length = 3;
                 this.gastos = gastos;
-                console.log(gastos);
                 this.loading = false;
             },
-            error: (error: any) => {
-                console.log(error);
-            }
+            error: (error: any) => {}
         });
     }
 
@@ -445,10 +526,7 @@ export class DashboardComponent implements OnInit {
                 const res = await this.gastosService.agregarGasto(
                     this.gastos[0]
                 );
-                if (this.windowSize <= 1000) {
-                    this.modal.classList.remove('show');
-                    this.modal.style.display = 'none';
-                }
+                console.log(res);
                 if (res) {
                     this.obtenerGastos();
                     this.obtenerPresupuesto();
@@ -480,7 +558,6 @@ export class DashboardComponent implements OnInit {
                 anio: new Date().getFullYear(),
                 monto: parseInt(this.form.value.monto!)
             };
-            console.log(this.gastos[index]);
 
             try {
                 const res = await this.gastosService.actualizarGasto(
@@ -569,18 +646,13 @@ export class DashboardComponent implements OnInit {
         (await this.ahorroService.obtenerAhorros()).subscribe({
             next: ({ahorros}: {ahorros: any}) => {
                 this.ahorros = ahorros;
-                console.log(ahorros);
             },
             error: (error: any) => {}
         });
     }
 
-    obtenerGastoHormiga() {
-        this.gastosService.obtenerGastoHormiga().subscribe({
-            next: (gastoHormiga: any) => {
-                this.gastosHormigas = gastoHormiga;
-            }
-        });
+    async obtenerGastoHormiga() {
+        this.obtenerGastos();
     }
 
     async obtenerPresupuesto() {
@@ -594,7 +666,6 @@ export class DashboardComponent implements OnInit {
         ).subscribe({
             next: ({presupuesto}: {presupuesto: Presupuesto}) => {
                 this.presupuesto = presupuesto;
-                console.log(presupuesto);
                 this.sumaTotalReal = presupuesto.presupuesto;
                 this.itemsPresupuesto = this.presupuesto.get_items;
                 this.graficoDonaPresupuesto = this.presupuesto.get_items.map(
@@ -607,9 +678,7 @@ export class DashboardComponent implements OnInit {
                     }
                 );
             },
-            error: (error: any) => {
-                console.log(error);
-            }
+            error: (error: any) => {}
         });
         (
             await this.gastosService.getGasto(
@@ -702,16 +771,13 @@ export class DashboardComponent implements OnInit {
                     }
                 );
             },
-            error: (error: any) => {
-                console.log(error);
-            }
+            error: (error: any) => {}
         });
         this.loading = false;
     }
 
     obtenerUsuario() {
         this.usuario = JSON.parse(this.appService.user).user;
-        console.log(this.usuario);
         this.ahorroService.obtenerNivelAhorroUsuario().subscribe({
             next: ({
                 posibleAhorro,
