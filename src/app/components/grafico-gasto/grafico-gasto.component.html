@@ -11,7 +11,7 @@
 <div *ngIf="!loading">
     <div
         *ngIf="porcentaje !== infinity"
-        class="card-footer text-center bg-white"
+        class="card-body text-center"
     >
         <p *ngIf="porcentaje < 80">
             Has gastado el <b>{{ porcentaje.toFixed(2) }}%</b> de tus ingresos.
@@ -32,7 +32,7 @@
     </div>
     <div
         *ngIf="porcentaje === infinity"
-        class="card-footer text-center bg-white"
+        class="card-body text-center"
     >
         <p class="text-danger">No tienes ingresos registrados en éste mes.</p>
         <p>Registra tus ingresos en <a href="/ingresos">Mis Ingresos</a></p>

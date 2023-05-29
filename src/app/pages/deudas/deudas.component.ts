@@ -1,6 +1,8 @@
+import {Ingreso} from '@/interfaces/ingresos';
 import {Component, OnInit, Renderer2} from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
 import {DeudasService} from '@services/deudas.service';
+import {IngresosService} from '@services/ingresos/ingresos.service';
 import {ToastrService} from 'ngx-toastr';
 
 export interface Tarjeta {
@@ -24,6 +26,8 @@ export class DeudasComponent implements OnInit {
     isAdding: boolean = false;
     selectedDeuda;
     selectedTarjeta;
+    sumaTotalReal: number = 0;
+    sumaTotalPagoMensual: number = 0;
 
     generarDias(mes: number, anio: number) {
         // calcular el número de días del mes
@@ -74,11 +78,15 @@ export class DeudasComponent implements OnInit {
         private fb: FormBuilder,
         private fb2: FormBuilder,
         private toastr: ToastrService,
-        private deudaService: DeudasService
+        private deudaService: DeudasService,
+        private ingresoService: IngresosService
     ) {}
 
     ngOnInit() {
+        this.sumaTotalReal = 0;
+        this.sumaTotalPagoMensual = 0;
         this.generarDias(12, 2023);
+        this.obtenerIngresos();
         this.obtenerDeuda();
         this.obtenerTarjeta();
     }
@@ -156,12 +164,12 @@ export class DeudasComponent implements OnInit {
         (await this.deudaService.getDeuda()).subscribe({
             next: ({deuda}: {deuda: any}) => {
                 this.deudas = deuda;
-
+                deuda.forEach((pago) => {
+                    this.sumaTotalPagoMensual += pago.pago_mensual;
+                });
                 this.loading = false;
             },
-            error: (error: any) => {
-                console.log(error);
-            }
+            error: (error: any) => {}
         });
     }
 
@@ -172,15 +180,16 @@ export class DeudasComponent implements OnInit {
                 this.tarjetas = tarjeta;
                 this.loading = false;
             },
-            error: (error: any) => {
-                console.log(error);
-            }
+            error: (error: any) => {}
         });
     }
 
     async deleteDeuda(deuda: any) {
         if (confirm('¿Estás seguro de eliminar la deuda?')) {
             await this.deudaService.eliminarDeuda(deuda.id);
+            this.sumaTotalReal = 0;
+            this.sumaTotalPagoMensual = 0;
+            this.obtenerIngresos();
             this.obtenerDeuda();
             this.toastr.info('Deuda eliminada con éxito.');
         }
@@ -189,6 +198,9 @@ export class DeudasComponent implements OnInit {
     async deleteTarjeta(deuda: Tarjeta) {
         if (confirm('¿Estás seguro de eliminar la tarjeta?')) {
             await this.deudaService.eliminarTarjeta(deuda.id);
+            this.sumaTotalReal = 0;
+            this.sumaTotalPagoMensual = 0;
+            this.obtenerIngresos();
             this.obtenerDeuda();
             this.toastr.info('Tarjeta eliminada con éxito.');
         }
@@ -207,12 +219,14 @@ export class DeudasComponent implements OnInit {
                 id_banco: this.form.value.id_banco!,
                 id_tipo_deuda: this.form.value.id_tipo_deuda!
             };
-            console.log(addDeuda);
             try {
                 const res = await this.deudaService.agregarDeuda(addDeuda);
                 this.modal.classList.remove('show');
                 this.modal.style.display = 'none';
                 if (res) {
+                    this.sumaTotalReal = 0;
+                    this.sumaTotalPagoMensual = 0;
+                    this.obtenerIngresos();
                     this.obtenerDeuda();
                     this.toastr.success('Deuda agregada con éxito.');
                 } else {
@@ -236,7 +250,9 @@ export class DeudasComponent implements OnInit {
                 await this.deudaService.editarDeuda(edit);
                 this.modal.classList.remove('show');
                 this.modal.style.display = 'none';
-
+                this.sumaTotalReal = 0;
+                this.sumaTotalPagoMensual = 0;
+                this.obtenerIngresos();
                 this.obtenerDeuda();
                 this.toastr.success('Deuda editada con éxito.');
             } catch (error) {}
@@ -248,6 +264,21 @@ export class DeudasComponent implements OnInit {
         this.form2.patchValue({
             id_banco: 0,
             tipo: '0'
+        });
+    }
+
+    async obtenerIngresos() {
+        const today = new Date();
+        const month = today.getMonth() + 1;
+        const year = today.getFullYear();
+        (await this.ingresoService.getIngreso(month, year)).subscribe({
+            next: ({sumaTotalReal}: {sumaTotalReal: number}) => {
+                this.sumaTotalReal = sumaTotalReal;
+                console.log(this.sumaTotalReal);
+            },
+            error: (error: any) => {
+                console.log(error);
+            }
         });
     }
 
@@ -284,7 +315,6 @@ export class DeudasComponent implements OnInit {
                 await this.deudaService.editarTarjeta(edit);
                 this.modal2.classList.remove('show');
                 this.modal2.style.display = 'none';
-
                 this.obtenerTarjeta();
                 this.toastr.success('Tarjeta editada con éxito.');
             } catch (error) {}

@@ -70,7 +70,7 @@
                                         <img
                                             height="25"
                                             [src]="
-                                                '../../../assets/img/bancos/' +
+                                                'assets/img/bancos/' +
                                                 deuda.id_banco +
                                                 '.png'
                                             "
@@ -79,7 +79,7 @@
                                         <img
                                             height="110"
                                             [src]="
-                                                '../../../assets/img/deudas/' +
+                                                'assets/img/deudas/' +
                                                 deuda.id_tipo_deuda +
                                                 '.svg'
                                             "
@@ -402,7 +402,7 @@
                 </form>
             </div>
             <div class="col-12 col-sm-4">
-                <div class="card table-responsive">
+                <div class="card table-responsive mb-3">
                     <div
                         class="card-header mt-1"
                         style="vertical-align: middle"
@@ -464,7 +464,7 @@
                                             <img
                                                 width="50"
                                                 [src]="
-                                                    '../../../assets/img/bancos/' +
+                                                    'assets/img/bancos/' +
                                                     tarjeta.id_banco +
                                                     '.png'
                                                 "
@@ -652,8 +652,14 @@
                     <!-- /.card-body -->
                 </div>
                 <!-- /.card -->
-                <div class="card">
-                    <div class="card-head text-center mt-2">
+                <div
+                    *ngIf="
+                        (sumaTotalPagoMensual * 100) / sumaTotalReal > 1 &&
+                        sumaTotalReal > 0
+                    "
+                    class="card mb-3"
+                >
+                    <div class="card-head text-center">
                         <h5>
                             <span class="text-principal"><b>¡Cuidado!</b></span>
                         </h5>
@@ -661,17 +667,24 @@
                     </div>
                     <div class="card-body text-center">
                         <p>
-                            Tus deudas están sobre el <b>30%</b> de tus ingresos.
+                            Tus pagos mensuales representan el
+                            <b
+                                >{{
+                                    (
+                                        (sumaTotalPagoMensual * 100) /
+                                        sumaTotalReal
+                                    ).toFixed(1)
+                                }}%</b
+                            >
+                            de tus ingresos.
                         </p>
-                    </div>
-                    <div class="card-footer text-center">
                         <p>
                             <b>Lee otras recomendaciones <a href="">aquí</a></b>
                         </p>
                     </div>
                 </div>
 
-                <div class="card">
+                <div class="card mb-3">
                     <div class="card-head text-center mt-2">
                         <h5>
                             <span class="text-principal"
@@ -720,8 +733,6 @@
                             respaldo en caso de que se presente algún problema
                             con el registro de tus pagos.
                         </p>
-                    </div>
-                    <div class="card-footer text-center">
                         <p>
                             <b>Lee otras recomendaciones <a href="">aquí</a></b>
                         </p>

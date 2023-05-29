@@ -51,6 +51,7 @@ import { GraficoLineaComponent } from './components/grafico-linea/grafico-linea.
 import { ModalAhorroComponent } from './components/modal-ahorro/modal-ahorro.component';
 import { GraficoDonaMayoresGastosComponent } from './components/grafico-dona-mayores-gastos/grafico-dona-mayores-gastos.component';
 import { AnalisisComponent } from './pages/analisis/analisis.component';
+import { CrudBienComponent } from './components/crud-bien/crud-bien.component';
 
 
 defineCustomElements();
@@ -93,7 +94,8 @@ registerLocaleData(localeEs);
         GraficoLineaComponent,
         ModalAhorroComponent,
         GraficoDonaMayoresGastosComponent,
-        AnalisisComponent
+        AnalisisComponent,
+        CrudBienComponent
 
     ],
     imports: [

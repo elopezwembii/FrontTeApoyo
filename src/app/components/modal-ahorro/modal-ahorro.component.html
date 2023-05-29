@@ -15,13 +15,13 @@
             <div class="modal-body">
                 <form [formGroup]="form" (ngSubmit)="submit()">
                     <div class="mb-3">
-                        <label for="tipoAhorro" class="form-label"
+                        <label for="tipo_ahorro" class="form-label"
                             >Tipo de ahorro</label
                         >
-                        <select formControlName="nombre" class="form-control">
+                        <select formControlName="tipo_ahorro" class="form-control">
                             <option selected value="-1">Seleccione</option>
                             <option
-                                *ngFor="let tipo of tipoAhorro"
+                                *ngFor="let tipo of tipo_ahorro"
                                 [value]="tipo.id"
                             >
                                 {{ tipo.descripcion }}
@@ -29,24 +29,12 @@
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label for="monto" class="form-label"
-                            >Monto mensual</label
-                        >
-                        <input
-                            autocomplete="off"
-                            formControlName="monto"
-                            type="number"
-                            class="form-control"
-                            placeholder="Monto mensual del ahorro"
-                        />
-                    </div>
-                    <div class="mb-3">
-                        <label for="fechaLimite" class="form-label"
+                        <label for="fecha_limite" class="form-label"
                             >Fecha límite</label
                         >
                         <input
                             autocomplete="off"
-                            formControlName="fechaLimite"
+                            formControlName="fecha_limite"
                             type="date"
                             class="form-control"
                             placeholder="Fecha límite del ahorro"

@@ -26,7 +26,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-12 col-sm-8">
-                <div class="card">
+                <div class="card mb-3">
                     <div class="card-body">
                         <!-- Selector de mes -->
                         <ul
@@ -82,12 +82,22 @@
                                     <span class="custom-text-gray mx-3"
                                         >Disponible:
                                     </span>
-                                    <span [class]=" sumaTotalReal - presupuestoMonto > 0 ? 'custom-text-bold text-success' : 'custom-text-bold text-danger' "
+                                    <span
+                                        [class]="
+                                            sumaTotalReal - presupuestoMonto > 0
+                                                ? 'custom-text-bold text-success'
+                                                : 'custom-text-bold text-danger'
+                                        "
                                         >$ </span
                                     ><span
-                                        [class]=" sumaTotalReal - presupuestoMonto > 0 ? 'custom-text-money text-success' : 'custom-text-money text-danger'  "
+                                        [class]="
+                                            sumaTotalReal - presupuestoMonto > 0
+                                                ? 'custom-text-money text-success'
+                                                : 'custom-text-money text-danger'
+                                        "
                                         >{{
-                                            sumaTotalReal - presupuestoMonto | currency: 'CLP':''
+                                            sumaTotalReal - presupuestoMonto
+                                                | currency: 'CLP':''
                                         }}</span
                                     >
                                     <img
@@ -307,22 +317,33 @@
                 </div>
             </div>
             <div class="col-12 col-sm-4">
-                <div class="card">
-                    <app-grafico-dona
-                        [data]="presupuesto"
-                    ></app-grafico-dona>
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="text-principal">
+                            <strong> Distribución de presupuesto</strong>
+                        </h5>
+                        <app-grafico-dona
+                            [data]="graficoDonaPresupuesto"
+                        ></app-grafico-dona>
+                    </div>
                 </div>
             </div>
         </div>
 
         <div class="row">
-            <div class="col-12 col-sm-12">
+            <div class="col-12 col-sm-12  mb-3">
                 <div class="card h-100">
-                    <app-grafico-barra
+                    <div class="card-body">
+                        <h5 class="text-principal">
+                            <strong> Comparativa gastos vs presupuesto</strong>
+                        </h5>
+                        <app-grafico-barra
                         [presupuesto]="graficoDonaPresupuesto"
                         [gastoReal]="gastosGraficoBarra"
                         class="custom-chart"
                     ></app-grafico-barra>
+                    </div>
+
                 </div>
             </div>
         </div>

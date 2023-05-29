@@ -161,12 +161,12 @@ export class GastosComponent implements OnInit {
         id: [''],
         desc: [''],
         fijar: [0],
-        tipo_gasto: [0],
-        subtipo_gasto: [0],
+        tipo_gasto: [0, [Validators.required]],
+        subtipo_gasto: [0,[Validators.required]],
         dia: [''],
         mes: [''],
         anio: [''],
-        monto: ['']
+        monto: ['',[Validators.required]]
     });
 
     get getMes() {
@@ -384,11 +384,13 @@ export class GastosComponent implements OnInit {
 
             try {
                 const res = await this.gastoService.actualizarGasto(
-                    this.gastos[index], this.selectionMonth + 1, this.year
+                    this.gastos[index],
+                    this.selectionMonth + 1,
+                    this.year
                 );
                 if (this.windowSize <= 1000) {
-                  this.modal.classList.remove('show');
-                  this.modal.style.display = 'none';
+                    this.modal.classList.remove('show');
+                    this.modal.style.display = 'none';
                 }
                 if (res) {
                     this.change = !this.change;

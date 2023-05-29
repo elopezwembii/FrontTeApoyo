@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, Input} from '@angular/core';
 
 @Component({
     selector: 'app-grafico-dona-mayores-gastos',
@@ -6,61 +6,63 @@ import {Component} from '@angular/core';
     styleUrls: ['./grafico-dona-mayores-gastos.component.scss']
 })
 export class GraficoDonaMayoresGastosComponent {
-    option = {
-        series: [
-            {
-                label: {
-                    formatter: '{d}%',
-                    position: 'inside',
-                    fontSize: 15,
-                    color: '#fff',
-                    fontWeight: 'bold'
-                },
-                type: 'pie',
-                center: ['50%', '50%'],
-                radius: ['45%', '80%'],
-                data: [
-                    {
-                        value: 24,
-                        name: 'Arriendo',
-                        itemStyle: {
-                            color: '#77E6E6'
-                        }
-                    },
-                    {
-                        value: 13,
-                        name: 'Cuentas',
-                        itemStyle: {
-                            color: '#30CCCC'
-                        }
-                    },
-                    {
-                        value: 32,
-                        name: 'Deudas',
-                        itemStyle: {
-                            color: '#17A0A6'
-                        }
-                    },
-                    {
-                        value: 9,
-                        name: 'Otros',
-                        itemStyle: {
-                            color: '#FBC974'
-                        }
-                    },
-                    {
-                        value: 22,
-                        name: 'Alimentación',
-                        itemStyle: {
-                            color: '#FFEC9C'
-                        }
-                    }
-                ]
-            }
-        ],
+    @Input() data: any;
+
+    coloresPastel = [
+        '#BCEAF3',
+        '#FFD48F',
+        '#FFDAC1',
+        '#E2F0CB',
+        '#2C939E',
+        '#C7CEEA',
+        '#FFA629',
+        '#FFCDFD',
+        '#E2F0CB',
+        '#FFE2C0'
+    ];
+
+    options: any = {
+        backgroundColor: '#fff',
+        tooltip: {
+            trigger: 'item',
+            formatter: '{a} <br/>{b}: {c} ({d}%)'
+        },
         legend: {
-            orient: 'vertical',
-            right: 'right'
+            orient: 'horizontal'
         }
     };
+
+    constructor() {}
+
+    ngOnChanges() {
+        console.log(this.data);
+        this.options = {
+            ...this.options,
+            color: this.coloresPastel,
+            series: [
+                {
+                    name: 'Item',
+                    type: 'pie',
+                    radius: ['30%', '70%'],
+                    data: this.data,
+                    itemStyle: {
+                        borderWidth: 0
+                    },
+                    emphasis: {
+                        itemStyle: {
+                            borderWidth: 0
+                        }
+                    },
+                    label: {
+                        formatter: '{d}%',
+                        position: 'inside',
+                        fontSize: 12,
+                        color: '#FFF',
+                        fontWeight: 'bold'
+                    },
+                    center: ['50%', '50%']
+                }
+            ]
+        };
+    }
 }

@@ -1,5 +1,5 @@
 import {Ahorro, TipoAhorro} from './../../interfaces/ahorro';
-import {Component} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AhorroService} from '@services/ahorro/ahorro.service';
 import * as bootstrap from 'bootstrap';
@@ -13,14 +13,16 @@ import {ToastrService} from 'ngx-toastr';
 export class ModalAhorroComponent {
     titulo = 'Agregar ahorro';
     myModal: any;
-    tipoAhorro: TipoAhorro[] = [];
+    tipo_ahorro: TipoAhorro[] = [];
+    @Input() ahorro: Ahorro[];
+    @Output() ahorroMod: EventEmitter<any[]> = new EventEmitter();
+    @Output() loading: EventEmitter<boolean> = new EventEmitter();
 
     form: FormGroup = this.fb.group({
         id: [,],
         img: [],
-        nombre: [, [Validators.required]],
-        fechaLimite: [, [Validators.required]],
-        monto: [, [Validators.required]],
+        tipo_ahorro: [, [Validators.required]],
+        fecha_limite: [, [Validators.required]],
         meta: [, [Validators.required]],
         recaudado: [, [Validators.required]]
     });
@@ -40,7 +42,7 @@ export class ModalAhorroComponent {
         this.obtenerTipoAhorro();
     }
 
-    openModal(ahorro: Ahorro = null) {
+    openModal(ahorro: Ahorro = null, listAhorro: Ahorro[]) {
         this.myModal.show();
         this.setFormValues(ahorro);
     }
@@ -50,28 +52,28 @@ export class ModalAhorroComponent {
         if (!ahorro) {
             this.form.reset();
             this.form.patchValue({
-                nombre: '-1'
+                tipo_ahorro: '-1'
             });
         } else {
             this.titulo = 'Editar ahorro';
 
-            const fechaISO = ahorro.fechaLimite;
+            const fechaISO = ahorro.fecha_limite;
             const fecha = new Date(fechaISO);
             const fechaFormateada = fecha.toISOString().split('T')[0];
 
             this.form.patchValue({
                 id: ahorro.id,
-                nombre: ahorro.tipoAhorro.id,
-                fechaLimite: fechaFormateada,
-                monto: ahorro.monto,
+                tipo_ahorro: ahorro.tipo_ahorro,
+                fecha_limite: fechaFormateada,
                 meta: ahorro.meta,
                 recaudado: ahorro.recaudado
             });
         }
     }
 
-    guardarAhorro(ahorro: Ahorro) {
-        this.ahorroService.agregarAhorro(ahorro).subscribe({
+    async guardarAhorro(ahorro: Ahorro) {
+        this.loading.emit(true);
+        /* this.ahorroService.agregarAhorro(ahorro).subscribe({
             complete: () => {
                 this.toastr.success(`Ahorro correctamente`);
                 this.myModal.hide();
@@ -80,11 +82,33 @@ export class ModalAhorroComponent {
                 this.toastr.error('Error');
                 console.error(resp);
             }
+        }); */
+        try {
+            const res = await this.ahorroService.agregarAhorro(ahorro);
+            this.toastr.success(`Ahorro guardado correctamente`);
+            this.obtenerAhorros();
+            this.myModal.hide();
+        } catch (error) {
+            this.loading.emit(false);
+        }
+    }
+
+    async obtenerAhorros() {
+        (await this.ahorroService.obtenerAhorros()).subscribe({
+            next: ({ahorros}: {ahorros: any}) => {
+                this.ahorro = ahorros;
+                this.ahorroMod.emit(this.ahorro);
+                this.loading.emit(false);
+            },
+            error: (error: any) => {
+                this.loading.emit(false);
+            }
         });
     }
 
-    editarAhorro(ahorro: Ahorro) {
-        this.ahorroService.editarAhorro(ahorro).subscribe({
+    async editarAhorro(ahorro: Ahorro) {
+        this.loading.emit(true);
+        /* (await this.ahorroService.editarAhorro(ahorro)).subscribe({
             complete: () => {
                 this.toastr.success(`Ahorro editado correctamente`);
                 this.myModal.hide();
@@ -93,22 +117,30 @@ export class ModalAhorroComponent {
                 this.toastr.error('Error');
                 console.error(resp);
             }
-        });
+        }); */
+        const res = await this.ahorroService.editarAhorro(ahorro);
+        if (res) {
+            this.toastr.success(`Ahorro editado correctamente`);
+            this.obtenerAhorros();
+            this.myModal.hide();
+        } else {
+            this.toastr.error('Error');
+        }
     }
 
     obtenerTipoAhorro() {
         this.ahorroService.obtenerTipoAhorro().subscribe({
             next: (tipoAhorro: TipoAhorro[]) => {
-                this.tipoAhorro = tipoAhorro;
+                this.tipo_ahorro = tipoAhorro;
             }
         });
     }
 
     submit() {
-        const {value: idAhorro} = this.form.get('nombre');
-        const tipoAhorro = this.tipoAhorro.find((tipo) => tipo.id == idAhorro);
-
-        console.log(tipoAhorro);
+        const {value: idAhorro} = this.form.get('tipo_ahorro');
+        const tipo_ahorro = this.tipo_ahorro.find(
+            (tipo) => tipo.id == idAhorro
+        );
 
         if (!this.form.valid) return;
 
@@ -116,7 +148,7 @@ export class ModalAhorroComponent {
 
         ahorro = {
             ...ahorro,
-            tipoAhorro
+            tipo_ahorro
         };
 
         if (ahorro.id) {
@@ -124,6 +156,6 @@ export class ModalAhorroComponent {
         } else {
             this.guardarAhorro(ahorro);
         }
-        this.ahorroService.obtenerAhorros().subscribe();
+        this.ahorroService.obtenerAhorros();
     }
 }
