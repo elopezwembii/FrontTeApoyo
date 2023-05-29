@@ -59,6 +59,10 @@ const routes: Routes = [
                 component: AnalisisComponent
             },
             {
+                path: 'profile',
+                component: ProfileComponent
+            },
+            {
                 path: '',
                 component: DashboardComponent
             }
