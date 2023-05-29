@@ -1,4 +1,4 @@
 export const environment = {
     production: true,
-    uri_api: 'http://13.90.92.134:8000/api/v1/'
+    uri_api: 'https://www.plataformadeautogestionfinanciera.cl/api/public/api/v1/'
 };

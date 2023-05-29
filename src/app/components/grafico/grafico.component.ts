@@ -109,7 +109,8 @@ export class GraficoComponent implements OnChanges {
                             },
                             label: {
                                 show: true,
-                                position: 'right',
+                                position: 'insideRight',
+                                offset: [20, 0],
                                 valueAnimation: true,
                                 formatter: (params: any) => {
                                     return (
@@ -137,7 +138,8 @@ export class GraficoComponent implements OnChanges {
                             },
                             label: {
                                 show: true,
-                                position: 'right',
+                                position: 'insideRight',
+                                offset: [20, 0],
                                 valueAnimation: true,
                                 formatter: (params: any) => {
                                     return (

@@ -488,11 +488,14 @@ export class DashboardComponent implements OnInit {
                     if (gh.subtipo_gasto === 131 || gh.subtipo_gasto === 132) {
                         gh.img = 'assets/img/hormiga/131.svg';
                     }
-                    if (gh.subtipo_gasto === 132) {
-                        gh.img = 'assets/img/hormiga/132.svg';
+                    if (gh.subtipo_gasto === 133) {
+                        gh.img = 'assets/img/hormiga/133.svg';
                     }
                     this.sumaGH += gh.monto;
                 });
+                this.gastosHormigas = this.gastosHormigas.sort((p1, p2) =>
+                p1.monto < p2.monto ? 1 : p1.monto > p2.monto ? -1 : 0
+            );
                 this.sumaTotalReal = sumaTotalReal;
                 gastos = gastos.reverse();
                 if (gastos.length > 3) gastos.length = 3;

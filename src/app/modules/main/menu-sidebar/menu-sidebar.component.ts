@@ -63,16 +63,17 @@ export const MENU = [
         ] */
     },
     {
-        name: 'Mis Gastos / Egresos',
-        iconClasses: 'fas fa-hand-holding-usd',
-        path: ['/gastos']
-    },
-    {
         name: 'Mi Presupuesto',
         iconClasses: 'fas fa-wallet',
         path: ['/presupuesto']
         //role: 'Administrativo',
     },
+    {
+        name: 'Mis Gastos / Egresos',
+        iconClasses: 'fas fa-hand-holding-usd',
+        path: ['/gastos']
+    },
+
     {
         name: 'Mis Deudas',
         iconClasses: 'fas fa-credit-card',

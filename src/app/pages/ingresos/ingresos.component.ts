@@ -87,11 +87,7 @@ export class IngresosComponent implements OnInit {
     }
 
     public arrayRec = [
-        [
-            'Hay dos formas que son las más utilizadas, para calcular el sueldo líquido.',
-            "1. Calcula entre el 75% u 80% sobre el 'total de haberes' de tu liquidación.",
-            '2. Al total de haberes, resta los descuentos legales: AFP, Isapre (sólo el 7% legal) y el impuesto a la renta si es que por tramo te corresponde el descuento.'
-        ],
+        [],
         [
             'Se promedian al menos 6 meses de boletas, descontando la retención correspondiente.'
         ],

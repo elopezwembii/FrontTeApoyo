@@ -347,6 +347,7 @@ export class PresupuestoComponent implements OnInit {
                     this.toastr.success('Presupuesto clonado con éxito.');
                 } else {
                     this.toastr.error('Error al clonar presupuesto.');
+                    event.target.checked = false;
                     this.loading = false;
                 }
             } catch (error) {

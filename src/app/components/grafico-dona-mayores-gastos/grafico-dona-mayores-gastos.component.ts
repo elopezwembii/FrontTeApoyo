@@ -25,7 +25,19 @@ export class GraficoDonaMayoresGastosComponent {
         backgroundColor: '#fff',
         tooltip: {
             trigger: 'item',
-            formatter: '{a} <br/>{b}: {c} ({d}%)'
+            formatter: (params: any) => {
+                console.log(params);
+                return (
+                    params.name +
+                    ': $ ' +
+                    params.value
+                        .toString()
+                        .replace(/\B(?=(\d{3})+(?!\d))/g, '.') +
+                    ' (' +
+                    params.percent +
+                    '%)'
+                );
+            }
         },
         legend: {
             orient: 'horizontal'
@@ -41,7 +53,7 @@ export class GraficoDonaMayoresGastosComponent {
             color: this.coloresPastel,
             series: [
                 {
-                    name: 'Item',
+                    name: 'Categoría',
                     type: 'pie',
                     radius: ['30%', '70%'],
                     data: this.data,

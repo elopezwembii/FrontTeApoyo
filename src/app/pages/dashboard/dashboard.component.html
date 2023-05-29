@@ -136,9 +136,9 @@
                                     <table class="table text-nowrap">
                                         <thead>
                                             <tr>
-                                                <th>Categoría</th>
-                                                <th>Sub-categoría</th>
-                                                <th>Monto</th>
+                                                <th class="text-center">Categoría</th>
+                                                <th class="text-center">Sub-categoría</th>
+                                                <th class="text-right">Monto</th>
                                             </tr>
                                         </thead>
                                         <tbody *ngIf="gastos.length > 0">
@@ -911,7 +911,7 @@
                                             >${{
                                                 sumaGH | currency: 'CLP':''
                                             }}</strong
-                                        >
+                                        > mensuales que, al año, significa un ahorro de <strong>${{ (sumaGH * 12) | currency: 'CLP':'' }}</strong>
                                     </p>
                                 </div>
                             </div>
@@ -920,7 +920,7 @@
                 </div>
                 <div class="col-md-3">
                     <div class="card h-100">
-                        <div class="card-head text-center mt-2">
+                        <div class="card-head text-center mt-4">
                             <h5>
                                 <span
                                     ><svg
@@ -963,7 +963,7 @@
                                 >
                             </h5>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body text-center">
                             <p>
                                 Registrar las
                                 <strong>fechas y categorías</strong>

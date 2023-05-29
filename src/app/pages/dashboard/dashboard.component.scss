@@ -79,3 +79,79 @@
     font-size: 28px;
     font-weight: bold;
 }
+
+
+.pill-gasto-tipo-1 {
+  background-color: rgba($color: rgb(255, 0, 0), $alpha: 0.2);
+  padding: 0.3rem;
+  border-radius: 1rem;
+  display: block;
+  padding: 0;
+  text-align: center;
+}
+
+.pill-gasto-tipo-2 {
+  background-color: rgba($color: rgb(255, 255, 0), $alpha: 0.2);
+  padding: 0.3rem;
+  border-radius: 1rem;
+  display: block;
+  padding: 0;
+  text-align: center;
+}
+
+.pill-gasto-tipo-3 {
+  background-color: rgba($color: rgb(255, 0, 255), $alpha: 0.2);
+  padding: 0.3rem;
+  border-radius: 1rem;
+  display: block;
+  padding: 0;
+  text-align: center;
+}
+
+.pill-gasto-tipo-4 {
+  background-color: rgba($color: rgb(0, 255, 0), $alpha: 0.2);
+  padding: 0.3rem;
+  border-radius: 1rem;
+  display: block;
+  padding: 0;
+  text-align: center;
+}
+
+.pill-gasto-tipo-5 {
+  background-color: rgba($color: rgb(0, 255, 255), $alpha: 0.2);
+  padding: 0.3rem;
+  border-radius: 1rem;
+  display: block;
+  padding: 0;
+  text-align: center;
+}
+
+.pill-gasto-tipo-6 {
+background-color: rgba($color: rgb(0, 0, 255), $alpha: 0.2);
+padding: 0.3rem;
+border-radius: 1rem;
+display: block;
+padding: 0;
+text-align: center;
+}
+
+.pill-gasto-tipo-7 {
+background-color: rgba($color: rgb(174, 0, 255), $alpha: 0.2);
+padding: 0.3rem;
+border-radius: 1rem;
+display: block;
+padding: 0;
+text-align: center;
+}
+
+::-webkit-scrollbar {
+-webkit-appearance: none;
+
+}
+
+::-webkit-scrollbar-thumb {
+background-color: rgba(0, 0, 0, .5);
+box-shadow: 0 0 1px rgba(255, 255, 255, .5);
+width: 4px;
+border-radius: 1rem;
+}

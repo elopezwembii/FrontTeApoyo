@@ -1,5 +1,6 @@
 import {Ingreso} from '@/interfaces/ingresos';
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import { ModalAnalisisComponent } from '@components/modal-analisis/modal-analisis.component';
 import {Tarjeta} from '@pages/deudas/deudas.component';
 import {DeudasService} from '@services/deudas.service';
 import {IngresosService} from '@services/ingresos/ingresos.service';
@@ -23,6 +24,7 @@ export class AnalisisComponent implements OnInit {
     porcentajeTotal: number = -1;
     apalancamientoCorto: number = 0;
     apalancamientoLargo: number = 0;
+    @ViewChild('modalAnalisis') modalAnalisis: ModalAnalisisComponent;
 
     vecesRentaCorto: number = -1;
     vecesRentaLargo: number = -1;
@@ -30,10 +32,15 @@ export class AnalisisComponent implements OnInit {
     constructor(
         private ingresoService: IngresosService,
         private deudaService: DeudasService
+
     ) {}
 
     ngOnInit() {
         this.obtenerData();
+    }
+
+    openModal(tipo:number, subtipo:number,indicador:number) {
+        this.modalAnalisis.openModal(tipo,subtipo,indicador);
     }
 
     async obtenerData() {
@@ -116,9 +123,8 @@ export class AnalisisComponent implements OnInit {
                 this.ingresos) *
             100;
 
-        this.vecesRentaCorto = (this.ingresos) / this.apalancamientoCorto;
-        this.vecesRentaLargo = (this.ingresos) / this.apalancamientoLargo;
-
+        this.vecesRentaCorto = this.ingresos / this.apalancamientoCorto;
+        this.vecesRentaLargo = this.ingresos / this.apalancamientoLargo;
 
         this.loading = false;
     }
