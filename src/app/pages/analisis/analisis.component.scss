@@ -1,0 +1,23 @@
+.card{
+  box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.3);
+}
+.nav-pills{
+  width: 100%;
+  border-radius: 0px 0px 0px 30px;
+
+}
+.nav-item{
+  width: 33.3%;
+
+}
+.nav-pills .nav-link{
+  font-size: x-large;
+  padding: 13px;
+  text-align: center;
+  background: #fff;
+  color: #2c939e;
+}
+.nav-pills .nav-link.active{
+  background: #2c939e;
+  color: #FFF;
+}

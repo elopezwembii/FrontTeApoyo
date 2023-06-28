@@ -22,7 +22,7 @@ export class MenuItemComponent implements OnInit {
     constructor(private router: Router, public appService: AppService) {}
 
     ngOnInit(): void {
-        this.user = JSON.parse(this.appService.user);
+        this.user = JSON.parse(sessionStorage.getItem('user'));
         if (
             this.menuItem &&
             this.menuItem.children &&
@@ -43,7 +43,9 @@ export class MenuItemComponent implements OnInit {
             this.toggleMenu();
             return;
         }
-        this.router.navigate(this.menuItem.path);
+        //'/finanzasPersonales' +
+        window.location.href =  this.menuItem.path;
+        //this.router.navigate(this.menuItem.path);
     }
 
     public toggleMenu() {

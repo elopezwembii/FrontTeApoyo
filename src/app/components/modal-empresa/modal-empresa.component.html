@@ -1,0 +1,90 @@
+<div class="modal fade" id="modalAhorro" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{ titulo }}</h5>
+                <button
+                    type="button"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                >
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="form" (ngSubmit)="submit()">
+                    <div class="mb-3">
+                        <label for="email" class="form-label"
+                            >Email Administrador</label
+                        >
+                        <input
+                            autocomplete="off"
+                            formControlName="email"
+                            type="email"
+                            class="form-control"
+                            placeholder="Email del usuario"
+                        />
+                        <small
+                            >Se creará una cuenta con los datos del email y
+                            contraseña.</small
+                        >
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label"
+                            >Contraseña</label
+                        >
+                        <input
+                            autocomplete="off"
+                            formControlName="password"
+                            type="text"
+                            class="form-control"
+                            placeholder="Contraseña del usuario"
+                        />
+                    </div>
+                    <div class="mb-3">
+                        <label for="nombre" class="form-label"
+                            >Nombre Empresa</label
+                        >
+                        <input
+                            autocomplete="off"
+                            formControlName="nombre"
+                            type="text"
+                            class="form-control"
+                            placeholder="Nombre de la empresa"
+                        />
+                    </div>
+                    <div class="mb-3">
+                        <label for="cantidad_colaboradores" class="form-label"
+                            >Cantidad máxima de colaboradores</label
+                        >
+                        <input
+                            autocomplete="off"
+                            formControlName="cantidad_colaboradores"
+                            type="text"
+                            class="form-control"
+                            placeholder="Cantidad máxima de colaboradores"
+                        />
+                    </div>
+
+                    <div class="modal-footer">
+                        <button
+                            type="button"
+                            class="btn btn-secondary"
+                            data-dismiss="modal"
+                        >
+                            Cerrar
+                        </button>
+                        <button
+                            [disabled]="!form.valid"
+                            type="submit"
+                            class="btn btn-primary"
+                        >
+                            Guardar cambios
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

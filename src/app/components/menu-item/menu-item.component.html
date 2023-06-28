@@ -3,7 +3,7 @@
     style="border-radius: 0.8rem 0rem 0rem 0.8rem; color: #fff"
     class="nav-link w-100"
     [ngClass]="{'navbar-link-active': isMainActive || isOneOfChildrenActive}"
-    *ngIf="menuItem.role === undefined || menuItem.role === user.rol"
+    *ngIf="menuItem.role === undefined || menuItem.role === user.rol.nombre"
 >
     <i class="nav-icon {{ menuItem.iconClasses }}"></i>
     <p>
@@ -16,13 +16,13 @@
     </p>
 </a>
 <ul
-    class="nav nav-treeview"
-    *ngFor="let item of menuItem.children"
+    [class]="'nav nav-treeview '"
+    *ngFor="let item of menuItem.children; let i = index"
     [@openClose]="isMenuExtended"
 >
     <li
         class="nav-item"
-        *ngIf="item.role === undefined || item.role === user.rol"
+        *ngIf="item.role === undefined || item.role === user.rol.nombre"
     >
         <a
             [routerLink]="item.path"

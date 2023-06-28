@@ -1,0 +1,152 @@
+<div class="col-12">
+  <div class="text-right">
+    <button (click)="abrirModal(true, null)" class="btn btn-light elevation-2 rounded-pill">
+      Nuevo Bien
+    </button>
+  </div>
+  <form [formGroup]="form" (ngSubmit)="update()">
+    <div *ngFor="let deuda of deudas">
+      <div class="row mt-3">
+        <div class="col col-12 text-right" style="font-size: larger">
+          <button type="button" (click)="abrirModal(false, deuda)" class="boton-acept-deuda">
+            <i class="fas fa-pen"></i>
+          </button>
+
+          <button class="boton-acept-deuda mx-3" title="cancel" type="button" (click)="deleteDeuda(deuda)">
+            <i class="fas fa-trash"></i>
+          </button>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-12 col-sm-4 text-center">
+              <img height="110" [src]="
+                                    deuda.tipo_bien === 1 ||
+                                    deuda.tipo_bien === 2
+                                        ? '../../../assets/img/bien/inversion.svg'
+                                        : deuda.tipo_bien === 3
+                                        ? '../../../assets/img/bien/casa.svg'
+                                        : '../../../assets/img/bien/auto.svg'
+                                " alt="" />
+            </div>
+            <div class="col-12 col-sm-8">
+              <div class="row mt-2">
+                <div class="col-6">
+                  <small class="mb-2">Tipo de valorización:
+
+                  </small>
+                  <p class="text-bold">{{
+                    tipos_valorizacion[
+                        deuda.tipo_valorizacion
+                    ]
+                }}</p>
+                </div>
+                <div class="col-6">
+                  <h5 class="text-bold mb-2 text-right">
+                    {{ deuda.desc }}
+                  </h5>
+                  <div class="text-right">
+                    <small>Valorado en: <span class="text-bold h3 text-right">$
+                        {{ deuda.valorado | currency:'CLP':'' }}</span></small>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">
+              Bienes
+            </h5>
+            <button type="button" class="close" (click)="cerrarModal()">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <div class="row">
+                <div class="col-12">
+                  <label for="desc">Descripción</label>
+                  <input type="text" class="form-control form-control-border" formControlName="desc" />
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="row">
+                <div class="col-12">
+                  <label for="valorizado">Valorizado</label>
+                  <input type="number" placeholder="$ " inputmode="decimal"
+                    class="form-control form-control-border text-right" formControlName="valorado" />
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="row">
+                <div class="col-12 col-sm-6">
+                  <p class="mb-2">
+                    <b>Tipo de Bien</b>
+                  </p>
+                  <select class="custom-select form-control-border" formControlName="tipo_bien">
+                    <option selected disabled [value]="0">
+                      Seleccione
+                    </option>
+                    <option [value]="1">
+                      Ahorro e Inversiones
+                    </option>
+                    <option [value]="2">
+                      Participacion en sociedades
+                    </option>
+                    <option [value]="3">Propiedades</option>
+                    <option [value]="4">Vehículos</option>
+                  </select>
+                </div>
+                <div class="col-12 col-sm-6">
+                  <p class="mb-2">
+                    <b>Tipo de Valorización</b>
+                  </p>
+                  <select class="custom-select form-control-border" formControlName="tipo_valorizacion">
+                    <option selected disabled [value]="0">
+                      Seleccione
+                    </option>
+                    <option [value]="1">
+                      Avalúo Fiscal
+                    </option>
+                    <option [value]="2">
+                      Precio de compraventa
+                    </option>
+                    <option [value]="3">Tasación</option>
+                    <option [value]="4">
+                      Valor promedio
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="form-group"></div>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="cerrarModal()">
+              Cerrar
+            </button>
+            <button [disabled]="form.invalid" [attr.data-tooltip]="
+                                form.invalid
+                                    ? 'Necesitas completar todos los campos'
+                                    : null
+                            " data-flow="left" type="submit" class="btn btn-primary">
+              Guardar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

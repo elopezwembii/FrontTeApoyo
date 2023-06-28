@@ -11,7 +11,16 @@ import {ForgotPasswordComponent} from '@modules/forgot-password/forgot-password.
 import {RecoverPasswordComponent} from '@modules/recover-password/recover-password.component';
 import {MainMenuComponent} from '@pages/main-menu/main-menu.component';
 import {SubMenuComponent} from '@pages/main-menu/sub-menu/sub-menu.component';
-import { GastosComponent } from '@pages/gastos/gastos.component';
+
+import {GastosComponent} from '@pages/gastos/gastos.component';
+import {IngresosComponent} from '@pages/ingresos/ingresos.component';
+import {PresupuestoComponent} from '@pages/presupuesto/presupuesto.component';
+import {AhorrosComponent} from '@pages/ahorros/ahorros.component';
+import {DeudasComponent} from '@pages/deudas/deudas.component';
+import {AnalisisComponent} from '@pages/analisis/analisis.component';
+import {GestionUsuariosComponent} from '@pages/gestion-usuarios/gestion-usuarios.component';
+import {GestionEmpresaComponent} from '@pages/gestion-empresa/gestion-empresa.component';
+import {GestionColaboradorComponent} from '@pages/gestion-colaborador/gestion-colaborador.component';
 
 const routes: Routes = [
     {
@@ -26,11 +35,47 @@ const routes: Routes = [
             },
             {
                 path: 'ingresos',
-                component: ProfileComponent
+                component: IngresosComponent
+            },
+            {
+                path: 'presupuesto',
+                component: PresupuestoComponent
             },
             {
                 path: 'gastos',
                 component: GastosComponent
+            },
+            {
+                path: 'ahorros',
+                component: AhorrosComponent
+            },
+            {
+                path: 'presupuesto',
+                component: PresupuestoComponent
+            },
+            {
+                path: 'deudas',
+                component: DeudasComponent
+            },
+            {
+                path: 'analisis',
+                component: AnalisisComponent
+            },
+            {
+                path: 'profile',
+                component: ProfileComponent
+            },
+            {
+                path: 'usuarios',
+                component: GestionUsuariosComponent
+            },
+            {
+                path: 'empresas',
+                component: GestionEmpresaComponent
+            },
+            {
+                path: 'colaboradores',
+                component: GestionColaboradorComponent
             },
             {
                 path: '',

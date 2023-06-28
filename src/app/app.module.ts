@@ -1,6 +1,6 @@
 import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
-import {HttpClientModule} from '@angular/common/http';
+import {LOCALE_ID, NgModule} from '@angular/core';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 
 import {AppRoutingModule} from '@/app-routing.module';
 import {AppComponent} from './app.component';
@@ -18,7 +18,7 @@ import {ToastrModule} from 'ngx-toastr';
 import {MessagesComponent} from '@modules/main/header/messages/messages.component';
 import {NotificationsComponent} from '@modules/main/header/notifications/notifications.component';
 
-import {registerLocaleData} from '@angular/common';
+import {CurrencyPipe, registerLocaleData} from '@angular/common';
 import localeEn from '@angular/common/locales/en';
 import {UserComponent} from '@modules/main/header/user/user.component';
 import {ForgotPasswordComponent} from '@modules/forgot-password/forgot-password.component';
@@ -34,10 +34,35 @@ import {ProfabricComponentsModule} from '@profabric/angular-components';
 import {defineCustomElements} from '@profabric/web-components/loader';
 import {SidebarSearchComponent} from './components/sidebar-search/sidebar-search.component';
 import {NgxLoadingModule, ngxLoadingAnimationTypes} from 'ngx-loading';
-import { GastosComponent } from './pages/gastos/gastos.component';
+
+import {GastosComponent} from './pages/gastos/gastos.component';
+import {NgxEchartsModule} from 'ngx-echarts';
+import {IngresosComponent} from './pages/ingresos/ingresos.component';
+import {GraficoComponent} from './components/grafico/grafico.component';
+import {GraficoGastoComponent} from './components/grafico-gasto/grafico-gasto.component';
+import { AhorrosComponent } from './pages/ahorros/ahorros.component';
+import localeEs from '@angular/common/locales/es'; // Importa la configuración regional para español
+import { PresupuestoComponent } from '@pages/presupuesto/presupuesto.component';
+import { GraficoDonaComponent } from '@components/grafico-dona/grafico-dona.component';
+import { GraficoBarraComponent } from '@components/grafico-barra/grafico-barra.component';
+import { CorsInterceptor } from './cors.interceptor';
+import { DeudasComponent } from './pages/deudas/deudas.component';
+import { GraficoLineaComponent } from './components/grafico-linea/grafico-linea.component';
+import { ModalAhorroComponent } from './components/modal-ahorro/modal-ahorro.component';
+import { GraficoDonaMayoresGastosComponent } from './components/grafico-dona-mayores-gastos/grafico-dona-mayores-gastos.component';
+import { AnalisisComponent } from './pages/analisis/analisis.component';
+import { CrudBienComponent } from './components/crud-bien/crud-bien.component';
+import { ModalAnalisisComponent } from './components/modal-analisis/modal-analisis.component';
+import { GestionUsuariosComponent } from './pages/gestion-usuarios/gestion-usuarios.component';
+import { GestionEmpresaComponent } from './pages/gestion-empresa/gestion-empresa.component';
+import { GestionColaboradorComponent } from './pages/gestion-colaborador/gestion-colaborador.component';
+import { DataTablesModule } from "angular-datatables";
+import { ModalUsuarioComponent } from './components/modal-usuario/modal-usuario.component';
+import { ModalEmpresaComponent } from './components/modal-empresa/modal-empresa.component';
+
 
 defineCustomElements();
-registerLocaleData(localeEn, 'en-EN');
+registerLocaleData(localeEs);
 
 @NgModule({
     declarations: [
@@ -61,17 +86,41 @@ registerLocaleData(localeEn, 'en-EN');
         MenuItemComponent,
         ControlSidebarComponent,
         SidebarSearchComponent,
-        GastosComponent
+        GastosComponent,
+        IngresosComponent,
+        GraficoComponent,
+        PresupuestoComponent,
+        GraficoDonaComponent,
+        GraficoBarraComponent,
+        GraficoGastoComponent,
+        PresupuestoComponent,
+        GraficoDonaComponent,
+        GraficoBarraComponent,
+        AhorrosComponent,
+        DeudasComponent,
+        GraficoLineaComponent,
+        ModalAhorroComponent,
+        GraficoDonaMayoresGastosComponent,
+        AnalisisComponent,
+        CrudBienComponent,
+        ModalAnalisisComponent,
+        GestionUsuariosComponent,
+        GestionEmpresaComponent,
+        GestionColaboradorComponent,
+        ModalUsuarioComponent,
+        ModalEmpresaComponent
+
     ],
     imports: [
         NgxLoadingModule.forRoot({
-          animationType: ngxLoadingAnimationTypes.threeBounce,
-          backdropBackgroundColour: 'rgba(255, 255, 255, 0.5)',
-          primaryColour: '#2c939e',
-          secondaryColour: '#2c939e',
-          tertiaryColour: '#2c939e'
+            animationType: ngxLoadingAnimationTypes.threeBounce,
+            backdropBackgroundColour: 'rgba(255, 255, 255, 0.5)',
+            primaryColour: '#2c939e',
+            secondaryColour: '#2c939e',
+            tertiaryColour: '#2c939e'
         }),
         BrowserModule,
+        DataTablesModule,
         StoreModule.forRoot({ui: uiReducer}),
         HttpClientModule,
         AppRoutingModule,
@@ -82,9 +131,13 @@ registerLocaleData(localeEn, 'en-EN');
             positionClass: 'toast-top-right',
             preventDuplicates: true
         }),
-        ProfabricComponentsModule
+        ProfabricComponentsModule,
+        NgxEchartsModule.forRoot({
+            echarts: () => import('echarts')
+        })
     ],
-    providers: [],
+    providers: [{provide: LOCALE_ID, useValue: 'ES_cl'},{ provide: HTTP_INTERCEPTORS, useClass: CorsInterceptor, multi: true },CurrencyPipe],
+
     bootstrap: [AppComponent]
 })
 export class AppModule {}

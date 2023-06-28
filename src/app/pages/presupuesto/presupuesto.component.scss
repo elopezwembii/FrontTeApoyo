@@ -1,0 +1,46 @@
+.icono-categoria {
+    color: #bee0e4;
+    font-size: 24px;
+    margin-right: 10px;
+}
+
+.custom-box {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    height: 50px;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.custom-text-gray {
+    font-weight: bold;
+    display: inline-block;
+    font-size: 14px;
+    color: gray;
+}
+
+.custom-text-bold {
+    font-weight: bold;
+}
+
+.custom-text-money {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.custom-margin {
+    margin-left: 5px;
+}
+
+
+.custom-chart {
+    /* Ajusta el tamaño de la fuente */
+    font-size: 14px;
+
+    /* Ajusta el ancho del gráfico */
+    width: 100%;
+
+    /* Ajusta el espaciado entre barras */
+    margin-bottom: 20px; /* Cambia el valor según tus necesidades */
+}
