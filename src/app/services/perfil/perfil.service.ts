@@ -1,52 +1,81 @@
+import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
+import {environment} from 'environments/environment';
 import {Observable, of} from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
 })
 export class PerfilService {
-    familia = [
-        {
-            nombre: 'Juan',
-            apellidoPaterno: 'Pérez',
-            apellidoMaterno: 'rojas',
-            rut: '11.111.111-1',
-            correo: 'juan@example.com'
-        },
-        {
-            nombre: 'María',
-            apellidoPaterno: 'González',
-            apellidoMaterno: 'diaz',
-            rut: '22.222.222-2',
-            correo: 'maria@example.com'
-        }
-    ];
+    familia = [];
 
-    constructor() {}
+    constructor(private _http: HttpClient) {}
 
-    obtenerInformacionUsuario() {
-        return of({
-            rut: '11.111.111-1',
-            nombre: 'Juan',
-            apellidoPaterno: 'Diaz',
-            apellidoMaterno: 'Perez',
-            correo: 'test@gmail.com',
-            celular: '+569 12345678',
-            direccion: 'Av. Angamos #2343',
-            ciudad: 'antofagasta',
-            nacionalidad: 'Chilena',
-            fechaNacimiento: '11/02/1980',
-            genero: 'Masculino'
-        });
+    async obtenerInformacionUsuario() {
+        const idUsuario = JSON.parse(sessionStorage.getItem('user')).user.id;
+        try {
+            const data: any = await new Promise((resolve, reject) => {
+                this._http
+                    .get(environment.uri_api + 'perfil/' + idUsuario, {
+                        headers: {
+                            Authorization:
+                                'Bearer ' +
+                                JSON.parse(sessionStorage.getItem('user'))
+                                    .access_token
+                        }
+                    })
+                    .subscribe(
+                        (response) => resolve(response),
+                        (error) => reject(error)
+                    );
+            });
+            console.log(data);
+            return of({
+                perfil: data
+            });
+        } catch (error) {}
     }
 
-    actualizarPerfil() {
-        return new Observable<boolean>((observer) => {
-            setTimeout(() => {
-                observer.next(true);
-                observer.complete();
-            }, 2000);
-        });
+    async actualizarPerfil(perfil: any) {
+        const idUsuario = JSON.parse(sessionStorage.getItem('user')).user.id;
+        try {
+            const res = await new Promise((resolve, reject) => {
+                this._http
+                    .post(
+                        environment.uri_api + 'perfil/' + idUsuario,
+                        {
+                            rut: perfil.rut,
+                            fecha_nacimiento: perfil.fecha_nacimiento,
+                            nombres: perfil.nombres,
+                            apellidos: perfil.apellidos,
+                            genero: perfil.genero,
+                            nacionalidad: perfil.nacionalidad,
+                            ciudad: perfil.ciudad,
+                            direccion: perfil.direccion,
+                            telefono: perfil.telefono,
+                            email: perfil.email
+                        },
+                        {
+                            headers: {
+                                Authorization:
+                                    'Bearer ' +
+                                    JSON.parse(sessionStorage.getItem('user'))
+                                        .access_token
+                            }
+                        }
+                    )
+                    .subscribe(
+                        (response) => {
+                            resolve(response);
+                        },
+                        (error) => {
+                            console.error(error);
+                            reject(error);
+                        }
+                    );
+            });
+            console.log(res);
+        } catch (error) {}
     }
 
     obtenerFamilia() {

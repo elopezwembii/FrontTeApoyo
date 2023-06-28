@@ -1,0 +1,149 @@
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-principal"><b> Gestión de empresas</b></h1>
+            </div>
+            <!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item">
+                        <a [routerLink]="['']">Inicio</a>
+                    </li>
+                    <li class="breadcrumb-item">Empresas</li>
+                </ol>
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+</div>
+
+<section class="content">
+    <div class="container-fluid w-100">
+        <div class="row">
+            <div class="col col-12">
+                <div class="card card-primary card-outline">
+                    <div class="card-header text-right">
+                        <button class="btn btn-info" (click)="openModal()">
+                            <i class="fas fa-plus-circle"></i> Agregar empresa
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <table
+                            *ngIf="empresas.length > 0"
+                            datatable
+                            [dtOptions]="dtOptions"
+                            class="row-border hover"
+                        >
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Email encargado</th>
+                                    <th>Cantidad colaboradores</th>
+                                    <th>Estado</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let empresa of empresas">
+                                    <td>{{ empresa.nombre }}</td>
+                                    <td>{{ empresa.get_encargado[0].email }}</td>
+                                    <td>
+                                        {{ empresa.cantidad_colaboradores }}
+                                    </td>
+                                    <td
+                                        [class]="
+                                            empresa.estado === 1
+                                                ? 'text-success text-bold'
+                                                : 'text-danger text-bold'
+                                        "
+                                    >
+                                        {{
+                                            empresa.estado === 1
+                                                ? 'Habilitado'
+                                                : 'Deshabilitado'
+                                        }}
+                                    </td>
+                                    <td>
+                                        <div
+                                            class="btn-group btn-group-toggle"
+                                            data-toggle="buttons"
+                                        >
+                                            <div
+                                                [attr.data-tooltip]="
+                                                    empresa.estado === 1
+                                                        ? 'Dar de baja'
+                                                        : 'Habilitar'
+                                                "
+                                                data-flow="top"
+                                            >
+                                                <button
+                                                    [class]="
+                                                        empresa.estado === 1
+                                                            ? 'btn btn-danger btn-sm'
+                                                            : 'btn btn-warning btn-sm'
+                                                    "
+                                                >
+                                                    <i
+                                                        [class]="
+                                                            empresa.estado === 1
+                                                                ? 'fas fa-trash'
+                                                                : 'fas fa-arrow-circle-up'
+                                                        "
+                                                    ></i>
+                                                </button>
+                                            </div>
+                                            <div
+                                                data-tooltip="Reiniciar contraseña"
+                                                data-flow="top"
+                                            >
+                                                <button
+                                                    class="btn btn-info btn-sm"
+                                                >
+                                                    <i
+                                                        class="fas fa-unlock"
+                                                    ></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table
+                            *ngIf="empresas.length === 0"
+                            datatable
+                            [dtOptions]="dtOptions"
+                            class="row-border hover"
+                        >
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Email encargado</th>
+                                    <th>Cantidad colaboradores</th>
+                                    <th>Estado</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td colspan="5" class="text-center">
+                                        Sin registros
+                                    </td>
+                                    <td class="text-center"></td>
+                                    <td class="text-center"></td>
+                                    <td class="text-center"></td>
+                                    <td class="text-center"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<app-modal-empresa #modalEmpresa></app-modal-empresa>
+<ngx-loading [show]="loading"></ngx-loading>

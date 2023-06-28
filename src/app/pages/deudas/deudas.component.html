@@ -88,32 +88,15 @@
                                     </div>
                                     <div class="col-12 col-sm-8">
                                         <div class="row mt-2">
-                                            <div class="col-6">
+                                            <div class="col-12 text-right">
                                                 <small class="text-bold"
-                                                    >Costo total:
+                                                    >Deuda pendiente de pago:
                                                     <h3
                                                         class="text-danger text-bold mb-0"
                                                     >
                                                         $
                                                         {{
-                                                            deuda.costo_total
-                                                                | currency
-                                                                    : 'CLP'
-                                                                    : ''
-                                                        }}
-                                                    </h3></small
-                                                >
-                                            </div>
-                                            <div class="col-6">
-                                                <small class="text-bold"
-                                                    >Llevas:
-                                                    <h3
-                                                        class="text-success text-bold mb-0"
-                                                    >
-                                                        $
-                                                        {{
-                                                            deuda.cuotas_pagadas *
-                                                                deuda.pago_mensual
+                                                            deuda.deuda_pendiente
                                                                 | currency
                                                                     : 'CLP'
                                                                     : ''
@@ -283,19 +266,7 @@
                                     </div>
                                     <div class="form-group">
                                         <div class="row">
-                                            <div class="col-12 col-sm-5">
-                                                <label for="montoReal"
-                                                    >Costo total Deuda</label
-                                                >
-                                                <input
-                                                    type="number"
-                                                    placeholder="$ "
-                                                    inputmode="decimal"
-                                                    class="form-control form-control-border text-right"
-                                                    formControlName="costo_total"
-                                                />
-                                            </div>
-                                            <div class="col-12 col-sm-5">
+                                            <div class="col-12 col-sm-8">
                                                 <label for="montoReal"
                                                     >Monto Pendiente por
                                                     pagar</label
@@ -308,7 +279,7 @@
                                                     formControlName="deuda_pendiente"
                                                 />
                                             </div>
-                                            <div class="col-12 col-sm-2">
+                                            <div class="col-12 col-sm-4">
                                                 <p class="mb-2">
                                                     <b>Día pago</b>
                                                 </p>
@@ -335,7 +306,7 @@
                                     </div>
                                     <div class="form-group">
                                         <div class="row">
-                                            <div class="col-12 col-sm-3">
+                                            <div class="col-12 col-sm-4">
                                                 <label for="cuotas_totales"
                                                     >Total de cuotas</label
                                                 >
@@ -346,7 +317,7 @@
                                                     formControlName="cuotas_totales"
                                                 />
                                             </div>
-                                            <div class="col-12 col-sm-3">
+                                            <div class="col-12 col-sm-4">
                                                 <label for="cuotas_totales"
                                                     >Cuotas pagadas</label
                                                 >
@@ -357,7 +328,7 @@
                                                     formControlName="cuotas_pagadas"
                                                 />
                                             </div>
-                                            <div class="col-12 col-sm-6">
+                                            <div class="col-12 col-sm-4">
                                                 <label for="montoReal"
                                                     >Pago mensual</label
                                                 >
@@ -428,7 +399,7 @@
                                 <thead>
                                     <tr>
                                         <th></th>
-                                        <th>Total</th>
+                                        <th>Cupo Total</th>
                                         <th>Utilizado</th>
                                         <th>Disponible</th>
                                         <th style="width: 50px">Banco</th>
@@ -594,7 +565,7 @@
                                                         class="col-12 col-sm-6"
                                                     >
                                                         <label for="montoReal"
-                                                            >Total</label
+                                                            >Cupo Total</label
                                                         >
                                                         <input
                                                             type="number"
@@ -608,7 +579,7 @@
                                                         class="col-12 col-sm-6"
                                                     >
                                                         <label for="montoReal"
-                                                            >Utilizado</label
+                                                            >Cupo Utilizado</label
                                                         >
                                                         <input
                                                             type="number"

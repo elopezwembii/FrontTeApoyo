@@ -11,7 +11,9 @@ import {ToastrService} from 'ngx-toastr';
 })
 export class ProfileComponent implements OnInit {
     usuario: any;
+    rol: string;
     familia: any[] = [];
+    loading: boolean = false;
 
     familiaForm = this.fb.group({
         nombre: ['', Validators.required],
@@ -22,17 +24,16 @@ export class ProfileComponent implements OnInit {
     });
 
     form: FormGroup = this.fb.group({
-        rut: ['', [Validators.required]],
-        nombre: ['', [Validators.required]],
-        apellidoPaterno: ['', [Validators.required]],
-        apellidoMaterno: ['', [Validators.required]],
-        correo: ['', [Validators.required, Validators.email]],
-        celular: ['', [Validators.required]],
-        direccion: ['', [Validators.required]],
-        ciudad: ['', [Validators.required]],
-        nacionalidad: ['', [Validators.required]],
-        fechaNacimiento: ['', [Validators.required]],
-        genero: ['', [Validators.required]]
+        rut: [''],
+        nombres: [''],
+        apellidos: [''],
+        email: ['', [Validators.email]],
+        celular: [''],
+        direccion: [''],
+        ciudad: [''],
+        nacionalidad: [''],
+        fecha_nacimiento: [''],
+        genero: [null]
     });
 
     constructor(
@@ -44,35 +45,53 @@ export class ProfileComponent implements OnInit {
 
     ngOnInit() {
         this.usuario = JSON.parse(this.appService.user);
+        this.rol = JSON.parse(sessionStorage.getItem('user')).rol.nombre;
         this.obtenerPerfilUsuario();
         this.obtenerMiembrosFamilia();
     }
 
-    obtenerPerfilUsuario() {
-        this.perfilUsuario.obtenerInformacionUsuario().subscribe({
-            next: (resp: any) => {
-                this.usuario = {
-                    ...this.usuario,
-                    ...resp
-                };
-
-                this.form.patchValue(this.usuario);
+    async obtenerPerfilUsuario() {
+        this.loading = true;
+        (await this.perfilUsuario.obtenerInformacionUsuario()).subscribe({
+            next: ({perfil}: {perfil: any}) => {
+                this.usuario = perfil;
+                this.form.patchValue({
+                    rut: perfil.rut,
+                    nombres: perfil.nombres,
+                    apellidos: perfil.apellidos,
+                    email: perfil.email,
+                    telefono: perfil.telefono,
+                    direccion: perfil.direccion,
+                    ciudad: perfil.ciudad,
+                    nacionalidad: perfil.nacionalidad,
+                    fecha_nacimiento: perfil.fecha_nacimiento,
+                    genero: perfil.genero
+                });
+                this.loading = false;
+            },
+            error: (error: any) => {
+                console.log(error);
             }
         });
     }
 
-    actualizarPerfil() {
-        this.perfilUsuario.actualizarPerfil().subscribe({
-            next: (resp: boolean) => {
-                if (resp) {
-                    this.toastr.success('Perfil actualizado correctamente');
-                }
-            },
-            error: (err: any) => {
-                this.toastr.error('ERROR,contacte con el administradorr');
-                console.log(err);
-            }
-        });
+    async actualizarPerfil() {
+        this.loading = true;
+        this.usuario.nombres = this.form.value.nombres!;
+        this.usuario.rut = this.form.value.rut!;
+        this.usuario.apellidos = this.form.value.apellidos!;
+        this.usuario.email = this.form.value.email!;
+        this.usuario.telefono = this.form.value.telefono!;
+        this.usuario.direccion = this.form.value.direccion!;
+        this.usuario.ciudad = this.form.value.ciudad!;
+        this.usuario.nacionalidad = this.form.value.nacionalidad!;
+        this.usuario.fecha_nacimiento = this.form.value.fecha_nacimiento!;
+        this.usuario.genero = this.form.value.genero!;
+        try {
+            await this.perfilUsuario.actualizarPerfil(this.usuario);
+            this.obtenerPerfilUsuario();
+            this.toastr.success('Perfil editado con éxito.');
+        } catch (error) {}
     }
 
     submit() {

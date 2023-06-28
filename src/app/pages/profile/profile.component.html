@@ -1,376 +1,257 @@
 <section class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-sm-6">
-                <h1>Perfil</h1>
-            </div>
-            <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="#">Inicio</a></li>
-                    <li class="breadcrumb-item active">Perfil usuario</li>
-                </ol>
-            </div>
-        </div>
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1>Perfil</h1>
+      </div>
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+          <li class="breadcrumb-item"><a href="#">Inicio</a></li>
+          <li class="breadcrumb-item active">Perfil usuario</li>
+        </ol>
+      </div>
     </div>
-    <!-- /.container-fluid -->
+  </div>
+  <!-- /.container-fluid -->
 </section>
 
 <!-- Main content -->
 <section class="content">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-3">
-                <!-- Profile Image -->
-                <div class="card card-primary card-outline">
-                    <div class="card-body box-profile">
-                        <div class="text-center">
-                            <pf-image
-                                class="user-img"
-                                src="/assets/img/default-profile.png"
-                                alt="User profile picture"
-                                width="100"
-                                height="100"
-                                rounded
-                            ></pf-image>
-                        </div>
-
-                        <h3 class="profile-username text-center">
-                            {{ usuario.name | titlecase }}
-                        </h3>
-
-                        <p class="text-muted text-center">
-                            {{ usuario.role }}
-                        </p>
-
-                        <strong>
-                            <i class="fas fa-map-marker-alt mr-1"></i>
-                            Dirección
-                        </strong>
-
-                        <p class="text-muted">
-                            {{ usuario.direccion }}
-                        </p>
-                    </div>
-                    <!-- /.card-body -->
-                </div>
-                <!-- /.card -->
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-3">
+        <!-- Profile Image -->
+        <div class="card card-primary card-outline">
+          <div class="card-body box-profile">
+            <div class="text-center">
+              <pf-image class="user-img" src="/assets/img/default-profile.png" alt="User profile picture" width="100"
+                height="100" rounded></pf-image>
             </div>
-            <!-- /.col -->
-            <div class="col-md-9">
-                <div class="card">
-                    <div class="card-header p-2">
-                        <ul class="nav nav-pills">
-                            <li class="nav-item">
-                                <a
-                                    class="nav-link active"
-                                    href="#settings"
-                                    data-toggle="tab"
-                                    >Información usuario</a
-                                >
-                            </li>
-                            <li class="nav-item">
-                                <a
-                                    class="nav-link"
-                                    href="#familia"
-                                    data-toggle="tab"
-                                    >Familia</a
-                                >
-                            </li>
-                        </ul>
+
+            <h3 class="profile-username text-center">
+              {{ usuario.nombres | titlecase }}
+            </h3>
+
+            <p class="text-muted text-center">
+              {{ rol }}
+            </p>
+
+            <strong>
+              <i class="fas fa-map-marker-alt mr-1"></i>
+              Dirección
+            </strong>
+
+            <p class="text-muted">
+              {{ usuario.direccion }}
+            </p>
+          </div>
+          <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+      </div>
+      <!-- /.col -->
+      <div class="col-md-9">
+        <div class="card">
+          <div class="card-header p-2">
+            <ul class="nav nav-pills">
+              <li class="nav-item">
+                <a class="nav-link active" href="#settings" data-toggle="tab">Información usuario</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#familia" data-toggle="tab">Familia</a>
+              </li>
+            </ul>
+          </div>
+          <!-- /.card-header -->
+          <div class="card-body">
+            <div class="tab-content">
+              <div class="active tab-pane" id="settings">
+                <form class="form-horizontal" [formGroup]="form" (submit)="submit()">
+                  <fieldset class="scheduler-border">
+                    <legend class="scheduler-border">
+                      Información personal
+                    </legend>
+                    <div class="form-group">
+                      <div class="row">
+                        <div class="col-sm-12">
+                          <label class="control-label">RUT</label>
+                          <input type="text" [value]="usuario.rut" placeholder="Actualiza tu rut ej. 12.345.678-9" formControlName="rut" class="form-control" />
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-sm-6">
+                          <label class="control-label">Nombres</label>
+                          <input type="text" [value]="usuario.nombres" placeholder="Ingresa tus nombres" formControlName="nombres" class="form-control" />
+                        </div>
+                        <div class="col-sm-6">
+                          <label class="control-label">Apellidos</label>
+                          <input type="text" [value]="usuario.apellidos" placeholder="Ingresa tus apellidos" formControlName="apellidos" class="form-control" />
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-sm-4">
+                          <label class="control-label">Género</label>
+                          <select formControlName="genero" [value]="usuario.genero" class="form-control">
+                            <option selected disabled [value]="null">Ingresa tu género</option>
+                            <option value="Masculino">Masculino</option>
+                            <option value="Femenino">Femenino</option>
+                            <option value="Otro">Otro</option>
+                            <option value="No definido">No definido</option>
+                          </select>
+                        </div>
+                        <div class="col-sm-4">
+                          <label class="control-label">Nacionalidad</label>
+                          <input type="text" [value]="usuario.nacionalidad" placeholder="Ingresa tu nacionalidad" formControlName="nacionalidad" class="form-control" />
+                        </div>
+                        <div class="col-sm-4">
+                          <label class="control-label">Fecha de
+                            nacimiento</label>
+                          <input type="date" [value]="usuario.fecha_nacimiento" formControlName="fecha_nacimiento" class="form-control" />
+                        </div>
+                      </div>
                     </div>
-                    <!-- /.card-header -->
-                    <div class="card-body">
-                        <div class="tab-content">
-                            <div class="active tab-pane" id="settings">
-                                <form
-                                    class="form-horizontal"
-                                    [formGroup]="form"
-                                    (submit)="submit()"
-                                >
-                                    <fieldset class="scheduler-border">
-                                        <legend class="scheduler-border">
-                                            Información personal
-                                        </legend>
-                                        <div class="form-group">
-                                            <div class="row">
-                                                <div class="col-sm-12">
-                                                    <label class="control-label"
-                                                        >RUT</label
-                                                    >
-                                                    <input
-                                                        type="text"
-                                                        formControlName="rut"
-                                                        class="form-control"
-                                                    />
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-sm-4">
-                                                    <label class="control-label"
-                                                        >Nombre</label
-                                                    >
-                                                    <input
-                                                        type="text"
-                                                        formControlName="nombre"
-                                                        class="form-control"
-                                                    />
-                                                </div>
-                                                <div class="col-sm-4">
-                                                    <label class="control-label"
-                                                        >Apellido Paterno</label
-                                                    >
-                                                    <input
-                                                        type="text"
-                                                        formControlName="apellidoPaterno"
-                                                        class="form-control"
-                                                    />
-                                                </div>
-                                                <div class="col-sm-4">
-                                                    <label class="control-label"
-                                                        >Apellido Materno</label
-                                                    >
-                                                    <input
-                                                        type="text"
-                                                        formControlName="apellidoMaterno"
-                                                        class="form-control"
-                                                    />
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-sm-4">
-                                                    <label class="control-label"
-                                                        >Género</label
-                                                    >
-                                                    <input
-                                                        type="text"
-                                                        formControlName="genero"
-                                                        class="form-control"
-                                                    />
-                                                </div>
-                                                <div class="col-sm-4">
-                                                    <label class="control-label"
-                                                        >Nacionalidad</label
-                                                    >
-                                                    <input
-                                                        type="text"
-                                                        formControlName="nacionalidad"
-                                                        class="form-control"
-                                                    />
-                                                </div>
-                                                <div class="col-sm-4">
-                                                    <label class="control-label"
-                                                        >Fecha de
-                                                        nacimiento</label
-                                                    >
-                                                    <input
-                                                        type="text"
-                                                        formControlName="fechaNacimiento"
-                                                        class="form-control"
-                                                    />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </fieldset>
+                  </fieldset>
 
-                                    <fieldset class="scheduler-border">
-                                        <legend class="scheduler-border">
-                                            Ubicación
-                                        </legend>
-                                        <div class="form-group">
-                                            <div class="row">
-                                                <div class="col-sm-6">
-                                                    <label class="control-label"
-                                                        >Ciudad</label
-                                                    >
-                                                    <input
-                                                        type="text"
-                                                        formControlName="ciudad"
-                                                        class="form-control"
-                                                    />
-                                                </div>
-                                                <div class="col-sm-6">
-                                                    <label class="control-label"
-                                                        >Dirección</label
-                                                    >
-                                                    <input
-                                                        type="text"
-                                                        formControlName="direccion"
-                                                        class="form-control"
-                                                    />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </fieldset>
-                                    <fieldset class="scheduler-border">
-                                        <legend class="scheduler-border">
-                                            Contacto
-                                        </legend>
-                                        <div class="form-group">
-                                            <div class="row">
-                                                <div class="col-sm-6">
-                                                    <label class="control-label"
-                                                        >Celular</label
-                                                    >
-                                                    <input
-                                                        type="text"
-                                                        formControlName="celular"
-                                                        class="form-control"
-                                                    />
-                                                </div>
-                                                <div class="col-sm-6">
-                                                    <label class="control-label"
-                                                        >Correo</label
-                                                    >
-                                                    <input
-                                                        type="email"
-                                                        formControlName="correo"
-                                                        class="form-control"
-                                                    />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </fieldset>
+                  <fieldset class="scheduler-border">
+                    <legend class="scheduler-border">
+                      Ubicación
+                    </legend>
+                    <div class="form-group">
+                      <div class="row">
+                        <div class="col-sm-6">
+                          <label class="control-label">Ciudad</label>
+                          <input type="text" [value]="usuario.ciudad" placeholder="Ingresa tu ciudad" formControlName="ciudad" class="form-control" />
+                        </div>
+                        <div class="col-sm-6">
+                          <label class="control-label">Dirección</label>
+                          <input type="text" [value]="usuario.direccion" placeholder="Ingresa tu dirección" formControlName="direccion" class="form-control" />
+                        </div>
+                      </div>
+                    </div>
+                  </fieldset>
+                  <fieldset class="scheduler-border">
+                    <legend class="scheduler-border">
+                      Contacto
+                    </legend>
+                    <div class="form-group">
+                      <div class="row">
+                        <div class="col-sm-6">
+                          <label class="control-label">Celular</label>
+                          <input type="text" [value]="usuario.telefono" placeholder="Ingresa tu celular" formControlName="celular" class="form-control" />
+                        </div>
+                        <div class="col-sm-6">
+                          <label class="control-label">Correo</label>
+                          <input type="email" [value]="usuario.email"  placeholder="Ingresa tu email" formControlName="email" class="form-control" />
+                        </div>
+                      </div>
+                    </div>
+                  </fieldset>
 
-                                    <div class="form-group">
-                                        <div class="col-sm-offset-2 col-sm-10">
-                                            <button
-                                                [disabled]="!form.valid"
-                                                type="submit"
-                                                class="btn btn-success"
-                                            >
-                                                Actualizar
-                                            </button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
+                  <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                      <button [disabled]="!form.valid" type="submit" class="btn btn-success">
+                        Actualizar
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
 
-                            <div class="tab-pane" id="familia">
+              <div class="tab-pane" id="familia">
 
-                                <fieldset class="scheduler-border">
-                                    <legend class="scheduler-border">
-                                        Miembros de la familia
-                                    </legend>
-                                    <table class="table table-striped">
-                                        <thead>
-                                            <tr>
-                                                <th>RUT</th>
-                                                <th>Nombre</th>
-                                                <th>Apellido paterno</th>
-                                                <th>Apellido materno</th>
-                                                <th>Correo</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr *ngFor="let miembro of familia">
-                                                <td>{{ miembro.rut }}</td>
-                                                <td>
-                                                    {{ miembro.nombre | titlecase }}
-                                                </td>
-                                                <td>
-                                                    {{
+                <fieldset class="scheduler-border">
+                  <legend class="scheduler-border">
+                    Miembros de la familia
+                  </legend>
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th>RUT</th>
+                        <th>Nombre</th>
+                        <th>Apellido paterno</th>
+                        <th>Apellido materno</th>
+                        <th>Correo</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let miembro of familia">
+                        <td>{{ miembro.rut }}</td>
+                        <td>
+                          {{ miembro.nombre | titlecase }}
+                        </td>
+                        <td>
+                          {{
                                                         miembro.apellidoPaterno
                                                             | titlecase
                                                     }}
-                                                </td>
-                                                <td>
-                                                    {{
+                        </td>
+                        <td>
+                          {{
                                                         miembro.apellidoMaterno
                                                             | titlecase
                                                     }}
-                                                </td>
-                                                <td>
-                                                    {{ miembro.correo | titlecase }}
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-    
+                        </td>
+                        <td>
+                          {{ miembro.correo | titlecase }}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
 
-                                </fieldset>
 
-                                <fieldset class="scheduler-border">
-                                    <legend class="scheduler-border">
-                                        Agregar miembro de la familia
-                                    </legend>
-                            
-                                    <form
-                                    [formGroup]="familiaForm"
-                                    (submit)="agregarMiembro()"
-                                >
+                </fieldset>
 
-                                <div class="form-group">
-                                    <label for="rut">RUT</label>
-                                    <input
-                                        type="text"
-                                        formControlName="rut"
-                                        class="form-control"
-                                    />
-                                </div>
+                <fieldset class="scheduler-border">
+                  <legend class="scheduler-border">
+                    Agregar miembro de la familia
+                  </legend>
 
-                                    <div class="row">
-                                        <div class="col-sm-4">
-                                            <label class="control-label"
-                                                >Nombre</label
-                                            >
-                                            <input
-                                                type="text"
-                                                formControlName="nombre"
-                                                class="form-control"
-                                            />
-                                        </div>
-                                        <div class="col-sm-4">
-                                            <label class="control-label"
-                                                >Apellido Paterno</label
-                                            >
-                                            <input
-                                                type="text"
-                                                formControlName="apellidoPaterno"
-                                                class="form-control"
-                                            />
-                                        </div>
-                                        <div class="col-sm-4">
-                                            <label class="control-label"
-                                                >Apellido Materno</label
-                                            >
-                                            <input
-                                                type="text"
-                                                formControlName="apellidoMaterno"
-                                                class="form-control"
-                                            />
-                                        </div>
-                                    </div>
+                  <form [formGroup]="familiaForm" (submit)="agregarMiembro()">
 
-                                  
-                                    <div class="form-group">
-                                        <label for="correo">Correo</label>
-                                        <input
-                                            type="email"
-                                            formControlName="correo"
-                                            class="form-control"
-                                        />
-                                    </div>
-                                    <button
-                                        [disabled]="!familiaForm.valid"
-                                        type="submit"
-                                        class="btn btn-primary"
-                                    >
-                                        Agregar
-                                    </button>
-                                </form>
-                                </fieldset>
-                           
-                            </div>
-                        </div>
-                        <!-- /.tab-content -->
+                    <div class="form-group">
+                      <label for="rut">RUT</label>
+                      <input type="text" formControlName="rut" class="form-control" />
                     </div>
-                    <!-- /.card-body -->
-                </div>
-                <!-- /.nav-tabs-custom -->
+
+                    <div class="row">
+                      <div class="col-sm-4">
+                        <label class="control-label">Nombre</label>
+                        <input type="text" formControlName="nombre" class="form-control" />
+                      </div>
+                      <div class="col-sm-4">
+                        <label class="control-label">Apellido Paterno</label>
+                        <input type="text" formControlName="apellidoPaterno" class="form-control" />
+                      </div>
+                      <div class="col-sm-4">
+                        <label class="control-label">Apellido Materno</label>
+                        <input type="text" formControlName="apellidoMaterno" class="form-control" />
+                      </div>
+                    </div>
+
+
+                    <div class="form-group">
+                      <label for="correo">Correo</label>
+                      <input type="email" formControlName="correo" class="form-control" />
+                    </div>
+                    <button [disabled]="!familiaForm.valid" type="submit" class="btn btn-primary">
+                      Agregar
+                    </button>
+                  </form>
+                </fieldset>
+
+              </div>
             </div>
-            <!-- /.col -->
+            <!-- /.tab-content -->
+          </div>
+          <!-- /.card-body -->
         </div>
-        <!-- /.row -->
+        <!-- /.nav-tabs-custom -->
+      </div>
+      <!-- /.col -->
     </div>
-    <!-- /.container-fluid -->
+    <!-- /.row -->
+  </div>
+  <!-- /.container-fluid -->
 </section>
+
+<ngx-loading [show]="loading"></ngx-loading>

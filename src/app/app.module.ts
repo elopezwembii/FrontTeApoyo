@@ -53,6 +53,12 @@ import { GraficoDonaMayoresGastosComponent } from './components/grafico-dona-may
 import { AnalisisComponent } from './pages/analisis/analisis.component';
 import { CrudBienComponent } from './components/crud-bien/crud-bien.component';
 import { ModalAnalisisComponent } from './components/modal-analisis/modal-analisis.component';
+import { GestionUsuariosComponent } from './pages/gestion-usuarios/gestion-usuarios.component';
+import { GestionEmpresaComponent } from './pages/gestion-empresa/gestion-empresa.component';
+import { GestionColaboradorComponent } from './pages/gestion-colaborador/gestion-colaborador.component';
+import { DataTablesModule } from "angular-datatables";
+import { ModalUsuarioComponent } from './components/modal-usuario/modal-usuario.component';
+import { ModalEmpresaComponent } from './components/modal-empresa/modal-empresa.component';
 
 
 defineCustomElements();
@@ -97,7 +103,12 @@ registerLocaleData(localeEs);
         GraficoDonaMayoresGastosComponent,
         AnalisisComponent,
         CrudBienComponent,
-        ModalAnalisisComponent
+        ModalAnalisisComponent,
+        GestionUsuariosComponent,
+        GestionEmpresaComponent,
+        GestionColaboradorComponent,
+        ModalUsuarioComponent,
+        ModalEmpresaComponent
 
     ],
     imports: [
@@ -109,6 +120,7 @@ registerLocaleData(localeEs);
             tertiaryColour: '#2c939e'
         }),
         BrowserModule,
+        DataTablesModule,
         StoreModule.forRoot({ui: uiReducer}),
         HttpClientModule,
         AppRoutingModule,

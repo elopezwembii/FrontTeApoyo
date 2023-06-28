@@ -14,6 +14,7 @@ import {forkJoin} from 'rxjs';
 import {Gasto} from '@/interfaces/gastos';
 import {FormBuilder, Validators} from '@angular/forms';
 import {NavigationEnd, Router} from '@angular/router';
+import {ShepherdService} from 'angular-shepherd';
 
 @Component({
     selector: 'app-dashboard',
@@ -34,6 +35,7 @@ export class DashboardComponent implements OnInit {
     sumaGH: number = 0;
     presupuesto: Presupuesto = {} as Presupuesto;
     loading: boolean = false;
+    loading2: boolean = false;
     categorias: Categoria[];
     topGastos: Array<any> = [];
     public tiposAhorro: TipoAhorro[] = [
@@ -129,7 +131,8 @@ export class DashboardComponent implements OnInit {
         private fb: FormBuilder,
         private toastr: ToastrService,
         private router: Router,
-        private renderer: Renderer2
+        private renderer: Renderer2,
+        private shepherdService: ShepherdService
     ) {
         this.router.events.subscribe((evt) => {
             if (evt instanceof NavigationEnd) {
@@ -144,6 +147,52 @@ export class DashboardComponent implements OnInit {
             this.windowSize = window.innerWidth;
         });
     }
+
+    defaultStep = [
+        {
+            id: 'intro',
+            attachTo: {
+                element: '.first-element',
+                on: 'bottom'
+            },
+            buttons: [
+                {
+                    classes: 'shepherd-button-secondary',
+                    text: 'Exit',
+                    type: 'cancel'
+                },
+                {
+                    classes: 'shepherd-button-primary',
+                    text: 'Back',
+                    type: 'back'
+                },
+                {
+                    classes: 'shepherd-button-primary',
+                    text: 'Next',
+                    type: 'next'
+                }
+            ],
+            cancelIcon: {
+                enabled: true
+            },
+            classes: 'custom-class-name-1 custom-class-name-2',
+            highlightClass: 'highlight',
+            scrollTo: false,
+            title: 'Welcome to Angular-Shepherd!',
+            text: [
+                'Angular-Shepherd is a JavaScript library for guiding users through your Angular app.'
+            ],
+            when: {
+                show: () => {
+                    console.log('show step');
+                },
+                hide: () => {
+                    console.log('hide step');
+                }
+            }
+        }
+    ];
+
     async ngOnInit() {
         this.loading = true;
         this.objectTipo = [
@@ -240,6 +289,451 @@ export class DashboardComponent implements OnInit {
         this.obtenerAhorros();
         this.obtenerGastoHormiga();
         this.obtenerUsuario();
+        //ejecutar Tour
+        this.shepherdService.defaultStepOptions = {
+            scrollTo: false,
+            cancelIcon: {
+                enabled: false
+            }
+        };
+        this.shepherdService.modal = true;
+        this.shepherdService.confirmCancel = true;
+        this.shepherdService.addSteps([
+            {
+                id: 'intro1',
+                attachTo: {
+                    element: '.nombre',
+                    on: 'bottom'
+                },
+                buttons: [
+                    {
+                        classes: 'btn btn-light',
+                        text: 'Atras',
+                        disabled() {
+                            return true;
+                        }
+                    },
+                    {
+                        classes: 'shepherd-button-primary',
+                        text: 'Siguiente',
+                        action() {
+                            this.next();
+                        }
+                    }
+                ],
+                cancelIcon: {
+                    enabled: false
+                },
+                title: '!Bienvenido¡ Nos da gusto verte por acá...',
+                classes: 'text-principal',
+                text: [
+                    'En este primer paso, te mostraremos cómo explorar el menú principal.'
+                ],
+                arrow: true
+            },
+            {
+                id: 'intro2',
+                attachTo: {
+                    element: '.nombre',
+                    on: 'bottom'
+                },
+                buttons: [
+                    {
+                        classes: 'shepherd-button-primary',
+                        text: 'Atras',
+                        action() {
+                            return this.back();
+                        }
+                    },
+                    {
+                        classes: 'shepherd-button-primary',
+                        text: 'Siguiente',
+                        action() {
+                            return this.next();
+                        }
+                    }
+                ],
+                cancelIcon: {
+                    enabled: false
+                },
+                title: '!Bienvenido¡ Nos da gusto verte por acá...',
+                classes: 'text-principal',
+                text: [
+                    'El menú principal se encuentra en la parte izquierda de la pantalla y te proporciona acceso a las diferentes secciones y funcionalidades de la aplicación.'
+                ],
+                arrow: true
+            },
+            {
+                id: 'intro3',
+                attachTo: {
+                    element: '.nombre',
+                    on: 'bottom'
+                },
+                buttons: [
+                    {
+                        classes: 'shepherd-button-primary',
+                        text: 'Atras',
+                        action() {
+                            return this.back();
+                        }
+                    },
+                    {
+                        classes: 'shepherd-button-primary',
+                        text: 'Siguiente',
+                        action() {
+                            return this.next();
+                        }
+                    }
+                ],
+                cancelIcon: {
+                    enabled: false
+                },
+                title: '!Bienvenido¡ Nos da gusto verte por acá...',
+                classes: 'text-principal',
+                text: [
+                    'Tómate tu tiempo para familiarizarte con las opciones del menú y cómo se organizan.'
+                ],
+                arrow: true
+            },
+            {
+                id: 'menu1',
+                attachTo: {
+                    element: '.main-sidebar',
+                    on: 'right'
+                },
+                buttons: [
+                    {
+                        classes: 'shepherd-button-primary',
+                        text: 'Atras',
+                        action() {
+                            return this.back();
+                        }
+                    },
+                    {
+                        classes: 'shepherd-button-primary',
+                        text: 'Siguiente',
+                        action() {
+                            return this.next();
+                        }
+                    }
+                ],
+                cancelIcon: {
+                    enabled: false
+                },
+                title: 'Tour por las opciones del menú',
+                classes: 'text-principal',
+                text: [
+                    'Desde las distintas opciones de este menú puedes acceder a las características del sistema.'
+                ],
+                arrow: true
+            },
+            {
+                id: 'menu2',
+                attachTo: {
+                    element: '.menu-item0',
+                    on: 'right'
+                },
+                buttons: [
+                    {
+                        classes: 'shepherd-button-primary',
+                        text: 'Atras',
+                        action() {
+                            return this.back();
+                        }
+                    },
+                    {
+                        classes: 'shepherd-button-primary',
+                        text: 'Siguiente',
+                        action() {
+                            return this.next();
+                        }
+                    }
+                ],
+                cancelIcon: {
+                    enabled: false
+                },
+                title: 'Tour por las opciones del menú',
+                classes: 'text-principal',
+                text: [
+                    'Desde esta opción puedes volver al panel principal y ver un resumen de tus ingresos, gastos y ahorros.'
+                ],
+                arrow: true
+            },
+            {
+                id: 'menu3',
+                attachTo: {
+                    element: '.menu-item1',
+                    on: 'right'
+                },
+                buttons: [
+                    {
+                        classes: 'shepherd-button-primary',
+                        text: 'Atras',
+                        action() {
+                            return this.back();
+                        }
+                    },
+                    {
+                        classes: 'shepherd-button-primary',
+                        text: 'Siguiente',
+                        action() {
+                            return this.next();
+                        }
+                    }
+                ],
+                cancelIcon: {
+                    enabled: false
+                },
+                title: 'Tour por las opciones del menú',
+                classes: 'text-principal',
+                text: [
+                    'Desde esta opción puedes registrar tus ingresos del mes en actual y proyectar tus ingresos fijos.'
+                ],
+                arrow: true
+            },
+            {
+                id: 'menu4',
+                attachTo: {
+                    element: '.menu-item2',
+                    on: 'right'
+                },
+                buttons: [
+                    {
+                        classes: 'shepherd-button-primary',
+                        text: 'Atras',
+                        action() {
+                            return this.back();
+                        }
+                    },
+                    {
+                        classes: 'shepherd-button-primary',
+                        text: 'Siguiente',
+                        action() {
+                            return this.next();
+                        }
+                    }
+                ],
+                cancelIcon: {
+                    enabled: false
+                },
+                title: 'Tour por las opciones del menú',
+                classes: 'text-principal',
+                text: [
+                    'Desde esta opción puedes ordenar tus gastos en un presupuesto mensual para no sobrepasarte.'
+                ],
+                arrow: true
+            },
+            {
+                id: 'menu5',
+                attachTo: {
+                    element: '.menu-item3',
+                    on: 'right'
+                },
+                buttons: [
+                    {
+                        classes: 'shepherd-button-primary',
+                        text: 'Atras',
+                        action() {
+                            return this.back();
+                        }
+                    },
+                    {
+                        classes: 'shepherd-button-primary',
+                        text: 'Siguiente',
+                        action() {
+                            return this.next();
+                        }
+                    }
+                ],
+                cancelIcon: {
+                    enabled: false
+                },
+                title: 'Tour por las opciones del menú',
+                classes: 'text-principal',
+                text: [
+                    'Desde esta opción puedes registrar tus gastos ordenados por categorías.'
+                ],
+                arrow: true
+            },
+            {
+                id: 'menu5',
+                attachTo: {
+                    element: '.menu-item4',
+                    on: 'right'
+                },
+                buttons: [
+                    {
+                        classes: 'shepherd-button-primary',
+                        text: 'Atras',
+                        action() {
+                            return this.back();
+                        }
+                    },
+                    {
+                        classes: 'shepherd-button-primary',
+                        text: 'Siguiente',
+                        action() {
+                            return this.next();
+                        }
+                    }
+                ],
+                cancelIcon: {
+                    enabled: false
+                },
+                title: 'Tour por las opciones del menú',
+                classes: 'text-principal',
+                text: [
+                    'Desde esta opción puedes registrar tu deuda financiera, tus tarjetas de crédito y tus cuentas corrientes para realizar un análisis de tu situación financiera.'
+                ],
+                arrow: true
+            },
+            {
+                id: 'menu6',
+                attachTo: {
+                    element: '.menu-item5',
+                    on: 'right'
+                },
+                buttons: [
+                    {
+                        classes: 'shepherd-button-primary',
+                        text: 'Atras',
+                        action() {
+                            return this.back();
+                        }
+                    },
+                    {
+                        classes: 'shepherd-button-primary',
+                        text: 'Siguiente',
+                        action() {
+                            return this.next();
+                        }
+                    }
+                ],
+                cancelIcon: {
+                    enabled: false
+                },
+                title: 'Tour por las opciones del menú',
+                classes: 'text-principal',
+                text: [
+                    'Desde esta opción puedes programar una meta de ahorro para saber cuanto debes ahorrar mensualmente.'
+                ],
+                arrow: true
+            },
+            {
+                id: 'menu7',
+                attachTo: {
+                    element: '.menu-item6',
+                    on: 'right'
+                },
+                buttons: [
+                    {
+                        classes: 'shepherd-button-primary',
+                        text: 'Atras',
+                        action() {
+                            return this.back();
+                        }
+                    },
+                    {
+                        classes: 'shepherd-button-primary',
+                        text: 'Siguiente',
+                        action() {
+                            return this.next();
+                        }
+                    }
+                ],
+                cancelIcon: {
+                    enabled: false
+                },
+                title: 'Tour por las opciones del menú',
+                classes: 'text-principal',
+                text: [
+                    'Desde esta opción puedes visualizar tus indicadores financieros de corto y largo plazo. Además, puedes obtener una recomendación para mejorar tus indicadores.'
+                ],
+                arrow: true
+            },
+            {
+                id: 'menu8',
+                attachTo: {
+                    element: '.menu-item7',
+                    on: 'right'
+                },
+                /* when: {
+                  show: () => {
+                    this.loading2 = false;
+                  },
+                  hide: () => {
+                    console.log('hide step');
+                  }
+                }, */
+                buttons: [
+                    {
+                        classes: 'shepherd-button-primary',
+                        text: 'Atras',
+                        action() {
+                            return this.back();
+                        }
+                    },
+                    {
+                        classes: 'shepherd-button-primary',
+                        text: 'Siguiente',
+                        action() {
+                            return this.next();
+                        }
+                    }
+                ],
+                cancelIcon: {
+                    enabled: false
+                },
+                title: 'Tour por las opciones del menú',
+                classes: 'text-principal',
+                text: [
+                    'Desde esta opción puedes simular un crédito bancario y visualizar cómo afecta tus indicadores en el futuro.'
+                ],
+                arrow: true
+            },
+            {
+                id: 'menu9',
+                attachTo: {
+                    element: '.menu-item8',
+                    on: 'right'
+                },
+                when: {
+                  show: () => {
+                    this.loading2 = false;
+                  },
+                  hide: () => {
+                    this.loading2 = false;
+                  },
+                },
+                buttons: [
+                    {
+                        classes: 'shepherd-button-primary',
+                        text: 'Atras',
+                        action() {
+                            return this.back();
+                        }
+                    },
+                    {
+                        classes: 'shepherd-button-primary',
+                        text: 'Siguiente',
+                        action() {
+                            return this.next();
+                        }
+                    }
+                ],
+                cancelIcon: {
+                    enabled: false
+                },
+                title: 'Tour por las opciones del menú',
+                classes: 'text-principal',
+                text: [
+                    'Desde esta opción puedes acceder a nuestras publicaciones y tips sobre finanzas personales.'
+                ],
+                arrow: true
+            }
+        ]);
+        this.loading2 = true;
+        this.shepherdService.start();
     }
 
     dias: number[];
@@ -494,8 +988,8 @@ export class DashboardComponent implements OnInit {
                     this.sumaGH += gh.monto;
                 });
                 this.gastosHormigas = this.gastosHormigas.sort((p1, p2) =>
-                p1.monto < p2.monto ? 1 : p1.monto > p2.monto ? -1 : 0
-            );
+                    p1.monto < p2.monto ? 1 : p1.monto > p2.monto ? -1 : 0
+                );
                 this.sumaTotalReal = sumaTotalReal;
                 gastos = gastos.reverse();
                 if (gastos.length > 3) gastos.length = 3;
@@ -780,7 +1274,7 @@ export class DashboardComponent implements OnInit {
     }
 
     obtenerUsuario() {
-        this.usuario = JSON.parse(this.appService.user).user;
+        this.usuario = JSON.parse(sessionStorage.getItem('user'));
         this.ahorroService.obtenerNivelAhorroUsuario().subscribe({
             next: ({
                 posibleAhorro,

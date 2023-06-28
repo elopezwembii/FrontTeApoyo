@@ -1,7 +1,8 @@
 import {Ingreso} from '@/interfaces/ingresos';
 import {Component, OnInit, ViewChild} from '@angular/core';
-import { ModalAnalisisComponent } from '@components/modal-analisis/modal-analisis.component';
+import {ModalAnalisisComponent} from '@components/modal-analisis/modal-analisis.component';
 import {Tarjeta} from '@pages/deudas/deudas.component';
+import {BienService} from '@services/bien.service';
 import {DeudasService} from '@services/deudas.service';
 import {IngresosService} from '@services/ingresos/ingresos.service';
 
@@ -22,8 +23,11 @@ export class AnalisisComponent implements OnInit {
     porcentajeCarga: number = -1;
     porcentajeCargaLarga: number = -1;
     porcentajeTotal: number = -1;
+    apalancamientoCortoTarjetas: number = 0;
     apalancamientoCorto: number = 0;
     apalancamientoLargo: number = 0;
+    relacionPat: number = 0;
+    sumaValorados: number = 0;
     @ViewChild('modalAnalisis') modalAnalisis: ModalAnalisisComponent;
 
     vecesRentaCorto: number = -1;
@@ -31,20 +35,29 @@ export class AnalisisComponent implements OnInit {
 
     constructor(
         private ingresoService: IngresosService,
-        private deudaService: DeudasService
-
+        private deudaService: DeudasService,
+        private bienService: BienService
     ) {}
 
     ngOnInit() {
         this.obtenerData();
     }
 
-    openModal(tipo:number, subtipo:number,indicador:number) {
-        this.modalAnalisis.openModal(tipo,subtipo,indicador);
+    openModal(tipo: number, subtipo: number, indicador: number) {
+        this.modalAnalisis.openModal(tipo, subtipo, indicador);
     }
 
     async obtenerData() {
         this.loading = true;
+        this.tarjetas = 0;
+        this.creditos = 0;
+        this.hipotecarios = 0;
+        this.ingresos = 0;
+        this.apalancamientoCorto = 0;
+        this.apalancamientoLargo = 0;
+        this.apalancamientoCortoTarjetas = 0;
+        this.relacionPat = 0;
+        this.sumaValorados = 0;
         //obtener ingresos formales
         (
             await this.ingresoService.getIngreso(
@@ -63,32 +76,34 @@ export class AnalisisComponent implements OnInit {
                         this.ingresos += ingreso.monto_real;
                     }
                 });
-                this.cargaCorto = [{name: 'Ingresos', value: this.ingresos}];
-                this.cargaLargo = [{name: 'Ingresos', value: this.ingresos}];
+                this.cargaLargo = [];
             },
-            error: (error: any) => {
-                console.log(error);
-            }
+            error: (error: any) => {}
         });
         //obtener tarjetas
         (await this.deudaService.getTarjeta()).subscribe({
             next: ({tarjeta}: {tarjeta: Tarjeta[]}) => {
                 tarjeta.forEach((t) => {
                     this.tarjetas += (t.total * 3) / 100;
-                    this.apalancamientoCorto += t.total;
+                    this.apalancamientoCortoTarjetas += t.total;
                 });
-                this.cargaCorto = [
-                    ...this.cargaCorto,
-                    {name: 'Tarjetas', value: this.tarjetas}
-                ];
+            },
+            error: (error: any) => {}
+        });
+        //obtener bienes
+        (await this.bienService.getBien()).subscribe({
+            next: ({deuda}: {deuda: any}) => {
+                deuda.forEach((bien) => {
+                    this.sumaValorados += bien.valorado;
+                });
             },
             error: (error: any) => {}
         });
         //obtener deudas
         (await this.deudaService.getDeuda()).subscribe({
             next: ({deuda}: {deuda: any}) => {
-                console.log(deuda);
                 deuda.forEach((d) => {
+                    console.log(d);
                     if (d.id_tipo_deuda === 2) {
                         this.hipotecarios += d.pago_mensual;
                         this.apalancamientoLargo += d.deuda_pendiente;
@@ -98,16 +113,30 @@ export class AnalisisComponent implements OnInit {
                     }
                 });
                 this.cargaCorto = [
-                    ...this.cargaCorto,
+                    {
+                        name: 'Ingresos',
+                        value: this.ingresos - this.tarjetas - this.creditos
+                    },
+                    {name: 'Líneas y Tarjetas', value: this.tarjetas},
                     {name: 'Créditos a corto plazo', value: this.creditos}
                 ];
                 this.cargaLargo = [
-                    ...this.cargaLargo,
+                    {
+                        name: 'Ingresos',
+                        value: this.ingresos - this.hipotecarios
+                    },
                     {name: 'Créditos hipotecarios', value: this.hipotecarios}
                 ];
                 this.cargaTotal = [
-                    {name: 'Ingresos', value: this.ingresos},
-                    {name: 'Tarjetas', value: this.tarjetas},
+                    {
+                        name: 'Ingresos',
+                        value:
+                            this.ingresos -
+                            this.tarjetas -
+                            this.creditos -
+                            this.hipotecarios
+                    },
+                    {name: 'Líneas y Tarjetas', value: this.tarjetas},
                     {name: 'Créditos a corto plazo', value: this.creditos},
                     {name: 'Créditos hipotecarios', value: this.hipotecarios}
                 ];
@@ -123,9 +152,15 @@ export class AnalisisComponent implements OnInit {
                 this.ingresos) *
             100;
 
-        this.vecesRentaCorto = this.ingresos / this.apalancamientoCorto;
-        this.vecesRentaLargo = this.ingresos / this.apalancamientoLargo;
-
+        this.vecesRentaCorto = this.apalancamientoCorto / this.ingresos;
+        this.vecesRentaLargo = this.apalancamientoLargo / this.ingresos;
+        this.relacionPat =
+            this.sumaValorados -
+            (this.apalancamientoLargo + this.apalancamientoCorto);
+        console.log('relacion pat', this.relacionPat);
+        if (this.apalancamientoCorto === 0) {
+            this.vecesRentaCorto = 0;
+        }
         this.loading = false;
     }
 }

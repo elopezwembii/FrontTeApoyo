@@ -93,7 +93,6 @@ export class DeudasComponent implements OnInit {
 
     form = this.fb.group({
         id: [''],
-        costo_total: [, [Validators.required, Validators.min(0)]],
         deuda_pendiente: [, [Validators.required, Validators.min(0)]],
         cuotas_totales: [, [Validators.required, Validators.min(0)]],
         cuotas_pagadas: [, [Validators.required, Validators.min(0)]],
@@ -115,7 +114,6 @@ export class DeudasComponent implements OnInit {
         this.isEditing = !isAdd;
         if (this.isEditing) {
             this.form.patchValue({
-                costo_total: deuda.costo_total,
                 cuotas_pagadas: deuda.cuotas_pagadas,
                 cuotas_totales: deuda.cuotas_totales,
                 deuda_pendiente: deuda.deuda_pendiente,
@@ -210,7 +208,6 @@ export class DeudasComponent implements OnInit {
         this.loading = true;
         if (!this.isEditing) {
             const addDeuda = {
-                costo_total: this.form.value.costo_total!,
                 deuda_pendiente: this.form.value.deuda_pendiente!,
                 cuotas_totales: this.form.value.cuotas_totales!,
                 cuotas_pagadas: this.form.value.cuotas_pagadas!,
@@ -237,7 +234,6 @@ export class DeudasComponent implements OnInit {
         } else {
             const edit = {
                 id: this.form.value.id!,
-                costo_total: this.form.value.costo_total!,
                 deuda_pendiente: this.form.value.deuda_pendiente!,
                 cuotas_totales: this.form.value.cuotas_totales!,
                 cuotas_pagadas: this.form.value.cuotas_pagadas!,

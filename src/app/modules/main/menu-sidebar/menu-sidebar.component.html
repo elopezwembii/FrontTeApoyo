@@ -1,5 +1,9 @@
 <!-- Brand Logo -->
-<a [routerLink]="['/']" style="border-bottom: 0; padding: 1rem 0px 0px 0px;" class="brand-link text-center">
+<a
+    [routerLink]="['/']"
+    style="border-bottom: 0; padding: 1rem 0px 0px 0px"
+    class="brand-link text-center"
+>
     <pf-image
         src="assets/img/logo.png"
         alt="Logo Te-Apoyo"
@@ -9,7 +13,7 @@
 </a>
 
 <!-- Sidebar -->
-<div style="padding-right: 0;" class="sidebar">
+<div style="padding-right: 0" class="sidebar">
     <!-- Sidebar user (optional) -->
     <!-- <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
@@ -42,8 +46,11 @@
             role="menu"
             data-accordion="false"
         >
-                <app-menu-item *ngFor="let item of menu" [menuItem]="item"></app-menu-item>
-
+            <app-menu-item
+                *ngFor="let item of menu; let i = index"
+                [ngClass]="'menu-item' + i"
+                [menuItem]="item"
+            ></app-menu-item>
         </ul>
     </nav>
 </div>

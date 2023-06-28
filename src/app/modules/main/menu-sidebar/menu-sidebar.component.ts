@@ -47,13 +47,14 @@ export const MENU = [
     {
         name: 'Inicio',
         iconClasses: 'fas fa-home',
-        path: ['/']
-        //role: 'Administrativo'
+        path: ['/'],
+        role: 'Usuario'
     },
     {
         name: 'Mis Ingresos',
         iconClasses: 'fas fa-money-bill-wave',
-        path: ['/ingresos']
+        path: ['/ingresos'],
+        role: 'Usuario'
         /* children: [
             {
                 name: 'Sub Ruta',
@@ -65,43 +66,68 @@ export const MENU = [
     {
         name: 'Mi Presupuesto',
         iconClasses: 'fas fa-wallet',
-        path: ['/presupuesto']
+        path: ['/presupuesto'],
+        role: 'Usuario'
         //role: 'Administrativo',
     },
     {
         name: 'Mis Gastos / Egresos',
         iconClasses: 'fas fa-hand-holding-usd',
-        path: ['/gastos']
+        path: ['/gastos'],
+        role: 'Usuario'
     },
 
     {
         name: 'Mis Deudas',
         iconClasses: 'fas fa-credit-card',
-        path: ['/deudas']
+        path: ['/deudas'],
+        role: 'Usuario'
         //role: 'Administrativo',
     },
     {
         name: 'Mis Ahorros',
         iconClasses: 'fas fa-piggy-bank',
-        path: ['/ahorros']
+        path: ['/ahorros'],
+        role: 'Usuario'
         //role: 'Administrativo',
     },
     {
         name: 'Análisis Financiero',
         iconClasses: 'fas fa-chart-line',
-        path: ['/analisis']
+        path: ['/analisis'],
+        role: 'Usuario'
         //role: 'Administrativo',
     },
     {
         name: 'Simular Crédito',
         iconClasses: 'fas fa-money-check',
-        path: ['/simular']
+        path: ['/simular'],
+        role: 'Usuario'
         //role: 'Administrativo',
     },
     {
         name: 'Aprende',
         iconClasses: 'fas fa-graduation-cap',
-        path: ['/aprende']
+        path: ['/aprende'],
+        role: 'Usuario'
         //role: 'Administrativo',
+    },
+    {
+        name: 'Gestión usuarios',
+        iconClasses: 'fas fa-user',
+        path: ['/usuarios'],
+        role: 'Administrador',
+    },
+    {
+        name: 'Gestión empresas',
+        iconClasses: 'fas fa-building',
+        path: ['/empresas'],
+        role: 'Administrador',
+    },
+    {
+        name: 'Gestión colaboradores',
+        iconClasses: 'fas fa-code-branch',
+        path: ['/colaboradores'],
+        role: 'Administrativo Empresa',
     }
 ];

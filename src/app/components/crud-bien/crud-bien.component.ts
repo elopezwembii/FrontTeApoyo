@@ -22,6 +22,13 @@ export class CrudBienComponent implements OnInit {
         'Precio de Compraventa'
     ];
 
+    tipos_valorizacion = [
+        'Avalúo Fiscal',
+        'Precio de compraventa',
+        'Tasación',
+        'Valor promedio'
+    ];
+
     constructor(
         private fb: FormBuilder,
         private toastr: ToastrService,
@@ -89,7 +96,6 @@ export class CrudBienComponent implements OnInit {
                 valorado: this.form.value.valorado!,
                 tipo_valorizacion: this.form.value.tipo_valorizacion!,
                 tipo_bien: this.form.value.tipo_bien!
-
             };
             try {
                 const res = await this.bienService.agregarDeuda(addDeuda);

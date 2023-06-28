@@ -7,32 +7,62 @@ import {Component, Input, OnInit} from '@angular/core';
 })
 export class GraficoDonaComponent implements OnInit {
     @Input() data: any;
+    @Input() ingreso:number;
+    suma: number = 0;
     coloresPastel = [
-      '#BCEAF3', '#FFD48F', '#FFDAC1', '#E2F0CB', '#2C939E',
-      '#C7CEEA', '#FFA629', '#FFCDFD', '#E2F0CB', '#FFE2C0'
+        '#BCEAF3',
+        '#FFD48F',
+        '#FFDAC1',
+        '#E2F0CB',
+        '#2C939E',
+        '#C7CEEA',
+        '#FFA629',
+        '#FFCDFD',
+        '#E2F0CB',
+        '#FFE2C0'
     ];
     options: any = {
         backgroundColor: '#fff',
         tooltip: {
             trigger: 'item',
-            formatter: '{a} <br/>{b}: {c} ({d}%)'
+            formatter: (params: any) => {
+                console.log(params);
+                if (params.name !== 'Ingresos') {
+                    return (
+                        params.name +
+                        ': $ ' +
+                        params.value
+                            .toString()
+                            .replace(/\B(?=(\d{3})+(?!\d))/g, '.') +
+                        ' (' +
+                        params.percent +
+                        '%)'
+                    );
+                } else {
+                    return (
+                      params.name +
+                      ': $ ' +
+                      this.ingreso
+                          .toString()
+                          .replace(/\B(?=(\d{3})+(?!\d))/g, '.') +
+                      ' (' +
+                      params.percent +
+                      '%)'
+                    );
+                }
+            }
         },
         legend: {
-            orient: 'horizontal',
+            orient: 'horizontal'
         }
     };
 
     constructor() {}
 
-
-  ngOnInit() {
-
-  }
-
-
+    ngOnInit() {}
 
     ngOnChanges() {
-      console.log(this.data);
+        console.log(this.data);
         this.options = {
             ...this.options,
             color: this.coloresPastel,
@@ -51,13 +81,13 @@ export class GraficoDonaComponent implements OnInit {
                         }
                     },
                     label: {
-                      formatter: '{d}%',
-                      position: 'inside',
-                      fontSize: 15,
-                      color: '#fff',
-                      fontWeight: 'bold'
-                  },
-                  center: ['50%', '50%'],
+                        formatter: '{d}%',
+                        position: 'inside',
+                        fontSize: 15,
+                        color: '#fff',
+                        fontWeight: 'bold'
+                    },
+                    center: ['50%', '60%']
                 }
             ]
         };

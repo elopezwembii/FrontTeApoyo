@@ -63,6 +63,47 @@ export class PresupuestoComponent implements OnInit {
     public selectionMonth: number = new Date().getMonth();
     public selectionYear: number = new Date().getFullYear();
 
+    opcionesSelect2 = {
+        1: [
+            'Artículos para el hogar, Mascotas, Limpieza y mantenimiento, Gasto Común, Arriendo o dividendo, Asesora del hogar/niñera/cuidadora, Seguro al hogar, Otros hogar'
+        ],
+        2: ['Agua, Luz, Gas, Cable/Internet, Alarma, Telefonía'],
+        3: [
+            'Supermercado, Feria, Agua en botellón, Antojos (bebida agu caf snacks), Comida rápida, Gastos en delivery y propinas, Otros alimentos'
+        ],
+        4: [
+            'Juguetes y videojuegos, Suscripciones y apps, Bares, pubs, restaurantes, Espectáculos y eventos, Otros entretenimientos'
+        ],
+        5: [
+            'Perfumes y cosméticos, Salón de belleza/Barbería, Médico/Dentista, Gimnasio (mensual), Arriendo canchas (deporte), Farmacia, Cuidado personal/Terapias, Otros salud y belleza'
+        ],
+        6: [
+            'Mantenimiento y reparaciones, Autolavado, Transporte público, Gasolina, Taxi-Uber-Didi, Peajes/Autopistas, Estacionamiento diario, Estacionamiento mensual, Seguro, Otros auto y transporte'
+        ],
+        7: [
+            'Servicios legales/contables, Otros educación y trabajo, Colegiatura, Academias/Cuotas de curso, Artículos librería/escritorio, Transporte Escolar, Otros educación y trabajo'
+        ],
+        8: [
+            'Donaciones, Apoyo a familiares y amigos, Regalos, Otros regalos y ayuda'
+        ],
+        9: ['Hospedaje, Vuelos, Otros gastos de viajes'],
+        10: [
+            'Casas comerciales, Créditos de consumo, Crédito automotriz, Tarjeta de crédito, Línea de crédito, Otros pagos de créditos'
+        ],
+        11: [
+            'Calzado, Accesorios, Lavandería y tintorería, Ropa, Otros Ropa y Cazado'
+        ],
+        12: [
+            'Impuestos, Pago pensión de alimentos, Seguros de vida, Alcohol, Tabaco, Juegos de azar/Apuestas online'
+        ],
+        13: [
+            'Ali express/Shein, Grandes tiendas/Mercado libre, Otras compras online'
+        ],
+        14: [
+            'Ahorro celebraciones, Ahorro cumpleaños, Ahorro Educación, Ahorro fiestas patrias, Ahorro fin de semana largo, Ahorro navidad/año nuevo, Ahorro viajes/vacaciones, Fondo de emergencia, Ahorro general (varios), Inversiones y Acciones'
+        ]
+    };
+
     public month: string = this.arrayMonth[this.selectionMonth];
     public year: number = this.selectionYear;
 

@@ -3,7 +3,7 @@
         <div class="row mb-2">
             <div class="col-sm-6">
                 <h1 class="m-0 text-principal">
-                    <b> ¡Hola {{ usuario.nombres | titlecase }}!</b>
+                    <b class="nombre"> ¡Hola {{ usuario.user.nombres | titlecase }}!</b>
                 </h1>
             </div>
             <!-- /.col -->
@@ -22,7 +22,7 @@
     <!-- /.container-fluid -->
 </div>
 
-<div class="container-fluid">
+<div class="container-fluid" *ngIf="usuario.rol.nombre === 'Usuario'">
     <div class="row">
         <!-- Fila 1 -->
         <div class="col-md-12 mb-3">
@@ -1017,3 +1017,4 @@
     </div>
 </div>
 <ngx-loading [show]="loading"></ngx-loading>
+<ngx-loading [show]="loading2"></ngx-loading>
