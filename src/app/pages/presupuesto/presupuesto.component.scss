@@ -5,12 +5,19 @@
 }
 
 .custom-box {
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    height: 50px;
-    align-items: center;
-    justify-content: center;
+    /* Estilos generales que aplican a todas las pantallas */
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16); 
     padding: 10px;
-    border-radius: 10px;
+}
+
+/* Estilos específicos para pantallas pequeñas (móviles) */
+@media (max-width: 600px) {
+    .custom-box {
+        flex-direction: column; /* Cambia la orientación a vertical para móviles */
+    }
 }
 
 .custom-text-gray {

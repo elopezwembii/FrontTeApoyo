@@ -49,36 +49,26 @@
             </ul>
             <!-- Tabla editable -->
             <div class="text-center">
-              <h5>
-                <span class="custom-box m-3">
-                  <span class="custom-text-gray mx-3">Total ingresos:
-                  </span>
-                  <span class="custom-text-bold text-success">$ </span><span class="custom-text-money text-success">{{
-                                            sumaTotalReal | currency: 'CLP':''
-                                        }}</span>
-                  <span class="custom-text-gray mx-3">Total presupuesto:
-                  </span>
-                  <span class="custom-text-bold text-danger">$ </span><span class="custom-text-money text-danger">{{
-                                            presupuestoMonto
-                                                | currency: 'CLP':''
-                                        }}</span>
-                  <span class="custom-text-gray mx-3">Disponible:
-                  </span>
-                  <span [class]="
-                                            sumaTotalReal - presupuestoMonto > 0
-                                                ? 'custom-text-bold text-principal'
-                                                : 'custom-text-bold text-danger'
-                                        ">$ </span><span [class]="
-                                            sumaTotalReal - presupuestoMonto > 0
-                                                ? 'custom-text-money text-principal'
-                                                : 'custom-text-money text-danger'
-                                        ">{{
-                                            sumaTotalReal - presupuestoMonto
-                                                | currency: 'CLP':''
-                                        }}</span>
-                </span>
-              </h5>
+              <div class="custom-box">
+                <div class="">
+                  <span class="custom-text-gray mx-3">Total ingresos:</span>
+                  <span class="custom-text-bold text-success">$ </span>
+                  <span class="custom-text-money text-success">{{sumaTotalReal | currency: 'CLP':''}}</span>
+                </div>
+                <div class="">
+                  <span class="custom-text-gray mx-3">Total presupuesto:</span>
+                  <span class="custom-text-bold text-danger">$ </span>
+                  <span class="custom-text-money text-danger">{{presupuestoMonto | currency: 'CLP':''}}</span>
+                </div>
+                <div class="">
+                  <span class="custom-text-gray mx-3">Disponible:</span>
+                  <span [class]="sumaTotalReal - presupuestoMonto > 0 ? 'custom-text-bold text-principal' : 'custom-text-bold text-danger'">$ </span>
+                  <span [class]="sumaTotalReal - presupuestoMonto > 0 ? 'custom-text-money text-principal' : 'custom-text-money text-danger'">{{sumaTotalReal - presupuestoMonto | currency: 'CLP':''}}</span>
+                </div>
+              </div>
             </div>
+            
+          
 
             <form [formGroup]="form" (ngSubmit)="update()">
               <div class="responsive">

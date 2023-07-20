@@ -1,0 +1,10 @@
+.bank-image {
+    max-width: 100%;
+  }
+  
+  @media screen and (min-width: 576px) {
+    .bank-image {
+      max-width: 150px;  /* Puedes ajustar este valor a tus necesidades */
+    }
+  }
+  
