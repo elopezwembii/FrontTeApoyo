@@ -31,6 +31,15 @@ export class HeaderComponent implements OnInit {
         this.searchForm = new UntypedFormGroup({
             search: new UntypedFormControl(null)
         });
+        if (window.innerWidth <= 768) {         
+            this.store.dispatch(new ToggleSidebarMenu());
+        }
+    }
+    
+    ngOnDestroy() {
+        if (window.innerWidth <= 768) {          
+            this.store.dispatch(new ToggleSidebarMenu());
+        }
     }
 
     logout() {
