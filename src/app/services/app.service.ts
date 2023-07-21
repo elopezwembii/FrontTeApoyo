@@ -4,6 +4,8 @@ import {ToastrService} from 'ngx-toastr';
 import {HttpClient} from '@angular/common/http';
 import { environment } from 'environments/environment';
 
+
+
 @Injectable({
     providedIn: 'root'
 })
@@ -16,34 +18,36 @@ export class AppService {
         private _http: HttpClient
     ) {}
 
-    async loginByAuth({email, password}) {
+    async loginByAuth({ email, password }) {
         try {
-            const data: any = await new Promise((resolve, reject) => {
-                this._http
-                    .post(
-                        environment.uri_api + 'login',
-                        {
-                            email,
-                            password
-                        }
-                    )
-                    .subscribe(
-                        (response) => {
-                            resolve(response);
-                        },
-                        (error) => {
-                            console.error(error);
-                            reject(error);
-                        }
-                    );
-            });
-            sessionStorage.setItem('user', JSON.stringify(data));
-            this.router.navigate(['/']);
-            this.toastr.success('Ingreso correcto');
+          const data: any = await new Promise((resolve, reject) => {
+            this._http
+              .post(
+                environment.uri_api + 'login',
+                {
+                  email,
+                  password
+                }
+              )
+              .subscribe(
+                (response) => {
+                  resolve(response);
+                },
+                (error) => {
+                  console.error(error);
+                  reject(error);
+                }
+              );
+          });
+          sessionStorage.setItem('user', JSON.stringify(data));
+          this.router.navigate(['/']);
+          this.toastr.success('Ingreso correcto');
+          window.location.reload();
         } catch (error) {
-            this.toastr.error("Usuario o contraseña no válida");
+          this.toastr.error('Usuario o contraseña no válida');
         }
-    }
+      }
+      
 
     async checkToken(jwt: string) {
         /* try {
