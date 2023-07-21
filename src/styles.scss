@@ -15,6 +15,9 @@
 @import 'ngx-toastr/toastr';
 
 $principalSidebar: #2c939e;
+$colorClaro: lighten($principalSidebar, 20%); /* Un tono más claro del color principal */
+$colorOscuro: darken($principalSidebar, 20%); /* Un tono más oscuro del color principal */
+
 $graficos: #bceaf3;
 $filtros: #cae9ed;
 $card: #ececec;
@@ -54,9 +57,11 @@ body {
 }
 
 .navbar-color {
-    background-color: $principalSidebar;
-}
+  background: $principalSidebar; /* Para navegadores que no soporten gradientes */
+  background: linear-gradient(to right, $colorOscuro, $principalSidebar, $colorClaro); /* Añadiendo un degradado de oscuro a claro */
+  //background: linear-gradient(to bottom, $colorOscuro, $principalSidebar, $colorClaro); /* Añadiendo un degradado de oscuro a claro */
 
+}
 .navbar-link-active {
     background-color: #fff;
     color: $principalSidebar !important;
