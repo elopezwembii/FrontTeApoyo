@@ -520,9 +520,9 @@
           <app-grafico [mes]="getMes" [anio]="getAnio" [change]="getChange"></app-grafico>
         </div>
         <div class="card  mb-3">
-          <div class="card-head text-center mt-2">
+          <div class="card-head text-center mt-4">
             <h5>
-              <span class="text-principal"><b>¿Sabías qué?</b></span>
+              <span class="text-main"><b>¿Sabías qué?</b></span>
               <span><svg width="59" height="58" viewBox="0 0 59 58" fill="none" xmlns="http://www.w3.org/2000/svg"
                   xmlns:xlink="http://www.w3.org/1999/xlink">
                   <rect width="58.5688" height="57.3585" fill="url(#pattern0)" />
@@ -545,7 +545,7 @@
           </div>
           <div class="card-footer text-center">
             <p>
-              <b>Puedes simular tu crédito <a href="">aquí</a></b>
+              <b>Para obtener tus indicadores de endeudamiento, registra tu deuda <a [routerLink]="['/deudas']">aquí</a></b>
             </p>
           </div>
         </div>

@@ -649,7 +649,7 @@
                             de tus ingresos.
                         </p>
                         <p>
-                            <b>Revisa tus indicadores financieros y nuestra recomendaciones <a href="">aquí</a></b>
+                            <b>Lee otras recomendaciones <a href="" data-toggle="modal" data-target="#modalDeudas">aquí</a></b>
                         </p>
                     </div>
                 </div>
@@ -700,12 +700,10 @@
                     </div>
                     <div class="card-body">
                         <p>
-                            Guarda los recibos de pago de sus cuotas para tener
-                            respaldo en caso de que se presente algún problema
-                            con el registro de tus pagos.
+                            Al completar información sobre las deudas que mantienes en bancos o instituciones financieras y teniendo registrado tus ingresos del mes, puedes ir a Análisis Financiero donde encontrarás tus indicadores personales y nuestras recomendaciones. 
                         </p>
                         <p>
-                            <b>Lee otras recomendaciones <a href="">aquí</a></b>
+                            <b>Revisa tu análisis financiero <a [routerLink]="['/analisis']">aquí</a></b>
                         </p>
                     </div>
                 </div>
@@ -717,3 +715,32 @@
 <ngx-loading [show]="loading"></ngx-loading>
 
 
+  <!-- Modal -->
+
+  <div class="modal fade" id="modalDeudas" tabindex="-1" role="dialog" aria-labelledby="modalDeudasLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content rounded-lg shadow" style="border: 1px solid #28a745; background-color: #f0fff4;">
+            <div class="modal-header border-0 pb-0">
+                <h5 class="modal-title text-muted" id="modalDeudasLabel" style="color: #28a745; font-weight: bold;">Consejos para manejar las deudas</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true" style="color: #28a745;">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-muted">
+                <div class="waveWrapper">
+                    <div class="wave"></div>
+                </div>
+                <ul class="pl-3" style="font-size: 1.1em; line-height: 1.6;">
+                    <li>Mantén el control sobre las deudas que adquieres.</li>
+                    <li>Compara y acude a los bancos que cobren menos.</li>
+                    <li>Para eso, siempre fíjate en el CAE y no en la tasa de interés.</li>
+                    <li>Atención con el uso de las líneas de crédito. Cobran altas tasas de interés.</li>
+                    <li>Aprende a usar la tarjeta de crédito pagando el total facturado.</li>
+                </ul>
+            </div>
+            <div class="modal-footer border-0">
+                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal" style="color: #28a745; border-color: #28a745;">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>

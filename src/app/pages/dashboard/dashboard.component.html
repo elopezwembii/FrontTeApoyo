@@ -47,7 +47,7 @@
           <div class="card-body">
             <div class="row">
                 <div class="col">
-                    <h5 class="card-title-custom">
+                    <h5 class=" text-main">
                         <strong
                             >¡Mira todo lo que has
                             ahorrado!</strong
@@ -104,7 +104,7 @@
         </div>
           <div class="mt-auto">
             <p class="text-center">
-              <b>Revisa algunos tips de ahorro <a href="">aquí</a></b>
+              <b>Revisa algunos tips de ahorro <a href="" data-toggle="modal" data-target="#modalAhorro">aquí</a></b>             
             </p>
           </div>
         </div>
@@ -117,7 +117,7 @@
         <div class="card h-100">
           <!-- Contenido Fila 3, Columna 1 -->
           <div class="card-body">
-            <h5 class="text-principal">
+            <h5 class="text-main">
                 <strong> Agregar gastos</strong>
             </h5>
             <p class="text-principal m-0 p-0">
@@ -734,7 +734,7 @@
         <div class="card h-100">
           <!-- Contenido Fila 3, Columna 2 -->
           <div class="card-body">
-            <h5 class="text-principal">
+            <h5 class="text-main">
                 <strong> Mayores gastos del mes</strong>
             </h5>
             <app-grafico-dona-mayores-gastos
@@ -751,7 +751,7 @@
         <div class="card h-100">
           <!-- Contenido Fila 2, Columna 1 -->
           <div class="card-body d-flex flex-column">
-            <h5 class="text-principal">
+            <h5 class="text-main">
                 <strong> Gasto hormiga</strong>
             </h5>
             <div class="row flex-grow-1">
@@ -956,7 +956,7 @@
                     </svg>
                 </span>
                 <br />
-                <span class="text-principal"
+                <span class="text-main"
                     ><b>¡Recuerda!</b></span
                 >
             </h5>
@@ -1015,3 +1015,36 @@
   <ngx-loading [show]="loading"></ngx-loading>
   <ngx-loading [show]="loading2"></ngx-loading>
   
+
+
+
+  <!-- Modal -->
+ <div class="modal fade" id="modalAhorro" tabindex="-1" role="dialog" aria-labelledby="modalAhorroLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content rounded-lg shadow" style="border: 1px solid #28a745; background-color: #f0fff4;">
+            <div class="modal-header border-0 pb-0">
+                <h5 class="modal-title text-muted" id="modalAhorroLabel" style="color: #28a745; font-weight: bold;">Consejos para Ahorrar</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true" style="color: #28a745;">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-muted">
+                <div class="waveWrapper">
+                    <div class="wave"></div>
+                </div>
+                <ul class="pl-3" style="font-size: 1.1em; line-height: 1.6;">
+                    <li>Determina el dinero que vas a ahorrar y métela en el presupuesto como gasto indispensable.</li>
+                    <li>Ten una cuenta/instrumento aparte para tus ahorros.</li>
+                    <li>Idealmente ahorra con descuento automático.</li>
+                    <li>Compara siempre en cada compra que hagas y en cada crédito que tomes.</li>
+                    <li>Realiza compras por mayor cuando tengas la ocasión.</li>
+                    <li>Aprovecha descuentos y ofertas en productos perecibles.</li>
+                    <li>Aplica estas dos cosas: reutiliza y/o hazlo tú en casa.</li>
+                </ul>
+            </div>
+            <div class="modal-footer border-0">
+                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal" style="color: #28a745; border-color: #28a745;">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
