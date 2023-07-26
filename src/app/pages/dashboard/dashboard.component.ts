@@ -284,7 +284,7 @@ export class DashboardComponent implements OnInit {
             }
         ];
         /* this.obtenerDatoGrafico(); */
-        this.obtenerGastos();
+       //this.obtenerGastos();
         this.obtenerPresupuesto();
         this.obtenerAhorros();
         this.obtenerGastoHormiga();

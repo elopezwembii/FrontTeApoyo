@@ -59,6 +59,7 @@ import { GestionColaboradorComponent } from './pages/gestion-colaborador/gestion
 import { DataTablesModule } from "angular-datatables";
 import { ModalUsuarioComponent } from './components/modal-usuario/modal-usuario.component';
 import { ModalEmpresaComponent } from './components/modal-empresa/modal-empresa.component';
+import { GastoHormigaComponent } from './components/gasto-hormiga/gasto-hormiga.component';
 
 
 defineCustomElements();
@@ -108,7 +109,8 @@ registerLocaleData(localeEs);
         GestionEmpresaComponent,
         GestionColaboradorComponent,
         ModalUsuarioComponent,
-        ModalEmpresaComponent
+        ModalEmpresaComponent,
+        GastoHormigaComponent
 
     ],
     imports: [
