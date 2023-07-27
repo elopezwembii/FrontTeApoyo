@@ -23,7 +23,19 @@ export class GraficoBarraComponent implements OnChanges {
                 rotate: 0
             }
         },
-        yAxis: {},
+        yAxis: {
+            axisLabel: {
+                formatter: function (value) {
+                    if (value >= 1000000) {
+                        return (value / 1000000) + 'M';
+                    } else if (value >= 1000) {
+                        return (value / 1000) + 'K';
+                    } else {
+                        return value;
+                    }
+                }
+            }
+        },
         series: [],
         legend: {
             data: ['Presupuesto', 'Gasto real'],
@@ -90,11 +102,48 @@ export class GraficoBarraComponent implements OnChanges {
 
             this.options = {
                 ...this.options,
-
+                tooltip: {
+                    trigger: 'item',
+                    formatter: function (params) {
+                        return `${params.name}: ${ '$ ' +
+                        params.value
+                            .toString()
+                            .replace(/\B(?=(\d{3})+(?!\d))/g, '.')}`;
+                    },
+                    position: function (point, params, dom, rect, size) {
+                        // Coordenadas x e y del ratón
+                        let x = point[0];
+                        let y = point[1];
+                        // Tamaño de la caja del tooltip
+                        let boxWidth = size.contentSize[0];
+                        let boxHeight = size.contentSize[1];
+                        // Tamaño de la caja del gráfico
+                        let graphWidth = size.viewSize[0];
+                        let graphHeight = size.viewSize[1];
+                        // Evita que el tooltip se salga por la derecha
+                        if (x + boxWidth > graphWidth) {
+                            x = graphWidth - boxWidth;
+                        }
+                        // Evita que el tooltip se salga por la izquierda
+                        if (x < 0) {
+                            x = 0;
+                        }
+                        // Evita que el tooltip se salga por arriba
+                        if (y + boxHeight > graphHeight) {
+                            y = graphHeight - boxHeight;
+                        }
+                        // Evita que el tooltip se salga por abajo
+                        if (y < 0) {
+                            y = 0;
+                        }
+                        return [x, y];
+                    }
+                },
                 xAxis: {
                     data: SinRepetidos.map((item) => item.name),
                     axisLabel: {
-                        rotate: 20
+                        rotate: 20,
+                        show: false
                     }
                 },
                 color: ['#BCEAF3', '#FFD48F'],
@@ -102,7 +151,7 @@ export class GraficoBarraComponent implements OnChanges {
                     {
 
                         label: {
-                            show: true,
+                            show: false,
                             position: 'top',
                             rotate: 90,
                             align: 'center',
@@ -139,7 +188,7 @@ export class GraficoBarraComponent implements OnChanges {
                             borderRadius: [5, 5, 0, 0]
                         },
                         label: {
-                            show: true,
+                            show: false,
                             position: 'top',
                             rotate: 90,
                             align: 'center',

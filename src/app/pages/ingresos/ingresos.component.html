@@ -555,3 +555,144 @@
 </section>
 
 <ngx-loading [show]="loading"></ngx-loading>
+
+
+
+<form [formGroup]="form" (ngSubmit)="update()">
+       <!-- Modal -->
+       <div class="modal fade" id="modalAgregarIngreso" tabindex="-1" aria-labelledby="exampleModalLabel"
+       aria-hidden="true">
+       <div class="modal-dialog">
+         <div class="modal-content">
+           <div class="modal-header">
+             <h5 class="modal-title" id="exampleModalLabel">
+               Ingreso
+             </h5>
+             <button type="button" class="close" (click)="
+                                                   cerrarModal()
+                                               ">
+               <span aria-hidden="true">&times;</span>
+             </button>
+           </div>
+           <div class="modal-body">
+             <div class="form-group">
+               <label for="desc">Descripción
+                 (opcional)</label>
+               <input autofocus type="text" class="form-control form-control-border"
+                 formControlName="desc" />
+             </div>
+             <div class="form-group">
+               <p>
+                 <b>Categoría</b>
+               </p>
+               <select class="custom-select form-control-border" formControlName="tipo_ingreso">
+                 <option selected disabled [value]="
+                                                           0
+                                                       ">
+                   Tipo
+                 </option>
+                 <option [value]="
+                                                           1
+                                                       ">
+                   Sueldo
+                   líquido
+                 </option>
+                 <option [value]="
+                                                           2
+                                                       ">
+                   Boleta
+                   de
+                   honorarios
+                 </option>
+                 <option [value]="
+                                                           3
+                                                       ">
+                   Arriendos
+                 </option>
+                 <option [value]="
+                                                           4
+                                                       ">
+                   Declaración
+                   de renta
+                   (Anual)
+                 </option>
+                 <option [value]="
+                                                           5
+                                                       ">
+                   Pensión
+                   de
+                   alimentos
+                   recibida
+                 </option>
+                 <option [value]="
+                                                           6
+                                                       ">
+                   Reembolsos
+                   o ayudas
+                   recibidas
+                 </option>
+                 <option [value]="
+                                                           7
+                                                       ">
+                   Otros
+                   ingresos
+                   formales
+                   o
+                   informales
+                 </option>
+               </select>
+             </div>
+             <div class="form-group">
+               <label for="montoReal">Monto</label>
+               <input type="number" placeholder="$ " inputmode="decimal"
+                 class="form-control form-control-border text-right" formControlName="montoReal"
+                title="Monto real" />
+             </div>
+             <div class="form-group">
+               <p>
+                 <b>Día</b>
+               </p>
+
+               <select class="custom-select form-control-border" formControlName="dia">
+                 <option selected disabled [value]="
+                                                           0
+                                                       ">
+                   Día
+                 </option>
+                 <option *ngFor="
+                                                           let dia of dias
+                                                       " [value]="
+                                                           dia
+                                                       ">
+                   {{
+                                                           dia
+                                                       }}
+                 </option>
+               </select>
+             </div>
+             <div class="form-group">
+               <input #fijarChk class="mycheck ml-3" type="checkbox" formControlName="fijar" />
+               <label for="fijar">Marca si
+                 deseas
+                 replicar
+                 este
+                 ingreso*</label>
+             </div>
+           </div>
+           <div class="modal-footer">
+             <button type="button" class="btn btn-secondary" (click)="
+                                                   cerrarModal()
+                                               ">
+               Cerrar
+             </button>
+             <button [disabled]="
+                                                   form.invalid
+                                               " data-tooltip="Necesitas completar todos los campos"
+               data-flow="left" type="submit" class="btn btn-primary">
+               Guardar
+             </button>
+           </div>
+         </div>
+       </div>
+     </div>
+</form>

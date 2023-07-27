@@ -314,7 +314,7 @@ export class GastosComponent implements OnInit {
 
     abrirModal() {
         if (this.windowSize <= 1000) {
-            this.modal = document.getElementById('exampleModal');
+            this.modal = document.getElementById('modalAgregarGasto');
             this.modal.classList.add('show');
             this.modal.style.display = 'block';
         }

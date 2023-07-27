@@ -29,3 +29,10 @@ font-size: 0.9rem;
 color: #bee0e4;
 font-size: 1.3rem
 }
+
+
+@media (max-width: 576px) {
+  .medium-text {
+      font-size: 13px;
+  }
+}
