@@ -3,6 +3,7 @@ import {Component, OnInit, Renderer2, ElementRef} from '@angular/core';
 import {Validators, FormBuilder} from '@angular/forms';
 import {NavigationEnd, Router} from '@angular/router';
 import {IngresosService} from '@services/ingresos/ingresos.service';
+import {ShepherdService} from 'angular-shepherd';
 import {ToastrService} from 'ngx-toastr';
 
 @Component({
@@ -113,7 +114,8 @@ export class IngresosComponent implements OnInit {
         private fb: FormBuilder,
         private ingresoService: IngresosService,
         private toastr: ToastrService,
-        private router: Router
+        private router: Router,
+        private shepherdService: ShepherdService
     ) {
         this.router.events.subscribe((evt) => {
             if (evt instanceof NavigationEnd) {
@@ -126,13 +128,13 @@ export class IngresosComponent implements OnInit {
         });
         this.renderer.listen('window', 'resize', (evt) => {
             this.windowSize = window.innerWidth;
-            console.log(window.innerWidth);
         });
     }
 
     ngOnInit() {
         this.obtenerIngresos();
         this.generarDias(this.selectionMonth, this.selectionYear);
+        this.guia();
     }
 
     async obtenerIngresos() {
@@ -150,7 +152,6 @@ export class IngresosComponent implements OnInit {
                 sumaTotalReal: number;
                 ingresos: Ingreso[];
             }) => {
-                console.log(ingresos);
                 this.sumaTotalReal = sumaTotalReal;
                 this.ingresos = ingresos;
                 this.change = !this.change;
@@ -263,6 +264,7 @@ export class IngresosComponent implements OnInit {
                     this.obtenerIngresos();
                     this.change = !this.change;
                     this.toastr.success('Ingreso agregado con éxito.');
+                    this.shepherdService.next();
                 } else {
                     this.toastr.error('Error al agregar un nuevo ingreso.');
                     this.loading = false;
@@ -316,6 +318,7 @@ export class IngresosComponent implements OnInit {
         this.isAdding = false;
         this.form.reset();
         this.toastr.info('No se realizaron cambios...');
+        this.shepherdService.cancel();
     }
 
     addUser() {
@@ -337,5 +340,150 @@ export class IngresosComponent implements OnInit {
 
     isEmpty(obj: any) {
         return Object.keys(obj).length === 0;
+    }
+
+    guia() {
+        if (this.ingresos.length === 0) return;
+
+        this.shepherdService.defaultStepOptions = {
+            scrollTo: false,
+            cancelIcon: {
+                enabled: false
+            }
+        };
+        this.shepherdService.modal = true;
+        this.shepherdService.confirmCancel = false;
+
+        this.shepherdService.addSteps([
+            {
+                id: 'intro1',
+                attachTo: {
+                    element: '.text-main',
+                    on: 'bottom'
+                },
+                buttons: [
+                    {
+                        classes: 'btn btn-light',
+                        text: 'Cancelar',
+                        action: () => this.shepherdService.cancel()
+                    },
+                    {
+                        classes: 'shepherd-button-primary',
+                        text: 'Siguiente',
+                        action: () => this.shepherdService.next()
+                    }
+                ],
+                cancelIcon: {
+                    enabled: false
+                },
+                //title: 'Ingresos',
+                classes: 'shepherd shepherd-open shepherd-theme-arrows',
+                text: ['Esta es la pagina de tus ingresos'],
+                arrow: true
+            },
+            {
+                id: 'intro2',
+                attachTo: {
+                    element: '.card-ingreso',
+                    on: 'right'
+                },
+                buttons: [
+                    {
+                        classes: 'btn btn-light',
+                        text: 'Atras',
+                        action: () => this.shepherdService.back()
+                    },
+                    {
+                        classes: 'shepherd-button-primary',
+                        text: 'Siguiente',
+                        action: () => this.shepherdService.next()
+                    }
+                ],
+                cancelIcon: {
+                    enabled: false
+                },
+                //title: 'Ingresos',
+                classes: 'shepherd shepherd-open shepherd-theme-arrows',
+                text: ['Este es el panel de tus ingresos'],
+                arrow: true
+            },
+            {
+                id: 'intro4',
+                attachTo: {
+                    element: '.boton-add',
+                    on: 'top'
+                },
+                buttons: [
+                    {
+                        classes: 'btn btn-light',
+                        text: 'Atras',
+                        action: () => this.shepherdService.back()
+                    },
+                    {
+                        classes: 'shepherd-button-primary',
+                        text: 'Siguiente',
+                        action: () => {
+                            this.addUser();
+                            this.shepherdService.next();
+                            //this.shepherdService.hide();
+                        }
+                    }
+                ],
+                cancelIcon: {
+                    enabled: false
+                },
+                //title: 'Ingresos',
+                classes: 'shepherd shepherd-open shepherd-theme-arrows',
+                text: [
+                    'Comencemos agregando un ingreso, haz clic aquí para poder agregar un ingreso'
+                ],
+                arrow: true
+            },
+            {
+                id: 'intro5',
+                attachTo: {
+                    element: '.red',
+                    on: 'bottom'
+                },
+                beforeShowPromise: function () {
+                    return new Promise(function (resolve) {
+                        setTimeout(resolve, 500);
+                    });
+                },
+                cancelIcon: {
+                    enabled: false
+                },
+                classes: 'shepherd shepherd-open shepherd-theme-arrows',
+                text: [
+                    'Completa con los datos para poder agregar los ingresos'
+                ],
+                arrow: true
+            },
+            {
+                id: 'intro6',
+                attachTo: {
+                    element: '.card-ingreso',
+                    on: 'right'
+                },
+                buttons: [
+                    {
+                        classes: 'shepherd-button-primary',
+                        text: 'Terminar',
+                        action: () => {
+                            this.shepherdService.complete();
+                        }
+                    }
+                ],
+                cancelIcon: {
+                    enabled: false
+                },
+                //title: 'Ingresos',
+                classes: 'shepherd shepherd-open shepherd-theme-arrows',
+                text: ['Finalmente se agrego el ingreso'],
+                arrow: true
+            }
+        ]);
+
+        this.shepherdService.start();
     }
 }
