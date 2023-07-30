@@ -222,6 +222,7 @@ export class IngresosComponent implements OnInit {
             this.modal = document.getElementById('modalAgregarIngreso');
             this.modal.classList.add('show');
             this.modal.style.display = 'block';
+            this.shepherdService.next();
         }
     }
 
@@ -234,6 +235,7 @@ export class IngresosComponent implements OnInit {
             this.isAdding = false;
             this.form.reset();
             this.toastr.info('No se realizaron cambios...');
+            this.shepherdService.cancel();
         }
     }
 
@@ -347,7 +349,7 @@ export class IngresosComponent implements OnInit {
         if (this.ingresos.length === 0) return; // en el caso que el usuario tenga ya un ingreso se salta el tutorial
 
         this.shepherdService.defaultStepOptions = {
-            scrollTo: false,
+            scrollTo: true,
             cancelIcon: {
                 enabled: false
             }
@@ -355,6 +357,17 @@ export class IngresosComponent implements OnInit {
         this.shepherdService.modal = true;
         this.shepherdService.confirmCancel = false;
 
+        if (window.innerWidth <= 768) {
+            // Verificar si la pantalla es de tamaño móvil
+            this.tourMovil();
+        } else {
+            this.tourEscritorio();
+        }
+
+        this.shepherdService.start();
+    }
+
+    tourEscritorio() {
         this.shepherdService.addSteps([
             {
                 id: 'intro1',
@@ -440,7 +453,88 @@ export class IngresosComponent implements OnInit {
                 text: ['Finalmente se agrego el ingreso']
             }
         ]);
+    }
 
-        this.shepherdService.start();
+    tourMovil() {
+        this.shepherdService.addSteps([
+            {
+                id: 'intro1',
+                attachTo: {
+                    element: '.text-main',
+                    on: 'bottom'
+                },
+                buttons: [
+                    {
+                        classes: 'btn btn-light',
+                        text: 'Cancelar',
+                        action: () => this.shepherdService.cancel()
+                    },
+                    {
+                        classes: 'shepherd-button-primary',
+                        text: 'Siguiente',
+                        action: () => this.shepherdService.next()
+                    }
+                ],
+                classes: 'shepherd shepherd-open shepherd-theme-arrows',
+                text: ['Esta es la pagina de tus ingresos']
+            },
+            {
+                id: 'intro2',
+                attachTo: {
+                    element: '.card-ingreso',
+                    on: 'right'
+                },
+                buttons: [
+                    {
+                        classes: 'btn btn-light',
+                        text: 'Atras',
+                        action: () => this.shepherdService.back()
+                    },
+                    {
+                        classes: 'shepherd-button-primary',
+                        text: 'Siguiente',
+                        action: () => this.shepherdService.next()
+                    }
+                ],
+                classes: 'shepherd shepherd-open shepherd-theme-arrows',
+                text: ['Este es el panel de tus ingresos']
+            },
+            {
+                id: 'intro4',
+                attachTo: {
+                    element: '.boton-add',
+                    on: 'top'
+                },
+                classes: 'shepherd shepherd-open shepherd-theme-arrows',
+                text: [
+                    'Comencemos agregando un ingreso, haz clic aquí para poder agregar un ingreso'
+                ]
+            },
+            {
+                id: 'intro5',
+                attachTo: {
+                    element: '.red',
+                    on: 'top'
+                },
+                classes: 'shepherd shepherd-open shepherd-theme-arrows',
+                text: ['Completa con los datos para poder agregar los ingresos']
+            },
+            {
+                id: 'intro6',
+                attachTo: {
+                    element: '.card-ingreso',
+                    on: 'right'
+                },
+                buttons: [
+                    {
+                        classes: 'shepherd-button-primary',
+                        text: 'Terminar',
+                        action: () => this.shepherdService.complete()
+                    }
+                ],
+                classes: 'shepherd shepherd-open shepherd-theme-arrows',
+                text: ['Finalmente se agrego el ingreso']
+            }
+        ]);
     }
 }
