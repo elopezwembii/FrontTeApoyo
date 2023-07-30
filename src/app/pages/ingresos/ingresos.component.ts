@@ -336,6 +336,7 @@ export class IngresosComponent implements OnInit {
 
         this.ingresoSelected = this.ingresos[this.ingresos.length - 1];
         this.isAdding = true;
+        this.shepherdService.next();
     }
 
     isEmpty(obj: any) {
@@ -343,7 +344,7 @@ export class IngresosComponent implements OnInit {
     }
 
     guia() {
-        if (this.ingresos.length === 0) return;
+        if (this.ingresos.length === 0) return; // en el caso que el usuario tenga ya un ingreso se salta el tutorial
 
         this.shepherdService.defaultStepOptions = {
             scrollTo: false,
@@ -373,13 +374,8 @@ export class IngresosComponent implements OnInit {
                         action: () => this.shepherdService.next()
                     }
                 ],
-                cancelIcon: {
-                    enabled: false
-                },
-                //title: 'Ingresos',
                 classes: 'shepherd shepherd-open shepherd-theme-arrows',
-                text: ['Esta es la pagina de tus ingresos'],
-                arrow: true
+                text: ['Esta es la pagina de tus ingresos']
             },
             {
                 id: 'intro2',
@@ -399,13 +395,8 @@ export class IngresosComponent implements OnInit {
                         action: () => this.shepherdService.next()
                     }
                 ],
-                cancelIcon: {
-                    enabled: false
-                },
-                //title: 'Ingresos',
                 classes: 'shepherd shepherd-open shepherd-theme-arrows',
-                text: ['Este es el panel de tus ingresos'],
-                arrow: true
+                text: ['Este es el panel de tus ingresos']
             },
             {
                 id: 'intro4',
@@ -413,31 +404,10 @@ export class IngresosComponent implements OnInit {
                     element: '.boton-add',
                     on: 'top'
                 },
-                buttons: [
-                    {
-                        classes: 'btn btn-light',
-                        text: 'Atras',
-                        action: () => this.shepherdService.back()
-                    },
-                    {
-                        classes: 'shepherd-button-primary',
-                        text: 'Siguiente',
-                        action: () => {
-                            this.addUser();
-                            this.shepherdService.next();
-                            //this.shepherdService.hide();
-                        }
-                    }
-                ],
-                cancelIcon: {
-                    enabled: false
-                },
-                //title: 'Ingresos',
                 classes: 'shepherd shepherd-open shepherd-theme-arrows',
                 text: [
                     'Comencemos agregando un ingreso, haz clic aquí para poder agregar un ingreso'
-                ],
-                arrow: true
+                ]
             },
             {
                 id: 'intro5',
@@ -445,19 +415,13 @@ export class IngresosComponent implements OnInit {
                     element: '.red',
                     on: 'bottom'
                 },
-                beforeShowPromise: function () {
-                    return new Promise(function (resolve) {
+                beforeShowPromise: () => {
+                    return new Promise((resolve) => {
                         setTimeout(resolve, 500);
                     });
                 },
-                cancelIcon: {
-                    enabled: false
-                },
                 classes: 'shepherd shepherd-open shepherd-theme-arrows',
-                text: [
-                    'Completa con los datos para poder agregar los ingresos'
-                ],
-                arrow: true
+                text: ['Completa con los datos para poder agregar los ingresos']
             },
             {
                 id: 'intro6',
@@ -469,18 +433,11 @@ export class IngresosComponent implements OnInit {
                     {
                         classes: 'shepherd-button-primary',
                         text: 'Terminar',
-                        action: () => {
-                            this.shepherdService.complete();
-                        }
+                        action: () => this.shepherdService.complete()
                     }
                 ],
-                cancelIcon: {
-                    enabled: false
-                },
-                //title: 'Ingresos',
                 classes: 'shepherd shepherd-open shepherd-theme-arrows',
-                text: ['Finalmente se agrego el ingreso'],
-                arrow: true
+                text: ['Finalmente se agrego el ingreso']
             }
         ]);
 

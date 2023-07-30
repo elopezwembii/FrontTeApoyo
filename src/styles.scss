@@ -445,3 +445,13 @@ text-center {
 text-justify {
     text-align: justify;
 }
+
+
+.shepherd-arrow:before,.shepherd-content {
+    background-color: $principalSidebar !important; /* Cambiar el color de fondo a azul */
+color: white;
+  }
+
+  .shepherd-text {
+    color: white !important
+}
