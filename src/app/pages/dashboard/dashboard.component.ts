@@ -870,13 +870,6 @@ export class DashboardComponent implements OnInit {
                 },
                 buttons: [
                     {
-                        classes: 'btn btn-light',
-                        text: 'Atras',
-                        disabled() {
-                            return true;
-                        }
-                    },
-                    {
                         classes: 'shepherd-button-primary',
                         text: 'Siguiente',
                         action() {
@@ -884,15 +877,11 @@ export class DashboardComponent implements OnInit {
                         }
                     }
                 ],
-                cancelIcon: {
-                    enabled: false
-                },
-                title: '!Bienvenido¡ Nos da gusto verte por acá...',
+                //title: '!Bienvenido¡ Nos da gusto verte por acá...',
                 classes: 'text-principal',
                 text: [
                     'En este primer paso, te mostraremos cómo explorar el menú principal.'
-                ],
-                arrow: true
+                ]
             },
             {
                 id: 'intro2',
@@ -916,15 +905,11 @@ export class DashboardComponent implements OnInit {
                         }
                     }
                 ],
-                cancelIcon: {
-                    enabled: false
-                },
-                title: '!Bienvenido¡ Nos da gusto verte por acá...',
+                //title: '!Bienvenido¡ Nos da gusto verte por acá...',
                 classes: 'text-principal',
                 text: [
                     'El menú principal se encuentra en la parte izquierda de la pantalla y te proporciona acceso a las diferentes secciones y funcionalidades de la aplicación.'
-                ],
-                arrow: true
+                ]
             },
             {
                 id: 'intro3',
@@ -948,15 +933,11 @@ export class DashboardComponent implements OnInit {
                         }
                     }
                 ],
-                cancelIcon: {
-                    enabled: false
-                },
-                title: '!Bienvenido¡ Nos da gusto verte por acá...',
+                //title: '!Bienvenido¡ Nos da gusto verte por acá...',
                 classes: 'text-principal',
                 text: [
                     'Tómate tu tiempo para familiarizarte con las opciones del menú y cómo se organizan.'
-                ],
-                arrow: true
+                ]
             },
             {
                 id: 'menu1',
@@ -980,15 +961,11 @@ export class DashboardComponent implements OnInit {
                         }
                     }
                 ],
-                cancelIcon: {
-                    enabled: false
-                },
-                title: 'Tour por las opciones del menú',
+                //title: 'Tour por las opciones del menú',
                 classes: 'text-principal',
                 text: [
                     'Desde las distintas opciones de este menú puedes acceder a las características del sistema.'
-                ],
-                arrow: true
+                ]
             },
             {
                 id: 'menu2',
@@ -1012,15 +989,11 @@ export class DashboardComponent implements OnInit {
                         }
                     }
                 ],
-                cancelIcon: {
-                    enabled: false
-                },
-                title: 'Tour por las opciones del menú',
+                //title: 'Tour por las opciones del menú',
                 classes: 'text-principal',
                 text: [
                     'Desde esta opción puedes volver al panel principal y ver un resumen de tus ingresos, gastos y ahorros.'
-                ],
-                arrow: true
+                ]
             },
             {
                 id: 'menu3',
@@ -1044,15 +1017,11 @@ export class DashboardComponent implements OnInit {
                         }
                     }
                 ],
-                cancelIcon: {
-                    enabled: false
-                },
-                title: 'Tour por las opciones del menú',
+                //title: 'Tour por las opciones del menú',
                 classes: 'text-principal',
                 text: [
                     'Desde esta opción puedes registrar tus ingresos del mes en actual y proyectar tus ingresos fijos.'
-                ],
-                arrow: true
+                ]
             },
             {
                 id: 'menu4',
@@ -1076,15 +1045,11 @@ export class DashboardComponent implements OnInit {
                         }
                     }
                 ],
-                cancelIcon: {
-                    enabled: false
-                },
-                title: 'Tour por las opciones del menú',
+                //title: 'Tour por las opciones del menú',
                 classes: 'text-principal',
                 text: [
                     'Desde esta opción puedes ordenar tus gastos en un presupuesto mensual para no sobrepasarte.'
-                ],
-                arrow: true
+                ]
             },
             {
                 id: 'menu5',
@@ -1108,15 +1073,11 @@ export class DashboardComponent implements OnInit {
                         }
                     }
                 ],
-                cancelIcon: {
-                    enabled: false
-                },
-                title: 'Tour por las opciones del menú',
+                //title: 'Tour por las opciones del menú',
                 classes: 'text-principal',
                 text: [
                     'Desde esta opción puedes registrar tus gastos ordenados por categorías.'
-                ],
-                arrow: true
+                ]
             },
             {
                 id: 'menu5',
@@ -1140,15 +1101,11 @@ export class DashboardComponent implements OnInit {
                         }
                     }
                 ],
-                cancelIcon: {
-                    enabled: false
-                },
-                title: 'Tour por las opciones del menú',
+                //title: 'Tour por las opciones del menú',
                 classes: 'text-principal',
                 text: [
                     'Desde esta opción puedes registrar tu deuda financiera, tus tarjetas de crédito y tus cuentas corrientes para realizar un análisis de tu situación financiera.'
-                ],
-                arrow: true
+                ]
             },
             {
                 id: 'menu6',
@@ -1172,15 +1129,11 @@ export class DashboardComponent implements OnInit {
                         }
                     }
                 ],
-                cancelIcon: {
-                    enabled: false
-                },
-                title: 'Tour por las opciones del menú',
+                //title: 'Tour por las opciones del menú',
                 classes: 'text-principal',
                 text: [
                     'Desde esta opción puedes programar una meta de ahorro para saber cuanto debes ahorrar mensualmente.'
-                ],
-                arrow: true
+                ]
             },
             {
                 id: 'menu7',
@@ -1204,15 +1157,11 @@ export class DashboardComponent implements OnInit {
                         }
                     }
                 ],
-                cancelIcon: {
-                    enabled: false
-                },
-                title: 'Tour por las opciones del menú',
+                //title: 'Tour por las opciones del menú',
                 classes: 'text-principal',
                 text: [
                     'Desde esta opción puedes visualizar tus indicadores financieros de corto y largo plazo. Además, puedes obtener una recomendación para mejorar tus indicadores.'
-                ],
-                arrow: true
+                ]
             },
             {
                 id: 'menu8',
@@ -1244,15 +1193,11 @@ export class DashboardComponent implements OnInit {
                         }
                     }
                 ],
-                cancelIcon: {
-                    enabled: false
-                },
-                title: 'Tour por las opciones del menú',
+                //title: 'Tour por las opciones del menú',
                 classes: 'text-principal',
                 text: [
                     'Desde esta opción puedes simular un crédito bancario y visualizar cómo afecta tus indicadores en el futuro.'
-                ],
-                arrow: true
+                ]
             },
             {
                 id: 'menu9',
@@ -1284,15 +1229,11 @@ export class DashboardComponent implements OnInit {
                         }
                     }
                 ],
-                cancelIcon: {
-                    enabled: false
-                },
-                title: 'Tour por las opciones del menú',
+                //title: 'Tour por las opciones del menú',
                 classes: 'text-principal',
                 text: [
                     'Desde esta opción puedes acceder a nuestras publicaciones y tips sobre finanzas personales.'
-                ],
-                arrow: true
+                ]
             }
         ]);
         this.loading2 = true;
