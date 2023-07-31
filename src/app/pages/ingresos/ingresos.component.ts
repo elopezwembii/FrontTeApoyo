@@ -134,7 +134,7 @@ export class IngresosComponent implements OnInit {
     ngOnInit() {
         this.obtenerIngresos();
         this.generarDias(this.selectionMonth, this.selectionYear);
-        this.guia();
+        
     }
 
     async obtenerIngresos() {
@@ -156,6 +156,7 @@ export class IngresosComponent implements OnInit {
                 this.ingresos = ingresos;
                 this.change = !this.change;
                 this.loading = false;
+                this.guia();
             },
             error: (error: any) => {
                 console.log(error);
@@ -345,8 +346,9 @@ export class IngresosComponent implements OnInit {
         return Object.keys(obj).length === 0;
     }
 
-    guia() {
-        if (this.ingresos.length === 0) return; // en el caso que el usuario tenga ya un ingreso se salta el tutorial
+    guia() {       
+
+        if (this.ingresos.length !== 0) return; // en el caso que el usuario tenga ya un ingreso se salta el tutorial
 
         this.shepherdService.defaultStepOptions = {
             scrollTo: true,
