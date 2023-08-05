@@ -270,7 +270,7 @@ input[type='number'] {
     position: relative;
     cursor: pointer;
 
-    z-index: 1; //1100
+    z-index: 6000; //1100
 }
 
 [data-tooltip]:before,
@@ -293,9 +293,9 @@ input[type='number'] {
     content: attr(data-tooltip);
     text-align: center;
     min-width: 3em;
-    max-width: 50em;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    // max-width: 50em;
+    // overflow: hidden;
+    // text-overflow: ellipsis;
     padding: 6px 8px;
     border-radius: 3px;
     background: $principalSidebar;
@@ -386,6 +386,22 @@ input[type='number'] {
 [data-tooltip='']::before {
     display: none !important;
 }
+[data-tooltip]:after {
+    /* Ajuste de ancho y alineación del texto */
+    max-width: 20em; /* puedes ajustar esto a lo que mejor se ajuste a tus necesidades */
+    white-space: normal;
+    word-wrap: break-word;
+    text-align: justify;
+
+    content: attr(data-tooltip);
+    padding: 6px 8px;
+    border-radius: 3px;
+    background: $principalSidebar;
+    color: #ffffff;
+    z-index: 1100;
+}
+
+
 
 .card {
     border-radius: 30px;

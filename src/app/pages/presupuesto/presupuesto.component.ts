@@ -15,7 +15,7 @@ import {
 import {Validators, FormBuilder} from '@angular/forms';
 import {GastosService} from '@services/gastos/gastos.service';
 import {PresupuestoService} from '@services/presupuesto/presupuesto.service';
-import { ShepherdService } from 'angular-shepherd';
+import {ShepherdService} from 'angular-shepherd';
 import {ToastrService} from 'ngx-toastr';
 import {forkJoin} from 'rxjs';
 
@@ -69,42 +69,42 @@ export class PresupuestoComponent implements OnInit {
 
     opcionesSelect2 = {
         1: [
-            'Artículos para el hogar, Mascotas, Limpieza y mantenimiento, Gasto Común, Arriendo o dividendo, Asesora del hogar/niñera/cuidadora, Seguro al hogar, Otros hogar'
+            'Artículos para el hogar, Mascotas, Limpieza y mantenimiento, Gasto común, Arriendo o dividendo, Asesora del hogar/niñera/cuidadora, Seguro del hogar, Otros gastos del hogar'
         ],
         2: ['Agua, Luz, Gas, Cable/Internet, Alarma, Telefonía'],
         3: [
-            'Supermercado, Feria, Agua en botellón, Antojos (bebida agu caf snacks), Comida rápida, Gastos en delivery y propinas, Otros alimentos'
+            'Supermercado, Feria, Agua en botellón, Antojos (bebida, agua, café, snacks), Comida rápida, Gastos en delivery y propinas, Otros alimentos'
         ],
         4: [
             'Juguetes y videojuegos, Suscripciones y apps, Bares, pubs, restaurantes, Espectáculos y eventos, Otros entretenimientos'
         ],
         5: [
-            'Perfumes y cosméticos, Salón de belleza/Barbería, Médico/Dentista, Gimnasio (mensual), Arriendo canchas (deporte), Farmacia, Cuidado personal/Terapias, Otros salud y belleza'
+            'Perfumes y cosméticos, Salón de belleza/Barbería, Médico/Dentista, Gimnasio (mensual), Arriendo de canchas (deporte), Farmacia, Cuidado personal/Terapias, Otros gastos de salud y belleza'
         ],
         6: [
-            'Mantenimiento y reparaciones, Autolavado, Transporte público, Gasolina, Taxi-Uber-Didi, Peajes/Autopistas, Estacionamiento diario, Estacionamiento mensual, Seguro, Otros auto y transporte'
+            'Mantenimiento y reparaciones, Autolavado, Transporte público, Gasolina, Taxi-Uber-Didi, Peajes/Autopistas, Estacionamiento diario, Estacionamiento mensual, Seguro, Otros gastos de auto y transporte'
         ],
         7: [
-            'Servicios legales/contables, Otros educación y trabajo, Colegiatura, Academias/Cuotas de curso, Artículos librería/escritorio, Transporte Escolar, Otros educación y trabajo'
+            'Servicios legales/contables, Otros gastos de educación y trabajo, Colegiatura, Academias/Cuotas de curso, Artículos de librería/escritorio, Transporte escolar, Otros gastos de educación y trabajo'
         ],
         8: [
-            'Donaciones, Apoyo a familiares y amigos, Regalos, Otros regalos y ayuda'
+            'Donaciones, Apoyo a familiares y amigos, Regalos, Otros gastos de regalos y ayuda'
         ],
         9: ['Hospedaje, Vuelos, Otros gastos de viajes'],
         10: [
             'Casas comerciales, Créditos de consumo, Crédito automotriz, Tarjeta de crédito, Línea de crédito, Otros pagos de créditos'
         ],
         11: [
-            'Calzado, Accesorios, Lavandería y tintorería, Ropa, Otros Ropa y Cazado'
+            'Calzado, Accesorios, Lavandería y tintorería, Ropa, Otros gastos de ropa y calzado'
         ],
         12: [
-            'Impuestos, Pago pensión de alimentos, Seguros de vida, Alcohol, Tabaco, Juegos de azar/Apuestas online'
+            'Impuestos, Pago de pensión de alimentos, Seguros de vida, Alcohol, Tabaco, Juegos de azar/Apuestas online'
         ],
         13: [
-            'Ali express/Shein, Grandes tiendas/Mercado libre, Otras compras online'
+            'AliExpress/Shein, Grandes tiendas/Mercado libre, Otras compras online'
         ],
         14: [
-            'Ahorro celebraciones, Ahorro cumpleaños, Ahorro Educación, Ahorro fiestas patrias, Ahorro fin de semana largo, Ahorro navidad/año nuevo, Ahorro viajes/vacaciones, Fondo de emergencia, Ahorro general (varios), Inversiones y Acciones'
+            'Ahorro para celebraciones, Ahorro para cumpleaños, Ahorro para educación, Ahorro para fiestas patrias, Ahorro para fin de semana largo, Ahorro para Navidad/Año Nuevo, Ahorro para viajes/vacaciones, Fondo de emergencia, Ahorro general (varios), Inversiones y Acciones'
         ]
     };
 
@@ -144,7 +144,6 @@ export class PresupuestoComponent implements OnInit {
             )
         ).subscribe({
             next: ({presupuesto}: {presupuesto: Presupuesto}) => {
-
                 this.presupuesto = presupuesto;
                 this.sumaTotalReal = presupuesto.presupuesto;
                 this.itemsPresupuesto = this.presupuesto.get_items;
@@ -370,9 +369,8 @@ export class PresupuestoComponent implements OnInit {
         this.presupuestoSelected =
             this.itemsPresupuesto[this.itemsPresupuesto.length - 1];
         this.isAdding = true;
-      
+
         this.nextAccion();
-        
     }
 
     isEmpty(obj: any) {
@@ -417,7 +415,7 @@ export class PresupuestoComponent implements OnInit {
 
     guia(clic) {
         if (this.itemsPresupuesto.length !== 0 && !clic) return; // en el caso que el usuario tenga ya un ingreso se salta el tutorial
-        
+
         this.shepherdService.defaultStepOptions = {
             scrollTo: true,
             cancelIcon: {
@@ -501,7 +499,9 @@ export class PresupuestoComponent implements OnInit {
                     });
                 },
                 classes: 'shepherd shepherd-open shepherd-theme-arrows',
-                text: ['Completa con los datos para poder agregar el presupuesto']
+                text: [
+                    'Completa con los datos para poder agregar el presupuesto'
+                ]
             },
             {
                 id: 'intro6',
@@ -515,7 +515,7 @@ export class PresupuestoComponent implements OnInit {
                         text: 'Terminar',
                         action: () => {
                             //TODO: verificar si ya tiene presupuesto
-                    
+
                             this.shepherdService.complete();
                         }
                     }
@@ -526,24 +526,19 @@ export class PresupuestoComponent implements OnInit {
         ]);
     }
 
-    nextAccion() {       
-        
-        if (this.tourStarted==true && this.tourCancelled==false) {
-            
-            this.tourCancelled=false;
+    nextAccion() {
+        if (this.tourStarted == true && this.tourCancelled == false) {
+            this.tourCancelled = false;
             this.shepherdService.next();
         }
     }
 
-    cancelAccion(){
-
-        this.tourStarted=false;
-        this.tourCancelled=true;
-        if (this.tourStarted==false && this.tourCancelled==true) {   
-         
-            this.tourCancelled=false;
-           this.shepherdService.cancel();
+    cancelAccion() {
+        this.tourStarted = false;
+        this.tourCancelled = true;
+        if (this.tourStarted == false && this.tourCancelled == true) {
+            this.tourCancelled = false;
+            this.shepherdService.cancel();
         }
     }
-
 }
