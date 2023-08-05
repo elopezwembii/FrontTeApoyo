@@ -15,6 +15,7 @@ import {
 import {Validators, FormBuilder} from '@angular/forms';
 import {GastosService} from '@services/gastos/gastos.service';
 import {PresupuestoService} from '@services/presupuesto/presupuesto.service';
+import { ShepherdService } from 'angular-shepherd';
 import {ToastrService} from 'ngx-toastr';
 import {forkJoin} from 'rxjs';
 
@@ -24,6 +25,9 @@ import {forkJoin} from 'rxjs';
     styleUrls: ['./presupuesto.component.scss']
 })
 export class PresupuestoComponent implements OnInit {
+    tourStarted = false;
+    tourCancelled = false;
+
     @ViewChild('chbMantener') chbMantener: ElementRef;
     presupuestoMonto: number = 0;
 
@@ -116,7 +120,8 @@ export class PresupuestoComponent implements OnInit {
         private fb: FormBuilder,
         private presupuestoService: PresupuestoService,
         private gastoService: GastosService,
-        private toastr: ToastrService
+        private toastr: ToastrService,
+        private shepherdService: ShepherdService
     ) {}
 
     async ngOnInit() {
@@ -139,13 +144,15 @@ export class PresupuestoComponent implements OnInit {
             )
         ).subscribe({
             next: ({presupuesto}: {presupuesto: Presupuesto}) => {
+
                 this.presupuesto = presupuesto;
-                console.log(presupuesto);
                 this.sumaTotalReal = presupuesto.presupuesto;
                 this.itemsPresupuesto = this.presupuesto.get_items;
                 this.presupuesto.get_items.map(
                     (item) => (this.presupuestoMonto += item.monto)
                 );
+                this.guia(false);
+
                 this.graficoDonaPresupuesto = this.presupuesto.get_items.map(
                     (item) => {
                         return {
@@ -291,6 +298,7 @@ export class PresupuestoComponent implements OnInit {
                 if (res) {
                     this.obtenerPresupuesto();
                     this.toastr.success('Presupuesto agregado con éxito.');
+                    this.nextAccion();
                 } else {
                     this.toastr.error('Error al agregar presupuesto.');
                     this.loading = false;
@@ -330,19 +338,25 @@ export class PresupuestoComponent implements OnInit {
     }
 
     cancel() {
-        if (
-            !this.isEditing &&
-            confirm(
-                'All unsaved changes will be removed. Are you sure you want to cancel?'
-            )
-        ) {
-            this.itemsPresupuesto.splice(0, 1);
+        // if (
+        //     !this.isEditing &&
+        //     confirm(
+        //         'All unsaved changes will be removed. Are you sure you want to cancel?'
+        //     )
+        // ) {
+        //     this.itemsPresupuesto.splice(0, 1);
+        // }
+
+        if (!this.isEditing) {
+            this.itemsPresupuesto.pop();
         }
 
         this.presupuestoSelected = {} as ItemPresupuesto;
         this.isEditing = false;
         this.isAdding = false;
+        this.toastr.info('No se realizaron cambios...');
         this.form.reset();
+        this.cancelAccion();
     }
 
     addUser() {
@@ -356,6 +370,9 @@ export class PresupuestoComponent implements OnInit {
         this.presupuestoSelected =
             this.itemsPresupuesto[this.itemsPresupuesto.length - 1];
         this.isAdding = true;
+      
+        this.nextAccion();
+        
     }
 
     isEmpty(obj: any) {
@@ -397,4 +414,136 @@ export class PresupuestoComponent implements OnInit {
             }
         }
     }
+
+    guia(clic) {
+        if (this.itemsPresupuesto.length !== 0 && !clic) return; // en el caso que el usuario tenga ya un ingreso se salta el tutorial
+        
+        this.shepherdService.defaultStepOptions = {
+            scrollTo: true,
+            cancelIcon: {
+                enabled: false
+            }
+        };
+        this.shepherdService.modal = true;
+        this.shepherdService.confirmCancel = false;
+        this.tourEscritorio();
+        this.tourStarted = true;
+        this.shepherdService.start();
+    }
+
+    tourEscritorio() {
+        this.shepherdService.addSteps([
+            {
+                id: 'intro1',
+                attachTo: {
+                    element: '.text-main',
+                    on: 'bottom'
+                },
+                buttons: [
+                    {
+                        classes: 'btn btn-light',
+                        text: 'Cancelar',
+                        action: () => {
+                            //this.tourCancelled=true;
+                            this.cancelAccion();
+                        }
+                    },
+                    {
+                        classes: 'shepherd-button-primary',
+                        text: 'Siguiente',
+                        action: () => this.shepherdService.next()
+                    }
+                ],
+                classes: 'shepherd shepherd-open shepherd-theme-arrows',
+                text: ['Esta es la pagina de tus presupuestos']
+            },
+            {
+                id: 'intro2',
+                attachTo: {
+                    element: '.card-presupuesto',
+                    on: 'right'
+                },
+                buttons: [
+                    {
+                        classes: 'btn btn-light',
+                        text: 'Atras',
+                        action: () => this.shepherdService.back()
+                    },
+                    {
+                        classes: 'shepherd-button-primary',
+                        text: 'Siguiente',
+                        action: () => this.shepherdService.next()
+                    }
+                ],
+                classes: 'shepherd shepherd-open shepherd-theme-arrows',
+                text: ['Este es el panel de tus presupuestos']
+            },
+            {
+                id: 'intro4',
+                attachTo: {
+                    element: '.boton-add',
+                    on: 'top'
+                },
+                classes: 'shepherd shepherd-open shepherd-theme-arrows',
+                text: [
+                    'Comencemos agregando un presupuesto, haz clic aquí para poder agregar un presupuesto'
+                ]
+            },
+            {
+                id: 'intro5',
+                attachTo: {
+                    element: '.red',
+                    on: 'bottom'
+                },
+                beforeShowPromise: () => {
+                    return new Promise((resolve) => {
+                        setTimeout(resolve, 500);
+                    });
+                },
+                classes: 'shepherd shepherd-open shepherd-theme-arrows',
+                text: ['Completa con los datos para poder agregar el presupuesto']
+            },
+            {
+                id: 'intro6',
+                attachTo: {
+                    element: '.card-presupuesto',
+                    on: 'right'
+                },
+                buttons: [
+                    {
+                        classes: 'shepherd-button-primary',
+                        text: 'Terminar',
+                        action: () => {
+                            //TODO: verificar si ya tiene presupuesto
+                    
+                            this.shepherdService.complete();
+                        }
+                    }
+                ],
+                classes: 'shepherd shepherd-open shepherd-theme-arrows',
+                text: ['Finalmente se agrego el presupuesto']
+            }
+        ]);
+    }
+
+    nextAccion() {       
+        
+        if (this.tourStarted==true && this.tourCancelled==false) {
+            
+            this.tourCancelled=false;
+            this.shepherdService.next();
+        }
+    }
+
+    cancelAccion(){
+
+        this.tourStarted=false;
+        this.tourCancelled=true;
+        if (this.tourStarted==false && this.tourCancelled==true) {   
+         
+            this.tourCancelled=false;
+           this.shepherdService.cancel();
+        }
+    }
+
 }

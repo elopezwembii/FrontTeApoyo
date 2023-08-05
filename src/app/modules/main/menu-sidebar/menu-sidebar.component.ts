@@ -98,13 +98,13 @@ export const MENU = [
         role: 'Usuario'
         //role: 'Administrativo',
     },
-    {
-        name: 'Simular Crédito',
-        iconClasses: 'fas fa-money-check',
-        path: ['/simular'],
-        role: 'Usuario'
-        //role: 'Administrativo',
-    },
+    // {
+    //     name: 'Simular Crédito',
+    //     iconClasses: 'fas fa-money-check',
+    //     path: ['/simular'],
+    //     role: 'Usuario'
+    //     //role: 'Administrativo',
+    // },
     {
         name: 'Aprende',
         iconClasses: 'fas fa-graduation-cap',

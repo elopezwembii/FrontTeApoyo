@@ -293,8 +293,6 @@ export class DashboardComponent implements OnInit {
         if (!localStorage.getItem('tourInicial')) {
             //ejecutar Tour
             this.guia();
-
-            localStorage.setItem('tourInicial', 'realizado');
         }
     }
 
@@ -865,7 +863,7 @@ export class DashboardComponent implements OnInit {
             {
                 id: 'intro1',
                 attachTo: {
-                    element: '.nombre',
+                    // element: '.nombre',
                     on: 'bottom'
                 },
                 buttons: [
@@ -880,14 +878,14 @@ export class DashboardComponent implements OnInit {
                 //title: '!Bienvenido¡ Nos da gusto verte por acá...',
                 classes: 'text-principal',
                 text: [
-                    'En este primer paso, te mostraremos cómo explorar el menú principal.'
+                    'Te guiaremos en unos pocos pasos sobre cómo navegar en nuestra plataforma.'
                 ]
             },
             {
                 id: 'intro2',
                 attachTo: {
-                    element: '.nombre',
-                    on: 'bottom'
+                    element: '.main-sidebar',
+                    on: 'right'
                 },
                 buttons: [
                     {
@@ -914,8 +912,8 @@ export class DashboardComponent implements OnInit {
             {
                 id: 'intro3',
                 attachTo: {
-                    element: '.nombre',
-                    on: 'bottom'
+                    element: '.main-sidebar',
+                    on: 'right'
                 },
                 buttons: [
                     {
@@ -936,7 +934,7 @@ export class DashboardComponent implements OnInit {
                 //title: '!Bienvenido¡ Nos da gusto verte por acá...',
                 classes: 'text-principal',
                 text: [
-                    'Tómate tu tiempo para familiarizarte con las opciones del menú y cómo se organizan.'
+                    'Tómate tu tiempo para familiarizarte con el menú. Desde la pantalla de inicio puedes volver a revisar esta guía cuantas veces lo necesites.'
                 ]
             },
             {
@@ -992,7 +990,7 @@ export class DashboardComponent implements OnInit {
                 //title: 'Tour por las opciones del menú',
                 classes: 'text-principal',
                 text: [
-                    'Desde esta opción puedes volver al panel principal y ver un resumen de tus ingresos, gastos y ahorros.'
+                    'En el panel principal (inicio) se mostrará un resumen de tus indicadores de ingresos, gastos y ahorro en base a la información que has registrado.'
                 ]
             },
             {
@@ -1020,7 +1018,7 @@ export class DashboardComponent implements OnInit {
                 //title: 'Tour por las opciones del menú',
                 classes: 'text-principal',
                 text: [
-                    'Desde esta opción puedes registrar tus ingresos del mes en actual y proyectar tus ingresos fijos.'
+                    'En esta opción, debes registrar los ingresos que recibes en el mes. Puedes "marcar" los ingresos que son fijos, para no tener que ingresarlo todos los meses. Asi ahorrarás tiempo.'
                 ]
             },
             {
@@ -1048,7 +1046,7 @@ export class DashboardComponent implements OnInit {
                 //title: 'Tour por las opciones del menú',
                 classes: 'text-principal',
                 text: [
-                    'Desde esta opción puedes ordenar tus gastos en un presupuesto mensual para no sobrepasarte.'
+                    'En esta opción, debes registrar lo que vas a gastar en el mes, por ítem (hogar, servicios básicos, alimento y comida, etc.).'
                 ]
             },
             {
@@ -1076,7 +1074,7 @@ export class DashboardComponent implements OnInit {
                 //title: 'Tour por las opciones del menú',
                 classes: 'text-principal',
                 text: [
-                    'Desde esta opción puedes registrar tus gastos ordenados por categorías.'
+                    'Una vez registrado tus ingresos y hecho tu presupuesto, ¡¡Ya estás listo!!. Comienza a registrar todos los gastos/egresos que efectúas (idealmente en el momento que los realizas). Esto nos permitirá entregarte información valiosa para optimizar tus finanzas.'
                 ]
             },
             {
@@ -1104,7 +1102,7 @@ export class DashboardComponent implements OnInit {
                 //title: 'Tour por las opciones del menú',
                 classes: 'text-principal',
                 text: [
-                    'Desde esta opción puedes registrar tu deuda financiera, tus tarjetas de crédito y tus cuentas corrientes para realizar un análisis de tu situación financiera.'
+                    'Texto debe decir: En esta opción, puedes registrar tu deuda financiera como créditos, líneas y tarjetas. Con esto podremos realizar un análisis de tu situación de endeudamiento y entregarte recomendaciones.'
                 ]
             },
             {
@@ -1132,7 +1130,7 @@ export class DashboardComponent implements OnInit {
                 //title: 'Tour por las opciones del menú',
                 classes: 'text-principal',
                 text: [
-                    'Desde esta opción puedes programar una meta de ahorro para saber cuanto debes ahorrar mensualmente.'
+                    'Texto debe decir: Desde esta opción puedes programar metas de ahorro en función del monto y del plazo en el que quieres lograrla.'
                 ]
             },
             {
@@ -1160,49 +1158,49 @@ export class DashboardComponent implements OnInit {
                 //title: 'Tour por las opciones del menú',
                 classes: 'text-principal',
                 text: [
-                    'Desde esta opción puedes visualizar tus indicadores financieros de corto y largo plazo. Además, puedes obtener una recomendación para mejorar tus indicadores.'
+                    'En esta opción del menú puedes visualizar tus indicadores de endeudamiento de corto y largo plazo, y obtener recomendaciones sobre tu situación en particular.'
                 ]
             },
+            // {
+            //     id: 'menu8',
+            //     attachTo: {
+            //         element: '.menu-item7',
+            //         on: 'right'
+            //     },
+            //     /* when: {
+            //       show: () => {
+            //         this.loading2 = false;
+            //       },
+            //       hide: () => {
+            //         console.log('hide step');
+            //       }
+            //     }, */
+            //     buttons: [
+            //         {
+            //             classes: 'shepherd-button-primary',
+            //             text: 'Atras',
+            //             action() {
+            //                 return this.back();
+            //             }
+            //         },
+            //         {
+            //             classes: 'shepherd-button-primary',
+            //             text: 'Siguiente',
+            //             action() {
+            //                 return this.next();
+            //             }
+            //         }
+            //     ],
+            //     //title: 'Tour por las opciones del menú',
+            //     classes: 'text-principal',
+            //     text: [
+            //         'Desde esta opción puedes simular un crédito bancario y visualizar cómo afecta tus indicadores en el futuro.'
+            //     ]
+            // },
             {
                 id: 'menu8',
                 attachTo: {
                     element: '.menu-item7',
-                    on: 'right'
-                },
-                /* when: {
-                  show: () => {
-                    this.loading2 = false;
-                  },
-                  hide: () => {
-                    console.log('hide step');
-                  }
-                }, */
-                buttons: [
-                    {
-                        classes: 'shepherd-button-primary',
-                        text: 'Atras',
-                        action() {
-                            return this.back();
-                        }
-                    },
-                    {
-                        classes: 'shepherd-button-primary',
-                        text: 'Siguiente',
-                        action() {
-                            return this.next();
-                        }
-                    }
-                ],
-                //title: 'Tour por las opciones del menú',
-                classes: 'text-principal',
-                text: [
-                    'Desde esta opción puedes simular un crédito bancario y visualizar cómo afecta tus indicadores en el futuro.'
-                ]
-            },
-            {
-                id: 'menu9',
-                attachTo: {
-                    element: '.menu-item8',
                     on: 'right'
                 },
                 when: {
@@ -1224,19 +1222,25 @@ export class DashboardComponent implements OnInit {
                     {
                         classes: 'shepherd-button-primary',
                         text: 'Siguiente',
-                        action() {
-                            return this.next();
+                        action:()=> {
+                            //TODO: verificar si el usuario presiona le botón 
+                            //localStorage.setItem('tourInicial', 'realizado');
+
+                            this.router.navigate(['ingresos']);
+
+                            this.shepherdService.next()
                         }
                     }
                 ],
                 //title: 'Tour por las opciones del menú',
                 classes: 'text-principal',
                 text: [
-                    'Desde esta opción puedes acceder a nuestras publicaciones y tips sobre finanzas personales.'
+                    'En esta sección puedes acceder a nuestras publicaciones con tips sobre finanzas personales y productos financieros.'
                 ]
             }
         ]);
         this.loading2 = true;
         this.shepherdService.start();
+       
     }
 }

@@ -12,6 +12,9 @@ import {ToastrService} from 'ngx-toastr';
     styleUrls: ['./ingresos.component.scss']
 })
 export class IngresosComponent implements OnInit {
+    tourStarted = false;
+    tourCancelled = false;
+
     dias: number[];
     change: boolean = false;
     loading: boolean = false;
@@ -134,7 +137,6 @@ export class IngresosComponent implements OnInit {
     ngOnInit() {
         this.obtenerIngresos();
         this.generarDias(this.selectionMonth, this.selectionYear);
-        
     }
 
     async obtenerIngresos() {
@@ -223,7 +225,8 @@ export class IngresosComponent implements OnInit {
             this.modal = document.getElementById('modalAgregarIngreso');
             this.modal.classList.add('show');
             this.modal.style.display = 'block';
-            this.shepherdService.next();
+
+            this.nextAccion();
         }
     }
 
@@ -236,7 +239,8 @@ export class IngresosComponent implements OnInit {
             this.isAdding = false;
             this.form.reset();
             this.toastr.info('No se realizaron cambios...');
-            this.shepherdService.cancel();
+            //this.tourCancelled=true;
+            this.cancelAccion();
         }
     }
 
@@ -267,7 +271,8 @@ export class IngresosComponent implements OnInit {
                     this.obtenerIngresos();
                     this.change = !this.change;
                     this.toastr.success('Ingreso agregado con éxito.');
-                    this.shepherdService.next();
+
+                    this.nextAccion();
                 } else {
                     this.toastr.error('Error al agregar un nuevo ingreso.');
                     this.loading = false;
@@ -321,7 +326,7 @@ export class IngresosComponent implements OnInit {
         this.isAdding = false;
         this.form.reset();
         this.toastr.info('No se realizaron cambios...');
-        this.shepherdService.cancel();
+        this.cancelAccion();
     }
 
     addUser() {
@@ -339,15 +344,15 @@ export class IngresosComponent implements OnInit {
 
         this.ingresoSelected = this.ingresos[this.ingresos.length - 1];
         this.isAdding = true;
-        this.shepherdService.next();
+
+        this.nextAccion();
     }
 
     isEmpty(obj: any) {
         return Object.keys(obj).length === 0;
     }
 
-    guia(clic) {       
-
+    guia(clic) {
         if (this.ingresos.length !== 0 && !clic) return; // en el caso que el usuario tenga ya un ingreso se salta el tutorial
 
         this.shepherdService.defaultStepOptions = {
@@ -365,7 +370,7 @@ export class IngresosComponent implements OnInit {
         } else {
             this.tourEscritorio();
         }
-
+        this.tourStarted = true;
         this.shepherdService.start();
     }
 
@@ -381,7 +386,10 @@ export class IngresosComponent implements OnInit {
                     {
                         classes: 'btn btn-light',
                         text: 'Cancelar',
-                        action: () => this.shepherdService.cancel()
+                        action: () => {
+                            //this.tourCancelled=true;
+                            this.cancelAccion();
+                        }
                     },
                     {
                         classes: 'shepherd-button-primary',
@@ -447,8 +455,12 @@ export class IngresosComponent implements OnInit {
                 buttons: [
                     {
                         classes: 'shepherd-button-primary',
-                        text: 'Terminar',
-                        action: () => this.shepherdService.complete()
+                        text: 'Siguiente',
+                        action: () => {
+                            //TODO: verificar si ya tiene ingreso
+                            this.router.navigate(['presupuesto']);
+                            this.shepherdService.complete();
+                        }
                     }
                 ],
                 classes: 'shepherd shepherd-open shepherd-theme-arrows',
@@ -530,13 +542,36 @@ export class IngresosComponent implements OnInit {
                 buttons: [
                     {
                         classes: 'shepherd-button-primary',
-                        text: 'Terminar',
-                        action: () => this.shepherdService.complete()
+                        text: 'Siguiente',
+                        action: () => {
+                            this.router.navigate(['presupuesto']);
+                            this.shepherdService.complete();
+                        }
                     }
                 ],
                 classes: 'shepherd shepherd-open shepherd-theme-arrows',
                 text: ['Finalmente se agrego el ingreso']
             }
         ]);
+    }
+
+    nextAccion() {      
+        
+        if (this.tourStarted==true && this.tourCancelled==false) {
+       
+            
+            this.tourCancelled=false;
+            this.shepherdService.next();
+        }
+    }
+
+    cancelAccion(){
+        this.tourStarted=false;
+        this.tourCancelled=true;
+        if (this.tourStarted==false && this.tourCancelled==true) {   
+            console.log('entro cancel');
+            this.tourCancelled=false;
+           this.shepherdService.cancel();
+        }
     }
 }

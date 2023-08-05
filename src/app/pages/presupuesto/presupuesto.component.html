@@ -2,7 +2,15 @@
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col-sm-6">
-        <h1 class="m-0 text-main"><b> Mi presupuesto</b></h1>
+        <h1 class="m-0 text-main"><b> Mi presupuesto</b>
+        <button
+        type="button"
+        (click)="guia(true)"
+        class="btn btn-outline-info rounded-pill shadow-sm ml-3"
+    >
+        <i class="fas fa-map-signs mr-2"></i> Iniciar Guía
+    </button>
+  </h1>
       </div>
       <!-- /.col -->
       <div class="col-sm-6">
@@ -10,7 +18,7 @@
           <li class="breadcrumb-item">
             <a [routerLink]="['']">Inicio</a>
           </li>
-          <li class="breadcrumb-item">presupuesto</li>
+          <li class="breadcrumb-item">Presupuesto</li>
         </ol>
       </div>
       <!-- /.col -->
@@ -26,7 +34,7 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-12 col-sm-8">
-        <div class="card mb-3">
+        <div class="card card-presupuesto mb-3">
           <div class="card-body">
             <!-- Selector de mes -->
             <ul class="pagination pagination-month justify-content-center align-items-center">
@@ -143,8 +151,8 @@
                                                             "></i>
                           </td>
                         </tr>
-
-                        <tr *ngIf="
+                    
+                        <tr [class.red]="i === itemsPresupuesto.length - 1" *ngIf="
                                                         presupuestoSelected ===
                                                         presupuesto
                                                     " class="row-table-edit">
