@@ -419,7 +419,7 @@ export class PresupuestoComponent implements OnInit {
         if (this.itemsPresupuesto.length !== 0 && !clic) return; // en el caso que el usuario tenga ya un ingreso se salta el tutorial
 
         this.shepherdService.defaultStepOptions = {
-            scrollTo: true,
+            scrollTo: false,
             cancelIcon: {
                 enabled: false
             }
@@ -448,7 +448,6 @@ export class PresupuestoComponent implements OnInit {
                         classes: cancelButtonClass,
                         text: 'Cancelar',
                         action: () => {
-                            //this.tourCancelled=true;
                             this.cancelAccion();
                         }
                     },
@@ -497,7 +496,7 @@ export class PresupuestoComponent implements OnInit {
                 id: 'intro5',
                 attachTo: {
                     element: '.red',
-                    on: 'bottom'
+                    on: 'right'
                 },
                 beforeShowPromise: () => {
                     return new Promise((resolve) => {

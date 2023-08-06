@@ -231,6 +231,9 @@ export class IngresosComponent implements OnInit {
     }
 
     cerrarModal() {
+
+        if (localStorage.getItem('tourInicial') !== 'realizado') return;
+
         if (this.windowSize <= 1000) {
             this.modal.classList.remove('show');
             this.modal.style.display = 'none';
@@ -443,7 +446,7 @@ export class IngresosComponent implements OnInit {
                 id: 'intro5',
                 attachTo: {
                     element: '.red',
-                    on: 'bottom'
+                    on: 'right'
                 },
                 beforeShowPromise: () => {
                     return new Promise((resolve) => {

@@ -269,8 +269,7 @@ input[type='number'] {
 [data-tooltip] {
     position: relative;
     cursor: pointer;
-
-    z-index: 6000; //1100
+    z-index: 11000; // Aumentar este valor
 }
 
 [data-tooltip]:before,
@@ -287,7 +286,7 @@ input[type='number'] {
 [data-tooltip]:before {
     content: '';
     border: 5px solid transparent;
-    z-index: 1100;
+    z-index: 9999;
 }
 [data-tooltip]:after {
     content: attr(data-tooltip);
@@ -300,20 +299,20 @@ input[type='number'] {
     border-radius: 3px;
     background: $principalSidebar;
     color: #ffffff;
-    z-index: 1100;
+    z-index: 9999;
 }
 
 @media (max-width: 1290px) {
     [data-tooltip] {
-        z-index: 100;
+        z-index: 9999;
     }
 
     [data-tooltip]:before {
-        z-index: 100;
+        z-index: 9999;
     }
 
     [data-tooltip]:after {
-        z-index: 100;
+        z-index: 9999;
     }
 }
 [data-tooltip]:hover:before,
@@ -398,7 +397,7 @@ input[type='number'] {
     border-radius: 3px;
     background: $principalSidebar;
     color: #ffffff;
-    z-index: 1100;
+    z-index: 9999;
 }
 
 
@@ -472,3 +471,4 @@ color: white;
     color: white !important;
     text-align: justify !important;
 }
+
