@@ -317,6 +317,8 @@ export class IngresosComponent implements OnInit {
     }
 
     cancel() {
+        if (localStorage.getItem('tourInicial') !== 'realizado') return;
+
         if (!this.isEditing) {
             this.ingresos.pop();
         }
@@ -375,6 +377,11 @@ export class IngresosComponent implements OnInit {
     }
 
     tourEscritorio() {
+        let isTourInicial = localStorage.getItem('tourInicial') === 'realizado';
+        let cancelButtonClass = isTourInicial
+            ? 'btn btn-light'
+            : 'btn btn-light d-none';
+
         this.shepherdService.addSteps([
             {
                 id: 'intro1',
@@ -384,7 +391,7 @@ export class IngresosComponent implements OnInit {
                 },
                 buttons: [
                     {
-                        classes: 'btn btn-light',
+                        classes: cancelButtonClass,
                         text: 'Cancelar',
                         action: () => {
                             //this.tourCancelled=true;
@@ -555,23 +562,20 @@ export class IngresosComponent implements OnInit {
         ]);
     }
 
-    nextAccion() {      
-        
-        if (this.tourStarted==true && this.tourCancelled==false) {
-       
-            
-            this.tourCancelled=false;
+    nextAccion() {
+        if (this.tourStarted == true && this.tourCancelled == false) {
+            this.tourCancelled = false;
             this.shepherdService.next();
         }
     }
 
-    cancelAccion(){
-        this.tourStarted=false;
-        this.tourCancelled=true;
-        if (this.tourStarted==false && this.tourCancelled==true) {   
-            console.log('entro cancel');
-            this.tourCancelled=false;
-           this.shepherdService.cancel();
+    cancelAccion() {
+        this.tourStarted = false;
+        this.tourCancelled = true;
+        if (this.tourStarted == false && this.tourCancelled == true) {
+          
+            this.tourCancelled = false;
+            this.shepherdService.cancel();
         }
     }
 }

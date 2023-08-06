@@ -346,6 +346,8 @@ export class PresupuestoComponent implements OnInit {
         //     this.itemsPresupuesto.splice(0, 1);
         // }
 
+        if (localStorage.getItem('tourInicial') !== 'realizado') return;
+
         if (!this.isEditing) {
             this.itemsPresupuesto.pop();
         }
@@ -430,6 +432,10 @@ export class PresupuestoComponent implements OnInit {
     }
 
     tourEscritorio() {
+
+        let isTourInicial = localStorage.getItem('tourInicial') === 'realizado';    
+        let cancelButtonClass = isTourInicial ?  'btn btn-light':'btn btn-light d-none' ;
+
         this.shepherdService.addSteps([
             {
                 id: 'intro1',
@@ -439,7 +445,7 @@ export class PresupuestoComponent implements OnInit {
                 },
                 buttons: [
                     {
-                        classes: 'btn btn-light',
+                        classes: cancelButtonClass,
                         text: 'Cancelar',
                         action: () => {
                             //this.tourCancelled=true;
@@ -515,7 +521,7 @@ export class PresupuestoComponent implements OnInit {
                         text: 'Terminar',
                         action: () => {
                             //TODO: verificar si ya tiene presupuesto
-
+                            localStorage.setItem('tourInicial', 'realizado');
                             this.shepherdService.complete();
                         }
                     }
