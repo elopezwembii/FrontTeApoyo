@@ -458,7 +458,7 @@ export class PresupuestoComponent implements OnInit {
                     }
                 ],
                 classes: 'shepherd shepherd-open shepherd-theme-arrows',
-                text: ['Esta es la pagina de tus presupuestos']
+                text: ['Acá puedes registrar tus presupuestos del mes']
             },
             {
                 id: 'intro2',
@@ -479,7 +479,7 @@ export class PresupuestoComponent implements OnInit {
                     }
                 ],
                 classes: 'shepherd shepherd-open shepherd-theme-arrows',
-                text: ['Este es el panel de tus presupuestos']
+                text: ['Este es el panel donde se muestran los presupuesto que registras']
             },
             {
                 id: 'intro4',
@@ -489,7 +489,7 @@ export class PresupuestoComponent implements OnInit {
                 },
                 classes: 'shepherd shepherd-open shepherd-theme-arrows',
                 text: [
-                    'Comencemos agregando un presupuesto, haz clic aquí para poder agregar un presupuesto'
+                    'Comencemos agregando un presupuesto. Haz click aquí para poder agregarlo'
                 ]
             },
             {
@@ -505,7 +505,7 @@ export class PresupuestoComponent implements OnInit {
                 },
                 classes: 'shepherd shepherd-open shepherd-theme-arrows',
                 text: [
-                    'Completa con los datos para poder agregar el presupuesto'
+                    'Completa los datos de tu presupuesto'
                 ]
             },
             {
@@ -519,14 +519,14 @@ export class PresupuestoComponent implements OnInit {
                         classes: 'shepherd-button-primary',
                         text: 'Terminar',
                         action: () => {
-                            //TODO: verificar si ya tiene presupuesto
+                           
                             localStorage.setItem('tourInicial', 'realizado');
                             this.shepherdService.complete();
                         }
                     }
                 ],
                 classes: 'shepherd shepherd-open shepherd-theme-arrows',
-                text: ['Finalmente se agrego el presupuesto']
+                text: ['¡Listo! Tu ingreso ha sido registrado']
             }
         ]);
     }

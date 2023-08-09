@@ -408,7 +408,7 @@ export class IngresosComponent implements OnInit {
                     }
                 ],
                 classes: 'shepherd shepherd-open shepherd-theme-arrows',
-                text: ['Esta es la pagina de tus ingresos']
+                text: ['Acá puedes registrar tus ingresos del mes']
             },
             {
                 id: 'intro2',
@@ -429,7 +429,7 @@ export class IngresosComponent implements OnInit {
                     }
                 ],
                 classes: 'shepherd shepherd-open shepherd-theme-arrows',
-                text: ['Este es el panel de tus ingresos']
+                text: ['Este es el panel donde se muestran los ingresos que registras']
             },
             {
                 id: 'intro4',
@@ -439,7 +439,7 @@ export class IngresosComponent implements OnInit {
                 },
                 classes: 'shepherd shepherd-open shepherd-theme-arrows',
                 text: [
-                    'Comencemos agregando un ingreso, haz clic aquí para poder agregar un ingreso'
+                    'Comencemos agregando un ingreso. Haz click aquí para poder agregarlo'
                 ]
             },
             {
@@ -454,7 +454,7 @@ export class IngresosComponent implements OnInit {
                     });
                 },
                 classes: 'shepherd shepherd-open shepherd-theme-arrows',
-                text: ['Completa con los datos para poder agregar los ingresos']
+                text: ['Completa los datos de tu ingreso principal']
             },
             {
                 id: 'intro6',
@@ -467,14 +467,17 @@ export class IngresosComponent implements OnInit {
                         classes: 'shepherd-button-primary',
                         text: 'Siguiente',
                         action: () => {
-                            //TODO: verificar si ya tiene ingreso
-                            this.router.navigate(['presupuesto']);
+                            
+                            if(this.ingresos.length===1){
+                                
+                                this.router.navigate(['presupuesto']);
+                               }
                             this.shepherdService.complete();
                         }
                     }
                 ],
                 classes: 'shepherd shepherd-open shepherd-theme-arrows',
-                text: ['Finalmente se agrego el ingreso']
+                text: ['¡Listo! Tu ingreso ha sido registrado']
             }
         ]);
     }
@@ -500,7 +503,7 @@ export class IngresosComponent implements OnInit {
                     }
                 ],
                 classes: 'shepherd shepherd-open shepherd-theme-arrows',
-                text: ['Esta es la pagina de tus ingresos']
+                text: ['Acá puedes registrar tus ingresos del mes']
             },
             {
                 id: 'intro2',
@@ -521,7 +524,7 @@ export class IngresosComponent implements OnInit {
                     }
                 ],
                 classes: 'shepherd shepherd-open shepherd-theme-arrows',
-                text: ['Este es el panel de tus ingresos']
+                text: ['Este es el panel donde se muestran los ingresos que registras']
             },
             {
                 id: 'intro4',
@@ -531,7 +534,7 @@ export class IngresosComponent implements OnInit {
                 },
                 classes: 'shepherd shepherd-open shepherd-theme-arrows',
                 text: [
-                    'Comencemos agregando un ingreso, haz clic aquí para poder agregar un ingreso'
+                    'Comencemos agregando un ingreso. Haz click aquí para poder agregarlo.'
                 ]
             },
             {
@@ -541,7 +544,7 @@ export class IngresosComponent implements OnInit {
                     on: 'top'
                 },
                 classes: 'shepherd shepherd-open shepherd-theme-arrows',
-                text: ['Completa con los datos para poder agregar los ingresos']
+                text: ['Completa los datos de tu ingreso principal']
             },
             {
                 id: 'intro6',
@@ -554,13 +557,16 @@ export class IngresosComponent implements OnInit {
                         classes: 'shepherd-button-primary',
                         text: 'Siguiente',
                         action: () => {
-                            this.router.navigate(['presupuesto']);
+                            
+                            if(this.ingresos.length===1){
+                             this.router.navigate(['presupuesto']);
+                            }
                             this.shepherdService.complete();
                         }
                     }
                 ],
                 classes: 'shepherd shepherd-open shepherd-theme-arrows',
-                text: ['Finalmente se agrego el ingreso']
+                text: ['¡Listo! Tu ingreso ha sido registrado']
             }
         ]);
     }
