@@ -38,6 +38,8 @@ export class UsuarioService {
     }
 
     async agregarUsuario(usuario: any): Promise<boolean> {
+    
+        
         try {
             const res = await new Promise((resolve, reject) => {
                 this._http
@@ -46,7 +48,10 @@ export class UsuarioService {
                         {
                             email: usuario.email,
                             password: usuario.password,
-                            rol: usuario.rol
+                            rol: usuario.rol,
+                            rut:usuario.rut,
+                            nombres:usuario.nombre,
+                            apellidos:usuario.apellidos,
                         },
                         {
                             headers: {

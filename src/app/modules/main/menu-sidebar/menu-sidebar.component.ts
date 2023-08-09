@@ -48,13 +48,13 @@ export const MENU = [
         name: 'Inicio',
         iconClasses: 'fas fa-home',
         path: ['/'],
-        role: 'Usuario'
+        roles: ['Usuario', 'Administrador']
     },
     {
         name: 'Mis Ingresos',
         iconClasses: 'fas fa-money-bill-wave',
         path: ['/ingresos'],
-        role: 'Usuario'
+        roles: ['Usuario', 'Administrador']
         /* children: [
             {
                 name: 'Sub Ruta',
@@ -67,35 +67,35 @@ export const MENU = [
         name: 'Mi Presupuesto',
         iconClasses: 'fas fa-wallet',
         path: ['/presupuesto'],
-        role: 'Usuario'
+        roles: ['Usuario', 'Administrador']
         //role: 'Administrativo',
     },
     {
         name: 'Mis Gastos / Egresos',
         iconClasses: 'fas fa-hand-holding-usd',
         path: ['/gastos'],
-        role: 'Usuario'
+        roles: ['Usuario', 'Administrador']
     },
 
     {
         name: 'Mis Deudas',
         iconClasses: 'fas fa-credit-card',
         path: ['/deudas'],
-        role: 'Usuario'
+        roles: ['Usuario', 'Administrador']
         //role: 'Administrativo',
     },
     {
         name: 'Mis Ahorros',
         iconClasses: 'fas fa-piggy-bank',
         path: ['/ahorros'],
-        role: 'Usuario'
+        roles: ['Usuario', 'Administrador']
         //role: 'Administrativo',
     },
     {
         name: 'Análisis Financiero',
         iconClasses: 'fas fa-chart-line',
         path: ['/analisis'],
-        role: 'Usuario'
+        roles: ['Usuario', 'Administrador']
         //role: 'Administrativo',
     },
     // {
@@ -109,7 +109,7 @@ export const MENU = [
         name: 'Aprende',
         iconClasses: 'fas fa-graduation-cap',
         path: ['/aprende'],
-        role: 'Usuario'
+        roles: ['Usuario', 'Administrador']
         //role: 'Administrativo',
     },
     {

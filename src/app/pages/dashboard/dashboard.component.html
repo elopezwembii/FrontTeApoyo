@@ -3,7 +3,7 @@
       <div class="row mb-2">
         <div class="col-sm-6">
           <h1 class="m-0 text-main">
-            <b class="nombre">¡Hola {{ usuario.user.nombres | titlecase }}!</b>
+            <b class="nombre">¡Holas {{ usuario.user.nombres | titlecase }}!</b>
             <button
             type="button"
             (click)="guia()"
@@ -29,7 +29,6 @@
     </div>
     <!-- /.container-fluid -->
   </div>
-  
 
   <div class="container-fluid" *ngIf="usuario.rol.nombre === 'Usuario'">
     <div class="row">

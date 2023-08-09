@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ToastrService} from 'ngx-toastr';
 import * as bootstrap from 'bootstrap';
 import {UsuarioService} from '@services/usuario.service';
+import {EmpresaService} from '@services/empresa.service';
 
 @Component({
     selector: 'app-modal-usuario',
@@ -16,27 +17,66 @@ export class ModalUsuarioComponent implements OnInit {
     titulo = 'Agregar usuario';
     myModal: any;
 
+    listaEmpresa: any[] = [];
+
     constructor(
         private fb: FormBuilder,
         private toastr: ToastrService,
-        private usuarioService: UsuarioService
+        private usuarioService: UsuarioService,
+        private empresaService: EmpresaService
     ) {}
 
     ngOnInit(): void {
+        this.obtenerEmpresas();
+
         this.myModal = new bootstrap.Modal(
             document.getElementById('modalAhorro'),
             {}
         );
     }
 
+    async obtenerEmpresas() {
+        (await this.empresaService.getEmpresas()).subscribe({
+            next: ({empresas}: {empresas: any}) => {
+                this.listaEmpresa = empresas;
+            },
+            error: (error: any) => {
+                this.loading.emit(false);
+            }
+        });
+    }
+
     form: FormGroup = this.fb.group({
         email: [, [Validators.required, Validators.email]],
-        password: [, [Validators.required]]
-    });
+        password: [, [Validators.required]],
+        empresa: [-1, [Validators.required]],
+        rut: [, [Validators.required]],  // Asegúrate de validar el RUT adecuadamente
+        nombre: [, [Validators.required]],
+        apellidos: [, [Validators.required]],
+        confirmPassword: [, [Validators.required]],
+    }, {validators: this.passwordsMatch});
+
+
+    passwordsMatch(group: FormGroup) {
+        const password = group.get('password').value;
+        const confirmPassword = group.get('confirmPassword').value;
+    
+        return password === confirmPassword ? null : {notMatching: true};
+    }
 
     openModal(usuario: any = null) {
+   
+        if (usuario === null) {
+            this.form.reset({
+                email: '',
+                password: '',
+                empresa: -1
+            });
+        } else {
+            this.setFormValues(usuario);
+        }
+
         this.myModal.show();
-        this.setFormValues(usuario);
     }
 
     setFormValues(usuario: any) {
@@ -50,7 +90,7 @@ export class ModalUsuarioComponent implements OnInit {
         }
     }
 
-    async guardarAhorro(usuario: any) {
+    async agregarUsuario(usuario: any) {
         this.loading.emit(true);
         try {
             const res = await this.usuarioService.agregarUsuario(usuario);
@@ -74,7 +114,7 @@ export class ModalUsuarioComponent implements OnInit {
         });
     }
 
-    async editarAhorro(usuario: any) {
+    async actualizarUsuario(usuario: any) {
         this.loading.emit(true);
 
         const res = await this.usuarioService.actualizarUsuario(usuario);
@@ -96,11 +136,30 @@ export class ModalUsuarioComponent implements OnInit {
             ...usuario
         };
 
+        console.log({usuario});
+        
+
         if (usuario.id) {
-            this.editarAhorro(usuario);
+            this.actualizarUsuario(usuario);
         } else {
-            this.guardarAhorro(usuario);
+            this.agregarUsuario(usuario);
         }
         this.usuarioService.getUsuarios();
     }
+
+    getFormErrors(): string[] {
+        let errors: string[] = [];
+        
+        if (this.form.get('rut').errors?.required) errors.push('RUT es requerido.');
+        if (this.form.get('nombre').errors?.required) errors.push('Nombre es requerido.');
+        if (this.form.get('apellidos').errors?.required) errors.push('Apellidos son requeridos.');
+        if (this.form.get('email').errors?.required) errors.push('Email es requerido.');
+        if (this.form.get('email').errors?.email) errors.push('Formato de email inválido.');
+        if (this.form.get('password').errors?.required) errors.push('Contraseña es requerida.');
+        if (this.form.get('confirmPassword').errors?.required) errors.push('Confirmación de contraseña es requerida.');
+        if (this.form.errors?.notMatching) errors.push('Contraseña y su confirmación no coinciden.');
+        
+        return errors;
+    }
+    
 }

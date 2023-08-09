@@ -61,6 +61,7 @@ import { ModalUsuarioComponent } from './components/modal-usuario/modal-usuario.
 import { ModalEmpresaComponent } from './components/modal-empresa/modal-empresa.component';
 import { GastoHormigaComponent } from './components/gasto-hormiga/gasto-hormiga.component';
 import { ChatComponent } from './components/chat/chat.component';
+import { ConfiguracionComponent } from './pages/configuracion/configuracion.component';
 
 
 defineCustomElements();
@@ -112,7 +113,8 @@ registerLocaleData(localeEs);
         ModalUsuarioComponent,
         ModalEmpresaComponent,
         GastoHormigaComponent,
-        ChatComponent
+        ChatComponent,
+        ConfiguracionComponent
 
     ],
     imports: [

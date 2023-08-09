@@ -3,55 +3,74 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">{{ titulo }}</h5>
-                <button
-                    type="button"
-                    class="close"
-                    data-dismiss="modal"
-                    aria-label="Close"
-                >
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
                 <form [formGroup]="form" (ngSubmit)="submit()">
-                    <div class="mb-3">
-                        <label for="email" class="form-label">Email</label>
-                        <input
-                            autocomplete="off"
-                            formControlName="email"
-                            type="email"
-                            class="form-control"
-                            placeholder="Email del usuario"
-                        />
+                    <div class="row">
+                        <!-- Campo para RUT -->
+                        <div class="col-md-6 mb-3">
+                            <label for="rut" class="form-label">RUT</label>
+                            <input autocomplete="off" formControlName="rut" type="text" class="form-control" placeholder="RUT del usuario" />
+                        </div>
+
+                        <!-- Campo para Nombre -->
+                        <div class="col-md-6 mb-3">
+                            <label for="nombre" class="form-label">Nombre</label>
+                            <input autocomplete="off" formControlName="nombre" type="text" class="form-control" placeholder="Nombre del usuario" />
+                        </div>
                     </div>
-                    <div class="mb-3">
-                        <label for="password" class="form-label"
-                            >Contraseña</label
-                        >
-                        <input
-                            autocomplete="off"
-                            formControlName="password"
-                            type="text"
-                            class="form-control"
-                            placeholder="Contraseña del usuario"
-                        />
+
+                    <div class="row">
+                        <!-- Campo para Apellidos -->
+                        <div class="col-md-12 mb-3">
+                            <label for="apellidos" class="form-label">Apellidos</label>
+                            <input autocomplete="off" formControlName="apellidos" type="text" class="form-control" placeholder="Apellidos del usuario" />
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <!-- Campo para Email -->
+                        <div class="col-md-6 mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input autocomplete="off" formControlName="email" type="email" class="form-control" placeholder="Email del usuario" />
+                        </div>
+
+                        <!-- Campo para Empresa -->
+                        <div class="col-md-6 mb-3">
+                            <label for="empresa" class="form-label">Empresa</label>
+                            <select formControlName="empresa" class="form-control">
+                                <option value="-1">No aplica</option>
+                                <option *ngFor="let empresa of listaEmpresa" [value]="empresa.id">{{empresa.nombre}}</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <!-- Campo para Contraseña -->
+                        <div class="col-md-6 mb-3">
+                            <label for="password" class="form-label">Contraseña</label>
+                            <input autocomplete="off" formControlName="password" type="password" class="form-control" placeholder="Contraseña del usuario" />
+                        </div>
+
+                        <!-- Campo para Confirmación de Contraseña -->
+                        <div class="col-md-6 mb-3">
+                            <label for="confirmPassword" class="form-label">Confirmar Contraseña</label>
+                            <input autocomplete="off" formControlName="confirmPassword" type="password" class="form-control" placeholder="Confirmar Contraseña" />
+                        </div>
+                    </div>
+
+                    <div class="alert alert-info" *ngIf="form.invalid && form.dirty">
+                        <ul>
+                            <li *ngFor="let error of getFormErrors()">{{ error }}</li>
+                        </ul>
                     </div>
 
                     <div class="modal-footer">
-                        <button
-                            type="button"
-                            class="btn btn-secondary"
-                            data-dismiss="modal"
-                        >
-                            Cerrar
-                        </button>
-                        <button
-                            [disabled]="!form.valid"
-                            type="submit"
-                            class="btn btn-primary"
-                        >
-                            Guardar cambios
-                        </button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        <button type="submit" class="btn btn-primary">Guardar cambios</button>
                     </div>
                 </form>
             </div>
