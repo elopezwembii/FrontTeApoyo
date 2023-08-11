@@ -1,5 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {ModalUsuarioComponent} from '@components/modal-usuario/modal-usuario.component';
+import {EmpresaService} from '@services/empresa.service';
 import {UsuarioService} from '@services/usuario.service';
 import {ToastrService} from 'ngx-toastr';
 
@@ -20,19 +21,87 @@ export class GestionUsuariosComponent implements OnInit {
             }
         };
         this.obtenerUsuarios();
+      
+    }
+    empresa = JSON.parse(sessionStorage.getItem('user')).user.id_empresa;
+    rol = JSON.parse(sessionStorage.getItem('user')).rol.nombre;
+    empresa_desc = JSON.parse(sessionStorage.getItem('user')).user.empresa
+        .nombre;
+
+    limiteColaboracion = 0;
+    cantidadColaboradores = 0;
+    cupoDisponible = false;
+
+    cupo() {
+        this.empresaService.getCantidadColaboradores(this.empresa).subscribe({
+            next: ({
+                limiteColaboradores,
+                cantidadColaboradores,
+                cupoDisponible
+            }: any) => {
+                this.limiteColaboracion = limiteColaboradores;
+                this.cantidadColaboradores = cantidadColaboradores;
+                this.cupoDisponible = cupoDisponible;
+            }
+        });
     }
 
     constructor(
         private usuarioService: UsuarioService,
+        private empresaService: EmpresaService,
         private toastr: ToastrService
-    ) {}
+    ) {
+        // Obtener el usuario y su información desde sessionStorage
+    }
+
+    // async obtenerUsuarios() {
+
+    //     const {
+    //         user: {id_empresa: empresa},
+    //         rol: {nombre: rol}
+    //     } = JSON.parse(sessionStorage.getItem('user'));
+
+    //     console.log(rol);
+    //     console.log(empresa);
+
+    //     this.loading = true;
+    //     (await this.usuarioService.getUsuarios()).subscribe({
+    //         next: ({usuarios}: {usuarios: any}) => {
+    //             this.usuarios = usuarios;
+
+    //             console.log('list',this.usuarios);
+
+    //             this.loading = false;
+    //         },
+    //         error: (error: any) => {}
+    //     });
+    // }
 
     async obtenerUsuarios() {
+        const {
+            user: {id_empresa: empresa, id: id_user},
+            rol: {nombre: rol}
+        } = JSON.parse(sessionStorage.getItem('user'));
+
         this.loading = true;
         (await this.usuarioService.getUsuarios()).subscribe({
             next: ({usuarios}: {usuarios: any}) => {
-                this.usuarios = usuarios;
-                console.log(usuarios);
+                this.cupo();
+                // Si el rol es administrador (rol 3), mostrar todos los usuarios
+                if (rol === 'Administrador') {
+                    this.usuarios = usuarios.filter(
+                        (usuario: any) => usuario.id !== id_user
+                    );
+                } else {
+                    // Filtrar la lista de usuarios según la empresa y excluir al usuario actual
+                    this.usuarios = usuarios.filter(
+                        (usuario: any) =>
+                            usuario.empresa &&
+                            usuario.empresa.id === empresa &&
+                            usuario.id !== id_user
+                    );
+                }
+
                 this.loading = false;
             },
             error: (error: any) => {}
@@ -45,7 +114,6 @@ export class GestionUsuariosComponent implements OnInit {
 
     actualizarUsuarios(usuariosMod: any[]) {
         this.obtenerUsuarios();
-        console.log(usuariosMod);
     }
 
     actualizarCarga(loading: boolean) {
@@ -59,12 +127,12 @@ export class GestionUsuariosComponent implements OnInit {
                 this.obtenerUsuarios();
                 this.toastr.info('Usuario dado de baja con éxito.');
             }
-        }else{
-          if (confirm('¿Estás seguro habilitar usuario?')) {
-            await this.usuarioService.cambiarEstado(usuario);
-            this.obtenerUsuarios();
-            this.toastr.info('Usuario habilitado con éxito.');
-        }
+        } else {
+            if (confirm('¿Estás seguro habilitar usuario?')) {
+                await this.usuarioService.cambiarEstado(usuario);
+                this.obtenerUsuarios();
+                this.toastr.info('Usuario habilitado con éxito.');
+            }
         }
     }
 }

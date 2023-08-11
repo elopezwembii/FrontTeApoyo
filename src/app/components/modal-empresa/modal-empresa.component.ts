@@ -16,6 +16,7 @@ export class ModalEmpresaComponent implements OnInit {
     titulo = 'Agregar empresa';
     myModal: any;
 
+
     constructor(
         private fb: FormBuilder,
         private toastr: ToastrService,
@@ -30,11 +31,22 @@ export class ModalEmpresaComponent implements OnInit {
     }
 
     form: FormGroup = this.fb.group({
+        rut: [, [Validators.required]], // Agregado: RUT
+        nombres: [, [Validators.required]], // Agregado: Nombres
+        apellidos: [, [Validators.required]], // Agregado: Apellidos
         email: [, [Validators.required, Validators.email]],
         password: [, [Validators.required]],
-        nombre: [, [Validators.required]],
+        confirmPassword: [, [Validators.required]], // Agregado: Confirmar Contraseña
+        nombreEmpresa: [, [Validators.required]],
         cantidad_colaboradores: [0, [Validators.required, Validators.min(1)]]
-    });
+    }, {validators: this.passwordsMatch});
+
+    passwordsMatch(group: FormGroup) {
+        const password = group.get('password').value;
+        const confirmPassword = group.get('confirmPassword').value;
+    
+        return password === confirmPassword ? null : {notMatching: true};
+    }
 
     openModal(empresa: any = null) {
         this.myModal.show();
@@ -66,7 +78,7 @@ export class ModalEmpresaComponent implements OnInit {
 
     async guardarEmpresa(empresa: any) {
         this.loading.emit(true);
-        try {
+        try {            
             const res = await this.empresaService.agregarEmpresa(empresa);
             this.toastr.success(`Usuario agregado correctamente`);
             this.obtenerEmpresas();
@@ -75,43 +87,6 @@ export class ModalEmpresaComponent implements OnInit {
             this.loading.emit(false);
         }
     }
-
-    /* async guardarAhorro(usuario: any) {
-        this.loading.emit(true);
-        try {
-            const res = await this.usuarioService.agregarUsuario(usuario);
-            this.toastr.success(`Usuario agregado correctamente`);
-            this.obtenerUsuarios();
-            this.myModal.hide();
-        } catch (error) {
-            this.loading.emit(false);
-        }
-    } */
-
-    /* async obtenerUsuarios() {
-        (await this.usuarioService.getUsuarios()).subscribe({
-            next: ({usuarios}: {usuarios: any}) => {
-                this.usuariosMod.emit(usuarios);
-                this.loading.emit(false);
-            },
-            error: (error: any) => {
-                this.loading.emit(false);
-            }
-        });
-    } */
-
-    /* async editarAhorro(usuario: any) {
-        this.loading.emit(true);
-
-        const res = await this.usuarioService.actualizarUsuario(usuario);
-        if (res) {
-            this.toastr.success(`Ahorro editado correctamente`);
-            this.obtenerUsuarios();
-            this.myModal.hide();
-        } else {
-            this.toastr.error('Error');
-        }
-    } */
 
     submit() {
         if (!this.form.valid) return;
@@ -129,4 +104,22 @@ export class ModalEmpresaComponent implements OnInit {
         }
         this.empresaService.getEmpresas();
     }
+
+    getFormErrors(): string[] {
+        let errors: string[] = [];
+        
+        if (this.form.get('rut').errors?.required) errors.push('RUT es requerido.');
+        if (this.form.get('nombres').errors?.required) errors.push('Nombre es requerido.');
+        if (this.form.get('apellidos').errors?.required) errors.push('Apellidos son requeridos.');
+        if (this.form.get('email').errors?.required) errors.push('Email es requerido.');
+        if (this.form.get('email').errors?.email) errors.push('Formato de email inválido.');
+        if (this.form.get('password').errors?.required) errors.push('Contraseña es requerida.');
+        if (this.form.get('confirmPassword').errors?.required) errors.push('Confirmación de contraseña es requerida.');
+        if (this.form.get('nombreEmpresa').errors?.required) errors.push('Nombre empresa es obligatorio');
+        if (this.form.get('cantidad_colaboradores').errors?.required) errors.push('La cantidad de colaboradores es obligatoria');
+        if (this.form.errors?.notMatching) errors.push('Contraseña y su confirmación no coinciden.');
+        
+        return errors;
+    }
+    
 }

@@ -42,7 +42,7 @@
                         <div class="col-md-6 mb-3">
                             <label for="empresa" class="form-label">Empresa</label>
                             <select formControlName="empresa" class="form-control">
-                                <option value="-1">No aplica</option>
+                                <!-- <option value="-1">No aplica</option> -->
                                 <option *ngFor="let empresa of listaEmpresa" [value]="empresa.id">{{empresa.nombre}}</option>
                             </select>
                         </div>

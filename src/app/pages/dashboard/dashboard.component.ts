@@ -835,6 +835,7 @@ export class DashboardComponent implements OnInit {
 
     obtenerUsuario() {
         this.usuario = JSON.parse(sessionStorage.getItem('user'));
+
         this.ahorroService.obtenerNivelAhorroUsuario().subscribe({
             next: ({
                 posibleAhorro,

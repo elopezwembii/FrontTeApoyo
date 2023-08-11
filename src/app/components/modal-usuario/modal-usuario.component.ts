@@ -18,6 +18,7 @@ export class ModalUsuarioComponent implements OnInit {
     myModal: any;
 
     listaEmpresa: any[] = [];
+    user: any;
 
     constructor(
         private fb: FormBuilder,
@@ -27,6 +28,7 @@ export class ModalUsuarioComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
+        
         this.obtenerEmpresas();
 
         this.myModal = new bootstrap.Modal(
@@ -35,42 +37,68 @@ export class ModalUsuarioComponent implements OnInit {
         );
     }
 
+    // async obtenerEmpresas() {
+
+    //     const { user: { id_empresa: empresa, id: id_user }, rol: { nombre: rol } } = JSON.parse(sessionStorage.getItem('user'));
+
+
+    //     (await this.empresaService.getEmpresas()).subscribe({
+    //         next: ({empresas}: {empresas: any}) => {
+    //             this.listaEmpresa = empresas;
+    //             console.log('g',this.listaEmpresa);
+                
+    //         },
+    //         error: (error: any) => {
+    //             this.loading.emit(false);
+    //         }
+    //     });
+    // }
+
     async obtenerEmpresas() {
+        const { user: { id_empresa: empresa, id: id_user }, rol: { nombre: rol, id: id_rol } } = JSON.parse(sessionStorage.getItem('user'));
+    
         (await this.empresaService.getEmpresas()).subscribe({
-            next: ({empresas}: {empresas: any}) => {
-                this.listaEmpresa = empresas;
+            next: ({ empresas }: { empresas: any }) => {
+                // Si el rol es administrador (rol 3), mostrar todas las empresas
+                if (rol === 'Administrador') {
+                    this.listaEmpresa = empresas;
+                } else {
+                    // Filtrar la lista de empresas por su ID
+                    this.listaEmpresa = empresas.filter((empresaItem: any) => empresaItem.id === empresa);
+                }
             },
             error: (error: any) => {
                 this.loading.emit(false);
             }
         });
     }
-
-    form: FormGroup = this.fb.group({
-        email: [, [Validators.required, Validators.email]],
-        password: [, [Validators.required]],
-        empresa: [-1, [Validators.required]],
-        rut: [, [Validators.required]],  // Asegúrate de validar el RUT adecuadamente
-        nombre: [, [Validators.required]],
-        apellidos: [, [Validators.required]],
-        confirmPassword: [, [Validators.required]],
-    }, {validators: this.passwordsMatch});
-
+    
+    form: FormGroup = this.fb.group(
+        {
+            email: [, [Validators.required, Validators.email]],
+            password: [, [Validators.required]],
+            empresa: [, [Validators.required]],
+            rut: [, [Validators.required]], // Asegúrate de validar el RUT adecuadamente
+            nombre: [, [Validators.required]],
+            apellidos: [, [Validators.required]],
+            confirmPassword: [, [Validators.required]]
+        },
+        {validators: this.passwordsMatch}
+    );
 
     passwordsMatch(group: FormGroup) {
         const password = group.get('password').value;
         const confirmPassword = group.get('confirmPassword').value;
-    
+
         return password === confirmPassword ? null : {notMatching: true};
     }
 
     openModal(usuario: any = null) {
-   
         if (usuario === null) {
             this.form.reset({
                 email: '',
                 password: '',
-                empresa: -1
+                empresa: JSON.parse(sessionStorage.getItem('user')).user.id_empresa
             });
         } else {
             this.setFormValues(usuario);
@@ -80,6 +108,7 @@ export class ModalUsuarioComponent implements OnInit {
     }
 
     setFormValues(usuario: any) {
+
         this.titulo = 'Agregar usuario';
         if (!usuario) {
             this.form.reset();
@@ -136,9 +165,6 @@ export class ModalUsuarioComponent implements OnInit {
             ...usuario
         };
 
-        console.log({usuario});
-        
-
         if (usuario.id) {
             this.actualizarUsuario(usuario);
         } else {
@@ -149,17 +175,24 @@ export class ModalUsuarioComponent implements OnInit {
 
     getFormErrors(): string[] {
         let errors: string[] = [];
-        
-        if (this.form.get('rut').errors?.required) errors.push('RUT es requerido.');
-        if (this.form.get('nombre').errors?.required) errors.push('Nombre es requerido.');
-        if (this.form.get('apellidos').errors?.required) errors.push('Apellidos son requeridos.');
-        if (this.form.get('email').errors?.required) errors.push('Email es requerido.');
-        if (this.form.get('email').errors?.email) errors.push('Formato de email inválido.');
-        if (this.form.get('password').errors?.required) errors.push('Contraseña es requerida.');
-        if (this.form.get('confirmPassword').errors?.required) errors.push('Confirmación de contraseña es requerida.');
-        if (this.form.errors?.notMatching) errors.push('Contraseña y su confirmación no coinciden.');
-        
+
+        if (this.form.get('rut').errors?.required)
+            errors.push('RUT es requerido.');
+        if (this.form.get('nombre').errors?.required)
+            errors.push('Nombre es requerido.');
+        if (this.form.get('apellidos').errors?.required)
+            errors.push('Apellidos son requeridos.');
+        if (this.form.get('email').errors?.required)
+            errors.push('Email es requerido.');
+        if (this.form.get('email').errors?.email)
+            errors.push('Formato de email inválido.');
+        if (this.form.get('password').errors?.required)
+            errors.push('Contraseña es requerida.');
+        if (this.form.get('confirmPassword').errors?.required)
+            errors.push('Confirmación de contraseña es requerida.');
+        if (this.form.errors?.notMatching)
+            errors.push('Contraseña y su confirmación no coinciden.');
+
         return errors;
     }
-    
 }

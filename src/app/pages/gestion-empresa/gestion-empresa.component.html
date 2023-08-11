@@ -39,7 +39,8 @@
                         >
                             <thead>
                                 <tr>
-                                    <th>Nombre</th>
+                                    <th>Nombre empresa</th>
+                                    <th>Nombre encargado</th>
                                     <th>Email encargado</th>
                                     <th>Cantidad colaboradores</th>
                                     <th>Estado</th>
@@ -48,8 +49,9 @@
                             </thead>
                             <tbody>
                                 <tr *ngFor="let empresa of empresas">
-                                    <td>{{ empresa.nombre }}</td>
-                                    <td>{{ empresa.get_encargado[0].email }}</td>
+                                    <td>{{ empresa.nombre | titlecase }}</td>
+                                    <td>{{ empresa.get_encargado[0].nombres | titlecase }} {{ empresa.get_encargado[0].apellidos | titlecase}}</td>
+                                    <td>{{ empresa.get_encargado[0].email | titlecase }}</td>
                                     <td>
                                         {{ empresa.cantidad_colaboradores }}
                                     </td>

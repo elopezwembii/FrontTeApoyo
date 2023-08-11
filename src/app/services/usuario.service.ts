@@ -52,6 +52,7 @@ export class UsuarioService {
                             rut:usuario.rut,
                             nombres:usuario.nombre,
                             apellidos:usuario.apellidos,
+                            empresa:usuario.empresa
                         },
                         {
                             headers: {

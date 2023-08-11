@@ -31,23 +31,13 @@
         <!-- Menu Body -->
 
         <!-- Menu Footer-->
-        <li class="user-footer row">
-            <div class="col">
-                <a [routerLink]="['/profile']" class="btn btn-default btn-flat w-100">
-                    Perfil
-                </a>
-            </div>
-            <div class="col">
-                <a [routerLink]="['/configuracion']" class="btn btn-default btn-flat w-100">
-                    Configuración
-                </a>
-            </div>
-            <div class="col">
-                <a (click)="logout()" class=" mt-3 btn btn-default btn-flat w-100">
-                    Cerrar sesión
-                </a>
-            </div>
+        <li class="user-footer">
+            <a [routerLink]="['/profile']" class="btn btn-default btn-flat">
+                Perfil
+            </a>
+            <a (click)="logout()" class="btn btn-default btn-flat float-right">
+                Cerrar sesión
+            </a>
         </li>
-        
     </div>
 </pf-dropdown>

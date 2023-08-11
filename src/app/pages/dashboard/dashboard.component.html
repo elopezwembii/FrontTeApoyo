@@ -30,7 +30,7 @@
     <!-- /.container-fluid -->
   </div>
 
-  <div class="container-fluid" *ngIf="usuario.rol.nombre === 'Usuario'">
+  <div *ngIf="usuario.rol.nombre === 'Usuario' || usuario.rol.nombre === 'Administrador' || usuario.rol.nombre === 'Administrativo Empresa'">
     <div class="row">
       <!-- Fila 1 -->
       <div class="col-md-8 mb-3">

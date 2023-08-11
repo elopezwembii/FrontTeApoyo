@@ -116,7 +116,7 @@ export const MENU = [
         name: 'Gestión usuarios',
         iconClasses: 'fas fa-user',
         path: ['/usuarios'],
-        role: 'Administrador',
+        roles: ['Administrador','Administrativo Empresa'],
     },
     {
         name: 'Gestión empresas',
@@ -124,10 +124,10 @@ export const MENU = [
         path: ['/empresas'],
         role: 'Administrador',
     },
-    {
-        name: 'Gestión colaboradores',
-        iconClasses: 'fas fa-code-branch',
-        path: ['/colaboradores'],
-        role: 'Administrativo Empresa',
-    }
+    // {
+    //     name: 'Gestión colaboradores',
+    //     iconClasses: 'fas fa-code-branch',
+    //     path: ['/colaboradores'],
+    //     role: 'Administrativo Empresa',
+    // }
 ];
