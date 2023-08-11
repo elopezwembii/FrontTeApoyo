@@ -1,0 +1,37 @@
+<button class="btn btn-info mx-2" data-toggle="modal" data-target="#massUploadModal">
+  <i class="fas fa-users"></i> Carga Masiva de
+  usuarios
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="massUploadModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalLabel">Carga Masiva de Usuarios</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form (submit)="submitFile()">
+          <div class="form-group">
+            <label for="file">Selecciona el archivo:</label>
+            <input type="file" id="file" (change)="handleFileInput($event.target.files)">
+          </div>
+          <div *ngIf="previewData">
+            <!-- Mostrar vista previa de los datos aquí si es necesario -->
+          </div>
+
+          <a href="assets/excel/miarchivo.xlsx" download="miarchivo.xlsx">Descargar archivo de prueba</a>
+
+         
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-success">Subir</button>
+      </div>
+    </div>
+  </div>
+</div>

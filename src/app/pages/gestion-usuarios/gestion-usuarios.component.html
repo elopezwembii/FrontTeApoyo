@@ -58,10 +58,10 @@
             <div class="col col-12">
                 <div class="card card-primary card-outline">
                     <div class="card-header text-right" *ngIf="empresa || rol=='Administrador'">
-                        <button class="btn btn-info mx-2">
-                            <i class="fas fa-users"></i> Carga Masiva de
-                            usuarios
-                        </button>
+
+                        <!-- <app-carga-masiva #modalCargaMasiva></app-carga-masiva> -->
+
+                     
                         <button [disabled]="!cupoDisponible && rol!=='Administrador'" class="btn btn-info" (click)="openModal()"
                             title="has alcanzo el limite de usuarios">
                             <i class="fas fa-plus-circle"></i> Agregar usuario
@@ -167,3 +167,6 @@
 <app-modal-usuario #modalUsuario [usuario]="usuarios" (usuariosMod)="actualizarUsuarios($event)"
     (loading)="actualizarCarga($event)"></app-modal-usuario>
 <ngx-loading [show]="loading"></ngx-loading>
+
+
+
