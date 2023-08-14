@@ -38,8 +38,6 @@ export class UsuarioService {
     }
 
     async agregarUsuario(usuario: any): Promise<boolean> {
-    
-        
         try {
             const res = await new Promise((resolve, reject) => {
                 this._http
@@ -49,10 +47,10 @@ export class UsuarioService {
                             email: usuario.email,
                             password: usuario.password,
                             rol: usuario.rol,
-                            rut:usuario.rut,
-                            nombres:usuario.nombre,
-                            apellidos:usuario.apellidos,
-                            empresa:usuario.empresa
+                            rut: usuario.rut,
+                            nombres: usuario.nombre,
+                            apellidos: usuario.apellidos,
+                            empresa: usuario.empresa
                         },
                         {
                             headers: {
@@ -156,5 +154,15 @@ export class UsuarioService {
         } catch (error) {
             return false;
         }
+    }
+
+    cargaMasiva(excel: any) {
+        return this._http.post(environment.uri_api + `masiva`, excel, {
+            headers: {
+                Authorization:
+                    'Bearer ' +
+                    JSON.parse(sessionStorage.getItem('user')).access_token
+            }
+        });
     }
 }

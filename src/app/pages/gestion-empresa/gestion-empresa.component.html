@@ -44,7 +44,7 @@
                                     <th>Email encargado</th>
                                     <th>Cantidad colaboradores</th>
                                     <th>Estado</th>
-                                    <th>Acciones</th>
+                                    <!-- <th>Acciones</th> -->
                                 </tr>
                             </thead>
                             <tbody>
@@ -68,7 +68,7 @@
                                                 : 'Deshabilitado'
                                         }}
                                     </td>
-                                    <td>
+                                    <!-- <td>
                                         <div
                                             class="btn-group btn-group-toggle"
                                             data-toggle="buttons"
@@ -110,7 +110,7 @@
                                                 </button>
                                             </div>
                                         </div>
-                                    </td>
+                                    </td> -->
                                 </tr>
                             </tbody>
                         </table>
@@ -147,5 +147,5 @@
         </div>
     </div>
 </section>
-<app-modal-empresa #modalEmpresa></app-modal-empresa>
+<app-modal-empresa (empresasMod)="obtenerEmpresas()" #modalEmpresa></app-modal-empresa>
 <ngx-loading [show]="loading"></ngx-loading>

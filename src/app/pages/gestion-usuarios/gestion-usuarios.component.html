@@ -59,7 +59,7 @@
                 <div class="card card-primary card-outline">
                     <div class="card-header text-right" *ngIf="empresa || rol=='Administrador'">
 
-                        <!-- <app-carga-masiva #modalCargaMasiva></app-carga-masiva> -->
+                        <app-carga-masiva #modalCargaMasiva></app-carga-masiva>
 
                      
                         <button [disabled]="!cupoDisponible && rol!=='Administrador'" class="btn btn-info" (click)="openModal()"
@@ -129,11 +129,7 @@
 
                                     <td>
                                         <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                            <div [attr.data-tooltip]="
-                                                    usuario.estado === 1
-                                                        ? 'Dar de baja'
-                                                        : 'Habilitar'
-                                                " data-flow="top">
+                                            <div>
                                                 <button [class]="
                                                         usuario.estado === 1
                                                             ? 'btn btn-danger btn-sm'
@@ -148,11 +144,11 @@
                                                         "></i>
                                                 </button>
                                             </div>
-                                            <div data-tooltip="Reiniciar contraseña" data-flow="top">
+                                            <!-- <div data-tooltip="Reiniciar contraseña" data-flow="top">
                                                 <button class="btn btn-info btn-sm">
                                                     <i class="fas fa-unlock"></i>
                                                 </button>
-                                            </div>
+                                            </div> -->
                                         </div>
                                     </td>
                                 </tr>
