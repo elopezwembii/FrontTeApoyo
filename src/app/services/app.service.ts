@@ -39,6 +39,7 @@ export class AppService {
                 }
               );
           });
+          
           sessionStorage.setItem('user', JSON.stringify(data));
           this.router.navigate(['/']);
           this.toastr.success('Ingreso correcto');

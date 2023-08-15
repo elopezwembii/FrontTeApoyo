@@ -23,6 +23,11 @@ export class MenuItemComponent implements OnInit {
 
     ngOnInit(): void {
         this.user = JSON.parse(sessionStorage.getItem('user'));
+
+
+        console.log('usuario',this.user);
+        
+
         if (
             this.menuItem &&
             this.menuItem.children &&
@@ -69,4 +74,12 @@ export class MenuItemComponent implements OnInit {
             this.isMenuExtended = false;
         }
     }
+
+    canShowContent(userRole: string, moduleRoles: string[]): boolean {
+        const result = moduleRoles.includes(userRole);
+        return result;
+      }
+      
+      
+      
 }

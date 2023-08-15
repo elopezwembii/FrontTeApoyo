@@ -21,18 +21,29 @@ export class GestionUsuariosComponent implements OnInit {
             }
         };
         this.obtenerUsuarios();
-      
     }
     empresa = JSON.parse(sessionStorage.getItem('user')).user.id_empresa;
     rol = JSON.parse(sessionStorage.getItem('user')).rol.nombre;
-    empresa_desc = JSON.parse(sessionStorage.getItem('user')).user.empresa
-        .nombre;
+    // empresa_desc = JSON.parse(sessionStorage.getItem('user')).user.empresa
+    //     .nombre;
+
+    userSession = JSON.parse(sessionStorage.getItem('user'));
+
+    empresa_desc =
+        this.userSession &&
+        this.userSession.user &&
+        this.userSession.user.empresa &&
+        this.userSession.user.empresa.nombre
+            ? this.userSession.user.empresa.nombre
+            : 'sin empresa';
 
     limiteColaboracion = 0;
     cantidadColaboradores = 0;
     cupoDisponible = false;
 
     cupo() {
+        if (this.empresa_desc === 'sin empresa') return;
+
         this.empresaService.getCantidadColaboradores(this.empresa).subscribe({
             next: ({
                 limiteColaboradores,
