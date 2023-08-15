@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {Component} from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
 import {environment} from 'environments/environment';
+import {EmpresaService} from '@services/empresa.service';
 
 @Component({
     selector: 'app-carga-masiva',
@@ -11,17 +12,23 @@ import {environment} from 'environments/environment';
 })
 export class CargaMasivaComponent {
     miForm = this.fb.group({
-        excel: [, [Validators.required]]
+        excel: [, [Validators.required]],
+        empresa: [1]
     });
 
     selectedFile: File = null;
     errores: any[] = [];
     empresa = JSON.parse(sessionStorage.getItem('user')).user.id_empresa;
+    rol = JSON.parse(sessionStorage.getItem('user')).rol.nombre;
+    listaEmpresa: any[] = [];
 
     constructor(
         private fb: FormBuilder,
-        private usuarioService: UsuarioService
-    ) {}
+        private usuarioService: UsuarioService,
+        private empresaService: EmpresaService
+    ) {
+        this.obtenerEmpresas();
+    }
 
     onFileSelected(event) {
         this.selectedFile = <File>event.target.files[0];
@@ -38,7 +45,12 @@ export class CargaMasivaComponent {
                 this.selectedFile.name
             );
 
-            formData.append('empresa', this.empresa);
+            if (this.rol === 'Administrador') {
+                let empresaValue = this.miForm.get('empresa').value;
+                formData.append('empresa', empresaValue.toString());
+            } else {
+                formData.append('empresa', this.empresa);
+            }
 
             this.usuarioService.cargaMasiva(formData).subscribe({
                 next: (response: any) => {
@@ -62,5 +74,26 @@ export class CargaMasivaComponent {
                 }
             });
         }
+    }
+
+    async obtenerEmpresas() {
+        const {
+            user: {id_empresa: empresa, id: id_user},
+            rol: {nombre: rol, id: id_rol}
+        } = JSON.parse(sessionStorage.getItem('user'));
+
+        (await this.empresaService.getEmpresas()).subscribe({
+            next: ({empresas}: {empresas: any}) => {
+                // Si el rol es administrador (rol 3), mostrar todas las empresas
+                if (rol === 'Administrador') {
+                    this.listaEmpresa = empresas;
+                } else {
+                    // Filtrar la lista de empresas por su ID
+                    this.listaEmpresa = empresas.filter(
+                        (empresaItem: any) => empresaItem.id === empresa
+                    );
+                }
+            }
+        });
     }
 }

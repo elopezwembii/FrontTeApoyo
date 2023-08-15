@@ -24,6 +24,14 @@
                       </ul>
                   </div>
 
+                  <div *ngIf="rol === 'Administrador'">
+                    <div class="form-group">
+                        <label for="empresaSelect">Selecciona la empresa:</label>
+                        <select id="empresaSelect" class="form-control" formControlName="empresa">
+                            <option *ngFor="let empresa of listaEmpresa" [value]="empresa.id">{{empresa.nombre}}</option>
+                        </select>
+                    </div>
+                </div>
                   <!-- Sección de Subida de Archivo -->
                   <div class="form-group">
                       <label for="file">Selecciona el archivo:</label>
