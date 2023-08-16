@@ -16,7 +16,7 @@ export class ModalUsuarioComponent implements OnInit {
     @Output() usuariosMod: EventEmitter<any[]> = new EventEmitter();
     titulo = 'Agregar usuario';
     myModal: any;
-
+    rol = JSON.parse(sessionStorage.getItem('user')).rol.nombre;
     listaEmpresa: any[] = [];
     user: any;
 
@@ -28,7 +28,6 @@ export class ModalUsuarioComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        
         this.obtenerEmpresas();
 
         this.myModal = new bootstrap.Modal(
@@ -41,12 +40,11 @@ export class ModalUsuarioComponent implements OnInit {
 
     //     const { user: { id_empresa: empresa, id: id_user }, rol: { nombre: rol } } = JSON.parse(sessionStorage.getItem('user'));
 
-
     //     (await this.empresaService.getEmpresas()).subscribe({
     //         next: ({empresas}: {empresas: any}) => {
     //             this.listaEmpresa = empresas;
     //             console.log('g',this.listaEmpresa);
-                
+
     //         },
     //         error: (error: any) => {
     //             this.loading.emit(false);
@@ -55,16 +53,21 @@ export class ModalUsuarioComponent implements OnInit {
     // }
 
     async obtenerEmpresas() {
-        const { user: { id_empresa: empresa, id: id_user }, rol: { nombre: rol, id: id_rol } } = JSON.parse(sessionStorage.getItem('user'));
-    
+        const {
+            user: {id_empresa: empresa, id: id_user},
+            rol: {nombre: rol, id: id_rol}
+        } = JSON.parse(sessionStorage.getItem('user'));
+
         (await this.empresaService.getEmpresas()).subscribe({
-            next: ({ empresas }: { empresas: any }) => {
+            next: ({empresas}: {empresas: any}) => {
                 // Si el rol es administrador (rol 3), mostrar todas las empresas
                 if (rol === 'Administrador') {
                     this.listaEmpresa = empresas;
                 } else {
                     // Filtrar la lista de empresas por su ID
-                    this.listaEmpresa = empresas.filter((empresaItem: any) => empresaItem.id === empresa);
+                    this.listaEmpresa = empresas.filter(
+                        (empresaItem: any) => empresaItem.id === empresa
+                    );
                 }
             },
             error: (error: any) => {
@@ -72,7 +75,7 @@ export class ModalUsuarioComponent implements OnInit {
             }
         });
     }
-    
+
     form: FormGroup = this.fb.group(
         {
             email: [, [Validators.required, Validators.email]],
@@ -95,11 +98,20 @@ export class ModalUsuarioComponent implements OnInit {
 
     openModal(usuario: any = null) {
         if (usuario === null) {
-            this.form.reset({
-                email: '',
-                password: '',
-                empresa: JSON.parse(sessionStorage.getItem('user')).user.id_empresa
-            });
+            if (this.rol === 'Administrador') {
+                this.form.reset({
+                    email: '',
+                    password: '',
+                    empresa: '-1'
+                });
+            } else {
+                this.form.reset({
+                    email: '',
+                    password: '',
+                    empresa: JSON.parse(sessionStorage.getItem('user')).user
+                        .id_empresa
+                });
+            }
         } else {
             this.setFormValues(usuario);
         }
@@ -108,7 +120,6 @@ export class ModalUsuarioComponent implements OnInit {
     }
 
     setFormValues(usuario: any) {
-
         this.titulo = 'Agregar usuario';
         if (!usuario) {
             this.form.reset();
