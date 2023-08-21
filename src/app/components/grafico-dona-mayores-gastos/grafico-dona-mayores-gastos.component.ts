@@ -47,7 +47,6 @@ export class GraficoDonaMayoresGastosComponent {
     constructor() {}
 
     ngOnChanges() {
-        console.log(this.data);
         this.options = {
             ...this.options,
             color: this.coloresPastel,

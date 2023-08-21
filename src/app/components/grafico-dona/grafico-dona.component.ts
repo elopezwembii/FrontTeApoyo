@@ -26,7 +26,6 @@ export class GraficoDonaComponent implements OnInit {
         tooltip: {
             trigger: 'item',
             formatter: (params: any) => {
-                console.log(params);
                 if (params.name !== 'Ingresos') {
                     return (
                         params.name +
@@ -62,7 +61,6 @@ export class GraficoDonaComponent implements OnInit {
     ngOnInit() {}
 
     ngOnChanges() {
-        console.log(this.data);
         this.options = {
             ...this.options,
             color: this.coloresPastel,

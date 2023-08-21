@@ -170,7 +170,6 @@ export class GraficoComponent implements OnChanges {
                         ((sumaAnterior - sumaActual) / sumaAnterior) * 100 * -1;
                 }
                 this.loading = false;
-                console.log(this.porcentaje);
             });
         });
     }

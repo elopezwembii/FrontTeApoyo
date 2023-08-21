@@ -1,3 +1,4 @@
+import {SIDEBAR_DARK_SKINS} from './../../utils/themes';
 import {Ingreso} from '@/interfaces/ingresos';
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
@@ -259,5 +260,15 @@ export class IngresosService {
                 totalVariableFijo: responseFijo
             });
         } catch (error) {}
+    }
+
+    validaTieneIngreso() {
+        return this._http.get(environment.uri_api + 'validaSiTieneIngreso', {
+            headers: {
+                Authorization:
+                    'Bearer ' +
+                    JSON.parse(sessionStorage.getItem('user')).access_token
+            }
+        });
     }
 }

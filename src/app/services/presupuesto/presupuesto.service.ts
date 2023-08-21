@@ -313,4 +313,16 @@ export class PresupuestoService {
         );
         return of(presupuesto ? presupuesto.presupuesto : 0);
     } */
+
+
+
+    validaTienePresupuesto() {
+        return this._http.get(environment.uri_api + 'validaSiTienePresupuesto', {
+            headers: {
+                Authorization:
+                    'Bearer ' +
+                    JSON.parse(sessionStorage.getItem('user')).access_token
+            }
+        });
+    }
 }

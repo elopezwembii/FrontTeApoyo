@@ -96,10 +96,7 @@ export class GraficoBarraComponent implements OnChanges {
                     }
                 });
             }
-
-            console.log(arregloPresupuesto);
-            console.log(arregloGasto);
-
+            
             this.options = {
                 ...this.options,
                 tooltip: {

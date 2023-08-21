@@ -135,6 +135,7 @@ export class IngresosComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.validaTieneIngreso();
         this.obtenerIngresos();
         this.generarDias(this.selectionMonth, this.selectionYear);
     }
@@ -231,7 +232,6 @@ export class IngresosComponent implements OnInit {
     }
 
     cerrarModal() {
-
         if (localStorage.getItem('tourInicial') !== 'realizado') return;
 
         if (this.windowSize <= 1000) {
@@ -272,6 +272,7 @@ export class IngresosComponent implements OnInit {
                 }
                 if (res) {
                     this.obtenerIngresos();
+                    this.validaTieneIngreso();
                     this.change = !this.change;
                     this.toastr.success('Ingreso agregado con éxito.');
 
@@ -356,9 +357,21 @@ export class IngresosComponent implements OnInit {
     isEmpty(obj: any) {
         return Object.keys(obj).length === 0;
     }
+    tieneIngreso = false;
+
+    async validaTieneIngreso() {
+        try {
+            const {tieneIngresos}: any = await this.ingresoService
+                .validaTieneIngreso()
+                .toPromise();
+            this.tieneIngreso = tieneIngresos;
+        } catch (error) {
+            console.error('Error al obtener el estado de los ingresos:', error);
+        }
+    }
 
     guia(clic) {
-        if (this.ingresos.length !== 0 && !clic) return; // en el caso que el usuario tenga ya un ingreso se salta el tutorial
+        if (this.tieneIngreso === true && !clic) return; // en el caso que el usuario tenga ya un ingreso se salta el tutorial
 
         this.shepherdService.defaultStepOptions = {
             scrollTo: true,
@@ -380,8 +393,8 @@ export class IngresosComponent implements OnInit {
     }
 
     tourEscritorio() {
-        let isTourInicial = localStorage.getItem('tourInicial') === 'realizado';
-        let cancelButtonClass = isTourInicial
+        //let isTourInicial = localStorage.getItem('tourInicial') === 'realizado';
+        let cancelButtonClass = this.tieneIngreso //isTourInicial
             ? 'btn btn-light'
             : 'btn btn-light d-none';
 
@@ -429,7 +442,9 @@ export class IngresosComponent implements OnInit {
                     }
                 ],
                 classes: 'shepherd shepherd-open shepherd-theme-arrows',
-                text: ['Este es el panel donde se muestran los ingresos que registras']
+                text: [
+                    'Este es el panel donde se muestran los ingresos que registras'
+                ]
             },
             {
                 id: 'intro4',
@@ -467,11 +482,9 @@ export class IngresosComponent implements OnInit {
                         classes: 'shepherd-button-primary',
                         text: 'Siguiente',
                         action: () => {
-                            
-                            if(this.ingresos.length===1){
-                                
+                            if (this.ingresos.length === 1) {
                                 this.router.navigate(['presupuesto']);
-                               }
+                            }
                             this.shepherdService.complete();
                         }
                     }
@@ -524,7 +537,9 @@ export class IngresosComponent implements OnInit {
                     }
                 ],
                 classes: 'shepherd shepherd-open shepherd-theme-arrows',
-                text: ['Este es el panel donde se muestran los ingresos que registras']
+                text: [
+                    'Este es el panel donde se muestran los ingresos que registras'
+                ]
             },
             {
                 id: 'intro4',
@@ -557,9 +572,8 @@ export class IngresosComponent implements OnInit {
                         classes: 'shepherd-button-primary',
                         text: 'Siguiente',
                         action: () => {
-                            
-                            if(this.ingresos.length===1){
-                             this.router.navigate(['presupuesto']);
+                            if (this.ingresos.length === 1) {
+                                this.router.navigate(['presupuesto']);
                             }
                             this.shepherdService.complete();
                         }
@@ -582,7 +596,6 @@ export class IngresosComponent implements OnInit {
         this.tourStarted = false;
         this.tourCancelled = true;
         if (this.tourStarted == false && this.tourCancelled == true) {
-          
             this.tourCancelled = false;
             this.shepherdService.cancel();
         }

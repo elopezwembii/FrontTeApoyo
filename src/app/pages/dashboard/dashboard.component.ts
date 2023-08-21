@@ -15,6 +15,7 @@ import {Gasto} from '@/interfaces/gastos';
 import {FormBuilder, Validators} from '@angular/forms';
 import {NavigationEnd, Router} from '@angular/router';
 import {ShepherdService} from 'angular-shepherd';
+import {IngresosService} from '@services/ingresos/ingresos.service';
 
 @Component({
     selector: 'app-dashboard',
@@ -38,6 +39,10 @@ export class DashboardComponent implements OnInit {
     loading2: boolean = false;
     categorias: Categoria[];
     topGastos: Array<any> = [];
+
+    tieneIngreso = false;
+    tienePresupuesto = false;
+
     public tiposAhorro: TipoAhorro[] = [
         {
             id: 1,
@@ -125,6 +130,7 @@ export class DashboardComponent implements OnInit {
 
     constructor(
         private presupuestoService: PresupuestoService,
+        private ingresoService: IngresosService,
         private ahorroService: AhorroService,
         private gastosService: GastosService,
         private appService: AppService,
@@ -290,9 +296,35 @@ export class DashboardComponent implements OnInit {
         this.obtenerGastoHormiga();
         this.obtenerUsuario();
 
-        if (!localStorage.getItem('tourInicial')) {
+       await this.validaTieneIngreso();
+       // this.validaTienePresupuesto();
+        console.log('xxxx',this.tieneIngreso);
+        
+        if (this.tieneIngreso===false) {
             //ejecutar Tour
             this.guia();
+        }
+    }
+
+    async validaTieneIngreso() {
+        try {
+            const {tieneIngresos}: any = await this.ingresoService
+                .validaTieneIngreso()
+                .toPromise();
+            this.tieneIngreso = tieneIngresos;
+        } catch (error) {
+            console.error('Error al obtener el estado de los ingresos:', error);
+        }
+    }
+
+    async validaTienePresupuesto() {
+        try {
+            const {tienePresupuesto}: any = await this.presupuestoService
+                .validaTienePresupuesto()
+                .toPromise();
+            this.tienePresupuesto = tienePresupuesto;
+        } catch (error) {
+            console.error('Error al obtener el estado del presupuesto:', error);
         }
     }
 
@@ -852,14 +884,19 @@ export class DashboardComponent implements OnInit {
     }
 
     guia() {
+
+        let cancelButtonClass = this.tieneIngreso //isTourInicial
+        ? 'btn btn-light'
+        : 'btn btn-light d-none';
+
         this.shepherdService.defaultStepOptions = {
-            scrollTo: false,
+            scrollTo: true,
             cancelIcon: {
                 enabled: false
             }
         };
         this.shepherdService.modal = true;
-        this.shepherdService.confirmCancel = true;
+        this.shepherdService.confirmCancel = false;
         this.shepherdService.addSteps([
             {
                 id: 'intro1',
@@ -868,6 +905,16 @@ export class DashboardComponent implements OnInit {
                     on: 'bottom'
                 },
                 buttons: [
+                    {
+                        classes: cancelButtonClass,
+                        text: 'Cancelar',
+                        action: () => {
+                            //this.tourCancelled=true;
+                            location.reload(); // Recarga la página actual
+
+                        }
+                    },
+
                     {
                         classes: 'shepherd-button-primary',
                         text: 'Siguiente',
@@ -1223,13 +1270,13 @@ export class DashboardComponent implements OnInit {
                     {
                         classes: 'shepherd-button-primary',
                         text: 'Siguiente',
-                        action:()=> {
-                            //TODO: verificar si el usuario presiona le botón 
+                        action: () => {
+                            //TODO: verificar si el usuario presiona le botón
                             //localStorage.setItem('tourInicial', 'realizado');
 
                             this.router.navigate(['ingresos']);
 
-                            this.shepherdService.next()
+                            this.shepherdService.next();
                         }
                     }
                 ],
@@ -1242,6 +1289,15 @@ export class DashboardComponent implements OnInit {
         ]);
         this.loading2 = true;
         this.shepherdService.start();
-       
+    }
+
+
+    cancelAccion() {
+        // this.tourStarted = false;
+        // this.tourCancelled = true;
+        // if (this.tourStarted == false && this.tourCancelled == true) {
+        //     this.tourCancelled = false;
+            this.shepherdService.cancel();
+        // }
     }
 }

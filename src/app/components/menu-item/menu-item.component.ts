@@ -24,10 +24,6 @@ export class MenuItemComponent implements OnInit {
     ngOnInit(): void {
         this.user = JSON.parse(sessionStorage.getItem('user'));
 
-
-        console.log('usuario',this.user);
-        
-
         if (
             this.menuItem &&
             this.menuItem.children &&

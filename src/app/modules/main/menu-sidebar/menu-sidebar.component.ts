@@ -48,13 +48,13 @@ export const MENU = [
         name: 'Inicio',
         iconClasses: 'fas fa-home',
         path: ['/'],
-        role: ['Usuario', 'Administrador']
+        role: ['Usuario', 'Administrador','Administrativo Empresa']
     },
     {
         name: 'Mis Ingresos',
         iconClasses: 'fas fa-money-bill-wave',
         path: ['/ingresos'],
-        role: ['Usuario', 'Administrador']
+        role: ['Usuario', 'Administrador','Administrativo Empresa']
         /* children: [
             {
                 name: 'Sub Ruta',
@@ -67,35 +67,35 @@ export const MENU = [
         name: 'Mi Presupuesto',
         iconClasses: 'fas fa-wallet',
         path: ['/presupuesto'],
-        role: ['Usuario', 'Administrador']
+        role: ['Usuario', 'Administrador','Administrativo Empresa']
         //role: 'Administrativo',
     },
     {
         name: 'Mis Gastos / Egresos',
         iconClasses: 'fas fa-hand-holding-usd',
         path: ['/gastos'],
-        role: ['Usuario', 'Administrador']
+        role: ['Usuario', 'Administrador','Administrativo Empresa']
     },
 
     {
         name: 'Mis Deudas',
         iconClasses: 'fas fa-credit-card',
         path: ['/deudas'],
-        role: ['Usuario', 'Administrador']
+        role: ['Usuario', 'Administrador','Administrativo Empresa']
         //role: 'Administrativo',
     },
     {
         name: 'Mis Ahorros',
         iconClasses: 'fas fa-piggy-bank',
         path: ['/ahorros'],
-        role: ['Usuario', 'Administrador']
+        role: ['Usuario', 'Administrador','Administrativo Empresa']
         //role: 'Administrativo',
     },
     {
         name: 'Análisis Financiero',
         iconClasses: 'fas fa-chart-line',
         path: ['/analisis'],
-        role: ['Usuario', 'Administrador']
+        role: ['Usuario', 'Administrador','Administrativo Empresa']
         //role: 'Administrativo',
     },
     // {
@@ -109,7 +109,7 @@ export const MENU = [
         name: 'Aprende',
         iconClasses: 'fas fa-graduation-cap',
         path: ['/aprende'],
-        role: ['Usuario', 'Administrador']
+        role: ['Usuario', 'Administrador','Administrativo Empresa']
         //role: 'Administrativo',
     },
     {

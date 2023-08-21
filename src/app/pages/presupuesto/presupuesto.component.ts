@@ -50,6 +50,8 @@ export class PresupuestoComponent implements OnInit {
         monto: ['', [Validators.required, Validators.min(0)]]
     });
 
+    tienePresupuesto=false;
+
     public arrayMonth = [
         'Enero',
         'Febrero',
@@ -125,6 +127,8 @@ export class PresupuestoComponent implements OnInit {
     ) {}
 
     async ngOnInit() {
+        this.validaTienePresupuesto();
+
         this.presupuestoService.obtenerCategoria().subscribe({
             next: (resp: any) => {
                 this.categorias = resp;
@@ -132,6 +136,7 @@ export class PresupuestoComponent implements OnInit {
         });
 
         /* this.obtenerDatoGrafico(); */
+      
         this.obtenerPresupuesto();
     }
     async obtenerPresupuesto() {
@@ -144,13 +149,15 @@ export class PresupuestoComponent implements OnInit {
             )
         ).subscribe({
             next: ({presupuesto}: {presupuesto: Presupuesto}) => {
+
+
                 this.presupuesto = presupuesto;
                 this.sumaTotalReal = presupuesto.presupuesto;
                 this.itemsPresupuesto = this.presupuesto.get_items;
                 this.presupuesto.get_items.map(
                     (item) => (this.presupuestoMonto += item.monto)
                 );
-                this.guia(false);
+                //this.guia(false);
 
                 this.graficoDonaPresupuesto = this.presupuesto.get_items.map(
                     (item) => {
@@ -163,6 +170,9 @@ export class PresupuestoComponent implements OnInit {
                 );
 
                 this.loading = false;
+            },
+            complete:()=>{
+                this.guia(false);
             },
             error: (error: any) => {
                 console.log(error);
@@ -238,7 +248,9 @@ export class PresupuestoComponent implements OnInit {
         this.obtenerPresupuesto();
         this.isAdding = false;
         /* this.obtenerDatoGrafico(); */
-        this.chbMantener.nativeElement.checked = false;
+        if (this.chbMantener) {
+            this.chbMantener.nativeElement.checked = false;
+        }
     }
 
     removeMonth() {
@@ -252,7 +264,9 @@ export class PresupuestoComponent implements OnInit {
         this.obtenerPresupuesto();
         this.isAdding = false;
         /* this.obtenerDatoGrafico(); */
-        this.chbMantener.nativeElement.checked = false;
+        if (this.chbMantener) {
+            this.chbMantener.nativeElement.checked = false;
+        }
     }
 
     selectUser(itemPresupuesto: ItemPresupuesto) {
@@ -295,9 +309,10 @@ export class PresupuestoComponent implements OnInit {
                     this.itemsPresupuesto[0]
                 );
                 if (res) {
+                    this.validaTienePresupuesto();
                     this.obtenerPresupuesto();
                     this.toastr.success('Presupuesto agregado con éxito.');
-                    this.nextAccion();
+                    this.nextAccion();            
                 } else {
                     this.toastr.error('Error al agregar presupuesto.');
                     this.loading = false;
@@ -414,9 +429,22 @@ export class PresupuestoComponent implements OnInit {
             }
         }
     }
+  
+    async validaTienePresupuesto() {
+        try {
+            const { tienePresupuesto }: any = await this.presupuestoService.validaTienePresupuesto().toPromise();
+            this.tienePresupuesto = tienePresupuesto;
+            console.log('tiene presupuesto variable desde la función', this.tienePresupuesto);
+        } catch (error) {
+            console.error('Error al obtener el estado del presupuesto:', error);
+        }
+    }
 
-    guia(clic) {
-        if (this.itemsPresupuesto.length !== 0 && !clic) return; // en el caso que el usuario tenga ya un ingreso se salta el tutorial
+    async guia(clic) {
+       await this.validaTienePresupuesto();
+        console.log('tiene prespuesto desde la funcion guia',this.tienePresupuesto);
+        
+        if (this.tienePresupuesto === true && !clic) return; // en el caso que el usuario tenga ya un ingreso se salta el tutorial
 
         this.shepherdService.defaultStepOptions = {
             scrollTo: false,
@@ -433,8 +461,8 @@ export class PresupuestoComponent implements OnInit {
 
     tourEscritorio() {
 
-        let isTourInicial = localStorage.getItem('tourInicial') === 'realizado';    
-        let cancelButtonClass = isTourInicial ?  'btn btn-light':'btn btn-light d-none' ;
+        //let isTourInicial = localStorage.getItem('tourInicial') === 'realizado';    
+        let cancelButtonClass = this.tienePresupuesto ?  'btn btn-light':'btn btn-light d-none' ;
 
         this.shepherdService.addSteps([
             {
