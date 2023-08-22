@@ -1,3 +1,4 @@
+import {UsuarioService} from '@services/usuario.service';
 import {
     Categoria,
     ItemPresupuesto,
@@ -31,6 +32,7 @@ export class DashboardComponent implements OnInit {
     ahorros: Ahorro[] = [];
     posibleAhorro: number;
     nivel: string;
+    imgNivel:string;
     siguienteNivel: string;
     ahorroSiguienteNivel: number;
     sumaGH: number = 0;
@@ -39,7 +41,6 @@ export class DashboardComponent implements OnInit {
     loading2: boolean = false;
     categorias: Categoria[];
     topGastos: Array<any> = [];
-
     tieneIngreso = false;
     tienePresupuesto = false;
 
@@ -138,7 +139,8 @@ export class DashboardComponent implements OnInit {
         private toastr: ToastrService,
         private router: Router,
         private renderer: Renderer2,
-        private shepherdService: ShepherdService
+        private shepherdService: ShepherdService,
+        private usuarioService: UsuarioService
     ) {
         this.router.events.subscribe((evt) => {
             if (evt instanceof NavigationEnd) {
@@ -296,14 +298,15 @@ export class DashboardComponent implements OnInit {
         this.obtenerGastoHormiga();
         this.obtenerUsuario();
 
-       await this.validaTieneIngreso();
-       // this.validaTienePresupuesto();
-      
-        
-        if (this.tieneIngreso===false) {
+        await this.validaTieneIngreso();
+        // this.validaTienePresupuesto();
+
+        if (this.tieneIngreso === false) {
             //ejecutar Tour
             this.guia();
         }
+
+        this.getNivel();
     }
 
     async validaTieneIngreso() {
@@ -879,15 +882,17 @@ export class DashboardComponent implements OnInit {
                 this.nivel = nivel;
                 this.siguienteNivel = siguienteNivel;
                 this.ahorroSiguienteNivel = ahorroSiguienteNivel;
+
+ 
+                
             }
         });
     }
 
     guia() {
-
         let cancelButtonClass = this.tieneIngreso //isTourInicial
-        ? 'btn btn-light'
-        : 'btn btn-light d-none';
+            ? 'btn btn-light'
+            : 'btn btn-light d-none';
 
         this.shepherdService.defaultStepOptions = {
             scrollTo: true,
@@ -911,7 +916,6 @@ export class DashboardComponent implements OnInit {
                         action: () => {
                             //this.tourCancelled=true;
                             location.reload(); // Recarga la página actual
-
                         }
                     },
 
@@ -1291,13 +1295,21 @@ export class DashboardComponent implements OnInit {
         this.shepherdService.start();
     }
 
-
     cancelAccion() {
         // this.tourStarted = false;
         // this.tourCancelled = true;
         // if (this.tourStarted == false && this.tourCancelled == true) {
         //     this.tourCancelled = false;
-            this.shepherdService.cancel();
+        this.shepherdService.cancel();
         // }
+    }
+
+    getNivel() {
+        this.usuarioService.getNivel().subscribe({
+            next:({nivel:{nivel,imagen_url}}:any)=>{                 
+                //this.nivel=nivel;
+                this.imgNivel=imagen_url
+            }
+        });
     }
 }

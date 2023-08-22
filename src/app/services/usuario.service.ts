@@ -165,4 +165,23 @@ export class UsuarioService {
             }
         });
     }
+
+    getNivel() {
+
+       return this._http
+        .get(
+            environment.uri_api +
+                'nivel',
+
+            {
+                headers: {
+                    Authorization:
+                        'Bearer ' +
+                        JSON.parse(sessionStorage.getItem('user'))
+                            .access_token
+                }
+            }
+        )
+       
+    }
 }
