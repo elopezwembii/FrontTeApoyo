@@ -59,7 +59,7 @@
                 <div class="card card-primary card-outline">
                     <div class="card-header text-right" *ngIf="empresa || rol=='Administrador'">
 
-                        <app-carga-masiva *ngIf="cupoDisponible"  #modalCargaMasiva></app-carga-masiva>
+                        <!-- <app-carga-masiva (OnReload)="obtenerUsuarios()" *ngIf="cupoDisponible || (rol==='Administrador')"  #modalCargaMasiva></app-carga-masiva> -->
 
                      
                         <button [disabled]="!cupoDisponible && rol!=='Administrador'" class="btn btn-info" (click)="openModal()"

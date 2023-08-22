@@ -1,9 +1,11 @@
 import {UsuarioService} from '@services/usuario.service';
 import {HttpClient} from '@angular/common/http';
-import {Component} from '@angular/core';
+import {Component, EventEmitter, Output} from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
 import {environment} from 'environments/environment';
 import {EmpresaService} from '@services/empresa.service';
+import { ToastrService } from 'ngx-toastr';
+
 
 @Component({
     selector: 'app-carga-masiva',
@@ -11,6 +13,9 @@ import {EmpresaService} from '@services/empresa.service';
     styleUrls: ['./carga-masiva.component.scss']
 })
 export class CargaMasivaComponent {
+
+    @Output() OnReload: EventEmitter<any[]> = new EventEmitter();
+
     miForm = this.fb.group({
         excel: [, [Validators.required]],
         empresa: [1]
@@ -25,7 +30,8 @@ export class CargaMasivaComponent {
     constructor(
         private fb: FormBuilder,
         private usuarioService: UsuarioService,
-        private empresaService: EmpresaService
+        private empresaService: EmpresaService,
+        private toastr: ToastrService,
     ) {
         this.obtenerEmpresas();
     }
@@ -36,6 +42,8 @@ export class CargaMasivaComponent {
 
     async submitFile() {
         this.errores = []; // Limpia los errores anteriores cada vez que intentes enviar.
+
+        if(!this.miForm.valid) return
 
         if (this.selectedFile) {
             const formData = new FormData();
@@ -56,10 +64,14 @@ export class CargaMasivaComponent {
                 next: (response: any) => {
                     if (response.success) {
                         // Aquí puedes mostrar un mensaje de éxito o hacer alguna otra acción.
+                        this.miForm.reset();
+                        this.OnReload.emit();
+                        this.toastr.info('Carga masiva procesada con éxito.');
                     } else if (
                         response.errors &&
                         Array.isArray(response.errors)
                     ) {
+                        this.miForm.reset();
                         this.errores = response.errors;
                     } else if (response.message) {
                         // Mostrar el mensaje de error específico que te devuelve el backend

@@ -298,7 +298,7 @@ export class DashboardComponent implements OnInit {
 
        await this.validaTieneIngreso();
        // this.validaTienePresupuesto();
-        console.log('xxxx',this.tieneIngreso);
+      
         
         if (this.tieneIngreso===false) {
             //ejecutar Tour
