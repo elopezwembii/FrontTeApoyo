@@ -10,52 +10,52 @@ import {Observable, of} from 'rxjs';
 export class AhorroService {
     private tiposAhorro: TipoAhorro[] = [
         {
-            id: 1,
+            id: 0,
             descripcion: 'Ahorro celebraciones',
             img: 'assets/icons/ahorro1.png'
         },
         {
-            id: 2,
+            id: 1,
             descripcion: 'Ahorro cumpleaños',
             img: 'assets/icons/ahorro1.png'
         },
         {
-            id: 3,
+            id: 2,
             descripcion: 'Ahorro Educación',
             img: 'assets/icons/ahorro1.png'
         },
         {
-            id: 4,
+            id: 3,
             descripcion: 'Ahorro fiestas patrias',
             img: 'assets/icons/ahorro1.png'
         },
         {
-            id: 5,
+            id: 4,
             descripcion: 'Ahorro fin de semana largo',
             img: 'assets/icons/ahorro1.png'
         },
         {
-            id: 6,
+            id: 5,
             descripcion: 'Ahorro navidad/año nuevo',
             img: 'assets/icons/ahorro1.png'
         },
         {
-            id: 7,
+            id: 6,
             descripcion: 'Ahorro viajes/vacaciones',
             img: 'assets/icons/ahorro1.png'
         },
         {
-            id: 8,
+            id: 7,
             descripcion: 'Fondo de emergencia',
             img: 'assets/icons/ahorro1.png'
         },
         {
-            id: 9,
+            id: 8,
             descripcion: 'Ahorro general (varios)',
             img: 'assets/icons/ahorro1.png'
         },
         {
-            id: 10,
+            id: 9,
             descripcion: 'Inversiones y Acciones',
             img: 'assets/icons/ahorro1.png'
         }
@@ -234,5 +234,21 @@ export class AhorroService {
 
     obtenerNivelAhorroUsuario() {
         return of(this.nivelUsuario);
+    }
+
+    actualizarMontoAhorro(id,monto) {
+        return this._http.put(
+            `${environment.uri_api}ahorro/${id}/actualizar-monto` ,
+            {
+                recaudado: monto
+            },
+            {
+                headers: {
+                    Authorization:
+                        'Bearer ' +
+                        JSON.parse(sessionStorage.getItem('user')).access_token
+                }
+            }
+        );
     }
 }

@@ -45,9 +45,10 @@
                     <div class="d-flex justify-content-between">
                         <h6 class="text-main">
                             <strong>{{
-                                tiposAhorro[item.tipo_ahorro - 1].descripcion
+                                tiposAhorro[item.tipo_ahorro].descripcion
                             }}</strong>
                         </h6>
+                     
                         <div>
                             <button
                                 (click)="openModal(item)"
@@ -72,7 +73,7 @@
                                 <div class="col-3 text-center">
                                     <img
                                         [src]="
-                                            tiposAhorro[item.tipo_ahorro - 1]
+                                            tiposAhorro[item.tipo_ahorro]
                                                 .img
                                         "
                                         alt="Icono de ahorro"
@@ -81,6 +82,7 @@
                                     />
                                 </div>
                                 <div class="col-9">
+
                                     <div class="text-right mt-2">
                                         Meta
                                         <strong class="big-text"
@@ -132,10 +134,18 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <!-- Aquí añadimos el botón -->
+                                    <div class="mt-3 text-center">
+                                        <button  (click)="setTipoAhorro(item.tipo_ahorro,tiposAhorro[item.tipo_ahorro].descripcion,item.id)"  type="button" class="btn btn-outline-info rounded-pill shadow-sm ml-3" data-toggle="modal" data-target="#modalRegistroAhorroEfectuado">
+                                            <i class="fas fa-piggy-bank mr-2"></i>
+                                            Registro de ahorro efectuado
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    
                 </div>
             </div>
 
@@ -202,6 +212,66 @@
                     <div class="wave"></div>
                 </div>
                <app-gasto-hormiga></app-gasto-hormiga>
+            </div>
+            <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+                <defs>
+                    <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 s 58-18 88-18 s 58 18 88 18 v44h-352z" />
+                </defs>
+                <g class="parallax">
+                    <use xlink:href="#gentle-wave" x="48" y="0" fill="#8ed6d7" /> <!-- Color pastel principal -->
+                    <use xlink:href="#gentle-wave" x="48" y="3" fill="#b3e4e5" /> <!-- Un poco más claro -->
+                    <use xlink:href="#gentle-wave" x="48" y="5" fill="#68c0c1" /> <!-- Un poco más oscuro -->
+                    <use xlink:href="#gentle-wave" x="48" y="7" fill="#c6f0f1" /> <!-- Más claro --> 
+                </g>
+            </svg>
+        </div>
+    </div>
+</div>
+
+
+  <!-- Modal -->
+  <div class="modal fade" id="modalRegistroAhorroEfectuado" tabindex="-1" role="dialog" aria-labelledby="modalRegistroAhorroEfectuadoLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content rounded-lg shadow">
+            <div class="modal-header border-0 pb-0">
+                <h5 class="modal-title text-muted" id="modalGastoHormigaLabel">Registro ahorro efectuado <br>({{selectedTipoAhorroNombre | titlecase}})</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-muted">
+                <div class="waveWrapper">
+                    <div class="wave"></div>
+                </div>
+              
+
+                <form [formGroup]="ahorroForm">
+                    <div class="form-group">
+                        <label for="descripcion">Descripción:</label>
+                        <input type="text" class="form-control" id="descripcion" formControlName="descripcion">
+                    </div>
+                
+                    <div class="form-group">
+                        <label for="monto">Monto:</label>
+                        <input type="number" class="form-control" id="monto" formControlName="monto">
+                    </div>
+                
+                    <div class="form-group">
+                        <label for="diaDelMes">Día del mes:</label>
+                        <select class="form-control" id="diaDelMes" formControlName="fecha">
+                            <option *ngFor="let dia of diasDelMesActual" [value]="dia">{{dia}}</option>
+                        </select>
+                    </div>
+                    
+                    
+                
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-verde-claro" (click)="guardarAhorroEfectuado()">Guardar</button>
+                    </div>
+                    
+                </form>
+                
+
             </div>
             <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
                 <defs>

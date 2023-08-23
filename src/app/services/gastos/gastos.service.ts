@@ -129,6 +129,53 @@ export class GastosService {
         }
     }
 
+
+    async agregarGastoAsociandoAhorro(gasto: Gasto, idAhorro:any): Promise<boolean> {
+        
+        try {
+            const res = await new Promise((resolve, reject) => {
+                this._http
+                    .post(
+                        environment.uri_api + 'agregar_gasto_asociandoAhorro',
+                        {
+                            desc: gasto.desc,
+                            monto: gasto.monto,
+                            fijar: gasto.fijar,
+                            tipo_gasto: gasto.tipo_gasto,
+                            subtipo_gasto: `${
+                                gasto.tipo_gasto
+                            }${++gasto.subtipo_gasto}`,
+                            dia: gasto.dia,
+                            mes: gasto.mes,
+                            anio: gasto.anio,
+                            idAhorro
+                        },
+                        {
+                            headers: {
+                                Authorization:
+                                    'Bearer ' +
+                                    JSON.parse(sessionStorage.getItem('user'))
+                                        .access_token
+                            }
+                        }
+                    )
+                    .subscribe(
+                        (response) => {
+                            resolve(response);
+                        },
+                        (error) => {
+                            console.error(error);
+                            reject(error);
+                        }
+                    );
+            });
+            return true;
+        } catch (error) {
+            return false;
+        }
+    }
+
+
     async actualizarGasto(
         gasto: Gasto,
         mesSelect: number,

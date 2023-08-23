@@ -36,3 +36,14 @@ font-size: 1.3rem
       font-size: 13px;
   }
 }
+
+
+.btn-verde-claro {
+  background-color: #8ed6d7; /* El color pastel principal que usas en las olas */
+  color: #fff; /* Texto en blanco */
+  border: none;
+}
+
+.btn-verde-claro:hover {
+  background-color: #68c0c1; /* Un poco más oscuro cuando pasas el ratón */
+}

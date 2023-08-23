@@ -291,7 +291,7 @@ input[type='number'] {
 [data-tooltip]:after {
     content: attr(data-tooltip);
     text-align: center;
-    min-width: 3em;
+    min-width: 20em;
     // max-width: 50em;
     // overflow: hidden;
     // text-overflow: ellipsis;
