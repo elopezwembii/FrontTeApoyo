@@ -269,7 +269,7 @@ input[type='number'] {
 [data-tooltip] {
     position: relative;
     cursor: pointer;
-    z-index: 11000; // Aumentar este valor
+    //z-index: 11000; // Aumentar este valor-----------------------------------
 }
 
 [data-tooltip]:before,
@@ -286,7 +286,7 @@ input[type='number'] {
 [data-tooltip]:before {
     content: '';
     border: 5px solid transparent;
-    z-index: 9999;
+    //z-index: 9999;
 }
 [data-tooltip]:after {
     content: attr(data-tooltip);
@@ -304,7 +304,7 @@ input[type='number'] {
 
 @media (max-width: 1290px) {
     [data-tooltip] {
-        z-index: 9999;
+        //z-index: 9999;---------------------------------------------
     }
 
     [data-tooltip]:before {
