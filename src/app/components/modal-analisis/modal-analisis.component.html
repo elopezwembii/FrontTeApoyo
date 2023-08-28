@@ -13,180 +13,359 @@
             <img style="max-height: 300px" src="assets/img/analisis/cf.svg" alt="" />
           </div>
           <div *ngIf="indicador >= 0 && indicador < 11" style="align-self: center" class="col-12 col-sm-8 text-justify">
-            <h5>
-              Puedes buscar espacios en tu presupuesto para el
-              ahorro y te sugerimos usar nuestra herramienta de
-              <a style="font-weight: bold" href="/presupuesto">PRESUPUESTO</a>
-              para poder visualizarlo, o si lo que necesitas es
-              tomar un crédito,
-              <span class="text-success">tienes la capacidad para ello.</span>
-              El tope de carga financiera de corto plazo es de un
-              <span class="text-bold">30%</span> de tu ingreso
-              total mensual.
-            </h5>
+            <div class="accordion" id="accordionExample">
+              <div class="card">
+                <div class="card-header" id="headingOne">
+                  <h2 class="mb-0">
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                      Busca Espacios para el Ahorro y el Uso Responsable del Crédito
+                    </button>
+                  </h2>
+                </div>
+                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                  <div class="card-body">
+                    Puedes buscar espacios en tu presupuesto para el ahorro y te sugerimos usar nuestra herramienta de <a style="font-weight: bold" href="/presupuesto">PRESUPUESTO</a> para visualizarlo. Si necesitas un nuevo crédito, tienes la capacidad para ello. El tope de carga financiera de corto plazo es de un <span class="text-bold">30%</span> de tu ingreso total mensual.
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
           <div *ngIf="indicador >= 11 && indicador < 21" style="align-self: center"
             class="col-12 col-sm-8 text-justify">
-            <h6>
-              Puedes tener espacio en tu presupuesto para el
-              ahorro y te sugerimos la herramienta de
-              <a class="text-bold" href="/presupuesto">PRESUPUESTO INTELIGENTE</a>
-              que tenemos para esto. Ideal si programas un
-              <span class="text-bold">descuento mensual automático</span>
-              para que puedas crear un fondo de emergencia y, de
-              esta forma, si surgiera algún imprevisto, no
-              tendrías que endeudarte para solucionarlo. Si lo que
-              necesitas es tomar un nuevo crédito, considera que
-              el porcentaje máximo de tus ingresos que puedes
-              destinar al pago de este tipo de productos, es del
-              <span class="text-bold">30%</span>. Si es realmente
-              necesario tomar un nuevo crédito en cuotas, podrías:
-              <ol>
-                <li>
-                  Tomar ese nuevo crédito, sumando la deuda
-                  actual, pactando una cuota que esté dentro
-                  del 30%, revisando siempre que las
-                  condiciones de este nuevo crédito sean
-                  iguales o mejores que el crédito que se paga
-                  (si incluyes ese crédito actual en la nueva
-                  deuda, debes solicitar a tu actual
-                  institución, un "prepago ley 20.130" para
-                  eximirte del pago de impuesto por el monto
-                  que prepagas. Este "prepago ley 20.130"
-                  debes pedirlo y entregarlo antes del curse
-                  de la nueva repactación, sea si lo haces en
-                  tu actual institución o en una distinta). Si
-                  el nuevo crédito lo estás tomando en la
-                  misma institución donde tienes tu crédito
-                  actual, puedes además "negociar" el cobro de
-                  la "comisión de prepago" del crédito actual.
-                </li>
-                <li>
-                  Preguntar en tu banco si, a los cupos de
-                  línea de crédito y tarjeta de crédito, se
-                  les asigna un valor cuota que pueda estar
-                  abultanto tu porcentaje de carga financiera.
-                  Si tu banco considera y les asigna una cuota
-                  a los cupos que mantienes, ve la posibilidad
-                  de ajustarlos y bajarlos. Importante: las
-                  tasas que tienen esos productos (línea y
-                  tarjeta) son altas.
-                </li>
-              </ol>
-            </h6>
+            <div class="accordion" id="accordionExample">
+              <div class="card">
+                <div class="card-header" id="headingOne">
+                  <h2 class="mb-0">
+                    <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+                      data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                      1.- Espacio en el Presupuesto y Ahorro
+                    </button>
+                  </h2>
+                </div>
+                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+                  data-parent="#accordionExample">
+                  <div class="card-body">
+                    Puedes tener espacio en tu presupuesto para el ahorro. Te sugerimos utilizar la herramienta de <a
+                      class="text-bold" href="/presupuesto">PRESUPUESTO INTELIGENTE</a>. Considera programar un <span
+                      class="text-bold">descuento mensual automático</span> para crear un fondo de emergencia y evitar
+                    endeudarte en caso de imprevistos.
+                  </div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-header" id="headingTwo">
+                  <h2 class="mb-0">
+                    <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse"
+                      data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                      2.- Porcentaje Máximo para Nuevo Crédito
+                    </button>
+                  </h2>
+                </div>
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                  <div class="card-body">
+                    Si necesitas un nuevo crédito, ten en cuenta que el porcentaje máximo de tus ingresos destinado al
+                    pago de este tipo de productos es del <span class="text-bold">30%</span>.
+                  </div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-header" id="headingThree">
+                  <h2 class="mb-0">
+                    <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse"
+                      data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                      3.- Opciones para Tomar un Nuevo Crédito
+                    </button>
+                  </h2>
+                </div>
+                <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                  <div class="card-body">
+                    Si es necesario tomar un nuevo crédito en cuotas, tienes opciones:
+                    <ol>
+                      <li>
+                        Puedes tomar un nuevo crédito sumando la deuda actual, asegurándote de que la cuota esté dentro
+                        del 30%. Si incluyes el crédito actual en la nueva deuda, solicita un "prepago ley 20.130" para
+                        eximirte del impuesto.
+                      </li>
+                      <li>
+                        Consulta si los cupos de línea y tarjeta de crédito están afectando tu carga financiera. Si
+                        asignan cuotas a estos cupos, ajusta y reduce sus valores si es posible.
+                      </li>
+                    </ol>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
           <div *ngIf="indicador >= 21 && indicador < 31" style="align-self: center"
             class="col-12 col-sm-8 text-justify">
-            <h6>
-              El tope de carga financiera mensual para el corto
-              plazo es de un <span class="text-bold">30%</span>.
-              Si estás cómod@ y no tienes complicaciones en el
-              pago mensual, te sugerimos continuar con tu plan de
-              pago. Ideal es que cuentes con un fondo al que
-              puedas acudir en caso de emergencia y no tomar
-              nuevas deudas. Para eso en esta misma plataforma
-              puedes encontrar un
-              <a class="text-bold" href="/presupuesto">PRESUPUESTO INTELIGENTE</a>, herramienta que te ayudará a llevar
-              un mejor
-              control de tus gastos y buscar espacios para el
-              ahorro. Si es realmente necesario tomar un nuevo
-              crédito en cuotas, te damos las siguientes
-              alternativas. Podrías:
-              <ol>
-                <li>
-                  Tomar ese nuevo crédito, sumando la deuda
-                  actual, pactando una cuota que esté dentro
-                  del 30%, revisando siempre que las
-                  condiciones de este nuevo crédito sean
-                  iguales o mejores que las del crédito que se
-                  paga (si incluyes ese crédito actual en la
-                  nueva deuda, debes solicitar a la
-                  institución donde actualmente tienes el
-                  crédito, un "prepago ley 20.130" para
-                  eximirte del pago de impuesto por el monto
-                  que prepagas. Este "prepago ley 20.130"
-                  debes pedirlo y entregarlo antes del curse
-                  de la nueva repactación, sea en la
-                  institución actual o si es en una distinta).
-                  Si el nuevo crédito lo estás tomando en la
-                  misma institución donde tienes tu crédito
-                  actual, puedes además "negociar" el cobro de
-                  la "comisión de prepago" del crédito actual.
-                </li>
-                <li>
-                  Preguntar en tu banco si los cupos de línea
-                  de crédito y tarjeta de crédito se les
-                  asigna un valor cuota, que pueda estar
-                  abultanto tu porcentaje de carga financiera.
-                  Si tu banco considera y les asigna una cuota
-                  a los cupos que mantienes, ve la posibilidad
-                  de ajustarlos y bajarlos. Importante: las
-                  tasas que tienen esos productos (línea y
-                  tarjeta) son altas.
-                </li>
-              </ol>
-            </h6>
+            <div class="accordion" id="accordionExample">
+
+              <!-- Sección 1 -->
+              <div class="card">
+                <div class="card-header" id="headingOne">
+                  <h2 class="mb-0">
+                    <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+                      data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                      Tope de Carga Financiera Mensual
+                    </button>
+                  </h2>
+                </div>
+                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+                  data-parent="#accordionExample">
+                  <div class="card-body">
+                    El tope de carga financiera mensual para el corto plazo es del <span class="text-bold">30%</span>.
+                  </div>
+                </div>
+              </div>
+
+              <!-- Sección 2 -->
+              <div class="card">
+                <div class="card-header" id="headingTwo">
+                  <h2 class="mb-0">
+                    <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+                      data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                      Continuar con el Plan de Pago
+                    </button>
+                  </h2>
+                </div>
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                  <div class="card-body">
+                    Si estás cómodo y no tienes complicaciones en el pago mensual, te sugerimos continuar con tu plan de
+                    pago.
+                  </div>
+                </div>
+              </div>
+
+              <!-- Sección 3 -->
+              <div class="card">
+                <div class="card-header" id="headingThree">
+                  <h2 class="mb-0">
+                    <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+                      data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                      Importancia de un Fondo de Emergencia
+                    </button>
+                  </h2>
+                </div>
+                <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                  <div class="card-body">
+                    Idealmente, deberías contar con un fondo al que puedas acudir en caso de emergencia y evitar tomar
+                    nuevas deudas.
+                  </div>
+                </div>
+              </div>
+
+              <!-- Sección 4 -->
+              <div class="card">
+                <div class="card-header" id="headingFour">
+                  <h2 class="mb-0">
+                    <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+                      data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                      Utiliza la Herramienta de Presupuesto Inteligente
+                    </button>
+                  </h2>
+                </div>
+                <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
+                  <div class="card-body">
+                    En esta misma plataforma, puedes utilizar la <a class="text-bold" href="/presupuesto">herramienta de
+                      PRESUPUESTO INTELIGENTE</a> para controlar tus gastos y encontrar espacios para el ahorro.
+                  </div>
+                </div>
+              </div>
+
+              <!-- Sección 5 -->
+              <div class="card">
+                <div class="card-header" id="headingFive">
+                  <h2 class="mb-0">
+                    <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+                      data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                      Alternativas en Caso de Necesidad de un Nuevo Crédito
+                    </button>
+                  </h2>
+                </div>
+                <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordionExample">
+                  <div class="card-body">
+                    Si es realmente necesario tomar un nuevo crédito en cuotas, aquí tienes algunas alternativas:
+                  </div>
+                </div>
+              </div>
+
+              <!-- Subsección 5.1 -->
+              <div class="card">
+                <div class="card-header" id="headingFiveOne">
+                  <h2 class="mb-0">
+                    <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+                      data-target="#collapseFiveOne" aria-expanded="false" aria-controls="collapseFiveOne">
+                      Tomar un Nuevo Crédito con Deuda Actual
+                    </button>
+                  </h2>
+                </div>
+                <div id="collapseFiveOne" class="collapse" aria-labelledby="headingFiveOne"
+                  data-parent="#accordionExample">
+                  <div class="card-body">
+                    Podrías tomar un nuevo crédito sumando la deuda actual y pactando una cuota que esté dentro del 30%.
+                    Asegúrate de que las condiciones del nuevo crédito sean iguales o mejores que las del crédito
+                    actual.
+                  </div>
+                </div>
+              </div>
+
+              <!-- Subsección 5.2 -->
+              <div class="card">
+                <div class="card-header" id="headingFiveTwo">
+                  <h2 class="mb-0">
+                    <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+                      data-target="#collapseFiveTwo" aria-expanded="false" aria-controls="collapseFiveTwo">
+                      Evaluar Cupos de Línea y Tarjeta de Crédito
+                    </button>
+                  </h2>
+                </div>
+                <div id="collapseFiveTwo" class="collapse" aria-labelledby="headingFiveTwo"
+                  data-parent="#accordionExample">
+                  <div class="card-body">
+                    Consulta en tu banco si los cupos de línea de crédito y tarjeta de crédito tienen asignada una cuota
+                    que afecta tu porcentaje de carga financiera. Ajusta los valores si es necesario, considerando las
+                    altas tasas de interés.
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
           <div *ngIf="indicador >= 31" style="align-self: center" class="col-12 col-sm-8 text-justify">
-            <h6>
-              Esto puede producirse porque tienes tus créditos a
-              muy corto plazo con una (s) cuota (s) muy alta (s),
-              o porque tienes efectivamente un endeudamiento que
-              sobrepasa tu capacidad crediticia. Te sugerimos usar
-              la herramienta de
-              <a href="/presupuesto">PRESUPUESTO INTELIGENTE</a>
-              que está en esta misma plataforma y que puede
-              ayudarte a llevar un mejor control de tus gastos y
-              buscar espacios para el ahorro. Si estimas que no
-              tendrás problemas en pagar, continúa con tu plan de
-              pago y procura no adquirir nuevas deudas. Si no
-              estás cómod@ pagando y este valor de cuota estresa
-              tu presupuesto mensual, puedes:
-              <ol>
-                <li>
-                  Refinanciar tu deuda actual a un nuevo
-                  plazo, más largo, que haga disminuir tu
-                  valor cuota mensual. Revisa siempre que las
-                  condiciones de este nuevo crédito sean
-                  iguales o mejores que las del crédito que se
-                  paga. Para esta gestión, debes solicitar a
-                  la (s) institución (es) donde tienes esa
-                  deuda , un "prepago ley 20.130" para
-                  eximirte del pago de impuesto por el monto
-                  que pre-pagas. Este "prepago ley 20.130"
-                  debes pedirlo y entregarlo antes del curse
-                  de la nueva repactación, sea si lo tomas en
-                  la misma institución o en otra distinta. Si
-                  el nuevo crédito lo estás tomando en la
-                  misma institución donde tienes tu crédito
-                  actual, puedes además "negociar" el cobro de
-                  la "comisión de prepago" del crédito actual.
-                </li>
-                <li>
-                  Preguntar en tu banco si los cupos de línea
-                  de crédito y tarjeta de crédito se les
-                  asigna un valor cuota que pueda estar
-                  abultando tu porcentaje de carga financiera.
-                  Si tu banco considera y les asigna una cuota
-                  a los cupos que mantienes, ve la posibilidad
-                  de ajustarlos y bajarlos. Importante: las
-                  tasas que tienen esos productos (línea y
-                  tarjeta) son altas.
-                </li>
-                <li>
-                  Si estás realmente en una situación difícil
-                  y cuentas con un bien raíz y éste está libre
-                  de hipoteca o la deuda relacionada es menor
-                  al 60% de su valor comercial, está la opción
-                  de hacer un "crédito hipotecario de fines
-                  generales", que permite traspasar esa deuda
-                  de corto plazo a un plazo mayor, con un
-                  valor mensual más reducido (para este último
-                  caso, consúltanos para más detalles).
-                </li>
-              </ol>
-            </h6>
+            <div class="accordion" id="accordionExample">
+
+              <!-- Sección 1 -->
+              <div class="card">
+                <div class="card-header" id="headingOne">
+                  <h2 class="mb-0">
+                    <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+                      data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                      Opciones para Reducir el Estrés Financiero
+                    </button>
+                  </h2>
+                </div>
+                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+                  data-parent="#accordionExample">
+                  <div class="card-body">
+                    Esto puede producirse porque tienes tus créditos a muy corto plazo con una (s) cuota (s) muy alta
+                    (s), o porque tienes un endeudamiento que sobrepasa tu capacidad crediticia.
+                  </div>
+                </div>
+              </div>
+
+              <!-- Sección 2 -->
+              <div class="card">
+                <div class="card-header" id="headingTwo">
+                  <h2 class="mb-0">
+                    <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+                      data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                      Utiliza la Herramienta de Presupuesto Inteligente
+                    </button>
+                  </h2>
+                </div>
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                  <div class="card-body">
+                    Utiliza la <a href="/presupuesto">herramienta de PRESUPUESTO INTELIGENTE</a> para controlar tus
+                    gastos y encontrar espacios para el ahorro.
+                  </div>
+                </div>
+              </div>
+
+              <!-- Sección 3 -->
+              <div class="card">
+                <div class="card-header" id="headingThree">
+                  <h2 class="mb-0">
+                    <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+                      data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                      Continúa con tu Plan de Pago y Evita Nuevas Deudas
+                    </button>
+                  </h2>
+                </div>
+                <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                  <div class="card-body">
+                    Si estás cómodo con el pago mensual, sigue con tu plan de pago y procura no adquirir nuevas deudas.
+                  </div>
+                </div>
+              </div>
+
+              <!-- Sección 4 -->
+              <div class="card">
+                <div class="card-header" id="headingFour">
+                  <h2 class="mb-0">
+                    <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+                      data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                      Alternativas en Caso de Dificultades en el Pago
+                    </button>
+                  </h2>
+                </div>
+                <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
+                  <div class="card-body">
+                    Si no estás cómodo pagando y el valor de cuota estresa tu presupuesto mensual, considera las
+                    siguientes opciones:
+                  </div>
+                </div>
+              </div>
+
+              <!-- Subsección 4.1 -->
+              <div class="card">
+                <div class="card-header" id="headingFourOne">
+                  <h2 class="mb-0">
+                    <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+                      data-target="#collapseFourOne" aria-expanded="false" aria-controls="collapseFourOne">
+                      Refinancia tu Deuda Actual a un Nuevo Plazo
+                    </button>
+                  </h2>
+                </div>
+                <div id="collapseFourOne" class="collapse" aria-labelledby="headingFourOne"
+                  data-parent="#accordionExample">
+                  <div class="card-body">
+                    Refinancia tu deuda actual a un plazo más largo para disminuir tu valor cuota mensual. Asegúrate de
+                    que las condiciones del nuevo crédito sean iguales o mejores que las del crédito actual.
+                  </div>
+                </div>
+              </div>
+
+              <!-- Subsección 4.2 -->
+              <div class="card">
+                <div class="card-header" id="headingFourTwo">
+                  <h2 class="mb-0">
+                    <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+                      data-target="#collapseFourTwo" aria-expanded="false" aria-controls="collapseFourTwo">
+                      Evalúa los Cupos de Línea y Tarjeta de Crédito
+                    </button>
+                  </h2>
+                </div>
+                <div id="collapseFourTwo" class="collapse" aria-labelledby="headingFourTwo"
+                  data-parent="#accordionExample">
+                  <div class="card-body">
+                    Consulta si los cupos de línea y tarjeta de crédito afectan tu carga financiera y ajusta los valores
+                    si es necesario.
+                  </div>
+                </div>
+              </div>
+
+              <!-- Subsección 4.3 -->
+              <div class="card">
+                <div class="card-header" id="headingFourThree">
+                  <h2 class="mb-0">
+                    <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+                      data-target="#collapseFourThree" aria-expanded="false" aria-controls="collapseFourThree">
+                      Considera el "Crédito Hipotecario de Fines Generales"
+                    </button>
+                  </h2>
+                </div>
+                <div id="collapseFourThree" class="collapse" aria-labelledby="headingFourThree"
+                  data-parent="#accordionExample">
+                  <div class="card-body">
+                    Si cuentas con un bien raíz libre de hipoteca o con deuda inferior al 60% de su valor, considera un
+                    "crédito hipotecario de fines generales" para traspasar la deuda de corto plazo a un plazo mayor con
+                    un valor mensual reducido.
+                  </div>
+                </div>
+              </div>
+
+            </div>
           </div>
+
         </div>
       </div>
       <!-- Nuevo Modal -->
@@ -196,170 +375,384 @@
             <img style="max-height: 300px" src="assets/img/analisis/cf.svg" alt="" />
           </div>
           <div *ngIf="indicador >= 0 && indicador < 11" style="align-self: center" class="col-12 col-sm-8 text-justify">
-            <h6>
-              Te recomendamos cotizar en al menos 3 bancos y
-              revisar CAE, dividendo final y cobertura de los
-              seguros. Hay seguros licitados e individuales que
-              tienen distinta cobertura y valor de prima (precio).
-              Debes revisar bien ambos ítems para lograr un
-              equilibrio entre el precio y que tu propiedad quede
-              bien cubierta en caso de un eventual siniestro.
-              Recuerda que el tope de carga hipotecaria es entre
-              un 25% y un 30% del ingreso total mensual. Revisa si
-              la propiedad que compras es DFL2, porque tiene
-              asociado beneficios tributarios, disminución del
-              impuesto al crédito cuando hagas la compraventa y
-              también en el pago de contribuciones. Los gastos
-              operacionales no son un factor a la hora de tomar la
-              decisión de elegir dónde tomar el crédito
-              hipotecario, porque las tarifas entre bancos son muy
-              parecidas, sin embargo, si compras una vivienda
-              nueva, puede que la inmobiliaria tenga convenio con
-              el banco y haya descuentos interesantes. Pregunta en
-              la institución donde tomarás el financiamiento,
-              cuándo comienzas a pagar el dividendo mensual. Lo
-              usual es que sea al mes subsiguiente desde efectuada
-              la inscripción en el Conservador de Bienes Raíces
-              respectivo. También puedes pedir período de gracia
-              adicional si lo deseas. Independientemente, si
-              partes pagando al mes subsiguiente o con mayor
-              período de gracia, tendrá impacto en el primer
-              dividendo (es más alto que los siguientes) porque
-              los seguros (desgravamen y a la propiedad) comienzan
-              la cobertura desde la firma de la escritura.
-            </h6>
+
+            <div class="accordion" id="accordionExample">
+              <div class="card">
+                <div class="card-header" id="headingOne">
+                  <h2 class="mb-0">
+                    <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+                      data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                      1.- Cotización en Bancos y Revisión de Seguros
+                    </button>
+                  </h2>
+                </div>
+
+                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+                  data-parent="#accordionExample">
+                  <div class="card-body">
+                    Antes de tomar cualquier decisión, es fundamental obtener cotizaciones de al menos tres bancos
+                    diferentes. Además, debes prestar especial atención al Costo Anual Equivalente (CAE), el dividendo
+                    final y la cobertura de los seguros asociados. Recuerda que existen seguros licitados y otros
+                    individuales, cada uno con distintas coberturas y primas. La clave está en lograr un equilibrio
+                    entre el precio y la adecuada protección de tu propiedad en caso de algún siniestro.
+                  </div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-header" id="headingTwo">
+                  <h2 class="mb-0">
+                    <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse"
+                      data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                      2.- Carga Hipotecaria y Límites de Endeudamiento
+                    </button>
+                  </h2>
+                </div>
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                  <div class="card-body">
+                    Es importante tener en cuenta que el tope de carga hipotecaria no debe exceder entre un 25% y un 30%
+                    de tu ingreso total mensual. Esta cifra te ayudará a determinar cuánto puedes comprometer de tus
+                    ingresos para el pago del crédito hipotecario. Mantener un equilibrio entre tus gastos y la carga
+                    hipotecaria es esencial para garantizar una gestión financiera saludable.
+                  </div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-header" id="headingThree">
+                  <h2 class="mb-0">
+                    <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse"
+                      data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                      3.- Beneficios de Propiedades DFL2
+                    </button>
+                  </h2>
+                </div>
+                <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                  <div class="card-body">
+                    Si la propiedad que estás considerando comprar tiene la categoría DFL2, es importante conocer los
+                    beneficios tributarios asociados. Estos incluyen la disminución del impuesto al crédito en el
+                    momento de la compraventa, así como reducciones en el pago de contribuciones. Asegúrate de
+                    aprovechar estos incentivos fiscales para optimizar tu inversión en bienes raíces.
+                  </div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-header" id="headingFour">
+                  <h2 class="mb-0">
+                    <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse"
+                      data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                      4.- Gastos Operacionales y Convenios Inmobiliarios
+                    </button>
+                  </h2>
+                </div>
+                <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
+                  <div class="card-body">
+                    Aunque las tarifas de los bancos para créditos hipotecarios suelen ser similares, no debes descuidar
+                    la posibilidad de convenios entre inmobiliarias y bancos que puedan ofrecer descuentos interesantes,
+                    especialmente si estás adquiriendo una vivienda nueva. Asegúrate de investigar y preguntar en la
+                    institución financiera donde obtendrás el crédito hipotecario.
+                  </div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-header" id="headingFive">
+                  <h2 class="mb-0">
+                    <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse"
+                      data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                      5.- Fechas de Pago y Periodo de Gracia
+                    </button>
+                  </h2>
+                </div>
+                <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordionExample">
+                  <div class="card-body">
+                    Es crucial conocer cuándo comenzarás a pagar el dividendo mensual. Generalmente, el primer pago
+                    ocurre al mes siguiente desde la inscripción en el Conservador de Bienes Raíces. Sin embargo,
+                    también puedes negociar un período de gracia adicional si así lo deseas. Ten en cuenta que la
+                    elección entre empezar a pagar al mes siguiente o más adelante afectará el monto del primer
+                    dividendo, ya que los seguros comienzan a cubrir desde la firma de la escritura.
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </div>
           <div *ngIf="indicador >= 11 && indicador < 21" style="align-self: center"
             class="col-12 col-sm-8 text-justify">
-            <p>
-              Esa carga tope se ubica entre un 25% y un 30% de tu
-              ingreso. Si sobrepasas este porcentaje, puedes
-              revisar estas 3 opciones: 1) Alargar el plazo total
-              del futuro crédito, para obtener un dividendo menor.
-              2) Dar un pié mayor (para conseguir el mismo efecto,
-              un dividendo menor). 3) Contar con un aval
-              calificado o complementar renta para pedir un
-              crédito bipersonal (mancomunado). Para esta última
-              opción, la institución solicitará y evaluará los
-              antecedentes financieros de quien avale o sea el
-              cotitular de la deuda. En caso que finalmente sea
-              aprobado el financiamiento, te recomendamos cotizar
-              en al menos 3 bancos y revisar CAE, dividendo final
-              y cobertura de los seguros. Hay seguros licitados e
-              individuales que tienen distinta cobertura y valor
-              de prima (precio). Debes revisar bien ambos ítems
-              para lograr un equilibrio entre el precio y que tu
-              propiedad quede bien cubierta en caso de un eventual
-              siniestro. Revisa si la propiedad que compras es
-              DFL2, porque tiene asociado beneficios tributarios,
-              disminución del impuesto al crédito cuando hagas la
-              compraventa y también en el pago de contribuciones.
-              Los gastos operacionales no son un factor a la hora
-              de tomar la decisión de elegir donde tomar el
-              crédito hipotecario, porque las tarifas entre bancos
-              son muy parecidas, sin embargo, si compras una
-              vivienda nueva puede que la inmobiliaria tenga
-              convenio con el banco y haya descuentos
-              interesantes. Pregunta en la institución donde
-              tomarás el financiamiento, cuándo comienzas a pagar
-              el dividendo mensual. Lo usual es que sea al mes
-              subsiguiente desde efectuada la inscripción en el
-              Conservador de Bienes Raíces respectivo. También
-              puedes pedir período de gracia adicional si lo
-              deseas. Independientemente, si partes pagando al mes
-              subsiguiente o con mayor periodo de gracia, tendrá
-              impacto en el primer dividendo (es más alto que los
-              siguientes) porque los seguros (desgravamen y a la
-              propiedad) comienzan la cobertura desde la firma de
-              la escritura.
-            </p>
+
+            <div class="accordion" id="accordionExample">
+              <div class="card">
+                <div class="card-header" id="headingOne">
+                  <h2 class="mb-0">
+                    <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+                      data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                      1.- Opciones para Controlar la Carga Hipotecaria
+                    </button>
+                  </h2>
+                </div>
+                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+                  data-parent="#accordionExample">
+                  <div class="card-body">
+                    Esa carga tope se ubica entre un 25% y un 30% de tu ingreso. Si sobrepasas este porcentaje, puedes
+                    considerar las siguientes opciones:
+                    <ol>
+                      <li>Alargar el plazo total del futuro crédito para obtener un dividendo menor.</li>
+                      <li>Dar un pie mayor para conseguir el mismo efecto de un dividendo menor.</li>
+                      <li>Contar con un aval calificado o complementar renta para pedir un crédito bipersonal
+                        (mancomunado). La institución evaluará los antecedentes financieros del aval o cotitular.</li>
+                    </ol>
+                    Si se aprueba el financiamiento, te recomendamos cotizar en al menos 3 bancos y revisar el CAE,
+                    dividendo final y cobertura de seguros. Es importante considerar seguros licitados e individuales
+                    con diferentes coberturas y primas para encontrar el equilibrio entre precio y protección de la
+                    propiedad en caso de siniestro. Además, verifica si la propiedad es DFL2 para aprovechar beneficios
+                    tributarios y reducción de impuestos al crédito y contribuciones.
+                  </div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-header" id="headingTwo">
+                  <h2 class="mb-0">
+                    <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse"
+                      data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                      2.- Consideraciones sobre Gastos Operacionales y Convenios
+                    </button>
+                  </h2>
+                </div>
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                  <div class="card-body">
+                    A la hora de elegir dónde tomar el crédito hipotecario, los gastos operacionales no son
+                    determinantes, ya que las tarifas entre bancos son similares. Sin embargo, en caso de adquirir una
+                    vivienda nueva, podría haber convenios entre inmobiliarias y bancos que ofrezcan descuentos
+                    interesantes. Es recomendable consultar en la institución financiera sobre la fecha de inicio del
+                    pago del dividendo mensual. Usualmente, el primer pago ocurre al mes subsiguiente desde la
+                    inscripción en el Conservador de Bienes Raíces, pero también puedes solicitar un período de gracia
+                    adicional. Ten en cuenta que el momento de inicio del pago afectará el monto del primer dividendo,
+                    ya que los seguros (desgravamen y propiedad) inician la cobertura desde la firma de la escritura.
+                  </div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-header" id="headingThree">
+                  <h2 class="mb-0">
+                    <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse"
+                      data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                      3.- Beneficios de Propiedades DFL2
+                    </button>
+                  </h2>
+                </div>
+                <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                  <div class="card-body">
+                    Si la propiedad que estás considerando comprar tiene la categoría DFL2, es importante conocer los
+                    beneficios tributarios asociados. Estos incluyen la disminución del impuesto al crédito en el
+                    momento de la compraventa, así como reducciones en el pago de contribuciones. Asegúrate de
+                    aprovechar estos incentivos fiscales para optimizar tu inversión en bienes raíces.
+                  </div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-header" id="headingFour">
+                  <h2 class="mb-0">
+                    <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse"
+                      data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                      4.- Gastos Operacionales y Convenios Inmobiliarios
+                    </button>
+                  </h2>
+                </div>
+                <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
+                  <div class="card-body">
+                    Aunque las tarifas de los bancos para créditos hipotecarios suelen ser similares, no debes descuidar
+                    la posibilidad de convenios entre inmobiliarias y bancos que puedan ofrecer descuentos interesantes,
+                    especialmente si estás adquiriendo una vivienda nueva. Asegúrate de investigar y preguntar en la
+                    institución financiera donde obtendrás el crédito hipotecario.
+                  </div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-header" id="headingFive">
+                  <h2 class="mb-0">
+                    <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse"
+                      data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                      5.- Fechas de Pago y Periodo de Gracia
+                    </button>
+                  </h2>
+                </div>
+                <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordionExample">
+                  <div class="card-body">
+                    Es crucial conocer cuándo comenzarás a pagar el dividendo mensual. Generalmente, el primer pago
+                    ocurre al mes siguiente desde la inscripción en el Conservador de Bienes Raíces. Sin embargo,
+                    también puedes negociar un período de gracia adicional si así lo deseas. Ten en cuenta que la
+                    elección entre empezar a pagar al mes siguiente o más adelante afectará el monto del primer
+                    dividendo, ya que los seguros comienzan a cubrir desde la firma de la escritura.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+
           </div>
           <div *ngIf="indicador >= 21 && indicador < 31" style="align-self: center"
             class="col-12 col-sm-8 text-justify">
-            <p>
-              Si te encuentras cómod@ pagando el valor del
-              dividendo actual, te recomendamos mantener tu plan
-              de pago y no aumentar la deuda. Revisa tu tasa
-              hipotecaria actual y evalúa la posibilida de
-              mejorarla, idealmente en tu mismo banco, a través de
-              la modalidad de refinanciamiento express, que es un
-              trámite notarial simple y rápido. Si buscas generar
-              más espacio en tu presupuesto, puedes refinanciar tu
-              deuda actual para revisar nuevos plazos, que
-              permitan un dividendo menor, sea en tu mismo banco
-              (modalidad "express" o "tradicional") o haciendo
-              "portabilidad financiera", llevándote el hipotecario
-              a otra institución con una nueva tasa y/o plazo.
-              Para este eventual nuevo crédito, te recomendamos
-              cotizar en al menos 3 bancos y revisar CAE,
-              dividendo final y cobertura de los seguros. Hay
-              seguros licitados e individuales que tienen distinta
-              cobertura y valor de prima (precio). Debes revisar
-              bien ambos ítems para lograr un equilibrio entre el
-              precio y que tu propiedad quede bien cubierta en
-              caso de un eventual siniestro. En la modalidad de
-              "refinanciamiento express" y en la "portabilidad",
-              los gastos operacionales se reducen
-              considerablemente, pero en la de "refinanciamiento
-              tradicional" pagarás casi la totalidad de los gastos
-              operacionales y sólo podrás eximirte del impuesto,
-              solicitando en el banco actual el formulario
-              "prepago ley 20.130" y presentándolo en la
-              institución donde refinanciarás (si es la misma
-              institución, igual lo debes pedir y presentar). Si
-              efectúas "refinanciamiento tradicional", también
-              debes tener cuidado y preguntar cuándo te cobrarán
-              el primer dividendo. Si lo hacen al mes subsiguiente
-              de inscrito el bien raíz en el Conservador de Bienes
-              Raíces, no hay problema, no coincidirán ambos
-              dividendos; pero si el primer dividendo se cobra al
-              mes subsiguiente después de la firma en notaría,
-              existe una alta probabilidad que se junten los
-              dividendos en ambas instituciones (el actual y el
-              nuevo) y tengas que pagar ambos en el mismo mes.
-              Para evitar que esto suceda, evalúa solicitar unos
-              meses de gracia en el nuevo crédito. Si necesitas
-              mayor información, contáctanos.
-            </p>
+            <div class="accordion" id="accordionExample">
+              <div class="card">
+                <div class="card-header" id="headingOne">
+                  <h2 class="mb-0">
+                    <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+                      data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                      1.- Mantenimiento del Plan de Pago Actual
+                    </button>
+                  </h2>
+                </div>
+                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+                  data-parent="#accordionExample">
+                  <div class="card-body">
+                    Si te sientes cómodo(a) pagando el valor del dividendo actual, es recomendable mantener tu plan de
+                    pago y evitar aumentar la deuda.
+                  </div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-header" id="headingTwo">
+                  <h2 class="mb-0">
+                    <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse"
+                      data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                      2.- Mejora de la Tasa Hipotecaria Actual
+                    </button>
+                  </h2>
+                </div>
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                  <div class="card-body">
+                    Evalúa la posibilidad de mejorar tu tasa hipotecaria actual, preferentemente en tu mismo banco, a
+                    través de la modalidad de refinanciamiento express. Este trámite notarial es simple y rápido.
+                  </div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-header" id="headingThree">
+                  <h2 class="mb-0">
+                    <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse"
+                      data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                      3.- Refinanciamiento para Generar Espacio en el Presupuesto
+                    </button>
+                  </h2>
+                </div>
+                <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                  <div class="card-body">
+                    Si buscas más espacio en tu presupuesto, puedes refinanciar tu deuda actual para revisar nuevos
+                    plazos que permitan un dividendo menor. Esto puede realizarse en tu mismo banco (modalidad "express"
+                    o "tradicional") o a través de "portabilidad financiera".
+                  </div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-header" id="headingFour">
+                  <h2 class="mb-0">
+                    <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse"
+                      data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                      4.- Consideraciones para un Eventual Nuevo Crédito
+                    </button>
+                  </h2>
+                </div>
+                <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
+                  <div class="card-body">
+                    Si optas por un nuevo crédito, es importante cotizar en al menos 3 bancos y revisar el CAE,
+                    dividendo final y cobertura de seguros. Debes considerar seguros licitados e individuales con
+                    diferentes coberturas y primas. También, evalúa si la propiedad es DFL2 para aprovechar beneficios
+                    tributarios.
+                  </div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-header" id="headingFive">
+                  <h2 class="mb-0">
+                    <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse"
+                      data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                      5.- Modalidades de Refinanciamiento y Gastos Operacionales
+                    </button>
+                  </h2>
+                </div>
+                <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordionExample">
+                  <div class="card-body">
+                    En las modalidades "refinanciamiento express" y "portabilidad", los gastos operacionales se reducen
+                    considerablemente. En "refinanciamiento tradicional", pagarás la mayoría de los gastos
+                    operacionales. En este caso, podrás eximirte del impuesto con el formulario "prepago ley 20.130". Si
+                    haces "refinanciamiento tradicional", pregunta cuándo se cobrará el primer dividendo para evitar que
+                    coincida con el actual. Evalúa solicitar meses de gracia en el nuevo crédito para evitar pagos
+                    simultáneos.
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
           <div *ngIf="indicador >= 31" style="align-self: center" class="col-12 col-sm-8 text-justify">
-            <p>
-              Puedes refinanciar tu deuda actual, para revisar
-              nuevos plazos que permitan un dividendo menor, en tu
-              mismo banco (modalidad "express" o "tradicional") o
-              haciendo "portabilidad financiera", llevándote el
-              hipotecario a otra institución con una nueva tasa
-              y/o plazo. Para este eventual nuevo crédito, te
-              recomendamos cotizar en al menos 3 bancos y revisar
-              CAE, dividendo final y cobertura de los seguros. Hay
-              seguros licitados e individuales que tienen distinta
-              cobertura y valor de prima (precio). Debes revisar
-              bien ambos item para lograr un equilibrio entre el
-              precio y que tu propiedad quede bien cubierta en
-              caso de un eventual siniestro. Puedes ahorrar en
-              gastos operacionales si usas la modalidad de
-              "refinanciamiento express" en tu mismo banco o
-              efectuando la "portabilidad financiera" si es a otro
-              banco. En la modalidad de "refinanciamiento
-              tradicional" pagarás casi la totalidad de ellos y
-              sólo podrás eximirte del impuesto, solicitando en el
-              banco actual el formulario "prepago ley 20.130" y
-              presentándolo en la institución donde refinanciarás
-              (si es la misma institución, igual lo debes pedir y
-              presentar). Si efectúas "refinanciamiento
-              tradicional" también debes tener cuidado y preguntar
-              cuándo te cobrarán el primer dividendo. Si es al mes
-              subsiguiente de inscrito el bien raíz en el
-              Conservador de Bienes Raíces, no hay problema, no
-              coincidirán ambos dividendos; pero si el primer
-              dividendo se cobra al mes subsiguiente después de la
-              firma en notaría, existe una alta probabilidad que
-              se topen los dividendos en ambas instituciones (el
-              actual y el nuevo) y tengas que pagar ambos en el
-              mismo mes. Para evitar que esto suceda, evalúa
-              solicitar unos meses de gracia en el nuevo crédito.
-              Si necesitas mayor información, contáctanos.
-            </p>
+            <div class="accordion" id="accordionExample">
+              <div class="card">
+                <div class="card-header" id="headingOne">
+                  <h2 class="mb-0">
+                    <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+                      data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                      1.- Opciones de Refinanciamiento y Nuevos Plazos
+                    </button>
+                  </h2>
+                </div>
+                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+                  data-parent="#accordionExample">
+                  <div class="card-body">
+                    Puedes refinanciar tu deuda actual para revisar nuevos plazos que permitan un dividendo menor. Esto
+                    es posible en tu mismo banco (modalidad "express" o "tradicional") o mediante la "portabilidad
+                    financiera", llevando el crédito hipotecario a otra institución con una nueva tasa y/o plazo.
+                  </div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-header" id="headingTwo">
+                  <h2 class="mb-0">
+                    <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse"
+                      data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                      2.- Consideraciones para un Eventual Nuevo Crédito
+                    </button>
+                  </h2>
+                </div>
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                  <div class="card-body">
+                    Si optas por un nuevo crédito, es importante cotizar en al menos 3 bancos y revisar el CAE,
+                    dividendo final y cobertura de seguros. Debes considerar seguros licitados e individuales con
+                    diferentes coberturas y primas para garantizar la protección de tu propiedad.
+                  </div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-header" id="headingThree">
+                  <h2 class="mb-0">
+                    <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse"
+                      data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                      3.- Ahorro en Gastos Operacionales
+                    </button>
+                  </h2>
+                </div>
+                <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                  <div class="card-body">
+                    En la modalidad de "refinanciamiento express" en tu mismo banco o con la "portabilidad financiera" a
+                    otro banco, puedes ahorrar en gastos operacionales. En "refinanciamiento tradicional", pagarás la
+                    mayoría de estos gastos, pero podrás eximirte del impuesto con el formulario "prepago ley 20.130".
+                  </div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-header" id="headingFour">
+                  <h2 class="mb-0">
+                    <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse"
+                      data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                      4.- Cuándo Cobrarán el Primer Dividendo
+                    </button>
+                  </h2>
+                </div>
+                <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
+                  <div class="card-body">
+                    Si realizas "refinanciamiento tradicional", pregunta cuándo se cobrará el primer dividendo para
+                    evitar coincidencias con el actual. Si ambos dividendos se cobran en el mismo mes, considera
+                    solicitar unos meses de gracia en el nuevo crédito para evitar pagos simultáneos.
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -371,88 +764,299 @@
             <img style="max-height: 300px" src="assets/img/analisis/cf.svg" alt="" />
           </div>
           <div *ngIf="indicador >= 0 && indicador < 26" style="align-self: center" class="col-12 col-sm-8 text-justify">
-            <h5>
-              Una carga financiera baja también es señal que
-              tienes capacidad de ahorro/inversión y hay distintos
-              instrumentos para ello, dependiendo de los montos,
-              destino, del plazo y perfil de riesgo. Consúltanos
-              si quieres profundizar en esta alternativa. Si lo
-              que necesitas es adquirir un crédito, recuerda
-              siempre cotizar en al menos 3 instituciones para que
-              puedas negociar buenas condiciones y fijarte muy
-              bien en el CAE, seguros asociados y cuota/dividendo
-              final. Te recordamos que en nuestra plataforma
-              cuentas con la herramienta
-              <a href="/presupuesto">PRESUPUESTO INTELIGENTE</a>,
-              para llevar un mejor control de tus gastos y buscar
-              espacios para el ahorro.
-            </h5>
+            <div class="accordion" id="accordionExample">
+
+
+              <div class="card">
+                <div class="card-header" id="headingOne">
+                  <h2 class="mb-0">
+                    <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+                      data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                      Importancia de una Carga Financiera Baja
+                    </button>
+                  </h2>
+                </div>
+                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+                  data-parent="#accordionExample">
+                  <div class="card-body">
+                    Una carga financiera baja también es señal de capacidad de ahorro e inversión. Existen distintos
+                    instrumentos para ello, consulta opciones según montos, destino, plazo y perfil de riesgo.
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="card">
+                <div class="card-header" id="headingTwo">
+                  <h2 class="mb-0">
+                    <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+                      data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                      Explorar Opciones de Ahorro e Inversión
+                    </button>
+                  </h2>
+                </div>
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                  <div class="card-body">
+                    Si estás interesado en explorar opciones de ahorro e inversión, puedes consultar con nosotros para
+                    profundizar en estas alternativas.
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="card">
+                <div class="card-header" id="headingThree">
+                  <h2 class="mb-0">
+                    <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+                      data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                      Cotizar en Distintas Instituciones
+                    </button>
+                  </h2>
+                </div>
+                <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                  <div class="card-body">
+                    Si necesitas adquirir un crédito, recuerda siempre cotizar en al menos 3 instituciones para negociar
+                    buenas condiciones. Fíjate en el CAE, seguros asociados y cuota/dividendo final.
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="card">
+                <div class="card-header" id="headingFour">
+                  <h2 class="mb-0">
+                    <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+                      data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                      Herramienta de Presupuesto Inteligente
+                    </button>
+                  </h2>
+                </div>
+                <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
+                  <div class="card-body">
+                    En nuestra plataforma, puedes utilizar la <a class="text-bold" href="/presupuesto">herramienta de
+                      PRESUPUESTO INTELIGENTE</a> para controlar tus gastos y buscar espacios para el ahorro.
+                  </div>
+                </div>
+              </div>
+
+            </div>
           </div>
           <div *ngIf="indicador >= 26 && indicador < 41" style="align-self: center"
             class="col-12 col-sm-8 text-justify">
-            <h6>
-              Tienes espacio para ahorrar o para tomar un nuevo
-              crédito, si es lo que necesitas. El tope de carga
-              financiera total se ubica entre un
-              <span class="text-bold">50% y 60%</span> del ingreso
-              total mensual, dependiendo de la institución
-              financiera. Podrías generar mayor espacio haciendo
-              ajustes en tu carga financiera, repactando plazos de
-              tus deudas actuales, siempre con atención a que la
-              repactación tenga al menos las mismas condiciones de
-              tu deuda actual en CAE, tasas y seguros. Revisa el
-              detalle de las recomendaciones de la carga
-              financiera de corto y de largo plazo, para ver dónde
-              tienes que acentuar esos ajustes. También tienes
-              capacidad de ahorro/inversión, y hay distintos
-              instrumentos para ello, dependiendo de los montos,
-              destino, del plazo y del perfil de riesgo.
-              Consúltanos si quieres profundizar en esta
-              alternativa. Te recordamos que en nuestra plataforma
-              cuentas con la herramienta PRESUPUESTO INTELIGENTE,
-              para llevar un mejor control de tus gastos y buscar
-              espacios para el ahorro.
-            </h6>
+            <div class="accordion" id="accordionExample">
+
+              <div class="card">
+                <div class="card-header" id="headingOne">
+                  <h2 class="mb-0">
+                    <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+                      data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                      Tienes Espacio para Ahorrar o Tomar un Nuevo Crédito
+                    </button>
+                  </h2>
+                </div>
+                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+                  data-parent="#accordionExample">
+                  <div class="card-body">
+                    Tienes espacio para ahorrar o para tomar un nuevo crédito, si es lo que necesitas. El tope de carga
+                    financiera total se ubica entre un <span class="text-bold">50% y 60%</span> del ingreso total
+                    mensual, dependiendo de la institución financiera.
+                  </div>
+                </div>
+              </div>
+
+              <div class="card">
+                <div class="card-header" id="headingTwo">
+                  <h2 class="mb-0">
+                    <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+                      data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                      Generar Mayor Espacio para Ahorrar o Endeudarte
+                    </button>
+                  </h2>
+                </div>
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                  <div class="card-body">
+                    Podrías generar mayor espacio haciendo ajustes en tu carga financiera, repactando plazos de tus
+                    deudas actuales. Asegúrate de que la repactación tenga al menos las mismas condiciones de tu deuda
+                    actual en CAE, tasas y seguros. Consulta las recomendaciones para la carga financiera de corto y
+                    largo plazo para determinar dónde hacer ajustes.
+                  </div>
+                </div>
+              </div>
+
+              <div class="card">
+                <div class="card-header" id="headingThree">
+                  <h2 class="mb-0">
+                    <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+                      data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                      Explorar Opciones de Ahorro e Inversión
+                    </button>
+                  </h2>
+                </div>
+                <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                  <div class="card-body">
+                    Si estás interesado en explorar opciones de ahorro e inversión, puedes consultar con nosotros para
+                    profundizar en estas alternativas según montos, destino, plazo y perfil de riesgo.
+                  </div>
+                </div>
+              </div>
+
+              <div class="card">
+                <div class="card-header" id="headingFour">
+                  <h2 class="mb-0">
+                    <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+                      data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                      Herramienta de Presupuesto Inteligente
+                    </button>
+                  </h2>
+                </div>
+                <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
+                  <div class="card-body">
+                    En nuestra plataforma, puedes utilizar la <a class="text-bold" href="/presupuesto">herramienta de
+                      PRESUPUESTO INTELIGENTE</a> para controlar tus gastos y buscar espacios para el ahorro.
+                  </div>
+                </div>
+              </div>
+
+            </div>
           </div>
           <div *ngIf="indicador >= 41 && indicador < 55" style="align-self: center"
             class="col-12 col-sm-8 text-justify">
-            <h5>
-              Te recomendamos no adquirir nuevos compromisos
-              financieros, pues podría comprometer tus pagos en
-              adelante. Si no estás cómod@ pagando, puedes revisar
-              las recomendaciones de carga financiera de corto y
-              largo plazo, para ver dónde puedes hacer ajustes. Te
-              recordamos que en nuestra plataforma cuentas con la
-              herramienta
-              <a href="/presupuesto">PRESUPUESTO INTELIGENTE</a>,
-              para llevar un mejor control de tus gastos y buscar
-              espacios para el ahorro.
-            </h5>
+            <div class="accordion" id="accordionExample">
+
+              <div class="card">
+                <div class="card-header" id="headingOne">
+                  <h2 class="mb-0">
+                    <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+                      data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                      Evita Adquirir Nuevos Compromisos Financieros
+                    </button>
+                  </h2>
+                </div>
+                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+                  data-parent="#accordionExample">
+                  <div class="card-body">
+                    Te recomendamos no adquirir nuevos compromisos financieros, ya que podrían comprometer tus pagos en
+                    adelante.
+                  </div>
+                </div>
+              </div>
+
+              <div class="card">
+                <div class="card-header" id="headingTwo">
+                  <h2 class="mb-0">
+                    <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+                      data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                      Revisar Recomendaciones de Carga Financiera
+                    </button>
+                  </h2>
+                </div>
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                  <div class="card-body">
+                    Si no te sientes cómod@ pagando, puedes revisar las recomendaciones de carga financiera de corto y
+                    largo plazo para determinar dónde hacer ajustes.
+                  </div>
+                </div>
+              </div>
+
+              <div class="card">
+                <div class="card-header" id="headingThree">
+                  <h2 class="mb-0">
+                    <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+                      data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                      Herramienta de Presupuesto Inteligente
+                    </button>
+                  </h2>
+                </div>
+                <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                  <div class="card-body">
+                    En nuestra plataforma, puedes utilizar la <a href="/presupuesto">herramienta de PRESUPUESTO
+                      INTELIGENTE</a> para llevar un mejor control de tus gastos y buscar espacios para el ahorro.
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
           </div>
           <div *ngIf="indicador >= 55" style="align-self: center" class="col-12 col-sm-8 text-justify">
-            <h6>
-              Es muy probable que si estás en este rango, tengas
-              un presupuesto muy estresado, hasta con
-              posibilidades de dejar de pagar algunos compromisos
-              (créditos, colegio, etc.) y tengas tus cupos
-              utilizados, pagando un alto costo financiero (línea
-              de crédito y tarjetas cobran altas tasas de
-              interés). Te sugerimos buscar una solución de forma
-              temprana antes de caer en morosidades, que reducirán
-              tus opciones de encontrar soluciones convenientes.
-              Negociar al día no es lo mismo que negociar con
-              morosidades. Reduce tu deuda lo máximo y más rápido
-              que puedas (si cuentas con bonos o ingresos extras,
-              destínalos a bajar endeudamiento) o estructura tu
-              deuda a más largo plazo (repactación), fijándote que
-              las condiciones de CAE, tasa y seguro sean buenas.
-              Revisa las recomendaciones para tu carga de corto y
-              largo plazo, para que hagas los ajustes de manera
-              óptima. Te recordamos que en nuestra plataforma
-              cuentas con la herramienta PRESUPUESTO INTELIGENTE,
-              para llevar un mejor control de tus gastos y buscar
-              espacios para el ahorro.
-            </h6>
+            <div class="accordion" id="accordionExample">
+
+              <div class="card">
+                <div class="card-header" id="headingOne">
+                  <h2 class="mb-0">
+                    <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+                      data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                      Evaluación de Carga Financiera
+                    </button>
+                  </h2>
+                </div>
+                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+                  data-parent="#accordionExample">
+                  <div class="card-body">
+                    Es muy probable que si estás en este rango, tengas un presupuesto muy estresado, hasta con
+                    posibilidades de dejar de pagar algunos compromisos (créditos, colegio, etc.) y tengas tus cupos
+                    utilizados, pagando un alto costo financiero (línea de crédito y tarjetas cobran altas tasas de
+                    interés).
+                  </div>
+                </div>
+              </div>
+
+              <div class="card">
+                <div class="card-header" id="headingTwo">
+                  <h2 class="mb-0">
+                    <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+                      data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                      Buscar Soluciones Tempranas
+                    </button>
+                  </h2>
+                </div>
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                  <div class="card-body">
+                    Te sugerimos buscar una solución de forma temprana antes de caer en morosidades, que reducirán tus
+                    opciones de encontrar soluciones convenientes. Negociar al día no es lo mismo que negociar con
+                    morosidades.
+                  </div>
+                </div>
+              </div>
+
+              <div class="card">
+                <div class="card-header" id="headingThree">
+                  <h2 class="mb-0">
+                    <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+                      data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                      Estrategias para Reducir Deuda
+                    </button>
+                  </h2>
+                </div>
+                <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                  <div class="card-body">
+                    Reduce tu deuda lo máximo y más rápido que puedas (si cuentas con bonos o ingresos extras,
+                    destínalos a bajar endeudamiento) o estructura tu deuda a más largo plazo (repactación), fijándote
+                    que las condiciones de CAE, tasa y seguro sean buenas. Revisa las recomendaciones para tu carga de
+                    corto y largo plazo, para que hagas los ajustes de manera óptima.
+                  </div>
+                </div>
+              </div>
+
+              <div class="card">
+                <div class="card-header" id="headingFour">
+                  <h2 class="mb-0">
+                    <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+                      data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                      Utilización de Herramienta PRESUPUESTO INTELIGENTE
+                    </button>
+                  </h2>
+                </div>
+                <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
+                  <div class="card-body">
+                    Te recordamos que en nuestra plataforma cuentas con la herramienta <a
+                      href="/presupuesto">PRESUPUESTO INTELIGENTE</a>, para llevar un mejor control de tus gastos y
+                    buscar espacios para el ahorro.
+                  </div>
+                </div>
+              </div>
+
+            </div>
           </div>
         </div>
       </div>
@@ -463,55 +1067,159 @@
           <div class="col-12 col-sm-4 text-center">
             <img style="max-height: 300px" src="assets/img/analisis/cf.svg" alt="" />
           </div>
-          <div *ngIf="indicador >= 0 && indicador < 5" style="align-self: center" class="col-12 col-sm-8 text-justify">
-            <h5>
-              Si es el caso, recuerda que puedes ingresar el monto y la cuota futura en nuestra Plataforma, para que
-              proyectes, tanto este indicador como el de carga financiera. Recuerda cotizar en al menos 3 instituciones
-              y fijarte en el CAE, cuota final, tasa de interés y los seguros (cuáles son y las coberturas). El tope de
-              este indicador es de 12 veces renta aproximadamente, pero dependiendo de tu banco, puedes tener espacio
-              para algo más.
-            </h5>
+           <div *ngIf="indicador >= 0 && indicador < 5" style="align-self: center" class="col-12 col-sm-8 text-justify">
+            <div class="accordion" id="accordionExample">
+              <div class="card">
+                <div class="card-header" id="headingOne">
+                  <h2 class="mb-0">
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                      Proyecta tu endeudamiento en nuestra Plataforma.
+                    </button>
+                  </h2>
+                </div>
+                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                  <div class="card-body">
+                    Si es necesario, ingresa el monto y la cuota futura en nuestra Plataforma.
+                    Esto te permitirá proyectar los indicadores de endeudamiento y carga financiera.
+                    No olvides cotizar en al menos 3 instituciones y revisar CAE, cuota final, tasa de interés y seguros.
+                    Dependiendo de tu banco, podrías tener espacio para más endeudamiento, pero el tope es de aproximadamente 12 veces tu renta.
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
           <div *ngIf="indicador >= 5 && indicador < 9" style="align-self: center" class="col-12 col-sm-8 text-justify">
-            <h6>
-              Tienes espacio para ahorrar o endeudarte si es lo que necesitas, aunque deberás verificar en la
-              institución financiera donde cotices, el tope de veces renta al que puedes llegar (el tope aproximadamente
-              es de 12 "veces" tu ingreso total mensual). Eso podría limitar el monto al que puedas acceder. Recuerda
-              que puedes ingresar el monto y la cuota futura en nuestra Plataforma, para que proyectes, tanto este
-              indicador como el de carga financiera.
-            </h6>
+            <div class="accordion" id="accordionExample">
+              <div class="card">
+                <div class="card-header" id="headingOne">
+                  <h2 class="mb-0">
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                      ¿Necesitas Evaluar tu Endeudamiento?
+                    </button>
+                  </h2>
+                </div>
+                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                  <div class="card-body">
+                    Si es necesario, ingresa el monto y la cuota futura en nuestra Plataforma. Esto te permitirá proyectar los indicadores de endeudamiento y carga financiera.
+                    No olvides cotizar en al menos 3 instituciones y revisar CAE, cuota final, tasa de interés y seguros. Dependiendo de tu banco, podrías tener espacio para más endeudamiento, aunque el tope generalmente es de aproximadamente 12 veces tu renta.
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-          <div *ngIf="indicador >= 9 && indicador < 13" style="align-self: center" class="col-12 col-sm-8 text-justify">
-            <h5>
-              Revisa si este endeudamiento fue tomado para algún negocio o inversión que te retorne ingresos o, si por
-              el contrario, estás tomando créditos para pagar tus gastos mensuales. En este último escenario, debes
-              revisar tu presupuesto mensual y tomar medidas para nivelar tus ingresos y gastos. En caso de requerir
-              urgentemente un crédito, lo más probable es que te soliciten un aval o complementación de renta (con tú
-              cónyuge, por ejemplo). Si tienes tus cupos de línea de crédito y tarjetas de crédito utilizados
-              permanentemente, estás pagando un alto costo financiero (las tasas de estos productos son altas) y sin
-              bajar deuda efectiva (capital). Para la tarjeta de crédito, la opción es pagar el "total facturado" y no
-              el “pago mínimo”, donde sólo rebajas un 5% a capital y el saldo son intereses a tasas altas. Si tienes la
-              opción de bajar deuda o amortizar cupos utilizados, sin acceder a un crédito (por ejemplo, con recursos
-              provenientes de algún ahorro, algún bono laboral o la venta de un bien), es el momento de hacerlo. Si
-              pagas la línea y la tarjeta, procura bajar los cupos y no volverlos a usar.
-            </h5>
-          </div>
+           <div *ngIf="indicador >= 9 && indicador < 13" style="align-self: center" class="col-12 col-sm-8 text-justify">
+            <div class="accordion" id="accordionExample">
+              <div class="card">
+                <div class="card-header" id="headingOne">
+                  <h2 class="mb-0">
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne"
+                      aria-expanded="true" aria-controls="collapseOne">
+                      Revisa si este endeudamiento fue tomado para negocios o inversiones.
+                    </button>
+                  </h2>
+                </div>
+                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+                  data-parent="#accordionExample">
+                  <div class="card-body">
+                    En caso contrario, revisa tu presupuesto mensual para nivelar ingresos y gastos.
+                  </div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-header" id="headingTwo">
+                  <h2 class="mb-0">
+                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                      data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                      Si necesitas un crédito urgente, es probable que requieras un aval o complemento de renta.
+                    </button>
+                  </h2>
+                </div>
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                  <div class="card-body">
+                    Si utilizas tus cupos de crédito y tarjetas constantemente, estás pagando altas tasas sin reducir
+                    deuda.
+                  </div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-header" id="headingThree">
+                  <h2 class="mb-0">
+                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                      data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                      Paga el "total facturado" en tu tarjeta de crédito en lugar del “pago mínimo” para reducir
+                      intereses.
+                    </button>
+                  </h2>
+                </div>
+                <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                  <div class="card-body">
+                    Si es posible, reduce deuda sin nuevos créditos, usando ahorros, bonos laborales o venta de bienes.
+                    Evita usar cupos nuevamente.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div> 
           <div *ngIf="indicador >= 13" style="align-self: center" class="col-12 col-sm-8 text-justify">
-            <h6>
-              Revisa si este endeudamiento fue tomado para algún negocio o inversión que te retorne ingresos o si, por
-              el contrario, estás tomando créditos para pagar tus gastos mensuales. En este último escenario, debes
-              revisar tu presupuesto mensual y tomar medidas para nivelar tus ingresos y gastos. En caso de requerir
-              urgentemente un crédito, lo más probable es que te soliciten un aval o complementación de renta (con tú
-              cónyuge, por ejemplo). Te recomendamos mantener disciplina de pago e ir abonando (o pagando la totalidad)
-              si cuentas con algún tipo de ahorro, ingresos extras (como algún bono de producción) o la venta de algún
-              bien. Te recomendamos partir por pagar los productos que tienen altas tasas de interés como la línea de
-              crédito y la tarjeta de crédito (ojalá bajando los cupos para no volverlos a utilizar), para
-              posteriormente abonar o pagar los créditos en cuotas (consumo, automotrices). Para estos abonos parciales
-              (o llamados también “prepagos parciales”) a créditos en cuotas, las instituciones exigen un porcentaje
-              mínimo, que normalmente es entre el 20% y 25% del saldo a capital vigente. Para la tarjeta de crédito, la
-              forma de bajar deuda es pagar el "total facturado" porque el "pago mínimo" sólo considera un 5% de
-              amortización a capital y el saldo son intereses con tasas altas.
-            </h6>
+
+            <div class="accordion" id="accordionExample">
+              <div class="card">
+                <div class="card-header" id="headingOne">
+                  <h2 class="mb-0">
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne"
+                      aria-expanded="true" aria-controls="collapseOne">
+                      Revisa el propósito de tu endeudamiento.
+                    </button>
+                  </h2>
+                </div>
+                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+                  data-parent="#accordionExample">
+                  <div class="card-body">
+                    Evalúa si tus deudas están destinadas a negocios o inversiones que generen ingresos.
+                    Si, en cambio, tomas créditos para gastos mensuales, ajusta tu presupuesto para equilibrar ingresos
+                    y gastos.
+                  </div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-header" id="headingTwo">
+                  <h2 class="mb-0">
+                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                      data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                      Toma medidas si necesitas un crédito urgente.
+                    </button>
+                  </h2>
+                </div>
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                  <div class="card-body">
+                    Si buscas un crédito urgente, es probable que te soliciten un aval o complementación de renta.
+                    Mantén la disciplina de pago y considera abonar tus deudas con ahorros, ingresos extras o ventas de
+                    bienes.
+                    Prioriza pagar productos con altas tasas como línea de crédito y tarjeta de crédito, y evita
+                    reutilizar cupos.
+                  </div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-header" id="headingThree">
+                  <h2 class="mb-0">
+                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                      data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                      Realiza abonos parciales a tus créditos en cuotas.
+                    </button>
+                  </h2>
+                </div>
+                <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                  <div class="card-body">
+                    Las instituciones suelen exigir un abono mínimo del 20% al 25% del saldo a capital vigente para
+                    créditos en cuotas.
+                    Para tarjetas de crédito, paga el "total facturado" en lugar del "pago mínimo" para reducir
+                    intereses altos.
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
       </div>
@@ -523,50 +1231,78 @@
             <img style="max-height: 300px" src="assets/img/analisis/cf.svg" alt="" />
           </div>
           <div *ngIf="indicador >= 0 && indicador < 21" style="align-self: center" class="col-12 col-sm-8 text-justify">
-            <h5>
-              Si estás interesado en una propiedad, puedes ingresar en nuestra Plataforma el monto del financiamiento y
-              el valor del dividendo futuro (debes ingresar ambos valores en pesos, no en UF) y te indicaremos si estás
-              dentro de los parámetros probables de aprobación, en "veces renta hipotecario" (o apalancamiento
-              hipotecario o de largo plazo) y carga financiera hipotecaria (o de largo plazo). Recuerda cotizar en al
-              menos 3 instituciones y fijarte en el CAE, dividendo final y los seguros asociados.
-            </h5>
+            <div class="accordion" id="accordionExample">
+              <div class="card">
+                <div class="card-header" id="headingOne">
+                  <h2 class="mb-0">
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                      ¿Interesado en una Propiedad? Consulta tu Financiamiento Hipotecario
+                    </button>
+                  </h2>
+                </div>
+                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                  <div class="card-body">
+                    Si estás interesado en una propiedad, puedes ingresar en nuestra Plataforma el monto del financiamiento y el valor del dividendo futuro (debes ingresar ambos valores en pesos, no en UF) y te indicaremos si estás dentro de los parámetros probables de aprobación, en "veces renta hipotecario" (o apalancamiento hipotecario o de largo plazo) y carga financiera hipotecaria (o de largo plazo). Recuerda cotizar en al menos 3 instituciones y fijarte en el CAE, dividendo final y los seguros asociados.
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
           <div *ngIf="indicador >= 21 && indicador < 36" style="align-self: center"
             class="col-12 col-sm-8 text-justify">
-            <h6>
-              Si estás interesado en una propiedad, puedes ingresar en nuestra plataforma el monto del financiamiento y
-              el valor del dividendo futuro (debes ingresar ambos valores en pesos, no en UF) y te indicaremos si estás
-              dentro de los parámetros probables de aprobación, en apalancamiento (o veces renta hipotecario) y carga
-              financiera de largo plazo. Deberás verificar en tu banco o los bancos en donde cotices, el tope de "veces
-              renta o apalancamiento hipotecario/largo plazo) al que puedes acceder. También puedes entregar un mayor
-              pié si cuentas con más ahorro o presentar un aval calificado o complementar renta para acceder a montos
-              que por sí solo no podrías (están los créditos bipersonales o mancomunados en donde cada uno toma el 50%
-              de la deuda y se comparte la propiedad del bien en el mismo porcentaje del financiamiento, por lo que si
-              en el futuro deseas vender, tienen que hacerlo ambos). Recuerda cotizar en al menos 3 instituciones y
-              fijarte en el CAE, dividendo final y los seguros asociados.
-            </h6>
+            <div class="accordion" id="accordionExample">
+              <div class="card">
+                <div class="card-header" id="headingOne">
+                  <h2 class="mb-0">
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                      ¿Interesado en una Propiedad? Consulta tu Financiamiento Hipotecario
+                    </button>
+                  </h2>
+                </div>
+                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                  <div class="card-body">
+                    Si estás interesado en una propiedad, puedes ingresar en nuestra plataforma el monto del financiamiento y el valor del dividendo futuro (debes ingresar ambos valores en pesos, no en UF) y te indicaremos si estás dentro de los parámetros probables de aprobación, en apalancamiento (o veces renta hipotecario) y carga financiera de largo plazo. Deberás verificar en tu banco o los bancos en donde cotices, el tope de "veces renta o apalancamiento hipotecario/largo plazo) al que puedes acceder. También puedes entregar un mayor pié si cuentas con más ahorro o presentar un aval calificado o complementar renta para acceder a montos que por sí solo no podrías (están los créditos bipersonales o mancomunados en donde cada uno toma el 50% de la deuda y se comparte la propiedad del bien en el mismo porcentaje del financiamiento, por lo que si en el futuro deseas vender, tienen que hacerlo ambos). Recuerda cotizar en al menos 3 instituciones y fijarte en el CAE, dividendo final y los seguros asociados.
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
           <div *ngIf="indicador >= 36 && indicador < 50" style="align-self: center"
             class="col-12 col-sm-8 text-justify">
-            <h5>
-              Tu capacidad es más limitada en la medida que tu indicador es más cercano a 50. La opción que tendrías que
-              revisar, en caso de querer comprar un bien raíz y tomar un crédito hipotecario, es a través de un aval o
-              complementando renta. Están los créditos bipersonales o mancomunados en donde cada uno toma el 50% del
-              monto total del crédito, esto hace que baje tu requisito de veces renta al tomar deuda por la mitad. Se
-              comparte la propiedad del bien en el mismo porcentaje del financiamiento, por lo que si en el futuro
-              deseas vender, tienen que hacerlo ambos. Recuerda cotizar en al menos 3 instituciones y fijarte en el CAE,
-              dividendo final y los seguros asociados.
-            </h5>
+            <div class="accordion" id="accordionExample">
+              <div class="card">
+                <div class="card-header" id="headingOne">
+                  <h2 class="mb-0">
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                      ¿Interesado en una Propiedad? Consulta tu Financiamiento Hipotecario
+                    </button>
+                  </h2>
+                </div>
+                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                  <div class="card-body">
+                    Si estás interesado en una propiedad, puedes ingresar en nuestra plataforma el monto del financiamiento y el valor del dividendo futuro (debes ingresar ambos valores en pesos, no en UF) y te indicaremos si estás dentro de los parámetros probables de aprobación, en apalancamiento (o veces renta hipotecario) y carga financiera de largo plazo. Deberás verificar en tu banco o los bancos en donde cotices, el tope de "veces renta o apalancamiento hipotecario/largo plazo) al que puedes acceder. Tu capacidad es más limitada en la medida que tu indicador es más cercano a 50. La opción que tendrías que revisar, en caso de querer comprar un bien raíz y tomar un crédito hipotecario, es a través de un aval o complementando renta. Están los créditos bipersonales o mancomunados en donde cada uno toma el 50% del monto total del crédito, esto hace que baje tu requisito de veces renta al tomar deuda por la mitad. Se comparte la propiedad del bien en el mismo porcentaje del financiamiento, por lo que si en el futuro deseas vender, tienen que hacerlo ambos. Recuerda cotizar en al menos 3 instituciones y fijarte en el CAE, dividendo final y los seguros asociados.
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
           <div *ngIf="indicador >= 50" style="align-self: center" class="col-12 col-sm-8 text-justify">
-            <h6>
-              Si estás en este rango, te recomendamos mantener disciplina de pago e ir abonando si cuentas con ingresos
-              extras, como algún bono (de producción, etc.) o la venta de algún activo. Recuerda que para abonar
-              (prepago parcial) los bancos exigen un mínimo porcentaje, que normalmente anda en torno al 10% del saldo a
-              capital actual, pero te recomendamos hacerlo con más del 20%, porque cada vez que prepagas, hay un costo
-              por ello (comisión). Antes de efectuar el abono pregunta en la institución en donde tienes el hipotecario,
-              si permiten bajar plazo o valor dividendo.
-            </h6>
+            <div class="accordion" id="accordionExample">
+              <div class="card">
+                <div class="card-header" id="headingOne">
+                  <h2 class="mb-0">
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                      Si estás en este rango, te recomendamos mantener disciplina de pago e ir abonando
+                    </button>
+                  </h2>
+                </div>
+                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                  <div class="card-body">
+                    Si estás en este rango, te recomendamos mantener disciplina de pago e ir abonando si cuentas con ingresos extras, como algún bono (de producción, etc.) o la venta de algún activo. Recuerda que para abonar (prepago parcial) los bancos exigen un mínimo porcentaje, que normalmente anda en torno al 10% del saldo a capital actual, pero te recomendamos hacerlo con más del 20%, porque cada vez que prepagas, hay un costo por ello (comisión). Antes de efectuar el abono pregunta en la institución en donde tienes el hipotecario, si permiten bajar plazo o valor dividendo.
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -578,27 +1314,59 @@
             <img style="max-height: 300px" src="assets/img/analisis/cf.svg" alt="" />
           </div>
           <div *ngIf="indicador > 0" style="align-self: center" class="col-12 col-sm-8 text-justify">
-            <h5>
-              En términos simples, implica que tienes más de lo que debes. Mientras más positiva es esta relación, mejor
-              estás preparado para imprevistos o para consolidar tu futuro personal/familiar.
-            </h5>
+            <div class="accordion" id="accordionExample">
+              <div class="card">
+                <div class="card-header" id="headingOne">
+                  <h2 class="mb-0">
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                      En términos simples, implica que tienes más de lo que debes.
+                    </button>
+                  </h2>
+                </div>
+                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                  <div class="card-body">
+                    Mientras más positiva es esta relación, mejor estás preparado para imprevistos o para consolidar tu futuro personal/familiar.
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
           <div *ngIf="indicador === 0" style="align-self: center" class="col-12 col-sm-8 text-justify">
-            <h6>
-              La idea o metas que debes fijarte, es que tus deudas vayan dismuyendo y tus activos aumentando. Encuentra
-              espacios en tu presupuesto para el ahorro. Con este ahorro evitas endeudarte para adquirir activos (sobre
-              todo los que no te retornan) o te sirve para efectuar abonos y pagar en menor tiempo esas deudas que
-              adquiriste.
-            </h6>
+            <div class="accordion" id="accordionExample">
+              <div class="card">
+                <div class="card-header" id="headingTwo">
+                  <h2 class="mb-0">
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                      La idea o metas que debes fijarte, es que tus deudas vayan disminuyendo y tus activos aumentando.
+                    </button>
+                  </h2>
+                </div>
+                <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                  <div class="card-body">
+                    Encuentra espacios en tu presupuesto para el ahorro. Con este ahorro evitas endeudarte para adquirir activos (sobre todo los que no te retornan) o te sirve para efectuar abonos y pagar en menor tiempo esas deudas que adquiriste.
+                  </div>
+                </div>
+              </div>
+            </div>
+            
           </div>
           <div *ngIf="indicador < 0" style="align-self: center" class="col-12 col-sm-8 text-justify">
-            <h5>
-              Nuestra sugerencia es que el crédito (la deuda) se use para adquirir activos que retornen, y no para
-              financiar consumo o gastos. Si el resultado negativo es relativamente alto, te sugerimos planificarte
-              financieramente para bajar endeudamiento, sea a través de buscar espacios de ahorro en tu presupuesto
-              mensual que permita en algún momento prepagar deuda o, por ejemplo, buscar nuevas fuentes de ingreso que
-              permitan ir amortizando (bajando) deuda con más velocidad..
-            </h5>
+            <div class="accordion" id="accordionExample">
+              <div class="card">
+                <div class="card-header" id="headingThree">
+                  <h2 class="mb-0">
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+                      Nuestra sugerencia es que el crédito (la deuda) se use para adquirir activos que retornen, y no para financiar consumo o gastos.
+                    </button>
+                  </h2>
+                </div>
+                <div id="collapseThree" class="collapse show" aria-labelledby="headingThree" data-parent="#accordionExample">
+                  <div class="card-body">
+                    Si el resultado negativo es relativamente alto, te sugerimos planificarte financieramente para bajar endeudamiento, sea a través de buscar espacios de ahorro en tu presupuesto mensual que permita en algún momento prepagar deuda o, por ejemplo, buscar nuevas fuentes de ingreso que permitan ir amortizando (bajando) deuda con más velocidad.
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
