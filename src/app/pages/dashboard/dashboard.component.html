@@ -611,8 +611,8 @@
                                 </h5>
                             </div>
                             <div class="col-6">
-                                <img src="assets/icons/wizard.png" class="img-fluid" />
-                                <!-- <img width="100" [src]="imgNivel"> -->
+                                <!-- <img src="assets/icons/wizard.png" class="img-fluid" /> -->
+                                <img width="100" [src]="imgNivel">
                             </div>
                         </div>
                         <div class="row mt-auto">
@@ -629,10 +629,16 @@
                         <strong>{{ siguienteNivel }}</strong
                         >!
                     </p> -->
-                                <p>
+                                <p *ngIf="siguienteNivel">
                                     <i class="fas fa-hand-point-right text-warning"></i>
-                                    ¡Avanza de nivel completando los registros!
+                                    Completa cada registro para pasar al siguiente nivel                               
+                                    <strong>{{ siguienteNivel }}</strong>!
                                 </p>
+
+                                <p *ngIf="!siguienteNivel">
+                                    ¡Felicidades, has llegado al nivel máximo!
+                                </p>
+
                             </div>
                         </div>
                     </div>

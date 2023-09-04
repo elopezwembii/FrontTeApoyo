@@ -32,7 +32,7 @@ export class DashboardComponent implements OnInit {
     ahorros: Ahorro[] = [];
     posibleAhorro: number;
     nivel: string;
-    imgNivel:string;
+    imgNivel: string;
     siguienteNivel: string;
     ahorroSiguienteNivel: number;
     sumaGH: number = 0;
@@ -879,12 +879,9 @@ export class DashboardComponent implements OnInit {
                 ahorroSiguienteNivel
             }: any) => {
                 this.posibleAhorro = posibleAhorro;
-                this.nivel = nivel;
-                this.siguienteNivel = siguienteNivel;
+                // this.nivel = nivel;
+                //this.siguienteNivel = siguienteNivel;
                 this.ahorroSiguienteNivel = ahorroSiguienteNivel;
-
- 
-                
             }
         });
     }
@@ -1306,9 +1303,12 @@ export class DashboardComponent implements OnInit {
 
     getNivel() {
         this.usuarioService.getNivel().subscribe({
-            next:({nivel:{nivel,imagen_url}}:any)=>{                 
-                //this.nivel=nivel;
-                this.imgNivel=imagen_url
+            next: ({
+                nivel: {nivel_actual, imagen_url_actual, siguiente_nivel}
+            }: any) => {
+                this.nivel = nivel_actual;
+                this.imgNivel = imagen_url_actual;
+                this.siguienteNivel = siguiente_nivel;
             }
         });
     }
