@@ -89,8 +89,15 @@ export class GastosComponent implements OnInit {
         ],
         9: ['Hospedaje', 'Vuelos', 'Otros gastos de viajes'],
         10: [
-            'Casas comerciales',
+            // 'Casas comerciales',
+            // 'Créditos de consumo',
+            // 'Crédito automotriz',
+            // 'Tarjeta de crédito',
+            // 'Línea de crédito',
+            // 'Otros pagos de créditos'
             'Créditos de consumo',
+            'Crédito hipotecario',
+            'Casas comerciales',
             'Crédito automotriz',
             'Tarjeta de crédito',
             'Línea de crédito',

@@ -19,6 +19,10 @@ export interface Tarjeta {
     styleUrls: ['./deudas.component.scss']
 })
 export class DeudasComponent implements OnInit {
+    selectedDeudaAhorro: string;
+    selectedTipoDeudaNombre: string;
+    selectedTipoDeudaId: string;
+
     deudas = [];
     tarjetas = [];
     dias: number[];
@@ -61,10 +65,17 @@ export class DeudasComponent implements OnInit {
     ];
 
     tipos_deuda = [
-        'Crédito de consumo',
+        // 'Crédito de consumo',
+        // 'Crédito hipotecario',
+        // 'Crédito automotriz',
+        // 'Compras a crédito'
+        'Créditos de consumo',
         'Crédito hipotecario',
+        'Casas comerciales',
         'Crédito automotriz',
-        'Compras a crédito'
+        'Tarjeta de crédito',
+        'Línea de crédito',
+        'Otros pagos de créditos'
     ];
 
     tipos_tarjeta = ['Línea de crédito', 'Tarjeta de crédito'];
@@ -89,6 +100,8 @@ export class DeudasComponent implements OnInit {
         this.obtenerIngresos();
         this.obtenerDeuda();
         this.obtenerTarjeta();
+
+        this.setDiasDelMesActual();
     }
 
     form = this.fb.group({
@@ -323,5 +336,46 @@ export class DeudasComponent implements OnInit {
             id_banco: 0,
             tipo: '0'
         });
+    }
+
+    fechaActual = new Date();
+    diasDelMesActual: number[] = [];
+
+    setDiasDelMesActual(): void {
+        const diasEnMes = new Date(
+            this.fechaActual.getFullYear(),
+            this.fechaActual.getMonth() + 1,
+            0
+        ).getDate();
+        this.diasDelMesActual = Array.from(
+            {length: diasEnMes},
+            (_, i) => i + 1
+        );
+    }
+
+    deudaForm = this.fb.group({
+        descripcion: ['', Validators.required],
+        monto: ['', [Validators.required, Validators.min(1)]],
+        salida: [this.fechaActual.getDate(), Validators.required]
+    });
+
+    setTipoDeuda(tipo: any, deuda: string) {
+        console.log('fola', {tipo});
+        console.log({deuda});
+
+        //, nombre: any, id: any
+        // this.selectedDeudaAhorro = tipo;
+        this.selectedTipoDeudaNombre = deuda;
+        // this.selectedTipoDeudaId = id;
+    }
+
+    guardarDeudaEfectuado() {
+        if (this.deudaForm.valid) {
+            console.log('deuda!!', this.deudaForm.value);
+        } else {
+            this.toastr.error(
+                'Por favor completa todos los campos correctamente.'
+            );
+        }
     }
 }
