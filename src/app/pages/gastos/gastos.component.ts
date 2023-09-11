@@ -255,6 +255,10 @@ export class GastosComponent implements OnInit {
                 sumaTotalReal: number;
                 gastos: Gasto[];
             }) => {
+
+                console.log('gastos',gastos);
+                
+
                 this.sumaTotalReal = sumaTotalReal;
                 this.gastos = gastos;
                 this.change = !this.change;

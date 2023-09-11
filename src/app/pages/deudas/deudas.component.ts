@@ -1,7 +1,9 @@
+import {Gasto} from '@/interfaces/gastos';
 import {Ingreso} from '@/interfaces/ingresos';
 import {Component, OnInit, Renderer2} from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
 import {DeudasService} from '@services/deudas.service';
+import {GastosService} from '@services/gastos/gastos.service';
 import {IngresosService} from '@services/ingresos/ingresos.service';
 import {ToastrService} from 'ngx-toastr';
 
@@ -19,7 +21,7 @@ export interface Tarjeta {
     styleUrls: ['./deudas.component.scss']
 })
 export class DeudasComponent implements OnInit {
-    selectedDeudaAhorro: string;
+    selectedTipoDeuda: number;
     selectedTipoDeudaNombre: string;
     selectedTipoDeudaId: string;
 
@@ -90,13 +92,14 @@ export class DeudasComponent implements OnInit {
         private fb2: FormBuilder,
         private toastr: ToastrService,
         private deudaService: DeudasService,
-        private ingresoService: IngresosService
+        private ingresoService: IngresosService,
+        private gastoService: GastosService
     ) {}
 
     ngOnInit() {
         this.sumaTotalReal = 0;
         this.sumaTotalPagoMensual = 0;
-        this.generarDias(12, 2023);
+        this.generarDias(12, 2023); //TODO: Ojo: revisar
         this.obtenerIngresos();
         this.obtenerDeuda();
         this.obtenerTarjeta();
@@ -161,8 +164,23 @@ export class DeudasComponent implements OnInit {
     }
 
     cerrarModal() {
-        this.modal.classList.remove('show');
-        this.modal.style.display = 'none';
+        // this.modal.classList.remove('show');
+        // this.modal.style.display = 'none';
+
+        const modal = document.getElementById('modalRegistroDeudaEfectuado');
+        modal.style.display = 'none';
+        modal.setAttribute('aria-hidden', 'true');
+        modal.classList.remove('show');
+
+        // Elimina TODOS los fondos oscuros (backdrops)
+        const backdrops = document.querySelectorAll('.modal-backdrop');
+        backdrops.forEach((backdrop) => {
+            document.body.removeChild(backdrop);
+        });
+
+        // Restaurar el scroll en el body si es necesario
+        document.body.style.paddingRight = '0';
+        document.body.classList.remove('modal-open');
     }
 
     cerrarModal2() {
@@ -360,22 +378,54 @@ export class DeudasComponent implements OnInit {
     });
 
     setTipoDeuda(tipo: any, deuda: string) {
-        console.log('fola', {tipo});
-        console.log({deuda});
-
-        //, nombre: any, id: any
-        // this.selectedDeudaAhorro = tipo;
+        this.selectedTipoDeuda = tipo.id_tipo_deuda;
         this.selectedTipoDeudaNombre = deuda;
-        // this.selectedTipoDeudaId = id;
+        this.selectedTipoDeudaId = tipo.id;
     }
 
-    guardarDeudaEfectuado() {
-        if (this.deudaForm.valid) {
-            console.log('deuda!!', this.deudaForm.value);
+    async guardarDeudaEfectuado() {
+        const descripcion = this.deudaForm.get('descripcion').value;
+        const monto: number = +this.deudaForm.get('monto').value;
+        const dia = this.deudaForm.get('salida').value;
+
+
+        console.log( 'select tipo gasto',this.selectedTipoDeuda);
+        
+
+        const gasto: Gasto = {
+            id: 0,
+            desc: descripcion,
+            fijar: 0,
+            tipo_gasto: 10,
+            subtipo_gasto: this.selectedTipoDeuda,
+            dia: dia,
+            mes: this.fechaActual.getMonth() + 1,
+            anio: this.fechaActual.getFullYear(),
+            monto: monto
+        };
+
+        console.log({gasto});
+
+        const res = await this.gastoService.agregarGastoAsociandoDeuda(
+            gasto,
+            this.selectedTipoDeudaId
+        );
+
+        if (res) {
+            this.cerrarModal();
+            this.obtenerDeuda();
+            this.toastr.success('Ingresado correctamente');
         } else {
-            this.toastr.error(
-                'Por favor completa todos los campos correctamente.'
-            );
+            this.toastr.error('Error al agregar un nuevo gasto.');
+            this.loading = false;
         }
+
+        // if (this.deudaForm.valid) {
+        //     console.log('deuda!!', this.deudaForm.value);
+        // } else {
+        //     this.toastr.error(
+        //         'Por favor completa todos los campos correctamente.'
+        //     );
+        // }
     }
 }

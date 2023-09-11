@@ -257,4 +257,67 @@ export class GastosService {
     obtenerGastoHormiga() {
         return of(this.gastos);
     }
+
+
+
+
+    async agregarGastoAsociandoDeuda(gasto: Gasto, idDeuda:any): Promise<boolean> {
+        
+       console.log('desde servicio', {
+        desc: gasto.desc,
+        monto: gasto.monto,
+        fijar: gasto.fijar,
+        tipo_gasto: gasto.tipo_gasto,
+        subtipo_gasto: `${
+            gasto.tipo_gasto
+        }${gasto.subtipo_gasto}`,
+        dia: gasto.dia,
+        mes: gasto.mes,
+        anio: gasto.anio,
+        idDeuda
+    },);
+       
+
+        try {
+            const res = await new Promise((resolve, reject) => {
+                this._http
+                    .post(
+                        environment.uri_api + 'agregar_gasto_asociandoDeuda',
+                        {
+                            desc: gasto.desc,
+                            monto: gasto.monto,
+                            fijar: gasto.fijar,
+                            tipo_gasto: gasto.tipo_gasto,
+                            subtipo_gasto: `${
+                                gasto.tipo_gasto
+                            }${gasto.subtipo_gasto}`,
+                            dia: gasto.dia,
+                            mes: gasto.mes,
+                            anio: gasto.anio,
+                            idDeuda
+                        },
+                        {
+                            headers: {
+                                Authorization:
+                                    'Bearer ' +
+                                    JSON.parse(sessionStorage.getItem('user'))
+                                        .access_token
+                            }
+                        }
+                    )
+                    .subscribe(
+                        (response) => {
+                            resolve(response);
+                        },
+                        (error) => {
+                            console.error(error);
+                            reject(error);
+                        }
+                    );
+            });
+            return true;
+        } catch (error) {
+            return false;
+        }
+    }
 }
