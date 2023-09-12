@@ -63,6 +63,7 @@ import { GastoHormigaComponent } from './components/gasto-hormiga/gasto-hormiga.
 import { ChatComponent } from './components/chat/chat.component';
 import { ConfiguracionComponent } from './pages/configuracion/configuracion.component';
 import { CargaMasivaComponent } from './components/carga-masiva/carga-masiva.component';
+import { AprendeComponent } from './pages/aprende/aprende.component';
 
 
 defineCustomElements();
@@ -116,7 +117,8 @@ registerLocaleData(localeEs);
         GastoHormigaComponent,
         ChatComponent,
         ConfiguracionComponent,
-        CargaMasivaComponent
+        CargaMasivaComponent,
+        AprendeComponent
 
     ],
     imports: [

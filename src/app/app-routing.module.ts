@@ -21,7 +21,8 @@ import {AnalisisComponent} from '@pages/analisis/analisis.component';
 import {GestionUsuariosComponent} from '@pages/gestion-usuarios/gestion-usuarios.component';
 import {GestionEmpresaComponent} from '@pages/gestion-empresa/gestion-empresa.component';
 import {GestionColaboradorComponent} from '@pages/gestion-colaborador/gestion-colaborador.component';
-import { ConfiguracionComponent } from '@pages/configuracion/configuracion.component';
+import {ConfiguracionComponent} from '@pages/configuracion/configuracion.component';
+import {AprendeComponent} from '@pages/aprende/aprende.component';
 
 const routes: Routes = [
     {
@@ -81,6 +82,10 @@ const routes: Routes = [
             {
                 path: 'configuracion',
                 component: ConfiguracionComponent
+            },
+            {
+                path: 'aprende',
+                component: AprendeComponent
             },
             {
                 path: '',

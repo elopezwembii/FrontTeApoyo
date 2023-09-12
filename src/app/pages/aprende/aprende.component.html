@@ -1,0 +1,124 @@
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-main mb-3">
+                    <strong>Frases enemigas de tus finanzas</strong>
+                </h1>
+                <p class="mb-4">No hay nada mejor que aprender de los que ya han triunfado, o al
+                    menos en el papel se ve así. El positivismo es parte de su vida, y
+                    asf lo han transmitido en cada una de las acciones.
+                </p>
+            </div>
+            <div class="col-sm-6">
+                <img src="../../../assets/img/pig.png" class="img-fluid" alt="Imagen de cerdo">
+            </div>
+        </div>
+    </div>
+</div>
+<section class="content" style="margin-bottom: 15px;">
+    <div class="row">
+        <!-- Aqui codigo de carucel -->
+        <div class="col-md-12">
+            <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                <!-- Indicadores -->
+                <ol class="carousel-indicators">
+                    <li *ngFor="let index of indicatorIndexes" data-target="#myCarousel" [attr.data-slide-to]="index"
+                        [class.active]="index === 0"></li>
+                </ol>
+                <!-- Slides del carrusel -->
+                <div class="carousel-inner">
+                    <div *ngFor="let cardGroup of cardGroups; let i = index" [class.active]="i === 0"
+                        class="carousel-item">
+                        <div class="row">
+                            <div *ngFor="let card of cardGroup" class="col-md-4">
+                                <div class="card mb-3" style="overflow: hidden;">
+                                    <img [src]="card.imageUrl" class="card-img-top" alt="Imagen"
+                                        style="width: 100%; height: auto;">
+                                    <div class="card-body">
+                                        <h5 class="text-main"><strong>{{ card.title }}</strong></h5>
+                                        <p class="card-text">{{ card.content }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Controles del carrusel -->
+                <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Anterior</span>
+                </a>
+                <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Siguiente</span>
+                </a>
+            </div>
+        </div>
+        <!-- Termina codigo caucel -->
+        <div class="col-md-8">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="text-main">
+                        <strong> Titulo A</strong>
+                    </h5>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae aliquam magni rem iste
+                        excepturi magnam commodi quos minima veniam quis sapiente tempora, soluta, dolorem dolore
+                        deleniti corporis nesciunt, itaque aut.</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card mb-3 h-100">
+                        <div class="card-body">
+                            <h5 class="text-main">
+                                <strong> Titulo B</strong>
+                            </h5>
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae aliquam magni rem iste
+                                excepturi magnam commodi quos minima veniam quis sapiente tempora, soluta, dolorem
+                                dolore
+                                deleniti corporis nesciunt, itaque aut.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card mb-3 h-100">
+                        <div class="card-body">
+                            <h5 class="text-main">
+                                <strong> Titulo C</strong>
+                            </h5>
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae aliquam magni rem iste
+                                excepturi magnam commodi quos minima veniam quis sapiente tempora, soluta, dolorem
+                                dolore
+                                deleniti corporis nesciunt, itaque aut.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <!-- <div class="card mb-3 h-100">
+                <div class="card-body">
+                    <h5 class="text-main">
+                        <strong> Titulo D</strong>
+                    </h5>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae aliquam magni rem iste
+                        excepturi magnam commodi quos minima veniam quis sapiente tempora, soluta, dolorem dolore
+                        deleniti corporis nesciunt, itaque aut.</p>
+                </div>
+            </div> -->
+            <div class="card mb-3 h-100" style="overflow: hidden;">
+                <img src="https://t4.ftcdn.net/jpg/03/06/71/93/240_F_306719380_KH1U3j9zh6Oa5T3vNt5GlcGoLGrZ2REC.jpg"
+                    class="card-img-top" alt="Imagen de ejemplo" style="width: 100%; height: auto;">
+                <div class="card-body">
+                    <h5 class="text-main">
+                        <strong> Titulo D</strong>
+                    </h5>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae aliquam magni rem iste
+                        excepturi magnam commodi quos minima veniam quis sapiente tempora, soluta, dolorem dolore
+                        deleniti corporis nesciunt, itaque aut.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

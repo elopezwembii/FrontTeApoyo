@@ -1,0 +1,19 @@
+/* Personalizar íconos de control del carrusel */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-color: #17a2b8; /* Cambiar a tu color deseado, por ejemplo, negro (#000) */
+    color: #fff; /* Cambiar a tu color deseado para los íconos */
+    width: 40px; /* Cambiar al ancho deseado */
+    height: 70px; /* Cambiar a la altura deseada */
+}
+
+/* Personalizar indicadores del carrusel */
+.carousel-indicators li {
+    background-color: #17a2b8; /* Cambiar a tu color deseado para los indicadores activos */
+    border-color: #17a2b8; /* Cambiar a tu color deseado para el borde de los indicadores */
+}
+
+.carousel-indicators .active {
+    background-color: #fff; /* Cambiar a tu color deseado para el indicador activo */
+    /* También puedes cambiar el color del texto o el tamaño aquí si es necesario */
+}

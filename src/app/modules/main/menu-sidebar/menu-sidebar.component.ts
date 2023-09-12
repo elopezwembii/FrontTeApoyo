@@ -71,7 +71,7 @@ export const MENU = [
         //role: 'Administrativo',
     },
     {
-        name: 'Mis Gastos / Egresos',
+        name: 'Mis Gastos',
         iconClasses: 'fas fa-hand-holding-usd',
         path: ['/gastos'],
         role: ['Usuario', 'Administrador','Administrativo Empresa']
