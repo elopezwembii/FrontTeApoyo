@@ -28,7 +28,7 @@
     <div class="row">
         <!-- Aqui codigo de carucel -->
         <div class="col-md-12">
-            <div id="myCarousel" class="carousel slide" data-ride="carousel">
+            <div id="myCarousel" class="carousel slide" data-ride="carousel" style="height: 490px;">
                 <!-- Indicadores -->
                 <ol class="carousel-indicators">
                     <li *ngFor="let index of indicatorIndexes" data-target="#myCarousel" [attr.data-slide-to]="index"
@@ -113,7 +113,8 @@
             <div class="card mb-3" style="overflow: hidden;">
                 <img src="https://images.unsplash.com/photo-1597075095308-0b47fc649175?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1289&q=80"
                     class="card-img-top card-image" alt="Imagen de ejemplo">
-                <div class="card-body text-justify">
+                    <div class="card-body d-flex flex-column align-items-center text-justify"
+                    style="padding: 20px;">
                     <h5 class="text-main">
                         <strong> Como ganar dinero en Tik Tok</strong>
                     </h5>
