@@ -31,3 +31,4 @@ export class AprendeComponent {
     return Array(this.cardGroups.length).fill(0).map((x, i) => i);
   }
 }
+

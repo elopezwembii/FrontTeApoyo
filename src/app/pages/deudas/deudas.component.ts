@@ -21,6 +21,8 @@ export interface Tarjeta {
     styleUrls: ['./deudas.component.scss']
 })
 export class DeudasComponent implements OnInit {
+    selectedValorCuota: number;
+
     selectedTipoDeuda: number;
     selectedTipoDeudaNombre: string;
     selectedTipoDeudaId: string;
@@ -373,59 +375,57 @@ export class DeudasComponent implements OnInit {
 
     deudaForm = this.fb.group({
         descripcion: ['', Validators.required],
-        monto: ['', [Validators.required, Validators.min(1)]],
+       // monto: ['', [Validators.required, Validators.min(1)]],
         salida: [this.fechaActual.getDate(), Validators.required]
     });
 
     setTipoDeuda(tipo: any, deuda: string) {
+        this.selectedValorCuota = tipo.pago_mensual;
+
         this.selectedTipoDeuda = tipo.id_tipo_deuda;
         this.selectedTipoDeudaNombre = deuda;
         this.selectedTipoDeudaId = tipo.id;
     }
 
     async guardarDeudaEfectuado() {
-        const descripcion = this.deudaForm.get('descripcion').value;
-        const monto: number = +this.deudaForm.get('monto').value;
-        const dia = this.deudaForm.get('salida').value;
+        if (this.deudaForm.valid) {
+            const descripcion = this.deudaForm.get('descripcion').value;
+            // const monto: number = +this.deudaForm.get('monto').value;
+            const dia = this.deudaForm.get('salida').value;
+            const monto = this.selectedValorCuota;
 
+            const gasto: Gasto = {
+                id: 0,
+                desc: descripcion,
+                fijar: 0,
+                tipo_gasto: 10,
+                subtipo_gasto: this.selectedTipoDeuda,
+                dia: dia,
+                mes: this.fechaActual.getMonth() + 1,
+                anio: this.fechaActual.getFullYear(),
+                monto: monto
+            };
 
-        console.log( 'select tipo gasto',this.selectedTipoDeuda);
-        
-
-        const gasto: Gasto = {
-            id: 0,
-            desc: descripcion,
-            fijar: 0,
-            tipo_gasto: 10,
-            subtipo_gasto: this.selectedTipoDeuda,
-            dia: dia,
-            mes: this.fechaActual.getMonth() + 1,
-            anio: this.fechaActual.getFullYear(),
-            monto: monto
-        };
-
-        console.log({gasto});
-
-        const res = await this.gastoService.agregarGastoAsociandoDeuda(
-            gasto,
-            this.selectedTipoDeudaId
-        );
-
-        if (res) {
-            this.cerrarModal();
-            this.obtenerDeuda();
-            this.toastr.success('Ingresado correctamente');
+            (
+                await this.gastoService.agregarGastoAsociandoDeuda(
+                    gasto,
+                    this.selectedTipoDeudaId
+                )
+            ).subscribe({
+                complete: () => {
+                    this.cerrarModal();
+                    this.obtenerDeuda();
+                    this.toastr.success('Ingresado correctamente');
+                },
+                error: ({ error: { message } }: any) => {
+                    this.loading = false;
+                    this.toastr.error(message);
+                }
+            });
         } else {
-            this.toastr.error('Error al agregar un nuevo gasto.');
-            this.loading = false;
+            this.toastr.error(
+                'Por favor completa todos los campos correctamente.'
+            );
         }
-
-        // if (this.deudaForm.valid) {
-        //     console.log('deuda!!', this.deudaForm.value);
-        // } else {
-        //     this.toastr.error(
-        //         'Por favor completa todos los campos correctamente.'
-        //     );
-        // }
     }
 }
