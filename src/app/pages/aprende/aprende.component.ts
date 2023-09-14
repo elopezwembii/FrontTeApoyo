@@ -67,5 +67,6 @@ export class AprendeComponent {
     // Por ejemplo, puedes abrir un cuadro de diálogo modal o navegar a una página de detalles.
     console.log('Mostrar más detalles de la tarjeta:', card);
   }
+  
 }
 
