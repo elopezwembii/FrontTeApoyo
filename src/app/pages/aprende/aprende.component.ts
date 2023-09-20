@@ -20,14 +20,8 @@ export class AprendeComponent implements OnInit {
     constructor(private blogsService: BlogsService) {}
 
     ngOnInit() {
-
         this.getFirstSixBlogs();
-
         this.getBlogs();
-
-     
-
-       
     }
 
     get indicatorIndexes() {
@@ -81,12 +75,11 @@ export class AprendeComponent implements OnInit {
             next: ({data}: any) => {
                 console.log(data);
 
-                this.cards=data;
+                this.cards = data;
 
                 for (let i = 0; i < this.cards.length; i += 3) {
                     this.cardGroups.push(this.cards.slice(i, i + 3));
                 }
-
             }
         });
     }
