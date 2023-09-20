@@ -131,4 +131,26 @@ export class AprendeComponent implements OnInit {
             }
         });
     }
+
+    generatePageNumbers() {
+      const maxPageNumbers = 10; 
+      const halfMaxPageNumbers = Math.floor(maxPageNumbers / 2);
+      const pages = [];
+    
+      for (let i = this.currentPage - halfMaxPageNumbers; i <= this.currentPage + halfMaxPageNumbers; i++) {
+        if (i >= 1 && i <= this.totalPages) {
+          pages.push(i);
+        }
+      }
+    
+      if (pages[0] > 1) {
+        pages.unshift('...');
+      }
+      if (pages[pages.length - 1] < this.totalPages) {
+        pages.push('...');
+      }
+    
+      return pages;
+    }
+    
 }

@@ -1,5 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"
-    style="position: fixed; top: 0; right: 0; width: 50%; height: auto;">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 100 100"
+    preserveAspectRatio="none"
+    style="position: fixed; top: 0; right: 0; width: 50%; height: auto"
+>
     <path fill="#17a2b8" fill-opacity="1" d="M100,0 C70,30 30,30 0,0" />
 </svg>
 <div class="content-header">
@@ -9,47 +13,92 @@
                 <h1 class="m-0 text-main mb-3">
                     <strong>Frases enemigas de tus finanzas</strong>
                 </h1>
-                <p class="mb-4 text-justify">No hay nada mejor que aprender de los que ya han triunfado, o al
-                    menos en el papel se ve así. El positivismo es parte de su vida, y
-                    asf lo han transmitido en cada una de las acciones.
+                <p class="mb-4 text-justify">
+                    No hay nada mejor que aprender de los que ya han triunfado,
+                    o al menos en el papel se ve así. El positivismo es parte de
+                    su vida, y asf lo han transmitido en cada una de las
+                    acciones.
                 </p>
             </div>
             <div class="col-sm-6">
-                <img src="../../../assets/img/pig.png" class="img-fluid" alt="Imagen de cerdo">
+                <img
+                    src="../../../assets/img/pig.png"
+                    class="img-fluid"
+                    alt="Imagen de cerdo"
+                />
             </div>
         </div>
     </div>
 </div>
-<section class="content" style="margin-bottom: 15px;">
+<section class="content" style="margin-bottom: 15px">
     <div class="row">
         <!-- Aqui codigo de carucel -->
         <div class="col-md-12">
-            <div id="myCarousel" class="carousel slide" data-ride="carousel" style="height: 490px;">
+            <div
+                id="myCarousel"
+                class="carousel slide"
+                data-ride="carousel"
+                style="height: 490px"
+            >
                 <!-- Indicadores -->
                 <ol class="carousel-indicators">
-                    <li *ngFor="let index of indicatorIndexes" data-target="#myCarousel" [attr.data-slide-to]="index"
-                        [class.active]="index === 0"></li>
+                    <li
+                        *ngFor="let index of indicatorIndexes"
+                        data-target="#myCarousel"
+                        [attr.data-slide-to]="index"
+                        [class.active]="index === 0"
+                    ></li>
                 </ol>
                 <!-- Slides del carrusel -->
                 <div class="carousel-inner">
-                    <div *ngFor="let cardGroup of cardGroups; let i = index" [class.active]="i === 0"
-                        class="carousel-item">
+                    <div
+                        *ngFor="let cardGroup of cardGroups; let i = index"
+                        [class.active]="i === 0"
+                        class="carousel-item"
+                    >
                         <div class="row">
-                            <div *ngFor="let card of cardGroup" class="col-md-4">
+                            <div
+                                *ngFor="let card of cardGroup"
+                                class="col-md-4"
+                            >
                                 <!-- Utiliza un contenedor para establecer una altura uniforme para las tarjetas -->
                                 <div class="card-container">
-                                    <div class="card mb-3" style="overflow: hidden;">
+                                    <div
+                                        class="card mb-3"
+                                        style="overflow: hidden"
+                                    >
                                         <!-- Establecer una altura máxima para la imagen -->
-                                        <img [src]="card.imageUrl" class="card-img-top" alt="Imagen"
-                                            style="width: 100%; max-height: 200px;">
+                                        <img
+                                            [src]="card.imageUrl"
+                                            class="card-img-top"
+                                            alt="Imagen"
+                                            style="
+                                                width: 100%;
+                                                max-height: 200px;
+                                            "
+                                        />
                                         <div class="card-body">
                                             <!-- Agregar la fecha arriba del título -->
-                                            <small class="text-muted">{{ card.date }}</small>
-                                            <h5 class="text-main"><strong>{{ card.title }}</strong></h5>
-                                            <p class="card-text text-justify">{{ card.content }}</p>
+                                            <small class="text-muted">{{
+                                                card.date
+                                            }}</small>
+                                            <h5 class="text-main">
+                                                <strong>{{
+                                                    card.title
+                                                }}</strong>
+                                            </h5>
+                                            <p class="card-text text-justify">
+                                                {{ card.content }}
+                                            </p>
                                             <!-- Agregar el botón "Leer más" con estilos de tu aplicación -->
-                                            <button class="btn btn-normal" (click)="showMore(card)">
-                                                Leer más <i class="fas fa-arrow-right"></i>
+                                            <button
+                                                class="btn btn-normal"
+                                                (click)="showMore(card)"
+                                            >
+                                                Leer más
+                                                <i
+                                                    class="fas fa-arrow-right"
+                                                ></i>
                                             </button>
                                         </div>
                                     </div>
@@ -59,12 +108,28 @@
                     </div>
                 </div>
                 <!-- Controles del carrusel -->
-                <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <a
+                    class="carousel-control-prev"
+                    href="#myCarousel"
+                    role="button"
+                    data-slide="prev"
+                >
+                    <span
+                        class="carousel-control-prev-icon"
+                        aria-hidden="true"
+                    ></span>
                     <span class="sr-only">Anterior</span>
                 </a>
-                <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <a
+                    class="carousel-control-next"
+                    href="#myCarousel"
+                    role="button"
+                    data-slide="next"
+                >
+                    <span
+                        class="carousel-control-next-icon"
+                        aria-hidden="true"
+                    ></span>
                     <span class="sr-only">Siguiente</span>
                 </a>
             </div>
@@ -75,14 +140,24 @@
         <div class="col-lg-12">
             <div class="row">
                 <div class="col-lg-6" *ngFor="let card of loadedCards">
-                    <div class="card mb-3" style="overflow: hidden;">
-                        <img [src]="card.imageUrl" class="card-img-top" alt="Imagen"
-                            style="width: 100%; max-height: 400px;">
+                    <div class="card mb-3" style="overflow: hidden">
+                        <img
+                            [src]="card.imageUrl"
+                            class="card-img-top"
+                            alt="Imagen"
+                            style="width: 100%; max-height: 400px"
+                        />
                         <div class="card-body">
                             <small class="text-muted">{{ card.date }}</small>
-                            <h5 class="text-main"><strong>{{ card.title }}</strong></h5>
-                            <p class="card-text text-justify">{{ card.content }}</p>
-                            <button class="btn btn-normal">Leer más <i class="fas fa-arrow-right"></i></button>
+                            <h5 class="text-main">
+                                <strong>{{ card.title }}</strong>
+                            </h5>
+                            <p class="card-text text-justify">
+                                {{ card.content }}
+                            </p>
+                            <button class="btn btn-normal">
+                                Leer más <i class="fas fa-arrow-right"></i>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -90,25 +165,37 @@
 
             <!-- Paginación -->
             <nav aria-label="Pagination">
-                <hr class="my-0">
+                <hr class="my-0" />
                 <ul class="pagination justify-content-center my-4">
                     <li class="page-item" [class.disabled]="!prevPageUrl">
-                        <a class="page-link" (click)="goToPage(prevPageUrl)" tabindex="-1"
-                            aria-disabled="true">Anterior</a>
+                        <a
+                            class="page-link"
+                            (click)="goToPage(prevPageUrl)"
+                            tabindex="-1"
+                            aria-disabled="true"
+                            >Anterior</a
+                        >
                     </li>
-                    <ng-container *ngFor="let page of pages">
-                        <li class="page-item" [class.active]="page === currentPage">
-                        
-                            <a class="page-link" (click)="goToPage(page)">{{ page }}</a>
+                    <ng-container *ngFor="let page of generatePageNumbers()">
+                        <li
+                            class="page-item"
+                            [class.active]="page === currentPage"
+                        >
+                            <a
+                                class="page-link pagination-link"
+                                (click)="goToPage(page === '...' ? null : page)"
+                                >{{ page }}</a
+                            >
                         </li>
                     </ng-container>
+
                     <li class="page-item" [class.disabled]="!nextPageUrl">
-                        <a class="page-link" (click)="goToPage(nextPageUrl)">Siguiente</a>
+                        <a class="page-link" (click)="goToPage(nextPageUrl)"
+                            >Siguiente</a
+                        >
                     </li>
                 </ul>
-            </nav>            
+            </nav>
         </div>
     </div>
-
-
 </section>
