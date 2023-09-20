@@ -79,3 +79,41 @@
 
 
 
+.pagination-link {
+    color: #2c939e;
+    background-color: transparent;
+    border: 1px solid #2c939e;
+    cursor: pointer;
+}
+
+.pagination-link:hover {
+    background-color: #2c939e;
+    color: #fff;
+}
+
+.page-item.active .pagination-link {
+    background-color: #2c939e;
+    color: #fff;
+}
+
+.page-link {
+    position: relative;
+    display: block;
+    padding: 0.5rem 0.75rem;
+    margin-left: -1px;
+    line-height: 1.25;
+    color: #2c939e;
+    background-color: transparent;
+    border: 1px solid #2c939e;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.page-link:hover {
+    background-color: #2c939e;
+    color: #fff;
+}
+
+.page-item.active .page-link {
+    z-index: 3;
+    border-color: #2c939e;
+}

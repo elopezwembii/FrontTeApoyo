@@ -16,4 +16,8 @@ export class BlogsService {
             .set('per_page', perPage.toString());
         return this.http.get(`${url}blogs`, {params});
     }
+
+    getFirstSixBlogs() {     
+        return this.http.get(`${url}getFirstSixBlogs`);
+    }
 }

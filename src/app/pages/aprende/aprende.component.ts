@@ -7,80 +7,27 @@ import {Component, OnInit} from '@angular/core';
     styleUrls: ['./aprende.component.scss']
 })
 export class AprendeComponent implements OnInit {
-    cards = [
-        {
-            title: 'Consejos para ahorrar dinero',
-            content:
-                'Descubre algunos consejos prácticos para aumentar tus ahorros y mejorar tu situación financiera.',
-            imageUrl:
-                'https://plus.unsplash.com/premium_photo-1677022383099-555c0bcc63e5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1326&q=80',
-            date: 'Enero 15, 2023'
-        },
-        {
-            title: 'Cómo invertir sabiamente',
-            content:
-                'Aprende las mejores estrategias de inversión para hacer crecer tu dinero a largo plazo.',
-            imageUrl:
-                'https://images.unsplash.com/photo-1579621970795-87facc2f976d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
-            date: 'Febrero 2, 2023'
-        },
-        {
-            title: 'Planificación financiera para principiantes',
-            content:
-                'Descubre los fundamentos de la planificación financiera y cómo establecer metas financieras realistas.',
-            imageUrl:
-                'https://plus.unsplash.com/premium_photo-1681469490209-c2f9f8f5c0a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1483&q=80',
-            date: 'Marzo 10, 2023'
-        },
-        {
-            title: 'Reducción de deudas: Estrategias efectivas',
-            content:
-                'Aprende cómo manejar y reducir eficazmente tus deudas para alcanzar la libertad financiera.',
-            imageUrl:
-                'https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1373&q=80',
-            date: 'Abril 5, 2023'
-        },
-        {
-            title: 'El impacto de los impuestos en tus finanzas',
-            content:
-                'Comprende cómo los impuestos pueden afectar tus inversiones y estrategias financieras.',
-            imageUrl:
-                'https://images.unsplash.com/photo-1633158829585-23ba8f7c8caf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
-            date: 'Mayo 20, 2023'
-        },
-        {
-            title: 'Planificación de jubilación: Pasos esenciales',
-            content:
-                'Descubre los pasos clave para una planificación de jubilación exitosa y sin preocupaciones.',
-            imageUrl:
-                'https://images.unsplash.com/photo-1459257831348-f0cdd359235f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
-            date: 'Junio 12, 2023'
-        }
-    ];
+    cards = [];
     loadedCards = [];
-    // Divide el arreglo de tarjetas en grupos de 3
     cardGroups = [];
-
     currentPage = 1;
     totalPages = 1;
     pages: number[] = [];
-
     prevPageUrl: string | null = null;
     nextPageUrl: string | null = null;
     current_page_url: string | null = null;
 
-    constructor(private blogsService: BlogsService) {
-        for (let i = 0; i < this.cards.length; i += 3) {
-            this.cardGroups.push(this.cards.slice(i, i + 3));
-        }
-    }
+    constructor(private blogsService: BlogsService) {}
 
     ngOnInit() {
-        this.getBlogs();
-    }
 
-    updatePaginationInfo() {
-        // Calcula el número total de páginas aquí en base a la cantidad de blogs y blogs por página
+        this.getFirstSixBlogs();
+
+        this.getBlogs();
+
+     
+
+       
     }
 
     get indicatorIndexes() {
@@ -108,7 +55,6 @@ export class AprendeComponent implements OnInit {
 
     getBlogs() {
         const perPage = 4;
-
         this.blogsService.getBlogs(this.currentPage, perPage).subscribe({
             next: ({
                 data,
@@ -126,31 +72,47 @@ export class AprendeComponent implements OnInit {
                 this.pages = Array(this.totalPages)
                     .fill(0)
                     .map((x, i) => i + 1);
+            }
+        });
+    }
 
-                this.updatePaginationInfo();
+    getFirstSixBlogs() {
+        this.blogsService.getFirstSixBlogs().subscribe({
+            next: ({data}: any) => {
+                console.log(data);
+
+                this.cards=data;
+
+                for (let i = 0; i < this.cards.length; i += 3) {
+                    this.cardGroups.push(this.cards.slice(i, i + 3));
+                }
+
             }
         });
     }
 
     generatePageNumbers() {
-      const maxPageNumbers = 10; 
-      const halfMaxPageNumbers = Math.floor(maxPageNumbers / 2);
-      const pages = [];
-    
-      for (let i = this.currentPage - halfMaxPageNumbers; i <= this.currentPage + halfMaxPageNumbers; i++) {
-        if (i >= 1 && i <= this.totalPages) {
-          pages.push(i);
+        const maxPageNumbers = 10;
+        const halfMaxPageNumbers = Math.floor(maxPageNumbers / 2);
+        const pages = [];
+
+        for (
+            let i = this.currentPage - halfMaxPageNumbers;
+            i <= this.currentPage + halfMaxPageNumbers;
+            i++
+        ) {
+            if (i >= 1 && i <= this.totalPages) {
+                pages.push(i);
+            }
         }
-      }
-    
-      if (pages[0] > 1) {
-        pages.unshift('...');
-      }
-      if (pages[pages.length - 1] < this.totalPages) {
-        pages.push('...');
-      }
-    
-      return pages;
+
+        if (pages[0] > 1) {
+            pages.unshift('...');
+        }
+        if (pages[pages.length - 1] < this.totalPages) {
+            pages.push('...');
+        }
+
+        return pages;
     }
-    
 }
