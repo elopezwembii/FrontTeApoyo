@@ -67,64 +67,68 @@ export class AprendeComponent implements OnInit {
 
     prevPageUrl: string | null = null;
     nextPageUrl: string | null = null;
-  
+    current_page_url: string | null = null;
+
     constructor(private blogsService: BlogsService) {
-      for (let i = 0; i < this.cards.length; i += 3) {
-        this.cardGroups.push(this.cards.slice(i, i + 3));
-      }
-    }
-  
-    ngOnInit() {
-      this.getBlogs();
-    }
-  
-    updatePaginationInfo() {
-      // Calcula el número total de páginas aquí en base a la cantidad de blogs y blogs por página
-     
-      
-    }
-  
-    get indicatorIndexes() {
-      return Array(this.cardGroups.length)
-        .fill(0)
-        .map((x, i) => i);
-    }
-  
-    showMore(card: any) {
-      console.log('Mostrar más detalles de la tarjeta:', card);
-    }
-  
-    goToPage(pageUrl: string) {
-        if (pageUrl) {
-          // Extrae el número de página de la URL
-          const pageNumberMatch = pageUrl.match(/page=(\d+)/);
-          if (pageNumberMatch) {
-            this.currentPage = parseInt(pageNumberMatch[1], 10);
-            this.getBlogs();
-          }
+        for (let i = 0; i < this.cards.length; i += 3) {
+            this.cardGroups.push(this.cards.slice(i, i + 3));
         }
-      }
-    
-      getBlogs() {
+    }
 
-        const perPage =4
+    ngOnInit() {
+        this.getBlogs();
+    }
 
-        this.blogsService.getBlogs(this.currentPage,perPage).subscribe({
-          next: ({ data, prev_page_url, next_page_url,total }: any) => {
-            this.loadedCards = data;
-            this.prevPageUrl = prev_page_url;
-            this.nextPageUrl = next_page_url;
+    updatePaginationInfo() {
+        // Calcula el número total de páginas aquí en base a la cantidad de blogs y blogs por página
+    }
 
+    get indicatorIndexes() {
+        return Array(this.cardGroups.length)
+            .fill(0)
+            .map((x, i) => i);
+    }
 
-            this.totalPages = Math.ceil(total / perPage);
-            this.pages = Array(this.totalPages).fill(0).map((x, i) => i + 1);
-      
-            console.log('total',this.totalPages);
-            console.log('page',this.pages);
+    showMore(card: any) {
+        console.log('Mostrar más detalles de la tarjeta:', card);
+    }
 
+    goToPage(pageUrl: string | number) {
+        if (typeof pageUrl === 'string' && pageUrl.startsWith('http')) {
+            const pageNumberMatch = pageUrl.match(/page=(\d+)/);
+            if (pageNumberMatch) {
+                this.currentPage = parseInt(pageNumberMatch[1], 10);
+                this.getBlogs();
+            }
+        } else if (typeof pageUrl === 'number') {
+            this.currentPage = pageUrl;
+            this.getBlogs();
+        }
+    }
 
-            this.updatePaginationInfo();
-          }
+    getBlogs() {
+        const perPage = 4;
+
+        this.blogsService.getBlogs(this.currentPage, perPage).subscribe({
+            next: ({
+                data,
+                prev_page_url,
+                next_page_url,
+                current_page_url,
+                total
+            }: any) => {
+                this.loadedCards = data;
+                this.prevPageUrl = prev_page_url;
+                this.nextPageUrl = next_page_url;
+                this.current_page_url = current_page_url;
+
+                this.totalPages = Math.ceil(total / perPage);
+                this.pages = Array(this.totalPages)
+                    .fill(0)
+                    .map((x, i) => i + 1);
+
+                this.updatePaginationInfo();
+            }
         });
-      }
-  }
+    }
+}

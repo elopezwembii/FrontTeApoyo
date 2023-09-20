@@ -65,3 +65,14 @@
     object-fit: cover; /* Recortar la imagen para mantener la relación de aspecto */
   }
   
+  /* Estilo para el enlace de página normal */
+.page-link {
+    cursor: pointer; /* Cambia el cursor al puntero al pasar por encima */
+    transition: background-color 0.3s ease; /* Agrega una transición suave al color de fondo */
+}
+
+/* Estilo para el enlace de página activa (página actual) */
+.page-item.active .page-link {
+    background-color: #007bff; /* Cambia el color de fondo cuando está activo */
+    color: #fff; /* Cambia el color del texto cuando está activo */
+}
