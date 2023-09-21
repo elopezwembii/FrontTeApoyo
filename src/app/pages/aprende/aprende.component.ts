@@ -1,5 +1,6 @@
+import {FormBuilder, FormGroup} from '@angular/forms';
 import {BlogsService} from './../../services/blogs.service';
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 
 @Component({
     selector: 'app-aprende',
@@ -21,7 +22,7 @@ export class AprendeComponent implements OnInit {
 
     idCategoriaActual = 1;
 
-    constructor(private blogsService: BlogsService) {}
+    constructor(private blogsService: BlogsService, private fb: FormBuilder) {}
 
     ngOnInit() {
         this.getFirstSixBlogs();
@@ -52,34 +53,68 @@ export class AprendeComponent implements OnInit {
         }
     }
 
-    getBlogs() {
+    getBlogs(termino?: string) {
+        this.loading = true;
         const perPage = 4;
-        this.blogsService.getBlogs(this.currentPage, perPage,this.idCategoriaActual).subscribe({
-            next: ({
-                data,
-                prev_page_url,
-                next_page_url,
-                current_page_url,
-                total
-            }: any) => {
-                this.loadedCards = data;
-                this.prevPageUrl = prev_page_url;
-                this.nextPageUrl = next_page_url;
-                this.current_page_url = current_page_url;
+        if (termino) {
+            this.blogsService
+                .getBlogs(
+                    this.currentPage,
+                    perPage,
+                    this.idCategoriaActual,
+                    termino
+                )
+                .subscribe({
+                    next: ({
+                        data,
+                        prev_page_url,
+                        next_page_url,
+                        current_page_url,
+                        total
+                    }: any) => {
+                        this.loading = false;
+                        this.loadedCards = data;
+                        this.prevPageUrl = prev_page_url;
+                        this.nextPageUrl = next_page_url;
+                        this.current_page_url = current_page_url;
 
-                this.totalPages = Math.ceil(total / perPage);
-                this.pages = Array(this.totalPages)
-                    .fill(0)
-                    .map((x, i) => i + 1);
-            }
-        });
+                        this.totalPages = Math.ceil(total / perPage);
+                        this.pages = Array(this.totalPages)
+                            .fill(0)
+                            .map((x, i) => i + 1);
+                    }
+                });
+        } else {
+            this.blogsService
+                .getBlogs(this.currentPage, perPage, this.idCategoriaActual)
+                .subscribe({
+                    next: ({
+                        data,
+                        prev_page_url,
+                        next_page_url,
+                        current_page_url,
+                        total
+                    }: any) => {
+                        this.loading = false;
+                        this.loadedCards = data;
+                        this.prevPageUrl = prev_page_url;
+                        this.nextPageUrl = next_page_url;
+                        this.current_page_url = current_page_url;
+
+                        this.totalPages = Math.ceil(total / perPage);
+                        this.pages = Array(this.totalPages)
+                            .fill(0)
+                            .map((x, i) => i + 1);
+                    }
+                });
+        }
     }
 
     getFirstSixBlogs() {
         this.blogsService.getFirstSixBlogs(this.idCategoriaActual).subscribe({
             next: ({data}: any) => {
                 this.cards = [];
-                this.cardGroups=[]
+                this.cardGroups = [];
                 this.cards = data;
 
                 for (let i = 0; i < this.cards.length; i += 3) {
@@ -127,8 +162,22 @@ export class AprendeComponent implements OnInit {
     seleccionarCategoria(categoria: any): void {
         this.idCategoriaActual = categoria.id;
         this.categoriaActual = categoria;
-       
+
         this.getFirstSixBlogs();
+        this.getBlogs();
+    }
+
+    formulario: FormGroup = this.fb.group({
+        termino: ['']
+    });
+    loading = false; 
+    buscar() {
+        const termino = this.formulario.get('termino').value;
+        this.getBlogs(termino);
+    }
+
+    limpiar() {
+        this.formulario.get('termino').setValue('');this.pages
         this.getBlogs();
     }
 }

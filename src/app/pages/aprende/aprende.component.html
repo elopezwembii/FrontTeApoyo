@@ -28,26 +28,22 @@
     <div class="container mt-3 mb-3">
         <div class="row">
             <div class="col-md-6">
-                <h3  class="m-0 text-main mb-3"><strong>Filtrar por categoría:</strong></h3>
-                <div>                
-                    <a
-                        *ngFor="let categoria of categorias"
-                        [class.active]="categoriaActual === categoria"
-                        (click)="seleccionarCategoria(categoria)"
-                 
-                        class="badge badge-primary mr-2"
-                    >{{ categoria.name }}</a>
+                <h3 class="m-0 text-main mb-3"><strong>Filtrar por categoría:</strong></h3>
+                <div>
+                    <a *ngFor="let categoria of categorias" [class.active]="categoriaActual === categoria"
+                        (click)="seleccionarCategoria(categoria)" class="badge badge-primary mr-2">{{ categoria.name
+                        }}</a>
                 </div>
             </div>
             <div class="col-md-6">
                 <!-- <h4>Categoría Actual: {{ categoriaActual ? categoriaActual.name : 'Todas' }}</h4> -->
                 <h3 class="m-0 text-main">
-                    Categoría Actual:<br/> <strong>{{ categoriaActual ? categoriaActual.name : 'Todas' }}</strong>
+                    Categoría Actual:<br /> <strong>{{ categoriaActual ? categoriaActual.name : 'Todas' }}</strong>
                 </h3>
             </div>
         </div>
     </div>
-    
+
 
     <div class="row">
         <!-- Aqui codigo de carucel -->
@@ -95,7 +91,6 @@
                                             </button>
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
@@ -115,6 +110,28 @@
     </div>
     <!-- Termina codigo caucel -->
     <div class="row">
+
+
+        <div class="col-12">
+            <form [formGroup]="formulario" (ngSubmit)="buscar()" class="w-100">
+              <div class="input-group mb-3">
+                <input formControlName="termino" class="form-control" type="text"
+                  placeholder="Ingrese término de búsqueda...">
+                <div class="input-group-append">
+                  <button class="btn custom-primary-color" type="submit">
+                    <span *ngIf="loading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    <span *ngIf="!loading">Buscar</span>
+                  </button>
+                  <button class="btn custom-secondary-color" type="button" (click)="limpiar()">Limpiar</button>
+                </div>
+              </div>
+            </form>
+          </div>
+          
+          
+
+
+
         <div class="col-lg-12">
             <div class="row">
                 <div class="col-lg-6" *ngFor="let card of loadedCards">
