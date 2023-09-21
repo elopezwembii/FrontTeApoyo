@@ -22,6 +22,7 @@ export class AprendeComponent implements OnInit {
     rol = JSON.parse(sessionStorage.getItem('user')).rol.nombre;
 
     categorias: any[] = [];
+    categoria_modal: any[] = [];
 
     idCategoriaActual = 1;
 
@@ -160,6 +161,9 @@ export class AprendeComponent implements OnInit {
         this.blogsService.getCategorias().subscribe({
             next: ({data}: any) => {
                 this.categorias = data;
+                this.categoria_modal = this.categorias.filter(
+                    (categoria) => categoria.id !== 1
+                );
             }
         });
     }
@@ -232,5 +236,9 @@ export class AprendeComponent implements OnInit {
         // Restaurar el scroll en el body si es necesario
         document.body.style.paddingRight = '0';
         document.body.classList.remove('modal-open');
+    }
+
+    editarCard(blog: any) {
+        console.log(blog);
     }
 }
