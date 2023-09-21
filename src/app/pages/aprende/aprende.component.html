@@ -23,6 +23,32 @@
     </div>
 </div>
 <section class="content" style="margin-bottom: 15px">
+
+
+    <div class="container mt-3 mb-3">
+        <div class="row">
+            <div class="col-md-6">
+                <h3  class="m-0 text-main mb-3"><strong>Filtrar por categoría:</strong></h3>
+                <div>                
+                    <a
+                        *ngFor="let categoria of categorias"
+                        [class.active]="categoriaActual === categoria"
+                        (click)="seleccionarCategoria(categoria)"
+                 
+                        class="badge badge-primary mr-2"
+                    >{{ categoria.name }}</a>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <!-- <h4>Categoría Actual: {{ categoriaActual ? categoriaActual.name : 'Todas' }}</h4> -->
+                <h3 class="m-0 text-main">
+                    Categoría Actual:<br/> <strong>{{ categoriaActual ? categoriaActual.name : 'Todas' }}</strong>
+                </h3>
+            </div>
+        </div>
+    </div>
+    
+
     <div class="row">
         <!-- Aqui codigo de carucel -->
         <div class="col-md-12">
@@ -51,10 +77,11 @@
                                             <!-- Pestaña de categoría -->
                                             <div class="category-tab">{{ card.categoria.name }}</div>
                                         </div>
-                                    
+
                                         <div class="card-body">
                                             <!-- Agregar la fecha arriba del título -->
-                                            <small class="text-muted">{{ card.created_at | date:'MMMM dd, yyyy' }}</small>
+                                            <small class="text-muted">{{ card.created_at | date:'MMMM dd, yyyy'
+                                                }}</small>
                                             <h5 class="text-main">
                                                 <strong>{{ card.title }}</strong>
                                             </h5>
@@ -68,7 +95,7 @@
                                             </button>
                                         </div>
                                     </div>
-                                    
+
                                 </div>
                             </div>
                         </div>
@@ -101,12 +128,12 @@
                             <!-- Pestaña de categoría -->
                             <div class="category-tab">{{ card.categoria.name }}</div>
                         </div>
-                            
+
                         <div class="card-body">
-                            <small class="text-muted">{{ card.created_at | date:'MMMM dd, yyyy' }}</small>                           
+                            <small class="text-muted">{{ card.created_at | date:'MMMM dd, yyyy' }}</small>
                             <h5 class="text-main">
                                 <strong>{{ card.title }}</strong>
-                            </h5>                          
+                            </h5>
                             <p class="card-text text-justify">
                                 {{ card.content }}
                             </p>

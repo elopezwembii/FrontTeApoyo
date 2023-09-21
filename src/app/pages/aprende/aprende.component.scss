@@ -127,3 +127,16 @@
     color: white; /* Color del texto */
     padding: 5px 10px; /* Espaciado interno */
 }
+
+/* Estilo personalizado para .badge-primary */
+.badge-primary {
+    color: #fff;
+    background-color: #17a2b8;
+    transition: background-color 0.3s; /* Agrega una transición suave para el cambio de color de fondo */
+    cursor: pointer;
+}
+
+/* Estilo de hover personalizado para .badge-primary */
+.badge-primary:hover {
+    background-color: #007B8A; /* Cambia el color de fondo en el hover */
+}

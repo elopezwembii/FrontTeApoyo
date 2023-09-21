@@ -17,6 +17,10 @@ export class AprendeComponent implements OnInit {
     nextPageUrl: string | null = null;
     current_page_url: string | null = null;
 
+    categorias: any[] = [];
+
+    idCategoriaActual = 1;
+
     constructor(private blogsService: BlogsService) {}
 
     ngOnInit() {
@@ -50,7 +54,7 @@ export class AprendeComponent implements OnInit {
 
     getBlogs() {
         const perPage = 4;
-        this.blogsService.getBlogs(this.currentPage, perPage).subscribe({
+        this.blogsService.getBlogs(this.currentPage, perPage,this.idCategoriaActual).subscribe({
             next: ({
                 data,
                 prev_page_url,
@@ -72,8 +76,10 @@ export class AprendeComponent implements OnInit {
     }
 
     getFirstSixBlogs() {
-        this.blogsService.getFirstSixBlogs().subscribe({
+        this.blogsService.getFirstSixBlogs(this.idCategoriaActual).subscribe({
             next: ({data}: any) => {
+                this.cards = [];
+                this.cardGroups=[]
                 this.cards = data;
 
                 for (let i = 0; i < this.cards.length; i += 3) {
@@ -110,9 +116,19 @@ export class AprendeComponent implements OnInit {
 
     getCategorias() {
         this.blogsService.getCategorias().subscribe({
-            next: (resp: any) => {
-                console.log(resp);
+            next: ({data}: any) => {
+                this.categorias = data;
             }
         });
+    }
+
+    categoriaActual: any = null; // Inicialmente no hay categoría seleccionada
+
+    seleccionarCategoria(categoria: any): void {
+        this.idCategoriaActual = categoria.id;
+        this.categoriaActual = categoria;
+       
+        this.getFirstSixBlogs();
+        this.getBlogs();
     }
 }

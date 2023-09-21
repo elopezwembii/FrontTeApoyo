@@ -10,17 +10,17 @@ const url = environment.uri_api;
 export class BlogsService {
     constructor(private http: HttpClient) {}
 
-    getBlogs(page: number = 1, perPage: number = 10) {
+    getBlogs(page: number = 1, perPage: number = 10,id: number) {
         const params = new HttpParams()
             .set('page', page.toString())
             .set('per_page', perPage.toString());
-        return this.http.get(`${url}blogs`, {params});
+        return this.http.get(`${url}blogs/${id}`, {params});
     }
 
-    getFirstSixBlogs() {
-        return this.http.get(`${url}getFirstSixBlogs`);
+    getFirstSixBlogs(id: number) {
+        return this.http.get(`${url}getFirstSixBlogs/${id}`);
     }
-    
+
     getCategorias() {
         return this.http.get(`${url}categorias`);
     }
