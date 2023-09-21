@@ -1,6 +1,7 @@
-import {FormBuilder, FormGroup} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {BlogsService} from './../../services/blogs.service';
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
     selector: 'app-aprende',
@@ -18,11 +19,17 @@ export class AprendeComponent implements OnInit {
     nextPageUrl: string | null = null;
     current_page_url: string | null = null;
 
+    rol = JSON.parse(sessionStorage.getItem('user')).rol.nombre;
+
     categorias: any[] = [];
 
     idCategoriaActual = 1;
 
-    constructor(private blogsService: BlogsService, private fb: FormBuilder) {}
+    constructor(
+        private blogsService: BlogsService,
+        private fb: FormBuilder,
+        private toastr: ToastrService
+    ) {}
 
     ngOnInit() {
         this.getFirstSixBlogs();
@@ -170,14 +177,60 @@ export class AprendeComponent implements OnInit {
     formulario: FormGroup = this.fb.group({
         termino: ['']
     });
-    loading = false; 
+    loading = false;
     buscar() {
         const termino = this.formulario.get('termino').value;
         this.getBlogs(termino);
     }
 
     limpiar() {
-        this.formulario.get('termino').setValue('');this.pages
+        this.formulario.get('termino').setValue('');
+        this.pages;
         this.getBlogs();
+    }
+
+    formulario_crear = this.fb.group({
+        title: ['', Validators.required],
+        content: ['', Validators.required],
+        imageUrl: ['', Validators.required],
+        categoria_id: [, Validators.required] // Asigna un valor por defecto (ejemplo: categoría 1)
+    });
+
+    @ViewChild('crearBlogModal') modal: ElementRef; // Referencia al modal
+
+    crearBlog() {
+        if (this.formulario_crear.valid) {
+            const formData = this.formulario_crear.value;
+
+            this.blogsService.addCategoria(formData).subscribe({
+                complete: () => {
+                    this.cerrarModal();
+                    this.pages;
+                    this.formulario_crear.reset();
+                    this.toastr.success('Agregado correctamente!');
+                    this.getBlogs();
+                    this.getFirstSixBlogs();
+                }
+            });
+        } else {
+            this.toastr.error('Campos incompletos');
+        }
+    }
+
+    cerrarModal() {
+        const modal = document.getElementById('crearBlogModal');
+        modal.style.display = 'none';
+        modal.setAttribute('aria-hidden', 'true');
+        modal.classList.remove('show');
+
+        // Elimina TODOS los fondos oscuros (backdrops)
+        const backdrops = document.querySelectorAll('.modal-backdrop');
+        backdrops.forEach((backdrop) => {
+            document.body.removeChild(backdrop);
+        });
+
+        // Restaurar el scroll en el body si es necesario
+        document.body.style.paddingRight = '0';
+        document.body.classList.remove('modal-open');
     }
 }
