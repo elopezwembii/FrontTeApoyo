@@ -17,7 +17,11 @@ export class BlogsService {
         return this.http.get(`${url}blogs`, {params});
     }
 
-    getFirstSixBlogs() {     
+    getFirstSixBlogs() {
         return this.http.get(`${url}getFirstSixBlogs`);
+    }
+    
+    getCategorias() {
+        return this.http.get(`${url}categorias`);
     }
 }

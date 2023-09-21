@@ -117,3 +117,13 @@
     z-index: 3;
     border-color: #2c939e;
 }
+
+/* Estilos para la pestaña de categoría */
+.category-tab {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background-color: #17a2b8; /* Color de fondo */
+    color: white; /* Color del texto */
+    padding: 5px 10px; /* Espaciado interno */
+}

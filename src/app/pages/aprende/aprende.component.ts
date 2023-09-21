@@ -22,6 +22,7 @@ export class AprendeComponent implements OnInit {
     ngOnInit() {
         this.getFirstSixBlogs();
         this.getBlogs();
+        this.getCategorias();
     }
 
     get indicatorIndexes() {
@@ -73,8 +74,6 @@ export class AprendeComponent implements OnInit {
     getFirstSixBlogs() {
         this.blogsService.getFirstSixBlogs().subscribe({
             next: ({data}: any) => {
-                console.log(data);
-
                 this.cards = data;
 
                 for (let i = 0; i < this.cards.length; i += 3) {
@@ -107,5 +106,13 @@ export class AprendeComponent implements OnInit {
         }
 
         return pages;
+    }
+
+    getCategorias() {
+        this.blogsService.getCategorias().subscribe({
+            next: (resp: any) => {
+                console.log(resp);
+            }
+        });
     }
 }
