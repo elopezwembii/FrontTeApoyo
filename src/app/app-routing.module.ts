@@ -23,6 +23,7 @@ import {GestionEmpresaComponent} from '@pages/gestion-empresa/gestion-empresa.co
 import {GestionColaboradorComponent} from '@pages/gestion-colaborador/gestion-colaborador.component';
 import {ConfiguracionComponent} from '@pages/configuracion/configuracion.component';
 import {AprendeComponent} from '@pages/aprende/aprende.component';
+import { AprendeDetalleComponent } from '@pages/aprende-detalle/aprende-detalle.component';
 
 const routes: Routes = [
     {
@@ -86,6 +87,10 @@ const routes: Routes = [
             {
                 path: 'aprende',
                 component: AprendeComponent
+            },
+            {
+                path: 'blogs/:id',
+                component: AprendeDetalleComponent
             },
             {
                 path: '',

@@ -64,6 +64,7 @@ import { ChatComponent } from './components/chat/chat.component';
 import { ConfiguracionComponent } from './pages/configuracion/configuracion.component';
 import { CargaMasivaComponent } from './components/carga-masiva/carga-masiva.component';
 import { AprendeComponent } from './pages/aprende/aprende.component';
+import { AprendeDetalleComponent } from './pages/aprende-detalle/aprende-detalle.component';
 
 
 defineCustomElements();
@@ -118,7 +119,8 @@ registerLocaleData(localeEs);
         ChatComponent,
         ConfiguracionComponent,
         CargaMasivaComponent,
-        AprendeComponent
+        AprendeComponent,
+        AprendeDetalleComponent
 
     ],
     imports: [

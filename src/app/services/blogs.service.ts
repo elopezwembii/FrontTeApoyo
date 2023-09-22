@@ -41,4 +41,8 @@ export class BlogsService {
     addCategoria(body: any) {
         return this.http.post(`${url}addBlogs`, body);
     }
+
+    getBlogsId(id: number) {
+        return this.http.get(`${url}detalleBlogs/${id}`);
+    }
 }
