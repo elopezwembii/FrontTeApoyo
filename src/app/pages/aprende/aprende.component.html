@@ -6,8 +6,8 @@
 <div class="content-header">
     <div class="container-fluid">
         <!-- Botón para abrir el modal -->
-        <button *ngIf="rol==='Administrador'" type="button" class="btn custom-primary-color" data-toggle="modal"
-            data-target="#crearBlogModal">
+        <button *ngIf="rol==='Administrador'" type="button" class="btn custom-primary-color" (click)="resetForm()"
+            data-toggle="modal" data-target="#crearBlogModal">
             Crear Blog
         </button>
         <div class="row mb-2">
@@ -69,24 +69,28 @@
                                         <!-- Contenedor relativo para la imagen y la pestaña de categoría -->
                                         <div style="position: relative;">
                                             <!-- Establecer una altura máxima para la imagen -->
-                                            <img [src]="card.imageUrl" class="card-img-top" alt="Imagen" style="width: 100%; max-height: 200px;" />
+                                            <img [src]="card.imageUrl" class="card-img-top" alt="Imagen"
+                                                style="width: 100%; max-height: 200px;" />
                                             <!-- Pestaña de categoría -->
                                             <div class="category-tab">{{ card.categoria.name }}</div>
-                                    
+
                                             <!-- Botón de edición en la esquina superior derecha -->
                                             <div style="position: absolute; top: 10px; right: 10px;">
-                                                <button *ngIf="rol==='Administrador'" class="btn btn-link rounded-circle p-2" data-toggle="modal"
-                                                data-target="#crearBlogModal" (click)="editarCard(card)" style="color: #17a2b8; font-size: 20px;">
+                                                <button *ngIf="rol==='Administrador'"
+                                                    class="btn btn-link rounded-circle p-2" data-toggle="modal"
+                                                    data-target="#crearBlogModal" (click)="editarCard(card)"
+                                                    style="color: #17a2b8; font-size: 20px;">
                                                     <i class="fas fa-edit"></i>
                                                 </button>
-                                                
-                                                
+
+
                                             </div>
                                         </div>
-                                    
+
                                         <div class="card-body">
                                             <!-- Agregar la fecha arriba del título -->
-                                            <small class="text-muted">{{ card.created_at | date:'MMMM dd, yyyy' }}</small>
+                                            <small class="text-muted">{{ card.created_at | date:'MMMM dd, yyyy'
+                                                }}</small>
                                             <h5 class="text-main">
                                                 <strong>{{ card.title }}</strong>
                                             </h5>
@@ -98,7 +102,7 @@
                                             </button>
                                         </div>
                                     </div>
-                                    
+
                                 </div>
                             </div>
                         </div>
@@ -195,12 +199,12 @@
 
 
 <!-- Modal para crear un nuevo blog -->
-<div class="modal fade" id="crearBlogModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" 
+<div class="modal fade" id="crearBlogModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Crear Nuevo Blog</h5>
+                <h5 class="modal-title" id="exampleModalLabel"> {{tituloModal }}</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>

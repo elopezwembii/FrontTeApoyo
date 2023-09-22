@@ -194,6 +194,7 @@ export class AprendeComponent implements OnInit {
     }
 
     formulario_crear = this.fb.group({
+        id: [],
         title: ['', Validators.required],
         content: ['', Validators.required],
         imageUrl: ['', Validators.required],
@@ -238,7 +239,21 @@ export class AprendeComponent implements OnInit {
         document.body.classList.remove('modal-open');
     }
 
+    tituloModal: string = 'Crear Nuevo Blogs';
+
     editarCard(blog: any) {
-        console.log(blog);
+        this.tituloModal = 'Editar Blogs';
+        this.formulario_crear.patchValue({
+            id: blog.id,
+            title: blog.title,
+            content: blog.content,
+            imageUrl: blog.imageUrl,
+            categoria_id: blog.categoria_id
+        });
+    }
+
+    resetForm() {
+        this.tituloModal = 'Crear Nuevo Blogs';
+        this.formulario_crear.reset();
     }
 }
