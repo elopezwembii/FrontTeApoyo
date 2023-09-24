@@ -45,4 +45,10 @@ export class BlogsService {
     getBlogsId(id: number) {
         return this.http.get(`${url}detalleBlogs/${id}`);
     }
+
+    updateDescriptionBlog(id: number, body: any) {
+        return this.http.put(`${url}blogs/${id}/update-description`, {
+            description: body
+        });
+    }
 }

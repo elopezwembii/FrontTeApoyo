@@ -45,6 +45,7 @@
     "jquery": "^3.6.0",
     "luxon": "3.0.3",
     "ngx-echarts": "^15.0.3",
+    "ngx-editor": "^15.0.0",
     "ngx-loading": "^15.0.0",
     "ngx-toastr": "16.0.1",
     "process": "0.11.10",

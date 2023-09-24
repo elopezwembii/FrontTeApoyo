@@ -65,6 +65,7 @@ import { ConfiguracionComponent } from './pages/configuracion/configuracion.comp
 import { CargaMasivaComponent } from './components/carga-masiva/carga-masiva.component';
 import { AprendeComponent } from './pages/aprende/aprende.component';
 import { AprendeDetalleComponent } from './pages/aprende-detalle/aprende-detalle.component';
+import { NgxEditorModule } from "ngx-editor";
 
 
 defineCustomElements();
@@ -124,6 +125,7 @@ registerLocaleData(localeEs);
 
     ],
     imports: [
+        NgxEditorModule,
         NgxLoadingModule.forRoot({
             animationType: ngxLoadingAnimationTypes.threeBounce,
             backdropBackgroundColour: 'rgba(255, 255, 255, 0.5)',
