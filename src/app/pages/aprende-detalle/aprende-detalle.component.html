@@ -17,9 +17,9 @@
                     <!-- <h2 class="m-0 text-main mb-3">
                         <strong>{{ blogs.title }}</strong>
                     </h2> -->
-                    <!-- <p class="blog-post-meta">
+                    <p class="blog-post-meta">
                         {{ blogs.created_at | date: 'MMMM dd, yyyy' }}
-                    </p> -->
+                    </p>
                     <!-- <p [innerHTML]="blogs.description"></p> -->
                     <form [formGroup]="form" (submit)="guardar()">
                         <div class="editor">
@@ -30,12 +30,14 @@
                             >
                             </ngx-editor-menu>
                             <ngx-editor
+                                class="edit"
                                 [editor]="editor"
                                 formControlName="editorContent"
                             >
                             </ngx-editor>
                         </div>
                         <button
+                            *ngIf="rol === 'Administrador'"
                             type="submit"
                             class="btn custom-primary-color mt-2"
                         >

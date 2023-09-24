@@ -1,27 +1,38 @@
 import {ActivatedRoute, Router} from '@angular/router';
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {BlogsService} from '@services/blogs.service';
 import {Editor, Toolbar, Validators} from 'ngx-editor';
 import {AbstractControl, FormControl, FormGroup} from '@angular/forms';
 
 import jsonDoc from './doc';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
     selector: 'app-aprende-detalle',
     templateUrl: './aprende-detalle.component.html',
     styleUrls: ['./aprende-detalle.component.scss']
 })
-export class AprendeDetalleComponent {
+export class AprendeDetalleComponent implements OnInit {
     blogs: any = {};
     rol = JSON.parse(sessionStorage.getItem('user')).rol.nombre;
     idblog: number = 0;
+    form: FormGroup; // Declarar el FormGroup
+
     constructor(
         private route: ActivatedRoute,
         private blogService: BlogsService,
-        private router: Router
+        private router: Router,
+        private toastr: ToastrService
     ) {}
 
     ngOnInit(): void {
+        this.form = new FormGroup({
+            editorContent: new FormControl(
+                {value: this.vacio, disabled: this.rol !== 'Administrador'},
+                Validators.required()
+            )
+        });
+
         // Accede al valor del parámetro 'id' desde ActivatedRoute
         this.route.params.subscribe((params) => {
             this.idblog = params['id'];
@@ -37,6 +48,13 @@ export class AprendeDetalleComponent {
         this.blogService.getBlogsId(id).subscribe({
             next: ({data}: any) => {
                 this.blogs = data;
+                console.log(this.blogs.description);
+
+                // Parsea la descripción del blog como JSON antes de asignarla al control
+                const parsedDescription = JSON.parse(this.blogs.description);
+
+                // Luego de obtener los datos del blog, asigna el valor parseado a editorContent
+                this.form.get('editorContent').setValue(parsedDescription);
             }
         });
     }
@@ -63,17 +81,6 @@ export class AprendeDetalleComponent {
         content: []
     };
 
-    form = new FormGroup({
-        editorContent: new FormControl(
-            {value: this.vacio, disabled: this.rol !== 'Administrador'}, 
-            Validators.required()
-        )
-    });
-
-    get doc(): AbstractControl {
-        return this.form.get('editorContent');
-    }
-
     ngOnDestroy(): void {
         this.editor.destroy();
     }
@@ -85,7 +92,8 @@ export class AprendeDetalleComponent {
             .updateDescriptionBlog(this.idblog, editorContent)
             .subscribe({
                 next: (resp) => {
-                    console.log(resp);
+                    this.getBlogId(this.idblog);
+                    this.toastr.success('Agregado correctamente!');
                 }
             });
     }
