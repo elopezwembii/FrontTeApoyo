@@ -46,6 +46,10 @@ export class BlogsService {
         return this.http.get(`${url}detalleBlogs/${id}`);
     }
 
+    deleteBlog(id: number) {
+        return this.http.delete(`${url}blogs/${id}`);
+    }
+
     updateDescriptionBlog(id: number, body: any) {
         return this.http.put(`${url}blogs/${id}/update-description`, {
             description: body

@@ -2,7 +2,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {BlogsService} from './../../services/blogs.service';
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ToastrService} from 'ngx-toastr';
-import { Router } from '@angular/router';
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'app-aprende',
@@ -262,5 +262,22 @@ export class AprendeComponent implements OnInit {
     verDetalle(id: number) {
         // Construye la URL utilizando el ID y redirige al detalle del blog
         this.router.navigate(['/blogs', id]);
-      }
+    }
+
+    eliminarBlog() {
+        if (confirm('¿Estás seguro de que quieres eliminar este blog?')) {
+            const formId = this.formulario_crear.get('id').value;
+
+            this.blogsService.deleteBlog(formId).subscribe({
+                next:(resp:any)=>{
+                    this.cerrarModal();
+                    this.toastr.success('El Blog se ha eliminado correctamente');
+                    this.getBlogs();
+                    this.getFirstSixBlogs();
+                }
+            })
+
+            console.log('Blog eliminado',formId);
+        }
+    }
 }

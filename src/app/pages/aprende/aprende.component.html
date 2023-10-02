@@ -237,10 +237,22 @@
                     </div>
                 </form>
             </div>
-            <div class="modal-footer">
+            <!-- <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                 <button type="button" class="btn custom-primary-color" (click)="crearBlog()">Guardar</button>
+                <button type="button" class="btn btn-danger" (click)="eliminarBlog()">Eliminar Blog</button>
             </div>
+             -->
+
+             <div class="modal-footer d-flex justify-content-between">
+                <button type="button" class="btn btn-danger" (click)="eliminarBlog()">Eliminar Blog</button>
+                <div>
+                    <button type="button" class="btn btn-secondary" style="margin-right: 8px;" data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn custom-primary-color" (click)="crearBlog()">Guardar</button>
+                </div>
+            </div>
+            
+            
         </div>
     </div>
 </div>
