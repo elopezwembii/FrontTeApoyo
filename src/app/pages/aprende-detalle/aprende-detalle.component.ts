@@ -4,7 +4,6 @@ import {BlogsService} from '@services/blogs.service';
 import {Editor, Toolbar, Validators} from 'ngx-editor';
 import {AbstractControl, FormControl, FormGroup} from '@angular/forms';
 
-import jsonDoc from './doc';
 import {ToastrService} from 'ngx-toastr';
 
 @Component({
@@ -63,7 +62,6 @@ export class AprendeDetalleComponent implements OnInit {
         this.router.navigate(['/aprende']);
     }
 
-    editordoc = jsonDoc;
     editor: Editor;
     toolbar: Toolbar = [
         ['bold', 'italic'],
@@ -86,10 +84,13 @@ export class AprendeDetalleComponent implements OnInit {
     }
 
     guardar() {
-        const {editorContent} = this.form.value;
+        // Convierte editorContent a una cadena (string)
+        const editorContentAsString = JSON.stringify(
+            this.form.get('editorContent').value
+        );
 
         this.blogService
-            .updateDescriptionBlog(this.idblog, editorContent)
+            .updateDescriptionBlog(this.idblog, editorContentAsString)
             .subscribe({
                 next: (resp) => {
                     this.getBlogId(this.idblog);
