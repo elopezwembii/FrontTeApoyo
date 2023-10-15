@@ -1,5 +1,5 @@
 import {Component, QueryList} from '@angular/core';
-import {FormGroup, FormControl} from '@angular/forms';
+import {FormGroup, FormControl, AbstractControl} from '@angular/forms';
 import {ChatBotService} from '@services/chat-bot.service';
 import {ViewChild, ElementRef, ViewChildren} from '@angular/core';
 
@@ -20,15 +20,19 @@ export class ChatComponent {
     }
 
     getCurrentTime() {
-        const now = new Date();
-    
-        const hours = now.getHours().toString().padStart(2, '0');
-        const minutes = now.getMinutes().toString().padStart(2, '0');
-        const seconds = now.getSeconds().toString().padStart(2, '0');
-    
-        return `${hours}:${minutes}:${seconds}`;
+        const fecha = new Date();
+        fecha.setHours(fecha.getHours() + 1); // Agrega una hora
+        const horas = fecha.getHours();
+        const minutos = fecha.getMinutes();
+        const segundos = fecha.getSeconds();
+        
+        const horaFormateada = `${horas.toString().padStart(2, '0')}:${minutos
+            .toString()
+            .padStart(2, '0')}:${segundos.toString().padStart(2, '0')}`;
+        
+        return horaFormateada;
     }
-
+    
     messages = [
         {
             text: 'Hola, ¿cómo estás? En que te puedo ayudar?',
@@ -49,7 +53,7 @@ export class ChatComponent {
         if (pregunta !== '') {
             this.messages.push({
                 text: this.chatForm.value.message,
-                time: new Date().toLocaleTimeString(),
+                time: this.getCurrentTime(),
                 sender: 'me'
             });
 
