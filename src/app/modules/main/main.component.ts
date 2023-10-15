@@ -11,6 +11,10 @@ import {Observable} from 'rxjs';
     styleUrls: ['./main.component.scss']
 })
 export class MainComponent implements OnInit {
+
+
+    usuario = JSON.parse(sessionStorage.getItem('user'));
+
     @HostBinding('class') class = 'wrapper navbar-light';
     public ui: Observable<UiState>;
 

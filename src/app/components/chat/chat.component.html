@@ -22,7 +22,7 @@
              [class]="message.sender === 'me' ? 'd-flex justify-content-end mb-4' : 'd-flex justify-content-start mb-4'">
             <div [class]="message.sender === 'me' ? 'msg_cotainer_send' : 'msg_cotainer'">
                 {{message.text}}
-                <span [class]="message.sender === 'me' ? 'msg_time_send' : 'msg_time'">{{message.time}}</span>
+                <span [class]="message.sender === 'me' ? 'msg_time_send' : 'msg_time'">{{message.time }}</span>
             </div>
         </div>
 

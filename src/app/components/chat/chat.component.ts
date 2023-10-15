@@ -11,7 +11,7 @@ import {ViewChild, ElementRef, ViewChildren} from '@angular/core';
 export class ChatComponent {
     @ViewChildren('msg') messagesElements: QueryList<ElementRef>;
 
-    showChat = true; //false
+    showChat = false;
     chatForm: FormGroup;
     botIsWriting = false;
 
@@ -19,9 +19,22 @@ export class ChatComponent {
         this.showChat = !this.showChat;
     }
 
+    getCurrentTime() {
+        const now = new Date();
+    
+        const hours = now.getHours().toString().padStart(2, '0');
+        const minutes = now.getMinutes().toString().padStart(2, '0');
+        const seconds = now.getSeconds().toString().padStart(2, '0');
+    
+        return `${hours}:${minutes}:${seconds}`;
+    }
+
     messages = [
-        // {text: 'Hola, ¿cómo estás?', time: '8:40 AM, Hoy', sender: 'other'},
-        // {text: 'En que te puedo ayudar?', time: '8:55 AM, Hoy', sender: 'other'}
+        {
+            text: 'Hola, ¿cómo estás? En que te puedo ayudar?',
+            time: this.getCurrentTime(),
+            sender: 'other'
+        }
     ];
 
     constructor(private chatbotService: ChatBotService) {
