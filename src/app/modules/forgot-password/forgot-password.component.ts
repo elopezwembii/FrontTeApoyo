@@ -37,6 +37,11 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
 
     forgotPassword() {
         if (this.forgotPasswordForm.valid) {
+
+            const {email}=this.forgotPasswordForm.value
+
+          
+            
         } else {
             this.toastr.error('Hello world!', 'Toastr fun!');
         }
