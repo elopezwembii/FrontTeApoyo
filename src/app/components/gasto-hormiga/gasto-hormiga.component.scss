@@ -10,3 +10,8 @@
     width: 5%;
 }
 
+.gasto-icon {
+    width: 60px; /* ajusta según tus necesidades */
+    height: 60px;
+    object-fit: contain; /* esto hace que la imagen se ajuste sin recortarla ni distorsionarla */
+}

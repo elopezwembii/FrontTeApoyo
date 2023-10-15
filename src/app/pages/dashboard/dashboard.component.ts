@@ -1151,7 +1151,7 @@ export class DashboardComponent implements OnInit {
                 //title: 'Tour por las opciones del menú',
                 classes: 'text-principal',
                 text: [
-                    'Texto debe decir: En esta opción, puedes registrar tu deuda financiera como créditos, líneas y tarjetas. Con esto podremos realizar un análisis de tu situación de endeudamiento y entregarte recomendaciones.'
+                    'Acá puedes registrar tu deuda financiera (créditos, líneas y tarjetas) y realizaremos un análisis de tu endeudamiento con recomendaciones. Cuando hagas el pago de la (s) cuota (s) del mes, regístralo acá.'
                 ]
             },
             {
@@ -1179,7 +1179,7 @@ export class DashboardComponent implements OnInit {
                 //title: 'Tour por las opciones del menú',
                 classes: 'text-principal',
                 text: [
-                    'Texto debe decir: Desde esta opción puedes programar metas de ahorro en función del monto y del plazo en el que quieres lograrla.'
+                    'Desde esta opción puedes programar metas de ahorro en función del monto y plazo en el que quieres lograrlo. Cuando efectúes el ahorro del mes, regístralo desde esta opción.'
                 ]
             },
             {
