@@ -20,10 +20,11 @@
     <div class="card-body chat-background">
         <div #msg *ngFor="let message of messages" 
              [class]="message.sender === 'me' ? 'd-flex justify-content-end mb-4' : 'd-flex justify-content-start mb-4'">
-            <div [class]="message.sender === 'me' ? 'msg_cotainer_send' : 'msg_cotainer'">
+             <div [class]="(message.sender === 'me' ? 'msg_cotainer_send text-justify' : 'msg_cotainer text-justify')">
                 {{message.text}}
                 <span [class]="message.sender === 'me' ? 'msg_time_send' : 'msg_time'">{{message.time }}</span>
             </div>
+            
         </div>
 
         <div *ngIf="botIsWriting" class="d-flex justify-content-start mb-4">

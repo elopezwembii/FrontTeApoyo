@@ -375,7 +375,7 @@ export class DeudasComponent implements OnInit {
 
     deudaForm = this.fb.group({
         descripcion: ['', Validators.required],
-       // monto: ['', [Validators.required, Validators.min(1)]],
+        // monto: ['', [Validators.required, Validators.min(1)]],
         salida: [this.fechaActual.getDate(), Validators.required]
     });
 
@@ -394,17 +394,30 @@ export class DeudasComponent implements OnInit {
             const dia = this.deudaForm.get('salida').value;
             const monto = this.selectedValorCuota;
 
+            // --- esto es asi por que se cambio la categoria cuando es crédito hipotecario,
+            //se va a gasto de hogar y arriendo/dividendo,
+            let tipoGasto = 10;
+            let tipoDeuda = this.selectedTipoDeuda;
+
+            if (this.selectedTipoDeuda === 2) {
+                tipoGasto = 1;
+                tipoDeuda = 5;
+            }
+            //-----
+
             const gasto: Gasto = {
                 id: 0,
                 desc: descripcion,
                 fijar: 0,
-                tipo_gasto: 10,
-                subtipo_gasto: this.selectedTipoDeuda,
+                tipo_gasto: tipoGasto,
+                subtipo_gasto: tipoDeuda,
                 dia: dia,
                 mes: this.fechaActual.getMonth() + 1,
                 anio: this.fechaActual.getFullYear(),
                 monto: monto
             };
+
+            console.log({gasto});
 
             (
                 await this.gastoService.agregarGastoAsociandoDeuda(
@@ -417,7 +430,7 @@ export class DeudasComponent implements OnInit {
                     this.obtenerDeuda();
                     this.toastr.success('Ingresado correctamente');
                 },
-                error: ({ error: { message } }: any) => {
+                error: ({error: {message}}: any) => {
                     this.loading = false;
                     this.toastr.error(message);
                 }
