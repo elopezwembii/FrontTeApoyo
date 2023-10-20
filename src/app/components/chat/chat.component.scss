@@ -4,7 +4,7 @@
     bottom: 10px;
     right: 10px;
     z-index: 1000; 
-    background-color: #128C7E;
+    // background-color: #128C7E;
     color: white;
     border-radius: 50%;
 }
@@ -116,8 +116,30 @@
     border-radius: 50%;
 }
 
+@keyframes blink {
+    0% { opacity: 1; }
+    50% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+@keyframes glow {
+    0% {
+        box-shadow: 0 0 5px #FFFF00, 0 0 10px #FFFF00, 0 0 15px #FFD700, 0 0 20px #FFD700, 0 0 25px #FFD700, 0 0 30px #FFD700, 0 0 35px #FFD700;
+    }
+    40% {
+        box-shadow: 0 0 5px #FFFF00, 0 0 10px #FFFF00, 0 0 15px #FFD700, 0 0 20px #FFD700, 0 0 25px #FFD700, 0 0 30px #FFD700, 0 0 35px #FFD700;
+    }
+    80% {
+        box-shadow: none; /* Esta línea hace que el destello desaparezca en la mitad de la animación */
+    }
+    100% {
+        box-shadow: 0 0 5px #FFFF00, 0 0 10px #FFFF00, 0 0 15px #FFD700, 0 0 20px #FFD700, 0 0 25px #FFD700, 0 0 30px #FFD700, 0 0 35px #FFD700;
+    }
+}
+
+
 .btn-whatsapp {
-    background-color: #25D366;
+    background-color: #bcd325;
     color: white;
     border-radius: 50%;
     width: 60px;
@@ -126,6 +148,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
+
+    animation: glow 3s infinite alternate;
 }
 
 .btn-whatsapp:hover {
@@ -154,3 +178,25 @@
     border-radius: 20px;
     border: 3px solid rgba(0, 0, 0, 0.1);
 }
+
+.circle-image {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center;
+}
+
+
+.chat-button {
+    background-image: url('/assets/icons/lucas-face.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 50px; // O el tamaño que prefieras
+    height: 50px; // O el tamaño que prefieras
+    border-radius: 50%; // Para que sea circular
+    border: none;
+    outline: none;
+    animation: glow 3s infinite alternate;
+} 

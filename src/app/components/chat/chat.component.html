@@ -1,5 +1,8 @@
-<button *ngIf="!showChat" (click)="toggleChat()" class="chat-button btn btn-whatsapp">
+<!-- <button *ngIf="!showChat" (click)="toggleChat()" class="chat-button btn btn-whatsapp">
     <i class="fab fa-whatsapp"></i>
+</button> -->
+
+<button *ngIf="!showChat" (click)="toggleChat()" class="chat-button btn">
 </button>
 
 
@@ -8,8 +11,8 @@
     <div class="card-header">
         <div class="d-flex justify-content-between align-items-center">
             <div class="d-flex align-items-center">
-                <img src="https://i.pinimg.com/originals/67/6d/24/676d24c0a26ed3503ff777d4ebb3ef79.gif" alt="Logo" height="80">
-                <h5 class="mb-0 ml-2">ChatBot Luca$</h5>
+                <img src="assets/icons/lucas-face.png" alt="Logo" height="40">
+                <h5 class="mb-0 ml-2">Luca$</h5>
             </div>
             <button type="button" class="close" aria-label="Close" (click)="toggleChat()">
                 <span aria-hidden="true">&times;</span>
