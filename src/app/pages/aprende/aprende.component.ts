@@ -27,6 +27,8 @@ export class AprendeComponent implements OnInit {
 
     idCategoriaActual = 1;
 
+    listaImagenes = [];
+
     constructor(
         private blogsService: BlogsService,
         private fb: FormBuilder,
@@ -38,6 +40,8 @@ export class AprendeComponent implements OnInit {
         this.getFirstSixBlogs();
         this.getBlogs();
         this.getCategorias();
+
+        this.obtenerImagenes();
     }
 
     get indicatorIndexes() {
@@ -269,15 +273,73 @@ export class AprendeComponent implements OnInit {
             const formId = this.formulario_crear.get('id').value;
 
             this.blogsService.deleteBlog(formId).subscribe({
-                next:(resp:any)=>{
+                next: (resp: any) => {
                     this.cerrarModal();
-                    this.toastr.success('El Blog se ha eliminado correctamente');
+                    this.toastr.success(
+                        'El Blog se ha eliminado correctamente'
+                    );
                     this.getBlogs();
                     this.getFirstSixBlogs();
                 }
-            })
+            });
 
-            console.log('Blog eliminado',formId);
+            console.log('Blog eliminado', formId);
         }
+    }
+
+    obtenerImagenes() {
+        this.blogsService.getImagenes().subscribe({
+            next: ({urls}: any) => {
+                this.listaImagenes = urls;
+            }
+        });
+    }
+
+    selectedImage: string = null;
+
+    selectImage(url: string) {
+        this.formulario_crear.get('imageUrl').setValue(url);
+        this.selectedImage = url;
+    }
+
+    eliminarImage(url: string) {
+        if (confirm('¿Estás seguro de que quieres eliminar esta imagen?')) {
+ 
+            this.deleteImage(url);
+        }
+    }
+
+    @ViewChild('fileInput', {static: false}) fileInput: ElementRef;
+
+    openFileInput() {
+        this.fileInput.nativeElement.click();
+    }
+
+    onFileChange(event: any) {
+        if (event.target.files && event.target.files[0]) {
+            const file = event.target.files[0];
+
+            const formData = new FormData();
+            formData.append('image', file, file.name);
+
+            this.blogsService.uploads(formData).subscribe(
+                (response) => {
+                    console.log(response);
+                    this.obtenerImagenes();
+                },
+                (error) => {
+                    console.error(error);
+                }
+            );
+        }
+    }
+
+    deleteImage(url:string){
+        this.blogsService.delete(url).subscribe({
+            next:(value) =>{
+                console.log("Eliminada");
+                this.obtenerImagenes();
+            },
+        })
     }
 }

@@ -26,11 +26,21 @@
                     <strong>Blog de Educación Financiera</strong>
                 </h1>
                 <p class="mb-4">
-                    En <strong class="text-main">Te Apoyo</strong> entregamos contenido actual, dinámico, simple y entretenido. <br>
-                    Construimos 7 grandes temáticas: Finanzas Personales, Presupuesto, Gastos Familiares, Endeudamiento, Créditos, Línea y Tarjeta de Crédito, Ahorro e Inversiones y Varios. <br>
-                    De esta manera puedes filtrar para consultar por algún tema específico o revisarlos todos. Cada artículo no toma más de 3 minutos. 
-                    Si hay alguna temática financiera que te interese que tratemos, puedes escribirnos a <a href="mailto:contacto@te-apoyo.cl">contacto@te-apoyo.cl</a> <br>
-                    Esperamos te sea de mucha utilidad 😊. <br>
+                    En <strong class="text-main">Te Apoyo</strong> entregamos
+                    contenido actual, dinámico, simple y entretenido. <br />
+                    Construimos 7 grandes temáticas: Finanzas Personales,
+                    Presupuesto, Gastos Familiares, Endeudamiento, Créditos,
+                    Línea y Tarjeta de Crédito, Ahorro e Inversiones y Varios.
+                    <br />
+                    De esta manera puedes filtrar para consultar por algún tema
+                    específico o revisarlos todos. Cada artículo no toma más de
+                    3 minutos. Si hay alguna temática financiera que te interese
+                    que tratemos, puedes escribirnos a
+                    <a href="mailto:contacto@te-apoyo.cl"
+                        >contacto@te-apoyo.cl</a
+                    >
+                    <br />
+                    Esperamos te sea de mucha utilidad 😊. <br />
                     <strong class="text-main"> El Equipo de Te Apoyo.</strong>
                 </p>
             </div>
@@ -254,12 +264,17 @@
                                 [src]="card.imageUrl"
                                 class="card-img-top"
                                 alt="Imagen"
-                                style="width: 100%; height: 200px; object-fit: cover;"
+                                style="
+                                    width: 100%;
+                                    height: 200px;
+                                    object-fit: cover;
+                                "
                             />
                             <!-- Pestaña de categoría -->
                             <div class="category-tab">
                                 {{ card.categoria.name }}
                             </div>
+
                             <div
                                 style="
                                     position: absolute;
@@ -374,7 +389,8 @@
                             formControlName="title"
                         />
                     </div>
-                    <div class="form-group">
+
+                    <!-- <div class="form-group">
                         <label for="content">imagen</label>
                         <input
                             type="text"
@@ -382,7 +398,32 @@
                             id="imagen"
                             formControlName="imageUrl"
                         />
-                    </div>
+                    </div> -->
+                    <input type="hidden" formControlName="imageUrl">
+
+
+                    <div class="form-group">
+                        <label for="content">imagen</label>
+                        <div class="contenedor-imagenes">
+                      
+                          <input type="file" #fileInput style="display: none;"(change)="onFileChange($event)"/>
+                      
+                          <div class="image-card" (click)="openFileInput()">
+                            <div class="image-upload-icon">
+                              <i class="fa fa-plus"></i>
+                            </div>
+                          </div>
+                            
+                          <div *ngFor="let url of listaImagenes" class="imagen-contenedor">
+                            <img [src]="url" [ngClass]="{'image-selected': url === selectedImage}" (click)="selectImage(url)" width="100" />
+                            <button type="button"  class="btn btn-danger" (click)="eliminarImage(url)">
+                              <i class="fas fa-trash"></i>
+                            </button>
+                          </div>
+                      
+                        </div>
+                      </div>
+                      
                     <div class="form-group">
                         <label for="content">Contenido</label>
                         <textarea
@@ -391,6 +432,7 @@
                             formControlName="content"
                         ></textarea>
                     </div>
+
                     <div class="form-group">
                         <label for="categoria_id">Categoría</label>
                         <select
@@ -414,6 +456,7 @@
                 <button type="button" class="btn btn-danger" (click)="eliminarBlog()">Eliminar Blog</button>
             </div>
              -->
+
 
             <div class="modal-footer d-flex justify-content-between">
                 <button

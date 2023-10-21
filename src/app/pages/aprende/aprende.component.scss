@@ -157,3 +157,62 @@
   .carousel-control-prev, .carousel-control-next {
     width: 20px; /* Ajusta este valor según tus necesidades */
 }
+
+
+
+.contenedor-imagenes {
+    max-height: 300px;
+    overflow-y: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+ }
+
+ .imagen-contenedor {
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; 
+
+    display: flex;
+    flex-direction: column; /* Acomoda el botón debajo de la imagen */
+    align-items: center; /* Centra los elementos horizontalmente */
+
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    margin: 10px;
+}
+
+.imagen-contenedor img {
+  
+    border-radius: 10px;
+    margin-bottom: 10px; /* Esto agregará un espacio debajo de la imagen */
+}
+
+
+.image-selected {
+    border: 5px solid #007BFF; /* Azul similar al del botón */
+    box-shadow: 0px 0px 15px #007BFF; /* Sombra para darle un efecto más destacado */
+}
+
+
+.contenedor {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.image-card {
+    border: 2px dashed gray;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+  }
+  
+  .image-upload-icon i {
+    font-size: 24px;
+    color: gray;
+  }
+  

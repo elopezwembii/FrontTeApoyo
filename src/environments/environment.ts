@@ -5,10 +5,10 @@
 export const environment = {
     production: false,
     //uri_api: 'http://13.90.92.134:8000/api/v1/'
-    uri_api: 'https://www.plataformadeautogestionfinanciera.cl/api/public/api/v1/',
-    url_api_chatbot:'https://api-chatbot-ta.azurewebsites.net/api/chatbot'
+    uri_api: 'http://localhost:8000/api/v1/',
+    url_api_chatbot:'http://localhost:3000/api/chatbot'
+    //uri_api: 'https://www.plataformadeautogestionfinanciera.cl/api/public/api/v1/'
 };
-
 
 /*
  * For easier debugging in development mode, you can import the following file

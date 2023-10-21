@@ -55,4 +55,19 @@ export class BlogsService {
             description: body
         });
     }
+
+    getImagenes() {
+        return this.http.get(`${url}showAll`);
+    }
+
+    uploads(formData: FormData) {
+        return this.http.post(`${url}upload`, formData);
+    }
+
+    delete(imageurl: string) {
+
+        console.log({imageurl});
+        
+        return this.http.post(`${url}deleteImage`, {imageurl});
+    }
 }
