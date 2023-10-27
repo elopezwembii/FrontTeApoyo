@@ -162,11 +162,26 @@
 
 .contenedor-imagenes {
     max-height: 300px;
-    overflow-y: auto;
+    overflow-y: scroll; /* Cambia "auto" por "scroll" */
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 10px;
- }
+}
+
+.contenedor-imagenes::-webkit-scrollbar {
+    width: 10px; /* Ajusta el ancho de la barra de desplazamiento */
+}
+
+.contenedor-imagenes::-webkit-scrollbar-thumb {
+    background-color: #888; /* Color de la barra de desplazamiento */
+    border-radius: 5px; /* Redondeo de las esquinas */
+}
+
+.contenedor-imagenes::-webkit-scrollbar-thumb:hover {
+    background-color: #555; /* Color al pasar el cursor por encima */
+}
+
+
 
  .imagen-contenedor {
 
@@ -215,4 +230,6 @@
     font-size: 24px;
     color: gray;
   }
+  
+
   
