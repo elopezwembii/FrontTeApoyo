@@ -206,4 +206,5 @@ export class ModalUsuarioComponent implements OnInit {
 
         return errors;
     }
+    
 }

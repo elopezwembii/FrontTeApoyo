@@ -66,6 +66,13 @@ import { CargaMasivaComponent } from './components/carga-masiva/carga-masiva.com
 import { AprendeComponent } from './pages/aprende/aprende.component';
 import { AprendeDetalleComponent } from './pages/aprende-detalle/aprende-detalle.component';
 import { NgxEditorModule } from "ngx-editor";
+import { PromoCuponesComponent } from './pages/promo-cupones/promo-cupones.component';
+import { ModalAddcuponComponent } from './components/modal-addcupon/modal-addcupon.component';
+import { PlanesComponent } from './pages/planes/planes.component';
+import { ModalPlanesComponent } from './components/modal-planes/modal-planes.component';
+import { SuscriptoresComponent } from './pages/suscriptores/suscriptores.component';
+import { TestsComponent } from './modules/tests/tests.component';
+import { ModalUserTestComponent } from './components/modal-user-test/modal-user-test.component';
 
 
 defineCustomElements();
@@ -121,7 +128,14 @@ registerLocaleData(localeEs);
         ConfiguracionComponent,
         CargaMasivaComponent,
         AprendeComponent,
-        AprendeDetalleComponent
+        AprendeDetalleComponent,
+        PromoCuponesComponent,
+        ModalAddcuponComponent,
+        PlanesComponent,
+        ModalPlanesComponent,
+        SuscriptoresComponent,
+        TestsComponent,
+        ModalUserTestComponent
 
     ],
     imports: [

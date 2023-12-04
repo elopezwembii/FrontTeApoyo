@@ -4,10 +4,10 @@
 
 export const environment = {
     production: false,
-    //uri_api: 'http://13.90.92.134:8000/api/v1/'
-    uri_api: 'http://localhost:8000/api/v1/',
-    url_api_chatbot:'http://localhost:3000/api/chatbot'
-    //uri_api: 'https://www.plataformadeautogestionfinanciera.cl/api/public/api/v1/'
+    uri_api: 'http://13.90.92.134:8000/api/v1/'
+    //uri_api: 'http://teapoyo.local/api/v1/',
+    //url_api_chatbot:'http://teapoyo.local/api/chatbot',
+    uri_api: 'https://www.plataformadeautogestionfinanciera.cl/api/public/api/v1/'
 };
 
 /*

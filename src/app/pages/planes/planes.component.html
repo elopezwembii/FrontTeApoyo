@@ -1,0 +1,116 @@
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-principal"><b> Planes de suscripción</b></h1>
+
+                <h1 *ngIf="rol !== 'Administrador'" class="m-0 text-principal">
+                    <b> Empresa {{ empresa_desc | titlecase }}</b>
+                </h1>
+
+            </div>
+            <!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item">
+                        <a [routerLink]="['']">Inicio</a>
+                    </li>
+                    <li class="breadcrumb-item">Planes</li>
+                </ol>
+            </div>
+            <!-- /.col -->
+        </div>
+        
+        <!-- /.row -->
+    </div>
+    
+    <!-- /.container-fluid -->
+</div>
+
+<section class="content">
+    <div class="container-fluid w-100">
+        <div class="row">
+            <div class="col col-12">
+                <div class="card card-primary card-outline">
+                    <div class="card-header text-right" *ngIf="empresa || rol=='Administrador'">
+
+                        <button [disabled]="!cupoDisponible && rol!=='Administrador'" class="btn btn-info" routerLink="/usuarios"
+                            title="" style="margin-right: 7px;">
+                            <i class="fas fa-angle-left"></i> Usuarios
+                        </button>
+
+                        <button [disabled]="!cupoDisponible && rol!=='Administrador'" class="btn btn-info" (click)="sincronizar();"
+                            title="" style="margin-right: 7px;">
+                            <i class="fas fa-plus-circle"></i> Sincronizar
+                        </button>
+
+                        <button [disabled]="!cupoDisponible && rol!=='Administrador'" class="btn btn-info" routerLink="/suscriptores"
+                            title="" style="margin-right: 7px;">
+                            <i class="fas fa-plus-circle"></i> Suscriptores
+                        </button>
+
+                        <button [disabled]="!cupoDisponible && rol!=='Administrador'" class="btn btn-info" (click)="openModal()"
+                            title="">
+                            <i class="fas fa-plus-circle"></i> Nuevo plan
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <table *ngIf="planes.length > 0" datatable [dtOptions]="dtOptions" class="row-border hover">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Nombre plan</th>
+                                    <th>Día de pagos</th>
+                                    <th>Repite</th>
+                                    <th>Precio</th>
+                                    <th>Cupón</th>
+                                    <th>Desc.</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of planes">
+                                    <td>[{{ item.id }}] <i class="fas fa-eye text-info" style="cursor:pointer;" (click)="vermercadopago(item.uid);"></i></td>
+                                    <td>{{ item.reason }}</td>
+                                    <td>{{ item.billing_day }}</td>
+                                    <td>{{ item.repetitions }}</td>
+                                    <td *ngIf="item.promo == 1"><span class="text-info">{{ item.transaction_amount | currency:'CLP':'symbol' }}</span></td>
+                                    <td *ngIf="item.promo == 0">{{ item.transaction_amount | currency:'CLP':'symbol' }}</td>
+                                    <td [class]="
+                                                item.state_cupon === 1
+                                                ? 'text-success text-bold'
+                                                : 'text-info text-bold'
+                                        ">
+                                        {{
+                                        item.state_cupon === 1
+                                        ? item.cupon
+                                        : 'S/N'
+                                        }}
+                                    </td>
+                                    <td>{{ item.percentage }}%</td>
+                                    <td>
+                                        <input type="checkbox" (click)="promo(item)" class="form-check-input" [checked]="
+                                            item.promo === 1
+                                            ? 'checked'
+                                            : ''
+                                        "/>
+                                        <button (click)="openModal(item)" type="button" class="btn btn-success btn-sm" style="margin-right: 5px;">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button (click)="borrar(item)" type="button" class="btn btn-danger btn-sm" style="margin-right: 5px;">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<app-modal-planes #modalPlanes [usuario]="usuarios" (planMod)="actualizarPlan($event)"
+    (loading)="actualizarCarga($event)"></app-modal-planes>
+<ngx-loading [show]="loading"></ngx-loading>

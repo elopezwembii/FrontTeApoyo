@@ -95,4 +95,51 @@ export class AppService {
     sendEmailResetPassword(email: string) {
         return this._http.post(`${environment.uri_api}sendEmail`, {email});
     }
+
+    //Test personalidad financiera
+    async userTest({email, autoriza}) {
+        try {
+            return new Promise((resolve, reject) => {
+                this._http
+                    .post(environment.uri_api + 'user_test', {
+                        email,
+                        autoriza
+                    })
+                    .subscribe(
+                        (response) => {
+                            resolve(response);
+                        },
+                        (error) => {
+                            console.error(error);
+                            reject(error);
+                        }
+                    );
+            });
+        } catch (error) {
+            this.router.navigate(['/login']);
+            this.toastr.error('Errores de validacion');
+        }
+    }
+
+    async submitTest(model:any) {
+        try {
+            return new Promise((resolve, reject) => {
+                this._http
+                    .post(environment.uri_api + 'submit_test', model)
+                    .subscribe(
+                        (response) => {
+                            resolve(response);
+                        },
+                        (error) => {
+                            console.error(error);
+                            reject(error);
+                        }
+                    );
+            });
+        } catch (error) {
+            this.router.navigate(['/login']);
+            this.toastr.error('Errores de validacion');
+        }
+    }
+
 }

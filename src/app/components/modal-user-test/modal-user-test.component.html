@@ -1,0 +1,35 @@
+<div class="modal fade" id="modalUserTest" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{ titulo }}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="form" (ngSubmit)="submit()">
+                    <div class="row">
+                        <div class="col-md-12 mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input autocomplete="off" type="email" formControlName="email" class="form-control" placeholder="Introduzca su email" />
+                        </div>
+
+                        <div class="form-check mb-3">
+                            <input type="checkbox" formControlName="autoriza" class="form-check-input ml-2" value="1" />
+                            <label for="autoriza" class="form-check-label ml-4">¿Desea recibir noticias y promociones de TE-APOYO?</label>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-normal" data-dismiss="modal"><i class="fas fa-times"></i> Cerrar</button>
+                            <button type="submit" class="btn btn-normal">Continuar <i class="fas fa-chevron-right"></i></button>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ngx-loading [show]="isAuthLoading"></ngx-loading>

@@ -98,6 +98,15 @@ export const MENU = [
         role: ['Usuario', 'Administrador','Administrativo Empresa']
         //role: 'Administrativo',
     },
+    /*
+    {
+        name: 'Promo cupones',
+        iconClasses: 'fa fa-tags',
+        path: ['/cupones'],
+        role: ['Administrador','Administrativo Empresa']
+        //role: 'Administrativo',
+    },
+    */
     // {
     //     name: 'Simular Crédito',
     //     iconClasses: 'fas fa-money-check',

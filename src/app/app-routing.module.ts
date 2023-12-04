@@ -24,6 +24,11 @@ import {GestionColaboradorComponent} from '@pages/gestion-colaborador/gestion-co
 import {ConfiguracionComponent} from '@pages/configuracion/configuracion.component';
 import {AprendeComponent} from '@pages/aprende/aprende.component';
 import { AprendeDetalleComponent } from '@pages/aprende-detalle/aprende-detalle.component';
+import { PromoCuponesComponent } from '@pages/promo-cupones/promo-cupones.component';
+import { PlanesComponent } from '@pages/planes/planes.component';
+import { SuscriptoresComponent } from '@pages/suscriptores/suscriptores.component';
+
+import { TestsComponent } from '@modules/tests/tests.component';
 
 const routes: Routes = [
     {
@@ -93,6 +98,18 @@ const routes: Routes = [
                 component: AprendeDetalleComponent
             },
             {
+                path: 'cupones',
+                component: PromoCuponesComponent
+            },
+            {
+                path: 'planes',
+                component: PlanesComponent
+            },
+            {
+                path: 'suscriptores',
+                component: SuscriptoresComponent
+            },
+            {
                 path: '',
                 component: DashboardComponent
             }
@@ -112,6 +129,10 @@ const routes: Routes = [
         path: 'recover-password',
         component: RecoverPasswordComponent,
         canActivate: [NonAuthGuard]
+    },
+    {
+        path: 'test',
+        component: TestsComponent
     },
     {path: '**', redirectTo: ''}
 ];
