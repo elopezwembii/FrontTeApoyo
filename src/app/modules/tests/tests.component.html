@@ -119,7 +119,7 @@
                     <input type="hidden" id="field{{i}}" formControlName="pregunta_id">
 
                     <div formArrayName="respuestas" *ngFor="let respuesta of field.get('respuestas').controls; let j = index">
-                      <input type="radio" id="respuesta{{i}}{{j}}" [value]="respuesta.value.id" (change)="onRadioChange(i, $event)">
+                      <input type="radio" id="respuesta{{i}}{{j}}" name="respuesta{{i}}" [value]="respuesta.value.id" (change)="onRadioChange(i, $event)">
                       <span style="margin-left: 5px;">{{ respuesta.value.respuesta }}</span>
                     </div>
 
