@@ -45,14 +45,17 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Suscriptor</th>
+                                    <th>Email</th>
                                     <th>Plan</th>
                                     <th>Cupón</th>
                                     <th>Tipo</th>
+                                    <th>Estado</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr *ngFor="let item of suscriptores">
                                     <td>{{ item.id }}</td>
+                                    <td>{{ item.nombre }} {{ item.apellido }}</td>
                                     <td>{{ item.email }}</td>
                                     <td>{{ item.reason }}</td>
                                     <td>{{ item.cupon }}</td>
@@ -62,6 +65,13 @@
                                                 : 'text-info text-bold'
                                         ">
                                         {{ item.tipo }}
+                                    </td>
+                                    <td [class]="
+                                            item.status === 0
+                                                ? 'text-danger text-bold'
+                                                : 'text-success text-bold'
+                                        ">
+                                        {{ item.status === 0 ?'Inactivo':'Activo' }}
                                     </td>
                                 </tr>
                             </tbody>
