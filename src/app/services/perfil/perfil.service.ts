@@ -1,13 +1,14 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {environment} from 'environments/environment';
-import {Observable, of} from 'rxjs';
+import {Observable, catchError, map, of, throwError} from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
 })
 export class PerfilService {
     familia = [];
+    usuario = [];
 
     constructor(private _http: HttpClient) {}
 
@@ -88,5 +89,22 @@ export class PerfilService {
             observer.next();
             observer.complete();
         });
+    }
+
+    actualClaves(model: any) {
+        let headers = {
+            Authorization: 'Bearer ' + JSON.parse(sessionStorage.getItem('user')).access_token
+        }
+
+        return this._http.post<any[]>(`${environment.uri_api}updatePass`, model, { headers: headers, observe: 'response' })
+            .pipe(
+                map((resp: any) => {
+                    return resp;
+                }
+            ),
+            catchError(error => {
+                return throwError(error);
+            }),
+        );
     }
 }
