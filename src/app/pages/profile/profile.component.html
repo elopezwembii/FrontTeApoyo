@@ -60,6 +60,9 @@
               <li class="nav-item">
                 <a class="nav-link" href="#familia" data-toggle="tab">Familia</a>
               </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#seguridad" data-toggle="tab">Seguridad</a>
+              </li>
             </ul>
           </div>
           <!-- /.card-header -->
@@ -129,6 +132,7 @@
                       </div>
                     </div>
                   </fieldset>
+
                   <fieldset class="scheduler-border">
                     <legend class="scheduler-border">
                       Contacto
@@ -240,6 +244,39 @@
                 </fieldset>
 
               </div>
+
+              <div class="tab-pane" id="seguridad">
+
+                <fieldset class="scheduler-border">
+                  <legend class="scheduler-border">
+                    Cambiar claves de acceso
+                  </legend>
+                  <form [formGroup]="seguridadForm" (submit)="actuallizarClaves()">
+
+                    <div class="row form-group">
+                      <div class="col-sm-4">
+                        <label class="control-label">Contraseña actual</label>
+                        <input type="password" formControlName="actual" class="form-control" />
+                      </div>
+                      <div class="col-sm-4">
+                        <label class="control-label">Nueva contraseña</label>
+                        <input type="password" formControlName="nueva" class="form-control" />
+                      </div>
+                      <div class="col-sm-4">
+                        <label class="control-label">confirme contraseña</label>
+                        <input type="password" formControlName="confirme" class="form-control" />
+                      </div>
+                    </div>
+
+                    <button [disabled]="!seguridadForm.valid" type="submit" class="btn btn-success">
+                      Actualizar
+                    </button>
+
+                  </form>
+                </fieldset>
+              </div>
+
+
             </div>
             <!-- /.tab-content -->
           </div>

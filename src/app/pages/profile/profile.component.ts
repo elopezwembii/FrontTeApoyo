@@ -23,6 +23,13 @@ export class ProfileComponent implements OnInit {
         correo: ['', [Validators.required, Validators.email]]
     });
 
+    seguridadForm = this.fb.group({
+        id: [''],
+        actual: ['', Validators.required],
+        nueva: ['', Validators.required],
+        confirme: ['', Validators.required]
+    });
+
     form: FormGroup = this.fb.group({
         rut: [''],
         nombres: [''],
@@ -124,4 +131,23 @@ export class ProfileComponent implements OnInit {
             }
         });
     }
+
+    actuallizarClaves() {
+        if (!this.seguridadForm.valid) return;
+        this.seguridadForm.value.id = this.usuario.id;
+
+        this.perfilUsuario.actualClaves(this.seguridadForm.value).subscribe({
+            next: (resp: any) => {
+                if(resp.body.code == 200){
+                    this.toastr.success(resp.body.message);
+                    this.seguridadForm.reset();
+                }else{
+                    this.toastr.error(resp.body.message); 
+                }
+                
+            }
+        });
+
+    }
+
 }
