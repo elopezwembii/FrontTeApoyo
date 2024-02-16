@@ -8,5 +8,5 @@ export interface Gasto {
     mes: number;
     anio: number;
     monto: number;
-    get_sub_tipo?: {nombre?: string};
+    get_sub_tipo?: {nombre?: string, id?: number};
 }

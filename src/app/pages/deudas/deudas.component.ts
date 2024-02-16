@@ -165,6 +165,26 @@ export class DeudasComponent implements OnInit {
         this.modal2.style.display = 'block';
     }
 
+    cerrarModal3() {
+        // this.modal.classList.remove('show');
+        // this.modal.style.display = 'none';
+
+        const modal = document.getElementById('exampleModal');
+        modal.style.display = 'none';
+        modal.setAttribute('aria-hidden', 'true');
+        modal.classList.remove('show');
+
+        // Elimina TODOS los fondos oscuros (backdrops)
+        const backdrops = document.querySelectorAll('.modal-backdrop');
+        backdrops.forEach((backdrop) => {
+            document.body.removeChild(backdrop);
+        });
+
+        // Restaurar el scroll en el body si es necesario
+        document.body.style.paddingRight = '0';
+        document.body.classList.remove('modal-open');
+    }
+
     cerrarModal() {
         // this.modal.classList.remove('show');
         // this.modal.style.display = 'none';

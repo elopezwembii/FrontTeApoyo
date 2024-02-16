@@ -33,13 +33,21 @@ $graficos3: #ffa629;
 $text: #333333;
 
 body {
-    width: 100vw;
+    width: auto;
     height: 100vh;
 }
 
 ::-webkit-scrollbar {
-    width: 0px;
-    background: transparent;
+    width: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: gray; /* Color de la barra */
+    border-radius: 5px; /* Bordes redondeados para la barra */
+}
+
+::-webkit-scrollbar-track {
+    background-color: transparent; /* Color del fondo */
 }
 
 .content {
@@ -201,6 +209,13 @@ td {
     border-radius: 5px;
     text-decoration: none;
     display: inline-block;
+}
+
+
+.dataTables_wrapper {
+    position: relative;
+    clear: both;
+    overflow: auto;
 }
 
 .boton-acept {

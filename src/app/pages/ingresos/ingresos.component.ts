@@ -461,7 +461,7 @@ export class IngresosComponent implements OnInit {
                 id: 'intro5',
                 attachTo: {
                     element: '.red',
-                    on: 'right'
+                    on: 'bottom'
                 },
                 beforeShowPromise: () => {
                     return new Promise((resolve) => {

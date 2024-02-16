@@ -785,17 +785,20 @@ export class DashboardComponent implements OnInit {
                 gastos: Gasto[];
                 sumaTotalReal: number;
             }) => {
+
+                console.log('GASTOS', gastos)
                 //aux no repetido
                 let gastosNoRepetido;
-                //ordenar por monto
+        
+           
                 gastos = gastos.sort((p1, p2) =>
                     p1.monto < p2.monto ? 1 : p1.monto > p2.monto ? -1 : 0
                 );
                 //clon de gastos
                 let totalGastos = [].concat(gastos);
-                //limitar gastos
-                if (gastos.length > 5) gastos.length = 5;
+              
                 //reducir los repetidos limitados
+                
                 gastosNoRepetido = gastos.reduce((acumulador, valorActual) => {
                     const elementoYaExiste = acumulador.find(
                         (elemento) =>
@@ -847,6 +850,14 @@ export class DashboardComponent implements OnInit {
                     },
                     []
                 );
+
+                if(gastosNoRepetido.length > 5){
+                    gastosNoRepetido.length = 5
+                }
+
+                if(gastosNoRepetido2.length > 5){
+                    gastosNoRepetido2 = 5
+                }
                 this.gastosGraficoBarra = gastosNoRepetido.map((gasto) => {
                     return {
                         name: this.categorias[gasto.tipo_gasto - 1].descripcion,
