@@ -1,0 +1,172 @@
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-principal"><b> Gestión de usuarios</b></h1>
+
+                <h1 *ngIf="rol !== 'Administrador'" class="m-0 text-principal">
+                    <b> Empresa {{ empresa_desc | titlecase }}</b>
+                </h1>
+                <h1 class="m-0 text-principal">
+                    <b> Tipo usuario {{ rol | titlecase }}</b>
+                </h1>
+
+            </div>
+            <!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item">
+                        <a [routerLink]="['']">Inicio</a>
+                    </li>
+                    <li class="breadcrumb-item">Usuarios</li>
+                </ol>
+            </div>
+            <!-- /.col -->
+        </div>
+        
+        <!-- /.row -->
+    </div>
+    
+    <!-- /.container-fluid -->
+</div>
+
+
+
+
+
+<section class="content">
+
+
+    <div class="col" *ngIf="rol!='Administrador'">
+        <div class="card-deck mb-3 text-center">
+            <div class="card mb-4 shadow-sm">
+                <h3 class="text-principal">Cantidad de Colaboradores</h3>
+                <h3 class="text-principal">{{ cantidadColaboradores | number }}</h3>
+            </div>
+            <div class="card mb-4 shadow-sm">
+                <h3 class="text-principal">Límite de Colaboración</h3>
+                <h3 class="text-principal">{{ limiteColaboracion | number }}</h3>
+            </div>
+        </div>
+    </div>
+    
+
+
+    
+    <div class="container-fluid w-100">
+        <div class="row">
+            <div class="col col-12">
+                <div class="card card-primary card-outline">
+                    <div class="card-header text-right" *ngIf="empresa || rol=='Administrador'">
+
+                        <!-- <app-carga-masiva (OnReload)="obtenerUsuarios()" *ngIf="cupoDisponible || (rol==='Administrador')"  #modalCargaMasiva></app-carga-masiva> -->
+                        
+                        <button routerLink="/planes" class="btn btn-info" title="Promo cupones" style="margin-right: 10px;">
+                            <i class="fas fa-plus-circle"></i> Planes de suscripción
+                        </button>
+                     
+                        <button [disabled]="!cupoDisponible && rol!=='Administrador'" class="btn btn-info" (click)="openModal()"
+                            title="has alcanzo el limite de usuarios">
+                            <i class="fas fa-plus-circle"></i> Agregar usuario
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <table *ngIf="usuarios.length > 0" datatable [dtOptions]="dtOptions" class="row-border hover">
+                            <thead>
+                                <tr>
+                                    <th>Rut</th>
+                                    <th>Nombres</th>
+                                    <th>Apellidos</th>
+                                    <th>Email</th>
+                                    <th>Teléfono</th>
+                                    <th>Empresa</th>
+                                    <th>Estado</th>
+                                    <!-- <th>Suscripción</th> -->
+                                    <th>Rol</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let usuario of usuarios">
+                                    <td>{{ usuario.rut }}</td>
+                                    <td>{{ usuario.nombres | titlecase }}</td>
+                                    <td>{{ usuario.apellidos | titlecase}}</td>
+                                    <td>{{ usuario.email | titlecase }}</td>
+                                    <td>{{ usuario.telefono }}</td>
+
+                                    <ng-container *ngIf="usuario.empresa">
+                                        <td>{{ usuario.empresa.nombre | titlecase }}</td>
+                                    </ng-container>
+                                    <ng-container *ngIf="!usuario.empresa">
+                                        <td>No aplica</td>
+                                    </ng-container>
+
+                                    <td [class]="
+                                            usuario.estado === 1
+                                                ? 'text-success text-bold'
+                                                : 'text-danger text-bold'
+                                        ">
+                                        {{
+                                        usuario.estado === 1
+                                        ? 'Habilitado'
+                                        : 'Deshabilitado'
+                                        }}
+                                    </td>
+                                    <!-- <td>
+                                        <span><i>Inicio:</i>
+                                            {{ usuario.suscripcion_inicio }}
+                                            <i>Fin:</i>
+                                            {{ usuario.suscripcion_fin }}</span>
+                                    </td> -->
+                                    <td>
+                                        <span *ngFor="let rol of usuario.roles" [ngClass]="{
+                                                  'badge badge-secondary': true,
+                                                  'administrador': rol.nombre === 'Administrador',
+                                                  'usuario': rol.nombre === 'Usuario',
+                                                  'administrativo-empresa': rol.nombre === 'Administrativo Empresa'
+                                              }">
+                                            {{ rol.nombre }}
+                                        </span>
+                                    </td>
+
+
+                                    <td>
+                                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                            <div>
+                                                <button [class]="
+                                                        usuario.estado === 1
+                                                            ? 'btn btn-danger btn-sm'
+                                                            : 'btn btn-warning btn-sm'
+                                                    " (click)="
+                                                        cambiarEstado(usuario)
+                                                    ">
+                                                    <i [class]="
+                                                            usuario.estado === 1
+                                                                ? 'fas fa-trash'
+                                                                : 'fas fa-arrow-circle-up'
+                                                        "></i>
+                                                </button>
+                                            </div>
+                                            <!-- <div data-tooltip="Reiniciar contraseña" data-flow="top">
+                                                <button class="btn btn-info btn-sm">
+                                                    <i class="fas fa-unlock"></i>
+                                                </button>
+                                            </div> -->
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<app-modal-usuario #modalUsuario [usuario]="usuarios" (usuariosMod)="actualizarUsuarios($event)"
+    (loading)="actualizarCarga($event)"></app-modal-usuario>
+<ngx-loading [show]="loading"></ngx-loading>
+
+
+

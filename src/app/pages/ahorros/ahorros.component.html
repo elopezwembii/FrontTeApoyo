@@ -1,0 +1,289 @@
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-main"><b> Mi ahorros</b></h1>
+            </div>
+            <!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item">
+                        <a [routerLink]="['']">Inicio</a>
+                    </li>
+                    <li class="breadcrumb-item">ahorros</li>
+                </ol>
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Primera columna -->
+            <div class="col-12 col-md-8 mb-3 mb-md-0">
+                <!-- Tarjeta en la primera columna -->
+            
+                <div
+                    class="d-flex justify-content-end"
+                    style="margin-bottom: 20px"
+                >
+                    <button
+                        type="button"
+                        (click)="openModal()"
+                        class="btn btn-light rounded-pill shadow"
+                    >
+                        Agregar ahorro
+                    </button>
+                </div>
+                <div class="mb-3" *ngFor="let item of ahorros">
+                    <div class="d-flex justify-content-between">
+                        <h6 class="text-main">
+                            <strong>{{
+                                tiposAhorro[item.tipo_ahorro].descripcion
+                            }}</strong>
+                        </h6>
+                     
+                        <div>
+                            <button
+                                (click)="openModal(item)"
+                                title="Editar ahorro"
+                                class="btn btn-link cursor-pointer"
+                            >
+                                <i class="fas fa-pencil-alt edit"></i>
+                            </button>
+                            <button
+                                (click)="eliminarAhorro(item)"
+                                title="Eliminar ahorro"
+                                class="btn btn-link cursor-pointer"
+                            >
+                                <i class="fas fa-trash edit"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-3 text-center">
+                                    <img
+                                        [src]="
+                                            tiposAhorro[item.tipo_ahorro]
+                                                .img
+                                        "
+                                        alt="Icono de ahorro"
+                                        class="img-fluid"
+                                        height="200"
+                                    />
+                                </div>
+                                <div class="col-9">
+
+                                    <div class="text-right mt-2">
+                                        Meta
+                                        <strong class="big-text"
+                                            >$
+                                            {{
+                                                item.meta | currency: 'CLP':''
+                                            }}</strong
+                                        >
+                                    </div>
+                                    <div class="row mt-2 medium-text">
+                                        <div class="col-4 text-left">
+                                            <strong class="medium-text"
+                                                >$
+                                                {{
+                                                    calculoMontoMensual(
+                                                        item.fecha_limite,
+                                                        item.meta,
+                                                        item.recaudado
+                                                    ).toFixed(0) | currency:'CLP':''
+                                                }}</strong
+                                            ><br />Monto Mensual
+                                        </div>
+                                        <div class="col-4 text-center">
+                                            <strong class="medium-text">{{
+                                                item.fecha_limite
+                                                    | date: 'dd/MM/yyyy'
+                                            }}</strong
+                                            ><br />Fecha Límite
+                                        </div>
+                                        <div class="col-4 text-right">
+                                            <strong class="medium-text">{{
+                                                item.recaudado
+                                                    | currency
+                                                        : '$'
+                                                        : 'symbol'
+                                                        : '1.0-0'
+                                            }}</strong
+                                            ><br />Recaudado
+                                        </div>
+                                    </div>
+                                    <div class="progress">
+                                        <div
+                                            class="progress-bar progress-bar-custom"
+                                            role="progressbar"
+                                            [style.width.%]="((item.recaudado * 100) / item.meta).toFixed(2)"
+                                        >
+                                            <div class="progress-label">
+                                                {{ ((item.recaudado * 100) / item.meta).toFixed(0) }}%
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Aquí añadimos el botón -->
+                                    <div class="mt-3 text-center">
+                                        <button  (click)="setTipoAhorro(item.tipo_ahorro,tiposAhorro[item.tipo_ahorro].descripcion,item.id)"  type="button" class="btn btn-outline-info rounded-pill shadow-sm ml-3" data-toggle="modal" data-target="#modalRegistroAhorroEfectuado">
+                                            <i class="fas fa-piggy-bank mr-2"></i>
+                                            Registro de ahorro efectuado
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+
+            <!-- Segunda columna -->
+            <div class="col-12 col-md-4">
+                <!-- Primera tarjeta -->
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="text-main">
+                            <strong> Evolución de tus ahorros por año</strong>
+                        </h5>
+                        <app-grafico-linea
+                            [historial]="historial"
+                            [change]="change"
+                        ></app-grafico-linea>
+                    </div>
+                </div>
+
+                <!-- Segunda tarjeta -->
+                <div class="card mb-3">
+                    <div class="card-head text-center text-main mt-4">
+                        <h5> <strong>¡Recuerda!</strong></h5>
+                    </div>
+                    <div class="card-body text-center">
+                        <p>
+                            Disminuye tus gastos hormigas para aumentar tus
+                            ahorros y alcanzar tus metas mas rápido
+                        </p>
+                        <p>
+                            <b
+                                >Puedes ver tus gastos hormiga
+                                <a href="" data-toggle="modal" data-target="#modalGastoHormiga">aquí</a></b
+                            >
+                        </p>
+                    </div>
+                </div>                
+            </div>
+        </div>
+    </div>
+</section>
+
+<ngx-loading [show]="loading"></ngx-loading>
+
+<app-modal-ahorro
+    #modalAhorro
+    [ahorro]="ahorros"
+    (ahorroMod)="actualizarAhorro($event)"
+    (loading)="actualizarCarga($event)"
+></app-modal-ahorro>
+<ngx-loading [show]="loading"></ngx-loading>
+
+  <!-- Modal -->
+  <div class="modal fade" id="modalGastoHormiga" tabindex="-1" role="dialog" aria-labelledby="modalGastoHormigaLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content rounded-lg shadow">
+            <div class="modal-header border-0 pb-0">
+                <h5 class="modal-title text-muted" id="modalGastoHormigaLabel">Gastos hormiga</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-muted">
+                <div class="waveWrapper">
+                    <div class="wave"></div>
+                </div>
+               <app-gasto-hormiga></app-gasto-hormiga>
+            </div>
+            <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+                <defs>
+                    <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 s 58-18 88-18 s 58 18 88 18 v44h-352z" />
+                </defs>
+                <g class="parallax">
+                    <use xlink:href="#gentle-wave" x="48" y="0" fill="#8ed6d7" /> <!-- Color pastel principal -->
+                    <use xlink:href="#gentle-wave" x="48" y="3" fill="#b3e4e5" /> <!-- Un poco más claro -->
+                    <use xlink:href="#gentle-wave" x="48" y="5" fill="#68c0c1" /> <!-- Un poco más oscuro -->
+                    <use xlink:href="#gentle-wave" x="48" y="7" fill="#c6f0f1" /> <!-- Más claro --> 
+                </g>
+            </svg>
+        </div>
+    </div>
+</div>
+
+
+  <!-- Modal -->
+  <div class="modal fade" id="modalRegistroAhorroEfectuado" tabindex="-1" role="dialog" aria-labelledby="modalRegistroAhorroEfectuadoLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content rounded-lg shadow">
+            <div class="modal-header border-0 pb-0">
+                <h5 class="modal-title text-muted" id="modalGastoHormigaLabel">Registro ahorro efectuado <br>({{selectedTipoAhorroNombre | titlecase}})</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-muted">
+                <div class="waveWrapper">
+                    <div class="wave"></div>
+                </div>
+              
+
+                <form [formGroup]="ahorroForm">
+                    <div class="form-group">
+                        <label for="descripcion">Descripción:</label>
+                        <input type="text" class="form-control" id="descripcion" formControlName="descripcion">
+                    </div>
+                
+                    <div class="form-group">
+                        <label for="monto">Monto:</label>
+                        <input type="number" class="form-control" id="monto" formControlName="monto">
+                    </div>
+                
+                    <div class="form-group">
+                        <label for="diaDelMes">Día del mes:</label>
+                        <select class="form-control" id="diaDelMes" formControlName="fecha">
+                            <option *ngFor="let dia of diasDelMesActual" [value]="dia">{{dia}}</option>
+                        </select>
+                    </div>
+                    
+                    
+                
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-verde-claro" (click)="guardarAhorroEfectuado()">Guardar</button>
+                    </div>
+                    
+                </form>
+                
+
+            </div>
+            <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+                <defs>
+                    <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 s 58-18 88-18 s 58 18 88 18 v44h-352z" />
+                </defs>
+                <g class="parallax">
+                    <use xlink:href="#gentle-wave" x="48" y="0" fill="#8ed6d7" /> <!-- Color pastel principal -->
+                    <use xlink:href="#gentle-wave" x="48" y="3" fill="#b3e4e5" /> <!-- Un poco más claro -->
+                    <use xlink:href="#gentle-wave" x="48" y="5" fill="#68c0c1" /> <!-- Un poco más oscuro -->
+                    <use xlink:href="#gentle-wave" x="48" y="7" fill="#c6f0f1" /> <!-- Más claro --> 
+                </g>
+            </svg>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,202 @@
+
+.chat-button {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    z-index: 1000; 
+    // background-color: #128C7E;
+    color: white;
+    border-radius: 50%;
+}
+
+.chat-window {
+    width: 320px;
+    position: fixed;
+    bottom: 20px; 
+    right: 20px;
+    border-radius: 20px;
+    z-index: 99999;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
+}
+
+.chat-window .card-header {
+    background-color: #128C7E;
+    color: white;
+    border-radius: 20px 20px 0 0;
+}
+
+.chat-window .card-body {
+    height: 300px;
+    overflow-y: auto;
+    background-color: #ECE5DD;
+}
+
+.chat-window .card-footer {
+    background-color: #f0f0f0;
+}
+
+.chat-window .card-footer input {
+    margin-top: 0px;
+    background-color: #ECE5DD;
+    border-radius: 25px;
+    padding: 10px;
+    border: none;
+    color: black;
+}
+
+.chat-window .card-footer button {
+    background-color: #128C7E;
+    color: white;
+    border-radius: 50%;
+}
+
+.close {
+    color: white;
+    border: none;
+    background: none;
+}
+
+.chat-background {
+    background-color: #ECE5DD;
+}
+
+.msg_cotainer {
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: 10px;
+    border-radius: 7.5px;
+    background-color: #ffffff;
+    padding: 10px;
+    position: relative;
+    max-width: 80%;
+}
+
+.msg_cotainer_send {
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-right: 10px;
+    border-radius: 7.5px;
+    background-color: #DCF8C6;
+    padding: 10px;
+    position: relative;
+    max-width: 80%;
+}
+
+.msg_time, .msg_time_send {
+    position: absolute;
+    bottom: -15px;
+    color: rgba(0,0,0,0.5);
+    font-size: 10px;
+}
+
+.msg_time {
+    left: 0;
+}
+
+.msg_time_send {
+    right:0;
+}
+
+.chat-window .card-footer {
+    background-color: #f0f0f0;
+    padding: 10px 20px;
+    border-radius: 0 0 20px 20px;
+}
+
+.chat-input {
+    border-radius: 25px;
+    border: none;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    padding: 5px 15px;
+}
+
+.send-btn {
+    background: none;
+    color: #007bff;
+    border-radius: 50%;
+}
+
+@keyframes blink {
+    0% { opacity: 1; }
+    50% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+@keyframes glow {
+    0% {
+        box-shadow: 0 0 5px #FFFF00, 0 0 10px #FFFF00, 0 0 15px #FFD700, 0 0 20px #FFD700, 0 0 25px #FFD700, 0 0 30px #FFD700, 0 0 35px #FFD700;
+    }
+    40% {
+        box-shadow: 0 0 5px #FFFF00, 0 0 10px #FFFF00, 0 0 15px #FFD700, 0 0 20px #FFD700, 0 0 25px #FFD700, 0 0 30px #FFD700, 0 0 35px #FFD700;
+    }
+    80% {
+        box-shadow: none; /* Esta línea hace que el destello desaparezca en la mitad de la animación */
+    }
+    100% {
+        box-shadow: 0 0 5px #FFFF00, 0 0 10px #FFFF00, 0 0 15px #FFD700, 0 0 20px #FFD700, 0 0 25px #FFD700, 0 0 30px #FFD700, 0 0 35px #FFD700;
+    }
+}
+
+
+.btn-whatsapp {
+    background-color: #bcd325;
+    color: white;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    animation: glow 3s infinite alternate;
+}
+
+.btn-whatsapp:hover {
+    color: white;
+    background-color: #128C7E;
+}
+
+
+
+.card-body {
+    overflow-y: scroll;
+    scrollbar-width: thin;
+    scrollbar-color: #128C7E rgba(0, 0, 0, 0.1); /* Cambia el primer color para el pulgar */
+}
+
+.card-body::-webkit-scrollbar {
+    width: 8px;
+}
+
+.card-body::-webkit-scrollbar-track {
+    background: #f0f0f0; /* Cambia este color para la pista */
+}
+
+.card-body::-webkit-scrollbar-thumb {
+    background-color: #128C7E; /* Cambia este color para el pulgar */
+    border-radius: 20px;
+    border: 3px solid rgba(0, 0, 0, 0.1);
+}
+
+.circle-image {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center;
+}
+
+
+.chat-button {
+    background-image: url('/assets/icons/lucas-face.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 50px; // O el tamaño que prefieras
+    height: 50px; // O el tamaño que prefieras
+    border-radius: 50%; // Para que sea circular
+    border: none;
+    outline: none;
+    animation: glow 3s infinite alternate;
+} 

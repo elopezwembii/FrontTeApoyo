@@ -1,0 +1,7 @@
+{
+	"/api/v1/*":{
+		"target": "http://teapoyo.local",
+		"secure": false,
+		"logLevel": "debug"
+	}
+}

@@ -1,0 +1,38 @@
+
+<a
+    (click)="handleMainMenuAction()"
+    style="border-radius: 0.8rem 0rem 0rem 0.8rem; color: #fff"
+    class="nav-link w-100"
+    [ngClass]="{'navbar-link-active': isMainActive || isOneOfChildrenActive}"
+    *ngIf="canShowContent(user.rol.nombre, menuItem.role)"
+
+>
+    <i class="nav-icon {{ menuItem.iconClasses }}"></i>
+    <p>
+        {{ menuItem.name }}
+        <i
+            *ngIf="isExpandable && menuItem.children.length > 0"
+            class="right fas fa-angle-right"
+            [@rotate]="isMenuExtended"
+        ></i>
+    </p>
+</a>
+<ul
+    [class]="'nav nav-treeview '"
+    *ngFor="let item of menuItem.children; let i = index"
+    [@openClose]="isMenuExtended"
+>
+    <li
+        class="nav-item"
+        *ngIf="item.role === undefined || item.role === user.rol.nombre"
+    >
+        <a
+            [routerLink]="item.path"
+            [routerLinkActive]="'active'"
+            class="nav-link"
+        >
+            <i class="nav-icon {{ item.iconClasses }}"></i>
+            <p>{{ item.name }}</p>
+        </a>
+    </li>
+</ul>

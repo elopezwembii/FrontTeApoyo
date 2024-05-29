@@ -1,0 +1,489 @@
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 100 100"
+    preserveAspectRatio="none"
+    style="position: fixed; top: 0; right: 0; width: 50%; height: auto"
+>
+    <path fill="#17a2b8" fill-opacity="1" d="M100,0 C70,30 30,30 0,0" />
+</svg>
+
+<div class="content-header">
+    <div class="container-fluid">
+        <!-- Botón para abrir el modal -->
+        <button
+            *ngIf="rol === 'Administrador'"
+            type="button"
+            class="btn custom-primary-color mb-4"
+            (click)="resetForm()"
+            data-toggle="modal"
+            data-target="#crearBlogModal"
+        >
+            Crear Blog
+        </button>
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-main mb-4">
+                    <strong>Blog de Educación Financiera</strong>
+                </h1>
+                <p class="mb-4">
+                    En <strong class="text-main">Te Apoyo</strong> entregamos
+                    contenido actual, dinámico, simple y entretenido. <br />
+                    Construimos 7 grandes temáticas: Finanzas Personales,
+                    Presupuesto, Gastos Familiares, Endeudamiento, Créditos,
+                    Línea y Tarjeta de Crédito, Ahorro e Inversiones y Varios.
+                    <br />
+                    De esta manera puedes filtrar para consultar por algún tema
+                    específico o revisarlos todos. Cada artículo no toma más de
+                    3 minutos. Si hay alguna temática financiera que te interese
+                    que tratemos, puedes escribirnos a
+                    <a href="mailto:contacto@te-apoyo.cl"
+                        >contacto@te-apoyo.cl</a
+                    >
+                    <br />
+                    Esperamos te sea de mucha utilidad 😊. <br />
+                    <strong class="text-main"> El Equipo de Te Apoyo.</strong>
+                </p>
+            </div>
+            <div class="col-sm-6">
+                <img
+                    src="../../../assets/img/pig.png"
+                    class="img-fluid"
+                    alt="Imagen de cerdo"
+                />
+            </div>
+        </div>
+    </div>
+</div>
+<section class="content" style="margin-bottom: 15px">
+    <div class="container mt-3 mb-3">
+        <div class="row">
+            <div class="col-md-6">
+                <h3 class="m-0 text-main mb-3">
+                    <strong>Filtrar por categoría:</strong>
+                </h3>
+                <div>
+                    <a
+                        *ngFor="let categoria of categorias"
+                        [class.active]="categoriaActual === categoria"
+                        (click)="seleccionarCategoria(categoria)"
+                        class="badge badge-primary mr-2"
+                        >{{ categoria.name }}</a
+                    >
+                </div>
+            </div>
+            <div class="col-md-6">
+                <!-- <h4>Categoría Actual: {{ categoriaActual ? categoriaActual.name : 'Todas' }}</h4> -->
+                <h3 class="m-0 text-main">
+                    Categoría Actual:<br />
+                    <strong>{{
+                        categoriaActual ? categoriaActual.name : 'Todas'
+                    }}</strong>
+                </h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Aqui codigo de carucel -->
+        <div class="col-md-12">
+            <div
+                id="myCarousel"
+                class="carousel slide"
+                data-ride="carousel"
+                style="height: 490px"
+            >
+                <!-- Indicadores -->
+                <ol class="carousel-indicators">
+                    <li
+                        *ngFor="let index of indicatorIndexes"
+                        data-target="#myCarousel"
+                        [attr.data-slide-to]="index"
+                        [class.active]="index === 0"
+                    ></li>
+                </ol>
+                <!-- Slides del carrusel -->
+                <div class="carousel-inner">
+                    <div
+                        *ngFor="let cardGroup of cardGroups; let i = index"
+                        [class.active]="i === 0"
+                        class="carousel-item"
+                    >
+                        <div class="row">
+                            <div
+                                *ngFor="let card of cardGroup"
+                                class="col-md-4"
+                            >
+                                <!-- Utiliza un contenedor para establecer una altura uniforme para las tarjetas -->
+                                <div class="card-container">
+                                    <div
+                                        class="card mb-3"
+                                        style="overflow: hidden"
+                                    >
+                                        <!-- Contenedor relativo para la imagen y la pestaña de categoría -->
+                                        <div style="position: relative">
+                                            <!-- Establecer una altura máxima para la imagen -->
+                                            <img
+                                                [src]="card.imageUrl"
+                                                class="card-img-top"
+                                                alt="Imagen"
+                                                style="
+                                                    width: 100%;
+                                                    max-height: 200px;
+                                                "
+                                            />
+                                            <!-- Pestaña de categoría -->
+                                            <div class="category-tab">
+                                                {{ card.categoria.name }}
+                                            </div>
+
+                                            <!-- Botón de edición en la esquina superior derecha -->
+                                            <div
+                                                style="
+                                                    position: absolute;
+                                                    top: 10px;
+                                                    right: 10px;
+                                                "
+                                            >
+                                                <button
+                                                    *ngIf="
+                                                        rol === 'Administrador'
+                                                    "
+                                                    class="btn btn-link rounded-circle p-2"
+                                                    data-toggle="modal"
+                                                    data-target="#crearBlogModal"
+                                                    (click)="editarCard(card)"
+                                                    style="
+                                                        color: #17a2b8;
+                                                        font-size: 20px;
+                                                    "
+                                                >
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                        <div class="card-body">
+                                            <!-- Agregar la fecha arriba del título -->
+                                            <small class="text-muted">{{
+                                                card.created_at
+                                                    | date: 'MMMM dd, yyyy'
+                                            }}</small>
+                                            <h5 class="text-main">
+                                                <strong>{{
+                                                    card.title
+                                                }}</strong>
+                                            </h5>
+                                            <p class="card-text text-justify">
+                                                {{ card.content }}
+                                            </p>
+                                            <!-- Agregar el botón "Leer más" con estilos de tu aplicación -->
+                                            <button
+                                                class="btn btn-normal"
+                                                (click)="verDetalle(card.id)"
+                                            >
+                                                Leer más
+                                                <i
+                                                    class="fas fa-arrow-right"
+                                                ></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Controles del carrusel -->
+                <a
+                    class="carousel-control-prev"
+                    href="#myCarousel"
+                    role="button"
+                    data-slide="prev"
+                >
+                    <span
+                        class="carousel-control-prev-icon"
+                        aria-hidden="true"
+                    ></span>
+                    <span class="sr-only">Anterior</span>
+                </a>
+                <a
+                    class="carousel-control-next"
+                    href="#myCarousel"
+                    role="button"
+                    data-slide="next"
+                >
+                    <span
+                        class="carousel-control-next-icon"
+                        aria-hidden="true"
+                    ></span>
+                    <span class="sr-only">Siguiente</span>
+                </a>
+            </div>
+        </div>
+    </div>
+    <!-- Termina codigo caucel -->
+    <div class="row">
+        <div class="col-12">
+            <form [formGroup]="formulario" (ngSubmit)="buscar()" class="w-100">
+                <div class="input-group mb-3">
+                    <input
+                        formControlName="termino"
+                        class="form-control"
+                        type="text"
+                        placeholder="Ingrese término de búsqueda..."
+                    />
+                    <div class="input-group-append">
+                        <button class="btn custom-primary-color" type="submit">
+                            <span
+                                *ngIf="loading"
+                                class="spinner-border spinner-border-sm"
+                                role="status"
+                                aria-hidden="true"
+                            ></span>
+                            <span *ngIf="!loading">Buscar</span>
+                        </button>
+                        <button
+                            class="btn custom-secondary-color"
+                            type="button"
+                            (click)="limpiar()"
+                        >
+                            Limpiar
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="col-lg-12">
+            <div class="row">
+                <div class="col-lg-6" *ngFor="let card of loadedCards">
+                    <div class="card mb-3" style="overflow: hidden">
+                        <div style="position: relative">
+                            <!-- Establecer una altura máxima para la imagen -->
+                            <img
+                                [src]="card.imageUrl"
+                                class="card-img-top"
+                                alt="Imagen"
+                                style="
+                                    width: 100%;
+                                    height: 200px;
+                                    object-fit: cover;
+                                "
+                            />
+                            <!-- Pestaña de categoría -->
+                            <div class="category-tab">
+                                {{ card.categoria.name }}
+                            </div>
+
+                            <div
+                                style="
+                                    position: absolute;
+                                    top: 10px;
+                                    right: 10px;
+                                "
+                            >
+                                <button
+                                    *ngIf="rol === 'Administrador'"
+                                    class="btn btn-link rounded-circle p-2"
+                                    data-toggle="modal"
+                                    data-target="#crearBlogModal"
+                                    (click)="editarCard(card)"
+                                    style="color: #17a2b8; font-size: 20px"
+                                >
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="card-body">
+                            <small class="text-muted">{{
+                                card.created_at | date: 'MMMM dd, yyyy'
+                            }}</small>
+                            <h5 class="text-main">
+                                <strong>{{ card.title }}</strong>
+                            </h5>
+                            <p class="card-text text-justify">
+                                {{ card.content }}
+                            </p>
+                            <button
+                                class="btn btn-normal"
+                                (click)="verDetalle(card.id)"
+                            >
+                                Leer más <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Paginación -->
+            <nav aria-label="Pagination">
+                <hr class="my-0" />
+                <ul class="pagination justify-content-center my-4">
+                    <li class="page-item" [class.disabled]="!prevPageUrl">
+                        <a
+                            class="page-link"
+                            (click)="goToPage(prevPageUrl)"
+                            tabindex="-1"
+                            aria-disabled="true"
+                            >Anterior</a
+                        >
+                    </li>
+                    <ng-container *ngFor="let page of generatePageNumbers()">
+                        <li
+                            class="page-item"
+                            [class.active]="page === currentPage"
+                        >
+                            <a
+                                class="page-link pagination-link"
+                                (click)="goToPage(page === '...' ? null : page)"
+                                >{{ page }}</a
+                            >
+                        </li>
+                    </ng-container>
+
+                    <li class="page-item" [class.disabled]="!nextPageUrl">
+                        <a class="page-link" (click)="goToPage(nextPageUrl)"
+                            >Siguiente</a
+                        >
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</section>
+
+<!-- Modal para crear un nuevo blog -->
+<div
+    class="modal fade"
+    id="crearBlogModal"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+>
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    {{ tituloModal }}
+                </h5>
+                <button
+                    type="button"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                >
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Formulario reactivo para crear un blog -->
+                <form [formGroup]="formulario_crear" (ngSubmit)="crearBlog()">
+                    <div class="form-group">
+                        <label for="title">Título</label>
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="title"
+                            formControlName="title"
+                        />
+                    </div>
+
+                    <!-- <div class="form-group">
+                        <label for="content">imagen</label>
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="imagen"
+                            formControlName="imageUrl"
+                        />
+                    </div> -->
+                    <input type="hidden" formControlName="imageUrl">
+
+
+                    <div class="form-group">
+                        <label for="content">imagen</label>
+                        <div class="contenedor-imagenes">
+                      
+                          <input type="file" #fileInput style="display: none;"(change)="onFileChange($event)"/>
+                      
+                          <div class="image-card" (click)="openFileInput()">
+                            <div class="image-upload-icon">
+                              <i class="fa fa-plus"></i>
+                            </div>
+                          </div>
+                            
+                          <div *ngFor="let url of listaImagenes" class="imagen-contenedor">
+                            <img [src]="url" [ngClass]="{'image-selected': url === selectedImage}" (click)="selectImage(url)" width="100" />
+                            <button type="button"  class="btn btn-danger" (click)="eliminarImage(url)">
+                              <i class="fas fa-trash"></i>
+                            </button>
+                          </div>
+                      
+                        </div>
+                      </div>
+                      
+                    <div class="form-group">
+                        <label for="content">Contenido</label>
+                        <textarea
+                            class="form-control"
+                            id="content"
+                            formControlName="content"
+                        ></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="categoria_id">Categoría</label>
+                        <select
+                            class="form-control"
+                            id="categoria_id"
+                            formControlName="categoria_id"
+                        >
+                            <option
+                                *ngFor="let categoria of categoria_modal"
+                                [value]="categoria.id"
+                            >
+                                {{ categoria.name }}
+                            </option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <!-- <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn custom-primary-color" (click)="crearBlog()">Guardar</button>
+                <button type="button" class="btn btn-danger" (click)="eliminarBlog()">Eliminar Blog</button>
+            </div>
+             -->
+
+
+            <div class="modal-footer d-flex justify-content-between">
+                <button
+                    type="button"
+                    class="btn btn-danger"
+                    (click)="eliminarBlog()"
+                >
+                    Eliminar Blog
+                </button>
+                <div>
+                    <button
+                        type="button"
+                        class="btn btn-secondary"
+                        style="margin-right: 8px"
+                        data-dismiss="modal"
+                    >
+                        Cerrar
+                    </button>
+                    <button
+                        type="button"
+                        class="btn custom-primary-color"
+                        (click)="crearBlog()"
+                    >
+                        Guardar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,86 @@
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-principal"><b> Suscriptores</b></h1>
+
+                <h1 *ngIf="rol !== 'Administrador'" class="m-0 text-principal">
+                    <b> Empresa {{ empresa_desc | titlecase }}</b>
+                </h1>
+
+            </div>
+            <!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item">
+                        <a [routerLink]="['']">Inicio</a>
+                    </li>
+                    <li class="breadcrumb-item">Suscriptores</li>
+                </ol>
+            </div>
+            <!-- /.col -->
+        </div>
+        
+        <!-- /.row -->
+    </div>
+    
+    <!-- /.container-fluid -->
+</div>
+
+<section class="content">
+    <div class="container-fluid w-100">
+        <div class="row">
+            <div class="col col-12">
+                <div class="card card-primary card-outline">
+                    <div class="card-header text-right" *ngIf="empresa || rol=='Administrador'">
+
+                        <button [disabled]="!cupoDisponible && rol!=='Administrador'" class="btn btn-info" routerLink="/planes"
+                            title="">
+                            <i class="fas fa-angle-left"></i> Planes
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <table *ngIf="suscriptores.length > 0" datatable [dtOptions]="dtOptions" class="row-border hover">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Suscriptor</th>
+                                    <th>Email</th>
+                                    <th>Plan</th>
+                                    <th>Cupón</th>
+                                    <th>Tipo</th>
+                                    <th>Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of suscriptores">
+                                    <td>{{ item.id }}</td>
+                                    <td>{{ item.nombre }} {{ item.apellido }}</td>
+                                    <td>{{ item.email }}</td>
+                                    <td>{{ item.reason }}</td>
+                                    <td>{{ item.cupon }}</td>
+                                    <td [class]="
+                                            item.tipo === 'individual'
+                                                ? 'text-success text-bold'
+                                                : 'text-info text-bold'
+                                        ">
+                                        {{ item.tipo }}
+                                    </td>
+                                    <td [class]="
+                                            item.status === 0
+                                                ? 'text-danger text-bold'
+                                                : 'text-success text-bold'
+                                        ">
+                                        {{ item.status === 0 ?'Inactivo':'Activo' }}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<ngx-loading [show]="loading"></ngx-loading>

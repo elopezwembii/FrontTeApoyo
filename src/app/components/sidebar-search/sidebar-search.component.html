@@ -1,0 +1,47 @@
+<pf-dropdown #dropdown hide-arrow [openOnButtonClick]="false">
+    <div slot="button" style="width: 100%;">
+        <div class="input-group">
+            <input
+                style="border-radius: .25rem 0rem 0rem .25rem; background-color: #fff; border: unset; color: black;"
+                class="form-control form-control-sidebar"
+                type="text"
+                placeholder="Buscar"
+                aria-label="Search"
+                [value]="searchText"
+                (input)="handleSearchTextChange($event)"
+            />
+            <!-- <div class="input-group-append">
+                <button class="btn btn-sidebar" (click)="handleIconClick()">
+                    <i
+                        [ngClass]="{
+                            fas: true,
+                            'fa-search': searchText.length === 0,
+                            'fa-times': searchText.length > 0,
+                            'fa-fw': true
+                        }"
+                    ></i>
+                </button>
+            </div> -->
+        </div>
+    </div>
+    <div class="menu" slot="menu">
+        <div *ngIf="foundMenuItems.length === 0" class="nothing-found">
+            No encontrado
+        </div>
+
+        <div *ngIf="foundMenuItems.length > 0" class="list-group">
+            <a
+                [routerLink]="menuItem.path"
+                *ngFor="let menuItem of foundMenuItems"
+                class="list-group-item"
+                (click)="handleMenuItemClick()"
+            >
+                <div
+                    class="search-title"
+                    [innerHTML]="boldString(menuItem.name, searchText)"
+                ></div>
+                <div class="search-path">{{ menuItem.name }}</div>
+            </a>
+        </div>
+    </div>
+</pf-dropdown>

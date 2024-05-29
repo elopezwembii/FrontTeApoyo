@@ -1,0 +1,17 @@
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(269deg)
+        brightness(107%) contrast(107%);
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+    color: red;
+    width: 5%;
+}
+
+.gasto-icon {
+    width: 60px; /* ajusta según tus necesidades */
+    height: 60px;
+    object-fit: contain; /* esto hace que la imagen se ajuste sin recortarla ni distorsionarla */
+}

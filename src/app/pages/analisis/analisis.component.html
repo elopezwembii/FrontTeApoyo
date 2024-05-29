@@ -1,0 +1,466 @@
+<div class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1 class="m-0 text-main"><b> Análisis Financiero</b></h1>
+      </div>
+      <!-- /.col -->
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+          <li class="breadcrumb-item">
+            <a [routerLink]="['']">Inicio</a>
+          </li>
+          <li class="breadcrumb-item">Análisis financiero</li>
+        </ol>
+      </div>
+      <!-- /.col -->
+    </div>
+    <!-- /.row -->
+  </div>
+  <!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+
+<!-- Main content -->
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12 col-sm-8">
+        <div class="card mb-3">
+             <div class="card-body">
+            <h5 class="text-main">
+              <strong>Carga financiera</strong>
+            </h5>
+
+
+            <div style="font-size: large" class="tab-content">
+              <div id="corto" class="container tab-pane active">
+                <div class="row">
+                  <div class="col-12 col-sm-6">
+                    <app-grafico-dona [data]="cargaCorto" [ingreso]="ingresos"></app-grafico-dona>
+                  </div>
+                  <div class="col-12 col-sm-6 align-self-center">
+                    <h2 [class]="
+                                              porcentajeCarga >= 0 &&
+                                              porcentajeCarga < 11
+                                                  ? 'text-center text-success'
+                                                  : porcentajeCarga >= 11 &&
+                                                    porcentajeCarga < 21
+                                                  ? 'text-center text-warning'
+                                                  : porcentajeCarga >= 21 &&
+                                                    porcentajeCarga < 31
+                                                  ? 'text-center text-danger'
+                                                  : porcentajeCarga >= 31
+                                                  ? 'text-center text-danger'
+                                                  : 'd-none'
+                                          ">
+                      {{ porcentajeCarga.toFixed(2) }} %
+                    </h2>
+                    <p *ngIf="
+                                              porcentajeCarga >= 0 &&
+                                              porcentajeCarga < 11
+                                          " style="text-align: justify" class="mx-1">
+                      Tu carga financiera de consumo o de
+                      corto plazo está en un rango
+                      <b class="text-success" style="font-size: large">BAJO</b>. Esto quiere decir que, la suma de las
+                      cuotas de créditos de consumo/automotriz
+                      y las cuotas asignadas para los cupos de
+                      líneas de crédito y tarjetas de crédito,
+                      es menor al 10% de tu ingreso total
+                      mensual.
+                    </p>
+                    <p *ngIf="
+                                              porcentajeCarga >= 11 &&
+                                              porcentajeCarga < 21
+                                          " style="text-align: justify" class="mx-1">
+                      Tu carga financiera de consumo o de
+                      corto plazo está en un rango
+                      <b class="text-warning" style="font-size: large">MEDIO</b>. Esto quiere decir que, la suma de las
+                      cuotas de créditos de consumo/automotriz
+                      y las cuotas asignadas para los cupos de
+                      líneas de crédito y tarjetas de crédito,
+                      está entre el 11% y el 20% de tu ingreso
+                      total mensual.
+                    </p>
+                    <p *ngIf="
+                                              porcentajeCarga >= 21 &&
+                                              porcentajeCarga < 31
+                                          " style="text-align: justify" class="mx-1">
+                      Tu carga financiera de consumo o de
+                      corto plazo está en un rango
+                      <b class="text-danger" style="font-size: large">ALTO</b>. Esto quiere decir que, la suma de las
+                      cuotas de créditos de consumo/automotriz
+                      y las cuotas asignadas para los cupos de
+                      líneas de crédito y tarjetas de crédito,
+                      está entre el 21% y el 30% de tu ingreso
+                      total mensual. El tope de carga
+                      financiera mensual para el corto plazo
+                      es de un 30%.
+                    </p>
+                    <p *ngIf="porcentajeCarga > 31" style="text-align: justify" class="mx-1">
+                      Tu carga financiera de consumo o de
+                      corto plazo está en un rango
+                      <b class="text-danger" style="font-size: large">MUY ALTO</b>. Esto quiere decir, que la suma de las
+                      cuotas de créditos de consumo/automotriz
+                      y las cuotas asignadas para los cupos de
+                      líneas de crédito y tarjetas de crédito,
+                      está por sobre el límite del 30% de tu
+                      ingresos mensual, lo que te deja sin
+                      capacidad crediticia y poco margen de
+                      acción en caso de alguna emergencia.
+                    </p>
+                    <a href="javascript:void(0)" (click)="openModal(1,1, porcentajeCarga)" class="nav-link">Nuestras
+                      recomendaciones <img src="assets/img/recomendaciones.svg" alt=""></a>
+                  </div>
+                </div>
+              </div>
+              <div id="largo" class="container tab-pane">
+                <div class="row">
+                  <div class="col-12 col-sm-6">
+                    <app-grafico-dona [data]="cargaLargo" [ingreso]="ingresos"></app-grafico-dona>
+                  </div>
+                  <div class="col-12 col-sm-6 align-self-center">
+                    <h2 [class]="
+                                              porcentajeCargaLarga >= 0 &&
+                                              porcentajeCargaLarga < 11
+                                                  ? 'text-center text-success'
+                                                  : porcentajeCargaLarga >= 11 &&
+                                                    porcentajeCargaLarga < 21
+                                                  ? 'text-center text-warning'
+                                                  : porcentajeCargaLarga >= 21 &&
+                                                    porcentajeCargaLarga < 31
+                                                  ? 'text-center text-danger'
+                                                  : porcentajeCargaLarga >= 31
+                                                  ? 'text-center text-danger'
+                                                  : 'd-none'
+                                          ">
+                      {{ porcentajeCargaLarga.toFixed(2) }} %
+                    </h2>
+                    <p *ngIf="
+                                              porcentajeCargaLarga >= 0 &&
+                                              porcentajeCargaLarga < 13
+                                          " style="text-align: justify" class="mx-1">
+                      Tu carga financiera hipotecaria o de
+                      largo plazo está en un rango
+                      <b class="text-success">BAJO</b>. Esto
+                      quiere decir que, la suma de los
+                      dividendos, es menor al 12% de tu
+                      ingreso total mensual. Es lo óptimo si
+                      estás pensando comprar una propiedad.
+                    </p>
+                    <p *ngIf="
+                                              porcentajeCargaLarga >= 13 &&
+                                              porcentajeCargaLarga < 21
+                                          " style="text-align: justify" class="mx-1">
+                      Tu carga financiera hipotecaria o de
+                      largo plazo está en un rango
+                      <b class="text-warning">MEDIO</b>. Esto
+                      quiere decir que, la suma de los
+                      dividendos, está entre un 11% y 20% de
+                      tu ingreso total mensual. Lo anterior
+                      implica que, si quieres pedir un nuevo
+                      crédito hipotecario, debes revisar la
+                      carga futura (dividendo futuro) que
+                      tendrás, para no excederte y que tu
+                      solicitud sea rechazada.
+                    </p>
+                    <p *ngIf="
+                                              porcentajeCargaLarga >= 21 &&
+                                              porcentajeCargaLarga < 31
+                                          " style="text-align: justify" class="mx-1">
+                      Tu carga financiera hipotecaria o de
+                      largo plazo está en un rango
+                      <b class="text-danger">ALTO</b>. Esto
+                      quiere decir que, la suma de los
+                      dividendos, está entre un 21% y un 30%
+                      de tu ingreso total mensual. El tope de
+                      carga de largo plazo está entre un 25% y
+                      un 30% del ingreso total mensual.
+                    </p>
+                    <p *ngIf="porcentajeCargaLarga > 31" style="text-align: justify" class="mx-1">
+                      Tu carga financiera hipotecaria o de
+                      largo plazo está en un rago
+                      <b class="text-danger">MUY ALTO</b>.
+                      Esto quiere decir que, la suma de los
+                      dividendos, está sobre el límite
+                      permitido para la deuda hipotecaria, que
+                      es entre un 25% y un 30% de tu ingreso
+                      total mensual.
+                    </p>
+                    <a href="javascript:void(0)" (click)="openModal(1,2,porcentajeCargaLarga)" class="nav-link">Nuestras
+                      recomendaciones <img src="assets/img/recomendaciones.svg" alt=""></a>
+                  </div>
+                </div>
+              </div>
+              <div id="total" class="container tab-pane">
+                <div class="row">
+                  <div class="col-12 col-sm-6">
+                    <app-grafico-dona [data]="cargaTotal" [ingreso]="ingresos"></app-grafico-dona>
+                  </div>
+                  <div class="col-12 col-sm-6 align-self-center">
+                    <h2 [class]="
+                                              porcentajeTotal >= 0 &&
+                                              porcentajeTotal < 26
+                                                  ? 'text-center text-success'
+                                                  : porcentajeTotal >= 26 &&
+                                                    porcentajeTotal < 41
+                                                  ? 'text-center text-warning'
+                                                  : porcentajeTotal >= 41 &&
+                                                    porcentajeTotal < 56
+                                                  ? 'text-center text-danger'
+                                                  : porcentajeTotal >= 56
+                                                  ? 'text-center text-danger'
+                                                  : 'd-none'
+                                          ">
+                      {{ porcentajeTotal.toFixed(2) }} %
+                    </h2>
+                    <p *ngIf="
+                                              porcentajeTotal >= 0 &&
+                                              porcentajeTotal < 26
+                                          " style="text-align: justify" class="mx-1">
+                      Tu carga financiera total está en un
+                      rango <b class="text-success">BAJO</b>.
+                      Esto es, que el porcentaje de tu ingreso
+                      total mensual destinado a pagar cuotas
+                      y/o dividendos, es menor al 25%.
+                    </p>
+                    <p *ngIf="
+                                              porcentajeTotal >= 26 &&
+                                              porcentajeTotal < 41
+                                          " style="text-align: justify" class="mx-1">
+                      Tu carga financiera total está en un
+                      rango <b class="text-warning">MEDIO</b>.
+                      Esto es, que el porcentaje de tu ingreso
+                      total mensual destinado a pagar cuotas
+                      y/o dividendos está entre un 26% y un
+                      40%. Tienes espacio para ahorrar o para
+                      tomar un nuevo crédito, si es lo que
+                      necesitas.
+                    </p>
+                    <p *ngIf="
+                                              porcentajeTotal >= 41 &&
+                                              porcentajeTotal < 56
+                                          " style="text-align: justify" class="mx-1">
+                      Tu carga financiera total está en un
+                      rango <b class="text-danger">ALTO</b>.
+                      Esto es, que el porcentaje de tu ingreso
+                      total mensual destinado a pagar cuotas
+                      y/o dividendos, está entre un 41% y 55%.
+                      El tope de carga total se sitúa entre el
+                      50% y el 60% del ingreso total mensual.
+                    </p>
+                    <p *ngIf="porcentajeTotal >= 56" style="text-align: justify" class="mx-1">
+                      Tu carga financiera total está en un
+                      rango
+                      <b class="text-danger">MUY ALTO</b>.
+                      Esto es, que el porcentaje de tu ingreso
+                      total mensual destinado a pagar cuotas
+                      y/o dividendos, está sobre el 56%. El
+                      tope normalmente está entre el 50% y el
+                      60% del ingreso total mensual. Esta
+                      situación te deja sin posibilidad de
+                      maniobrar en caso de alguna emergencia.
+                    </p>
+                    <a href="javascript:void(0)" (click)="openModal(1,3,porcentajeTotal)" class="nav-link">Nuestras
+                      recomendaciones <img src="assets/img/recomendaciones.svg" alt=""></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <ul class="nav nav-pills card-body p-0" role="tablist">
+              <li class="nav-item">
+                <a class="nav-link active" data-toggle="pill" href="#corto">Corto plazo</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" data-toggle="pill" href="#largo">Largo plazo</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" data-toggle="pill" href="#total">Total</a>
+              </li>
+            </ul>
+
+
+          </div>
+        </div>
+
+
+
+
+
+        
+      </div>
+      <div class="col-12 col-sm-4">
+        <div class="card mb-3">
+          <div class="card-body">
+            <h5 class="text-main">
+              <strong>Apalancamiento</strong>
+              <div style="font-size: large" class="tab-content">
+                <div id="corto2" class="container tab-pane active">
+                  <div class="card-body">
+                    <div class="text-center">
+                      <img width="100" src="assets/img/apalancamiento.svg" alt="" />
+                      <p *ngIf="
+                                                vecesRentaCorto >= 0 &&
+                                                vecesRentaCorto < 4
+                                            " class="mt-2">
+                        Tienes un "apalancamiento o veces renta
+                        de consumo" en rango
+                        <b class="text-success">BAJO</b>. Esto
+                        es, que tu deuda de corto plazo
+                        (consumo) representa menos de 4 veces tu
+                        ingreso total mensual.
+                      </p>
+                      <p *ngIf="
+                                                vecesRentaCorto >= 5 &&
+                                                vecesRentaCorto < 9
+                                            " class="mt-2">
+                        Tienes un "apalancamiento o veces renta
+                        de consumo" en rango
+                        <b class="text-warning">MEDIO</b>. Esto
+                        es, que tu deuda de corto plazo
+                        (consumo) representa entre 5 y 8 veces
+                        tu ingreso total mensual.
+                      </p>
+                      <p *ngIf="
+                                                vecesRentaCorto >= 9 &&
+                                                vecesRentaCorto < 13
+                                            " class="mt-2">
+                        Tienes un "apalancamiento o veces renta
+                        de consumo" en rango
+                        <b class="text-danger">ALTO</b>. Esto
+                        es, que tu deuda de corto plazo
+                        (consumo) representa entre 9 y 12 veces
+                        tu ingreso total mensual. Normalmente el
+                        tope de apalancamiento es de 12 veces tu
+                        ingreso total mensual.
+                      </p>
+                      <p *ngIf="vecesRentaCorto > 13" class="mt-2">
+                        Tienes un "apalancamiento o veces renta
+                        de consumo" en rango
+                        <b class="text-danger">MUY ALTO</b>.
+                        Esto es, que tu deuda de corto plazo
+                        (consumo) representa más de 13 veces tu
+                        ingreso total mensual. El tope
+                        normalmente es de 12 veces tu ingreso
+                        total mensual.
+                      </p>
+                      <a href="javascript:void(0)" (click)="openModal(2,1,vecesRentaCorto)" class="nav-link">Nuestras
+                        recomendaciones <img src="assets/img/recomendaciones.svg" alt=""></a>
+                    </div>
+                  </div>
+                </div>
+                <div id="largo2" class="container tab-pane">
+                  <div class="card-body">
+                    <div class="text-center">
+                      <img width="100" src="assets/img/apalancamiento.svg" alt="" />
+                      <p *ngIf="
+                                                vecesRentaLargo >= 0 &&
+                                                vecesRentaLargo < 21
+                                            " class="mt-2">
+                        Tienes un "apalancamiento o veces renta
+                        de largo plazo" en rango
+                        <b class="text-success">BAJO</b>. Esto
+                        es, que tu deuda hipotecaria representa
+                        menos de 20 veces tu ingreso total
+                        mensual. El tope de este indicador
+                        normalmente está en 50 veces tu ingreso
+                        total mensual.
+                      </p>
+                      <p *ngIf="
+                                                vecesRentaLargo >= 21 &&
+                                                vecesRentaLargo < 36
+                                            " class="mt-2">
+                        Tienes un "apalancamiento o veces renta
+                        de largo plazo" en rango
+                        <b class="text-warning">MEDIO</b>. Esto
+                        es, que tu deuda hipotecaria representa
+                        entre 21 y 35 veces tu ingreso total
+                        mensual. El tope de este indicador
+                        normalmente está en 50 veces tu ingreso
+                        total mensual.
+                      </p>
+                      <p *ngIf="
+                                                vecesRentaLargo >= 36 &&
+                                                vecesRentaLargo < 51
+                                            " class="mt-2">
+                        Tienes un "apalancamiento o veces renta
+                        de largo plazo" en rango
+                        <b class="text-danger">ALTO</b>. Esto
+                        es, que tu deuda hipotecaria representa
+                        entre 36 y 50 veces tu ingreso total
+                        mensual. El tope de este indicador
+                        normalmente está en 50 veces tu ingreso
+                        total mensual.
+                      </p>
+                      <p *ngIf="vecesRentaLargo >= 51" class="mt-2">
+                        Tienes un "apalancamiento o veces renta
+                        de largo plazo" en rango
+                        <b class="text-danger">MUY ALTO</b>.
+                        Esto es, que tu deuda hipotecaria
+                        representa más de 50 veces tu ingreso
+                        total mensual.
+                      </p>
+                      <a href="javascript:void(0)" (click)="openModal(2,2, vecesRentaLargo)" class="nav-link">Nuestras
+                        recomendaciones <img src="assets/img/recomendaciones.svg" alt=""></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <ul class="nav nav-pills card-body p-0" role="tablist">
+                <li class="nav-item w-50">
+                  <a class="nav-link active w-100" data-toggle="pill" href="#corto2">Corto plazo</a>
+                </li>
+                <li class="nav-item w-50">
+                  <a class="nav-link" data-toggle="pill" href="#largo2">Largo plazo</a>
+                </li>
+              </ul>
+            </h5>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 col-sm-8 mb-3">
+        <h5 class="text-main">
+          <strong>Mis Bienes</strong>
+        </h5>
+        <app-crud-bien></app-crud-bien>
+      </div>
+      <div class="col-12 col-sm-4">
+        <div class="card mb-3">
+                <div class="card-body text-center">
+            <h5 class="text-main">
+              <strong>Relación Patrimonial</strong>
+            </h5>
+            <div class="text-center">
+              <img width="100"
+                [src]="relacionPat > 0 ? 'assets/img/relacionPositiva.svg':'assets/img/relacionNegativ.svg'" alt="" />
+            </div>
+            <div style="font-size: large">
+              <p *ngIf="relacionPat > 0">
+                Tienes una relación patrimonial
+                <b class="text-success">positiva</b>. Es decir,
+                tus activos suman más que tus deudas, lo que
+                favorece tu posición financiera.
+              </p>
+              <p *ngIf="relacionPat < 0">
+                Tu relacion patrimonial es negativa, es decir, debes más de lo que tienes. En general esta relación se
+                da cuando tienes mucha deuda de corto plazo (créditos de consumo/automotrices, líneas y tarjetas).
+              </p>
+              <p *ngIf="relacionPat === 0">
+                Tu relación patrimonial es igual a cero, es decir, lo que tienes, lo debes.
+              </p>
+              <a class="text-center" href="javascript:void(0)" (click)="openModal(3,1,relacionPat)" class="nav-link">Nuestras
+                recomendaciones <img src="assets/img/recomendaciones.svg" alt=""></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<app-modal-analisis #modalAnalisis></app-modal-analisis>
+<ngx-loading [show]="loading"></ngx-loading>

@@ -1,0 +1,158 @@
+<div class="row flex-grow-1">
+    <div
+        class="col-12 d-flex flex-column justify-content-center"
+    >
+        <p>
+            En {{ arrayMonth[actualMonth] }} tus
+            mayores gastos Hormigas fueron:
+        </p>
+        <div class="row">
+            <div class="col-12">
+                <div
+                    class="carousel slide"
+                    data-ride="carousel"
+                    id="gh-carousel"
+                >
+                    <div class="carousel-inner">
+                        <div
+                            class="carousel-item active"
+                        >
+                            <div class="row">
+                                <div
+                                    *ngFor="
+                                        let gh of gastosHormigas.slice(
+                                            0,
+                                            4
+                                        )
+                                    "
+                                    class="col-3 d-flex flex-column justify-content-center"
+                                >
+                                    <div
+                                        class="gasto-icon-container text-center"
+                                    >
+                                        <img
+                                            class="img-fluid gasto-icon mb-3 w-auto"
+                                            [src]="
+                                                gh.img
+                                            "
+                                        />
+                                        <p
+                                            class="mb-0"
+                                        >
+                                            $
+                                            {{
+                                                gh.monto
+                                                    | currency
+                                                        : 'CLP'
+                                                        : ''
+                                            }}
+                                        </p>
+                                        <p
+                                            class="mb-0"
+                                        >
+                                            {{
+                                                loading
+                                                    ? null
+                                                    : gh
+                                                          .get_sub_tipo
+                                                          .nombre
+                                            }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div
+                            class="carousel-item"
+                            *ngIf="
+                                gastosHormigas.length >
+                                4
+                            "
+                        >
+                            <div class="row">
+                                <div
+                                    *ngFor="
+                                        let gh of gastosHormigas.slice(
+                                            4,
+                                            8
+                                        )
+                                    "
+                                    class="col-3 d-flex flex-column justify-content-center"
+                                >
+                                    <div
+                                        class="gasto-icon-container text-center"
+                                    >
+                                        <img
+                                            class="img-fluid gasto-icon mb-3 w-auto"
+                                            [src]="
+                                                gh.img
+                                            "
+                                        />
+                                        <p
+                                            class="mb-0"
+                                        >
+                                            $
+                                            {{
+                                                gh.monto
+                                                    | currency
+                                                        : 'CLP'
+                                                        : ''
+                                            }}
+                                        </p>
+                                        <p
+                                            class="mb-0"
+                                        >
+                                        {{
+                                          loading
+                                              ? null
+                                              : gh
+                                                    .get_sub_tipo
+                                                    .nombre
+                                      }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <a
+                        class="carousel-control-prev"
+                        href="#gh-carousel"
+                        role="button"
+                        data-slide="prev"
+                    >
+                        <span
+                            class="carousel-control-prev-icon"
+                            aria-hidden="true"
+                        ></span>
+                        <span class="sr-only"
+                            >Previous</span
+                        >
+                    </a>
+                    <a
+                        class="carousel-control-next"
+                        href="#gh-carousel"
+                        role="button"
+                        data-slide="next"
+                    >
+                        <span
+                            class="carousel-control-next-icon"
+                            aria-hidden="true"
+                        ></span>
+                        <span class="sr-only"
+                            >Next</span
+                        >
+                    </a>
+                </div>
+            </div>
+        </div>
+        <p class="ahorro-texto mt-3">
+            Pudiste haber ahorrado
+            <strong
+                >${{
+                    sumaGH | currency: 'CLP':''
+                }}</strong
+            > mensuales que, al año, significa un ahorro de <strong>${{ (sumaGH * 12) | currency: 'CLP':'' }}</strong>
+        </p>
+    </div>
+</div>

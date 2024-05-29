@@ -1,0 +1,12 @@
+<app-header ></app-header>
+
+<app-menu-sidebar style="position: fixed; border-radius: 0px 50px 50px 0px;"  class="sidebar-dark-primary navbar-color"></app-menu-sidebar>
+
+<div class="content-wrapper">
+    <router-outlet></router-outlet>
+</div>
+
+<app-footer></app-footer>
+<div id="sidebar-overlay" (click)="onToggleMenuSidebar()"></div>
+
+<app-chat></app-chat>

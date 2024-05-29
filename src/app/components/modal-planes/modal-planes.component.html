@@ -1,0 +1,125 @@
+<div class="modal fade" id="modalPlanes" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{ titulo }}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <form [formGroup]="form" (ngSubmit)="submit()">
+                    <div class="row">
+
+                        <!-- Campo para Tipo de frecuencia -->
+                        <div class="col-md-3 mb-3">
+                            <label for="frequency" class="form-label">Frecuencia de cobro</label>
+                            <select formControlName="frequency" type="text" class="form-control" (change)="seleccionFrecuencyType($event)">
+                                <option *ngFor="let item of frequencyAll" 
+                                [value]="item.id"
+                                [attr.data-type]="item.type"
+                                [attr.data-proportional]="item.proportional"
+                                >{{ item.name }}</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-3 mb-3">
+                            <label class="form-label">Duración de la suscripción</label>
+                            <div class="form-check">
+                                <div class="form-check" style="display: inline-block; margin-right: 10px;">
+                                    <input type="radio" formControlName="radio" value="disable" (change)="onInputChange()" class="form-check-input">
+                                    <label for="state_cupon" class="form-check-label">Ilimitada</label>
+                                </div>
+                                <div class="form-check" style="display: inline-block;">
+                                    <input type="radio" formControlName="radio" value="enable" (change)="onInputChange()" class="form-check-input">
+                                    <label for="state_cupon" class="form-check-label">Limitada</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Campo para repetitions -->
+                        <div class="col-md-3 mb-3">
+                            <label for="repetitions" class="form-label">Cantidad de cobros</label>
+                            <input autocomplete="off" formControlName="repetitions" type="number" min="1" max="12" class="form-control" placeholder="Repetición de facturas" />
+                        </div>
+
+                        <div class="col-md-3 mb-3">
+                            <label for="billing_day" class="form-label">Día de facturación</label>
+                            <input autocomplete="off" formControlName="billing_day" type="number" min="1" max="28" class="form-control" placeholder="Día de facturación" />
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <!-- Campo para transaction_amount -->
+                        <div class="col-md-3 mb-3">
+                            <label for="transaction_amount" class="form-label">Precio</label>
+                            <input autocomplete="off" formControlName="transaction_amount" type="number" min="0" class="form-control" placeholder="Precio" />
+                        </div>
+
+                        <div class="col-md-3 mb-3">
+                            <label for="frequency_free" class="form-label">Días gratis</label>
+                            <input autocomplete="off" formControlName="frequency_free" type="number" min="0" class="form-control" placeholder="Días gratis" />
+                        </div>
+
+                        <!-- Campo para descripcion -->
+                        <div class="col-md-6 mb-3">
+                            <label for="reason" class="form-label">Nombre del plan</label>
+                            <input autocomplete="off" formControlName="reason" type="text" class="form-control" placeholder="Nombre del plan" />
+                        </div>
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label">Opciones de descuento</label>
+                            <div class="form-check">
+                                <div class="form-check" style="display: inline-block; margin-right: 10px;">
+                                    <input type="radio" formControlName="checkradio" value="disable" (change)="onDescuento()" class="form-check-input">
+                                    <label for="checkradio" class="form-check-label">Sin descuento</label>
+                                </div>
+                                <div class="form-check" style="display: inline-block;">
+                                    <input type="radio" formControlName="checkradio" value="enable" (change)="onDescuento()" class="form-check-input">
+                                    <label for="checkradio" class="form-check-label">Con descuento</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label for="cupon" class="form-label">Cupón</label>
+                            <input formControlName="cupon" type="text" class="form-control" placeholder="No. de cupón">
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label for="percentage" class="form-label">Porcentaje de descuento</label>
+                            <input formControlName="percentage" type="number" min="0" class="form-control" placeholder="Porcentaje de descuento">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12 mb-3">
+                            <label for="empresa_id" class="form-label">Empresas</label>
+                            <select formControlName="empresa_id" type="text" class="form-control">
+                                <option [value]="0">Sin empresa afiliada</option>
+                                <option *ngFor="let item of listaEmpresa" [value]="item.id">{{ item.nombre }}</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="alert alert-info" *ngIf="form.invalid && form.dirty && getFormErrors().length > 0">
+                        <ul>
+                            <li *ngFor="let error of getFormErrors()">{{ error }}</li>
+                        </ul>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                    </div>
+                </form>
+                
+            </div>
+        </div>
+    </div>
+</div>
