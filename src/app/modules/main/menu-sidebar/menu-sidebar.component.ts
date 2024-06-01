@@ -85,16 +85,16 @@ export const MENU = [
         //role: 'Administrativo',
     },
     {
-        name: 'Mis Ahorros',
-        iconClasses: 'fas fa-piggy-bank',
-        path: ['/ahorros'],
+        name: 'Análisis Financiero',
+        iconClasses: 'fas fa-chart-line',
+        path: ['/analisis'],
         role: ['Usuario', 'Administrador','Administrativo Empresa']
         //role: 'Administrativo',
     },
     {
-        name: 'Análisis Financiero',
-        iconClasses: 'fas fa-chart-line',
-        path: ['/analisis'],
+        name: 'Mis Ahorros',
+        iconClasses: 'fas fa-piggy-bank',
+        path: ['/ahorros'],
         role: ['Usuario', 'Administrador','Administrativo Empresa']
         //role: 'Administrativo',
     },

@@ -785,7 +785,7 @@ export class DashboardComponent implements OnInit {
                 gastos: Gasto[];
                 sumaTotalReal: number;
             }) => {
-
+    
                 console.log('GASTOS', gastos)
                 //aux no repetido
                 let gastosNoRepetido;
@@ -814,14 +814,14 @@ export class DashboardComponent implements OnInit {
                                     monto: elemento.monto + valorActual.monto
                                 };
                             }
-
+    
                             return elemento;
                         });
                     }
-
+    
                     return [...acumulador, valorActual];
                 }, []);
-
+    
                 //reducir los repetidos no limitados
                 let gastosNoRepetido2 = totalGastos.reduce(
                     (acumulador, valorActual) => {
@@ -841,22 +841,22 @@ export class DashboardComponent implements OnInit {
                                             elemento.monto + valorActual.monto
                                     };
                                 }
-
+    
                                 return elemento;
                             });
                         }
-
+    
                         return [...acumulador, valorActual];
                     },
                     []
                 );
-
+    
                 if(gastosNoRepetido.length > 5){
                     gastosNoRepetido.length = 5
                 }
-
+    
                 if(gastosNoRepetido2.length > 5){
-                    gastosNoRepetido2 = 5
+                    gastosNoRepetido2 = gastosNoRepetido2.slice(0, 5); // Corrección aquí
                 }
                 this.gastosGraficoBarra = gastosNoRepetido.map((gasto) => {
                     return {
@@ -878,6 +878,7 @@ export class DashboardComponent implements OnInit {
         });
         this.loading = false;
     }
+    
 
     obtenerUsuario() {
         this.usuario = JSON.parse(sessionStorage.getItem('user'));
