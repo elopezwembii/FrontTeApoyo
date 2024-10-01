@@ -43,7 +43,6 @@
     "datatables.net": "^1.11.3",
     "datatables.net-dt": "^1.11.3",
     "echarts": "^5.4.2",
-    "gatekeeper-client-sdk": "0.4.2",
     "jquery": "^3.6.0",
     "luxon": "3.0.3",
     "ngx-echarts": "^15.0.3",

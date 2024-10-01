@@ -14,3 +14,26 @@
         background-color: transparent;
     }
 }
+
+.subscription {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 25px;
+}
+
+.subscription button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 10px; /* Ajusta el tamaño del botón */
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    color: #bee0e4;
+}
+
+.subscription p {
+    margin: 0; /* Elimina el margen del párrafo */
+    
+}

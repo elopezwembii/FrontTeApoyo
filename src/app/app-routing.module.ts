@@ -29,6 +29,7 @@ import { PlanesComponent } from '@pages/planes/planes.component';
 import { SuscriptoresComponent } from '@pages/suscriptores/suscriptores.component';
 
 import { TestsComponent } from '@modules/tests/tests.component';
+import { SubscripcionesComponent } from '@pages/subscripciones/subscripciones.component';
 
 const routes: Routes = [
     {
@@ -104,6 +105,10 @@ const routes: Routes = [
             {
                 path: 'planes',
                 component: PlanesComponent
+            },
+            {
+                path: 'subscripciones',
+                component: SubscripcionesComponent
             },
             {
                 path: 'suscriptores',

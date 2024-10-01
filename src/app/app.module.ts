@@ -73,6 +73,7 @@ import { ModalPlanesComponent } from './components/modal-planes/modal-planes.com
 import { SuscriptoresComponent } from './pages/suscriptores/suscriptores.component';
 import { TestsComponent } from './modules/tests/tests.component';
 import { ModalUserTestComponent } from './components/modal-user-test/modal-user-test.component';
+import { SubscripcionesComponent } from '@pages/subscripciones/subscripciones.component';
 
 
 defineCustomElements();
@@ -133,6 +134,7 @@ registerLocaleData(localeEs);
         ModalAddcuponComponent,
         PlanesComponent,
         ModalPlanesComponent,
+        SubscripcionesComponent,
         SuscriptoresComponent,
         TestsComponent,
         ModalUserTestComponent
