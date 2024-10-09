@@ -176,6 +176,14 @@
   margin: 0 auto;
 }
 
+.subscription-class {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  gap: 1rem;
+}
+
 .pricing1 .badge-inverse {
   background-color: #3e4555;
 }
