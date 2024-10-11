@@ -4,10 +4,13 @@
 
 export const environment = {
     production: true,
-    //uri_api: 'http://13.90.92.134:8000/api/v1/'
-    uri_api: 'https://www.plataformadeautogestionfinanciera.cl/api/public/api/v1/',
-    url_api_chatbot:'https://api-chatbot-ta.azurewebsites.net/api/chatbot'
+    uri_api: 'http://127.0.0.1:8000/api/v1/',
+    // uri_api: 'https://www.plataformadeautogestionfinanciera.cl/api/public/api/v1/',
+    // url_api_chatbot:'https://api-chatbot-ta.azurewebsites.net/api/chatbot'
+    uri_api_v2: 'http://localhost:5040/v1',
     //uri_api: 'https://www.plataformadeautogestionfinanciera.cl/api/public/api/v1/'
+    api_key: 'TAPY-d2ede386-9c7e-43c4-82d6-2162699f19de'
+
 };
 
 /*

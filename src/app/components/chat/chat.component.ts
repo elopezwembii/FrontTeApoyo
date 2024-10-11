@@ -49,21 +49,30 @@ export class ChatComponent {
 
     sendMessage() {
         const pregunta = this.chatForm.value.message.trim();
-
+    
         if (pregunta !== '') {
+            // Crea el objeto con la estructura que necesitas enviar
+            const messageObject = {
+                question: pregunta,
+                userId: JSON.parse(sessionStorage.getItem('user')).user.id,  // Aquí puedes modificarlo según sea necesario
+                year: new Date().getFullYear(),  // Establece el año actual
+                month: new Date().getMonth() + 1  // Establece el mes actual (meses empiezan en 0)
+            };
+    
             this.messages.push({
                 text: this.chatForm.value.message,
                 time: this.getCurrentTime(),
                 sender: 'me'
             });
-
+    
             this.scrollToBottom();
             this.chatForm.reset();
-
+    
             this.botIsWriting = true;
-
-            this.chatbotService.obtenerRespuesta(pregunta).subscribe({
-                next: ({author, fecha, response}: any) => {
+    
+            // Envía el objeto completo al servicio
+            this.chatbotService.obtenerRespuesta(messageObject).subscribe({
+                next: ({ author, fecha, response }: any) => {
                     this.messages.push({
                         text: response,
                         time: this.formatToTime(fecha),

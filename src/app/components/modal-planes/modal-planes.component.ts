@@ -142,7 +142,6 @@ export class ModalPlanesComponent {
   }
 
   submit() {
-
     const formValue = this.form.value;
     formValue.frequency = Number(formValue.frequency);
 

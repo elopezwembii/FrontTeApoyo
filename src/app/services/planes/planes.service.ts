@@ -4,6 +4,7 @@ import {environment} from 'environments/environment';
 import {Observable, catchError, map, of, throwError} from 'rxjs';
 import { Planes } from '@/interfaces/planes';
 
+const apiKey = `${environment.api_key}`;
 @Injectable({
   providedIn: 'root'
 })
@@ -14,18 +15,18 @@ export class PlanesService {
   constructor(private _http: HttpClient) {}
 
   public getAlls(): Observable<any> {
-    return this._http.get<Planes>(`${environment.uri_api}planes`, { headers: {
-      Authorization: 'Bearer ' + JSON.parse(sessionStorage.getItem('user')).access_token
+    return this._http.get<Planes>(`${environment.uri_api_v2}/subscriptions`, { headers: {
+      Authorization: 'Bearer ' + apiKey
     }, responseType: 'json' });
   }
 
   async agregarPlan(model: any) {
  
     let headers = {
-      Authorization: 'Bearer ' + JSON.parse(sessionStorage.getItem('user')).access_token
+      Authorization: 'Bearer ' + apiKey
     }
 
-    return this._http.post<any[]>(`${environment.uri_api}crearPlanes`, model, { headers: headers, observe: 'response' })
+    return this._http.post<any[]>(`${environment.uri_api_v2}/subscriptions`, model, { headers: headers, observe: 'response' })
       .pipe(
         map((resp: any) => {
           return resp;
@@ -39,9 +40,9 @@ export class PlanesService {
   async actualizarPlan(model: Planes) {
 
     let headers = {
-      Authorization: 'Bearer ' + JSON.parse(sessionStorage.getItem('user')).access_token
+      Authorization: 'Bearer ' + apiKey
     }
-    return this._http.post<any[]>(`${environment.uri_api}updateplan`, model, { headers: headers, observe: 'response' })
+    return this._http.post<any[]>(`${environment.uri_api_v2}updateplan`, model, { headers: headers, observe: 'response' })
       .pipe(
         map((resp: any) => {
           return resp;
@@ -55,9 +56,9 @@ export class PlanesService {
   public sincronizar(): Observable<any> {
     let go = "plan";
     let headers = {
-      Authorization: 'Bearer ' + JSON.parse(sessionStorage.getItem('user')).access_token
+      Authorization: 'Bearer ' + apiKey
     }
-    return this._http.get<any[]>(`${environment.uri_api}sincronizar/${go}`, { headers: headers, observe: 'response' })
+    return this._http.get<any[]>(`${environment.uri_api_v2}sincronizar/${go}`, { headers: headers, observe: 'response' })
       .pipe(
         map((resp: any) => {
           return resp;
@@ -68,11 +69,11 @@ export class PlanesService {
       );
   }
 
-  public eliminar(model:any): Observable<any> {
+  public eliminar(id:string): Observable<any> {
     let headers = {
-      Authorization: 'Bearer ' + JSON.parse(sessionStorage.getItem('user')).access_token
+      Authorization: 'Bearer ' + apiKey
     }
-    return this._http.post<any[]>(`${environment.uri_api}eliminar_plan`, model, { headers: headers, observe: 'response' })
+    return this._http.delete<any[]>(`${environment.uri_api_v2}/subscriptions/subscription?subscriptionId=${id}`, { headers: headers, observe: 'response' })
       .pipe(
         map((resp: any) => {
           return resp;
@@ -85,9 +86,9 @@ export class PlanesService {
 
   public promoFront(id:any, promo:any): Observable<any> {
     let headers = {
-      Authorization: 'Bearer ' + JSON.parse(sessionStorage.getItem('user')).access_token
+      Authorization: 'Bearer ' + apiKey
     }
-    return this._http.post<any[]>(`${environment.uri_api}promo_front`, {id:id, promo:promo}, { headers: headers, observe: 'response' })
+    return this._http.post<any[]>(`${environment.uri_api_v2}promo_front`, {id:id, promo:promo}, { headers: headers, observe: 'response' })
       .pipe(
         map((resp: any) => {
           return resp;

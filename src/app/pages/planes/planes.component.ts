@@ -88,7 +88,7 @@ export class PlanesComponent {
 
   borrar(plan:any) {
     this.loading = true;
-    this.planesServices.eliminar(plan).subscribe(resp => {
+    this.planesServices.eliminar(plan.id).subscribe(resp => {
       this.loading = false;
       this.getPlan();
     });     
