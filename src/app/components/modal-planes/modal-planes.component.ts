@@ -25,13 +25,11 @@ export class ModalPlanesComponent {
     promo: any = {};
     uid: any = {};
     frequencyAll:any = [
-      {id:7, type:"days", proportional:true, name:"Semanal"},
       {id:1, type:"months", proportional:true, name:"Mensual"},
-      {id:12, type:"months", proportional:false, name:"Anual"},
-      {id:15, type:"days", proportional:true, name:"Quincenal"},
-      {id:2, type:"months", proportional:true, name:"Bimestral"},
-      {id:3, type:"months", proportional:true, name:"Trimestral"},
-      {id:4, type:"months", proportional:true, name:"Cuatrimestral"}
+    ];
+    frequencyFree:any = [
+      {id:7, type:"days", proportional:true, name:"Diaria"},
+      {id:1, type:"months", proportional:true, name:"Mensual"},
     ];
     currencyId:any = "CLP";
   
@@ -44,9 +42,6 @@ export class ModalPlanesComponent {
   ) {}
 
   ngOnInit(): void {
-
-    this.onInputChange();
-    this.onDescuento();
     this.obtenerEmpresas();
 
     this.myModal = new bootstrap.Modal(
@@ -54,10 +49,7 @@ export class ModalPlanesComponent {
       {}
     );
   }
-
-  ngAfterViewInit(){
-
-  }
+  
 
   async obtenerEmpresas() {
     const {
@@ -84,52 +76,62 @@ export class ModalPlanesComponent {
     });
 }
 
-  form: FormGroup = this.fb.group({
-      frequency: [, [Validators.required]],//frecuencia de facturacion 1
-      frequency_type: [, [Validators.required]],
-      repetitions: [, [Validators.required]],
-      billing_day: [, [Validators.required]],
-      billing_day_proportional: [, [Validators.required]],
-      frequency_free: [, [Validators.required]],//frecuendia para periodos de prueba
-      frequency_type_free: [, [Validators.required]],
-      transaction_amount: [, [Validators.required]],
-      cupon: [],
-      percentage:[],
-      state_cupon: [],
-      radio: ['disable'],
-      checkradio: ['disable'],
-      currency_id: [this.currencyId],
-      reason: [, [Validators.required]],
-      empresa_id: [, [Validators.required]]
-  });
+form: FormGroup = this.fb.group({
+  reason: [, [Validators.required]],
+  auto_recurring: this.fb.group({
+    frequency: ['', [Validators.required]],
+    frequency_type: ['', [Validators.required]],
+    repetitions: ['', [Validators.required]],
+    billing_day: ['', [Validators.required]],
+    free_trial: this.fb.group({
+      frequency: ['', [Validators.required]],
+      frequency_type: ['', [Validators.required]],
+    }),
+    transaction_amount: ['', [Validators.required]],
+  }),
+  coupon: '',
+  type: ['', [Validators.required]],
+  promo: '',
+  state_cupon: ['', [Validators.required]],
+  percentage:'',
+  status: ['active'],
+  enterpriseId: [, [Validators.required]]
+});
 
-  openModal(data: any = null) {
-    if (data === null) {
-      this.form.reset({
-        frequency: 1,
+
+openModal(data: any = null) {
+  if (data === null) {
+    this.form.reset({
+      reason: '',
+      auto_recurring: {
+        frequency: '',
         frequency_type: 'months',
-        repetitions: 1,
-        billing_day: 1,
-        billing_day_proportional: false,
-        frequency_free: 1,
-        frequency_type_free: 'days',
-        transaction_amount: '',
-        cupon: '',
-        percentage: '0',
-        state_cupon: 0,
-        radio:'disable',
-        checkradio:'disable',
-        currency_id: this.currencyId,
-        reason: '',
-        empresa_id: 0
-      });
-
-    } else {
-      this.promo = data;
-      this.setFormValues(data);
-    }
-    this.myModal.show();
+        repetitions: '',
+        billing_day: '',
+        free_trial: {
+          frequency: '',
+          frequency_type: 'days'
+        },
+        transaction_amount: ''
+      },
+      coupon: '',
+      promo: 0,
+      state_cupon: 0,
+      percentage: 1,
+      status: 'active',
+      enterpriseId: 0
+    });
+  } else {
+    this.promo = data;
+    this.setFormValues(data);  // Asumo que setFormValues es un método que asigna los valores de data al formulario
   }
+
+  if (this.myModal) {
+    this.myModal.show(); // Mostrar el modal si está inicializado
+  } else {
+    console.error('Modal not initialized');
+  }
+}
 
   setFormValues(data: any) {
     this.titulo = 'Agregar plan';
@@ -143,42 +145,21 @@ export class ModalPlanesComponent {
 
   submit() {
     const formValue = this.form.value;
-    formValue.frequency = Number(formValue.frequency);
-
-    let billing_day_proportional = formValue.billing_day_proportional;
-    let bool = (billing_day_proportional === 'true'); 
-    formValue.billing_day_proportional = bool; 
-
-    //if (!this.form.valid) return;
-    let valor = { ...this.form.value };
+    formValue.enterpriseId = Number(formValue.enterpriseId);
+    let valor = { ...formValue };
+    
     if (this.promo.id) {
-      valor.id = this.promo.id;
-      valor.uid = this.promo.uid;
-      valor.frequency_type_free = 'days';
-    }
-
-    if (this.promo.id) {
-      this.actualizarPlan(valor);
+      // Pasar el ID como argumento separado y quitarlo del cuerpo del objeto
+      this.actualizarPlan(valor, this.promo.id);
     } else {
       this.agregarPlan(valor);
     }
-  
-  }
-
-  seleccionFrecuencyType(event) {
-    const selectedOption = event.target.options[event.target.selectedIndex];
-    const valor = selectedOption.getAttribute('data-type');
-    this.form.get('frequency_type').setValue(valor);
-
-    const prop = selectedOption.getAttribute('data-proportional');
-    this.form.get('billing_day_proportional').setValue(prop);
   }
 
   async agregarPlan(modelo: any) {
     this.loading.emit(true);
     try {
       (await this.planesServices.agregarPlan(modelo)).subscribe(resp => {
-        console.log(resp)
         this.myModal.hide();
         this.loading.emit(false);
         if(resp.status == 200){
@@ -201,16 +182,10 @@ export class ModalPlanesComponent {
     }
   }
 
-  async actualizarPlan(modelo:any){
-
-    console.log('request',modelo)
-
+  async actualizarPlan(modelo:any, id: number){
     this.loading.emit(true);
     try {
-      (await this.planesServices.actualizarPlan(modelo)).subscribe(resp => {
-
-        console.log('response',resp)
-
+      (await this.planesServices.actualizarPlan(modelo, id)).subscribe(resp => {
         this.myModal.hide();
         this.loading.emit(false);
         if(resp.status == 200){

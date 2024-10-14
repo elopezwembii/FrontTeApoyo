@@ -37,12 +37,12 @@ export class PlanesService {
       );
   }
 
-  async actualizarPlan(model: Planes) {
+  async actualizarPlan(model: Planes, planId: number) {
 
     let headers = {
       Authorization: 'Bearer ' + apiKey
     }
-    return this._http.post<any[]>(`${environment.uri_api_v2}updateplan`, model, { headers: headers, observe: 'response' })
+    return this._http.patch<any[]>(`${environment.uri_api_v2}/subscriptions/subscription?subscriptionId=${planId}`, model, { headers: headers, observe: 'response' })
       .pipe(
         map((resp: any) => {
           return resp;
