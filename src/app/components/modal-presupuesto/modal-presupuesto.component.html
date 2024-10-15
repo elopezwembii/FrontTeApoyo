@@ -1,0 +1,74 @@
+<div class="modal fade" id="modalPresupuesto" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">{{ titulo }}</h5>
+          <button
+            type="button"
+            class="close"
+            (click)="closeModal()"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <!-- Aquí puedes agregar el contenido del modal para presupuesto -->
+          <div class="responsive">
+            <table class="table text-nowrap">
+              <thead>
+                <tr>
+                  <th scope="col">Categoría</th>
+                  <th></th>
+                  <th class="text-right">Monto</th>
+                </tr>
+              </thead>
+              <tbody *ngIf="itemsPresupuesto.length > 0">
+                <ng-container *ngFor="let presupuesto of itemsPresupuesto; let i = index">
+                  <div class="separador"></div>
+                  <ng-container class="row-table">
+                    <tr class="row-table" *ngIf="presupuestoSelected !== presupuesto">
+                      <td>
+                        <input type="checkbox" (change)="onCategoryChange(presupuesto.tipo_gasto, $event.target.checked)" class="mx-2"/>
+                        <i [class]="categorias[presupuesto.tipo_gasto - 1].img" class="icono-categoria"></i>
+                        {{ categorias[presupuesto.tipo_gasto - 1].descripcion }}
+                      </td>
+                      <td [attr.data-tooltip]="opcionesSelect2[presupuesto.tipo_gasto]" data-flow="top">
+                        <span>
+                          <i class="far fa-question-circle text-principal" style="font-size: small"></i>
+                          <small><i>¿Qué abarca ésta categoría?</i></small>
+                        </span>
+                      </td>
+                      <td class="text-right">
+                        ${{ presupuesto.monto | currency: 'CLP': '' }}
+                      </td>
+                    </tr>
+                  </ng-container>
+                </ng-container>
+              </tbody>
+              
+            </table>
+            <!-- <div>
+              <input class="mycheck" type="checkbox" [checked]="presupuesto.fijado === 1"
+                [disabled]="presupuesto.fijado === 1" (click)="mantenerPresupuestoMes($event)" />
+              <b style="vertical-align: super" class="text-principal px-3">Mantener presupuesto mes anterior</b>
+            </div> -->
+          </div>
+        </div>
+        <div class="modal-footer">
+            <button
+                type="button"
+                class="btn btn-secondary"
+                data-dismiss="modal"
+            >
+                Cerrar
+            </button>
+            <button type="submit" class="btn btn-primary">
+                Guardar
+            </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  

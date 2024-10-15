@@ -74,6 +74,7 @@ import { SuscriptoresComponent } from './pages/suscriptores/suscriptores.compone
 import { TestsComponent } from './modules/tests/tests.component';
 import { ModalUserTestComponent } from './components/modal-user-test/modal-user-test.component';
 import { SubscripcionesComponent } from '@pages/subscripciones/subscripciones.component';
+import { ModalPresupuestoComponent } from '@components/modal-presupuesto/modal-presupuesto.component';
 
 
 defineCustomElements();
@@ -123,6 +124,7 @@ registerLocaleData(localeEs);
         GestionEmpresaComponent,
         GestionColaboradorComponent,
         ModalUsuarioComponent,
+        ModalPresupuestoComponent,
         ModalEmpresaComponent,
         GastoHormigaComponent,
         ChatComponent,

@@ -7,6 +7,9 @@ import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {environment} from 'environments/environment';
 import {Observable, of} from 'rxjs';
+import { ReplicateAll } from './interfaces/presupuesto.interface';
+
+const apiKey = `${environment.api_key}`;
 
 @Injectable({
     providedIn: 'root'
@@ -170,29 +173,22 @@ export class PresupuestoService {
     }
 
     async replicarPresupuesto(
-        mes_actual: number,
-        anio_actual: number,
-        mes_anterior: number,
-        anio_anterior: number
+        data: ReplicateAll
     ): Promise<boolean> {
         try {
             const res = await new Promise((resolve, reject) => {
                 this._http
                     .post(
-                        environment.uri_api +
-                            'mantener_presupuesto_mes_anterior',
-                        {
-                            mes_actual,
-                            anio_actual,
-                            mes_anterior,
-                            anio_anterior
-                        },
+                        environment.uri_api_v2 +
+                            '/budgets/replicate-all',
+                        
+                            data
+                        ,
                         {
                             headers: {
                                 Authorization:
                                     'Bearer ' +
-                                    JSON.parse(sessionStorage.getItem('user'))
-                                        .access_token
+                                    apiKey
                             }
                         }
                     )

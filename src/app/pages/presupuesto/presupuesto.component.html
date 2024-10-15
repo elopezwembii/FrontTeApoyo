@@ -149,7 +149,6 @@
                                                                     presupuesto
                                                                 )
                                                             "></i>
-                            <i class="fas fa-copy button-table mx-2"></i>
                           </td>
                         </tr>
                     
@@ -215,6 +214,9 @@
               <button [disabled]="isAdding" class="boton-add" (click)="addUser()" type="button">
                 <b>+ Agregar categoría al mes actual</b>
               </button>
+              <button [disabled]="isAdding" class="boton-add" (click)="openModal()" type="button">
+                <b>Clonar desde un presupuesto anterior</b>
+              </button>
             </form>
           </div>
         </div>
@@ -247,4 +249,7 @@
     </div>
   </div>
 </section>
+<app-modal-presupuesto #modalPresupuesto
+   ></app-modal-presupuesto>
 <ngx-loading [show]="loading"></ngx-loading>
+

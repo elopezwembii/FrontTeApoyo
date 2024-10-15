@@ -13,7 +13,9 @@ import {
     ViewChild
 } from '@angular/core';
 import {Validators, FormBuilder} from '@angular/forms';
+import { ModalPresupuestoComponent } from '@components/modal-presupuesto/modal-presupuesto.component';
 import {GastosService} from '@services/gastos/gastos.service';
+import { ReplicateAll } from '@services/presupuesto/interfaces/presupuesto.interface';
 import {PresupuestoService} from '@services/presupuesto/presupuesto.service';
 import {ShepherdService} from 'angular-shepherd';
 import {ToastrService} from 'ngx-toastr';
@@ -35,7 +37,9 @@ export class PresupuestoComponent implements OnInit {
     presupuesto: Presupuesto = {} as Presupuesto;
     itemsPresupuesto: ItemPresupuesto[] = [];
     presupuestoSelected: ItemPresupuesto = {} as ItemPresupuesto;
+    @ViewChild('modalPresupuesto') modalPresupuesto: ModalPresupuestoComponent;
     loading: boolean = false;
+    user = JSON.parse(sessionStorage.getItem('user')).user.id;
 
     sumaTotalReal: number = 0;
 
@@ -129,21 +133,30 @@ export class PresupuestoComponent implements OnInit {
     async ngOnInit() {
         this.validaTienePresupuesto();
 
+
         this.presupuestoService.obtenerCategoria().subscribe({
             next: (resp: any) => {
                 this.categorias = resp;
             }
         });
 
+        console.log(this.user)
+
         /* this.obtenerDatoGrafico(); */
       
         this.obtenerPresupuesto();
     }
+
+    openModal() {
+        this.modalPresupuesto.openModal();
+      }
+
     async obtenerPresupuesto() {
         this.loading = true;
         this.presupuestoMonto = 0;
         (
             await this.presupuestoService.getPresupuesto(
+
                 this.selectionMonth + 1,
                 this.year
             )
@@ -290,6 +303,14 @@ export class PresupuestoComponent implements OnInit {
         }
     }
 
+    async p(itemPresupuesto: ItemPresupuesto, index: number) {
+        if (confirm('¿Estas seguro de eliminar el item?')) {
+            await this.presupuestoService.eliminarItem(itemPresupuesto.id);
+            this.obtenerPresupuesto();
+            this.toastr.info('Ítem eliminado con éxito');
+        }
+    }
+
     generateId() {
         return this.itemsPresupuesto.length + 1;
     }
@@ -397,7 +418,7 @@ export class PresupuestoComponent implements OnInit {
     async mantenerPresupuestoMes(event: any) {
         const {checked} = event.target;
         let mes_actual = this.selectionMonth + 1;
-        let anio_actual = this.selectionYear;
+        let anio_actual = this.selectionYear + 1;
         let mes_anterior, anio_anterior;
         if (mes_actual === 1) {
             mes_anterior = 12;
@@ -406,14 +427,19 @@ export class PresupuestoComponent implements OnInit {
             mes_anterior = mes_actual - 1;
             anio_anterior = anio_actual;
         }
+
+        const obj: ReplicateAll = {
+            currentMonth: mes_actual,
+            currentYear: anio_actual,
+            previousMonth: mes_anterior,
+            previousYear: anio_anterior,
+            userId: this.user
+        }
         this.loading = true;
         if (checked) {
             try {
                 const res = await this.presupuestoService.replicarPresupuesto(
-                    mes_actual,
-                    anio_actual,
-                    mes_anterior,
-                    anio_anterior
+                    obj
                 );
                 if (res) {
                     this.obtenerPresupuesto();
