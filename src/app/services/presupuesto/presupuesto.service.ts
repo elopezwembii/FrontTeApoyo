@@ -7,7 +7,7 @@ import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {environment} from 'environments/environment';
 import {Observable, of} from 'rxjs';
-import { ReplicateAll } from './interfaces/presupuesto.interface';
+import { ReplicateAll, ReplicateOnly } from './interfaces/presupuesto.interface';
 
 const apiKey = `${environment.api_key}`;
 
@@ -207,6 +207,44 @@ export class PresupuestoService {
             return false;
         }
     }
+
+    async replicarUnPresupuesto(
+        data: ReplicateOnly
+    ): Promise<boolean> {
+        try {
+            const res = await new Promise((resolve, reject) => {
+                this._http
+                    .post(
+                        environment.uri_api_v2 +
+                            '/budgets/replicate-only',
+                        
+                            data
+                        ,
+                        {
+                            headers: {
+                                Authorization:
+                                    'Bearer ' +
+                                    apiKey
+                            }
+                        }
+                    )
+                
+                .subscribe(
+                    (response) => {
+                        resolve(response);
+                    },
+                    (error) => {
+                        console.error(error);
+                        reject(error);
+                    }
+                );
+            });
+            return true;
+        } catch (error) {
+            return false;
+        }
+    }
+
 
     /* agregarPresupuesto(nuevoPresupuesto: Presupuesto): Observable<string> {
         return new Observable<string>((observer) => {

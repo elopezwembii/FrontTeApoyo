@@ -73,9 +73,10 @@ export class ModalPresupuestoComponent {
   presupuestoSelected: ItemPresupuesto = {} as ItemPresupuesto;
   categorias: Categoria[] = [];
 
-  presupuestoMonto: number = 0;
-  presupuesto: Presupuesto = {} as Presupuesto;
-  itemsPresupuesto: ItemPresupuesto[] = [];
+  @Input() presupuestoActual: Presupuesto = {} as Presupuesto;
+  @Input() presupuesto: Presupuesto = {} as Presupuesto;
+  @Input() itemsPresupuesto: ItemPresupuesto[] = [];
+  @Input() presupuestoMonto: number = 0;
   loading: boolean = false;
 
   sumaTotalReal: number = 0;
@@ -98,12 +99,13 @@ export class ModalPresupuestoComponent {
 
   ngOnInit(): void {
     this.myModal = new bootstrap.Modal(document.getElementById('modalPresupuesto'), {});
-    this.obtenerPresupuesto();
     this.presupuestoService.obtenerCategoria().subscribe({
       next: (resp: any) => {
           this.categorias = resp;
       }
+    
   });
+  console.log(this.itemsPresupuesto)
   }
   
   onCategoryChange(categoryId: number, isChecked: boolean): void {
@@ -114,29 +116,7 @@ export class ModalPresupuestoComponent {
     }
   }
 
-  async obtenerPresupuesto() {
-    this.loading = true;
-    this.presupuestoMonto = 0;
-    (
-        await this.presupuestoService.getPresupuesto(
-            this.selectionMonth + 1,
-            this.year
-        )
-    ).subscribe({
-        next: ({presupuesto}: {presupuesto: Presupuesto}) => {
-            this.presupuesto = presupuesto;
-            this.sumaTotalReal = presupuesto.presupuesto;
-            this.itemsPresupuesto = this.presupuesto.get_items;
-            this.presupuesto.get_items.map(
-                (item) => (this.presupuestoMonto += item.monto)
-            );
-            this.loading = false;
-        },
-        error: (error: any) => {
-            console.log(error);
-        }
-    });
-  }
+
 
   openModal() {
     this.myModal.show(); // Mostrar el modal
@@ -145,4 +125,34 @@ export class ModalPresupuestoComponent {
   closeModal() {
     this.myModal.hide(); // Ocultar el modal
   }
+
+  async guardarPresupuesto() {
+  // Calcular el mes y año anteriores
+  const previousMonth = this.presupuestoActual.mes === 1 ? 12 : this.presupuestoActual.mes - 1;
+  const previousYear = this.presupuestoActual.mes === 1 ? this.presupuestoActual.anio - 1 : this.presupuestoActual.anio;
+
+  // Construcción del objeto con los datos corregidos
+  const objetoGuardar = {
+    currentMonth: this.presupuestoActual.mes,  // El mes actual
+    currentYear: this.presupuestoActual.anio,  // El año actual
+    previousMonth: previousMonth,  // Mes anterior corregido
+    previousYear: previousYear,  // Año anterior corregido si el mes es enero
+    userId: 1,  // Aquí podrías agregar la lógica para obtener el ID de usuario real
+    items: this.selectedCategoryIds  // IDs seleccionados en el array
+  };
+
+
+    console.log(objetoGuardar)
+
+      try {
+          const res = await this.presupuestoService.replicarUnPresupuesto(
+            objetoGuardar
+          );
+          return res;
+
+      } catch (error) {
+          this.loading = false;
+      }
+  }
 }
+

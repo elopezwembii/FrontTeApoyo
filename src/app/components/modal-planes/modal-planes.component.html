@@ -33,21 +33,23 @@
                             </option>
                           </select>
                         </div>
-                    
                         <!-- Campo para Frecuencia de cobro -->
                         <div class="col-md-3 mb-3">
-                          <label for="repetitions" class="form-label">Frecuencia de cobro</label>
-                          <input
-                          formControlName="frequency"
+                            <label for="repetitions" class="form-label">Frecuencia de cobro</label>
+                            <input
+                            formControlName="frequency"
                             autocomplete="off"
                             type="number"
                             min="1"
-                            max="12"
+                            max="1"
                             class="form-control"
                             placeholder="Veces a cobrar"
+                            disabled
                           />
-                        </div>
-                    
+                          
+                          </div>
+                          
+                          
                         <!-- Campo para Cantidad de cobros -->
                         <div class="col-md-3 mb-3">
                           <label for="repetitions" class="form-label">Cantidad de cobros</label>
@@ -140,51 +142,6 @@
 
                     <div class="row">
                         <div class="col-md-4 mb-3">
-                            <label class="form-label"
-                                >Opciones de descuento</label
-                            >
-                            <div class="form-check">
-                                <div
-                                    class="form-check"
-                                    style="
-                                        display: inline-block;
-                                        margin-right: 10px;
-                                    "
-                                >
-                                    <input
-                                        type="radio"
-                                        formControlName="checkradio"
-                                        value="disable"
-                                        (change)="onDescuento()"
-                                        class="form-check-input"
-                                    />
-                                    <label
-                                        for="checkradio"
-                                        class="form-check-label"
-                                        >Sin descuento</label
-                                    >
-                                </div>
-                                <div
-                                    class="form-check"
-                                    style="display: inline-block"
-                                >
-                                    <input
-                                        type="radio"
-                                        formControlName="checkradio"
-                                        value="enable"
-                                        (change)="onDescuento()"
-                                        class="form-check-input"
-                                    />
-                                    <label
-                                        for="checkradio"
-                                        class="form-check-label"
-                                        >Con descuento</label
-                                    >
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-4 mb-3">
                             <label for="cupon" class="form-label">Cupón</label>
                             <input
                                 formControlName="coupon"
@@ -195,17 +152,21 @@
                         </div>
 
                         <div class="col-md-4 mb-3">
-                            <label for="percentage" class="form-label"
-                                >Porcentaje de descuento</label
-                            >
+                            <label for="percentage" class="form-label">Porcentaje de descuento</label>
                             <input
-                                formControlName="percentage"
-                                type="number"
-                                min="0"
-                                class="form-control"
-                                placeholder="Porcentaje de descuento"
+                              formControlName="percentage"
+                              type="number"
+                              min="0"
+                              class="form-control"
+                              placeholder="Porcentaje de descuento"
                             />
-                        </div>
+                            <div *ngIf="form.get('percentage').touched && form.get('percentage').invalid" class="text-danger">
+                              <small *ngIf="form.get('percentage').errors?.required">El porcentaje es requerido</small>
+                              <small *ngIf="form.get('percentage').errors?.min">Debe ser al menos 1</small>
+                              <small *ngIf="form.get('percentage').errors?.max">No puede exceder 100</small>
+                            </div>
+                          </div>
+                          
                     </div>
 
                     <div class="row">

@@ -79,7 +79,7 @@ export class ModalPlanesComponent {
 form: FormGroup = this.fb.group({
   reason: [, [Validators.required]],
   auto_recurring: this.fb.group({
-    frequency: ['', [Validators.required]],
+    frequency: [{ value: 1, disabled: true }, [Validators.required]],
     frequency_type: ['', [Validators.required]],
     repetitions: ['', [Validators.required]],
     billing_day: ['', [Validators.required]],
@@ -104,7 +104,7 @@ openModal(data: any = null) {
     this.form.reset({
       reason: '',
       auto_recurring: {
-        frequency: '',
+        frequency: 1,
         frequency_type: 'months',
         repetitions: '',
         billing_day: '',
@@ -145,6 +145,7 @@ openModal(data: any = null) {
 
   submit() {
     const formValue = this.form.value;
+    formValue.auto_recurring.frequency = this.form.get('auto_recurring.frequency').value || 1; // Incluir manualmente el valor
     formValue.enterpriseId = Number(formValue.enterpriseId);
     let valor = { ...formValue };
     
@@ -250,17 +251,29 @@ openModal(data: any = null) {
   }
 
   onDescuento() {
-    const radioValue = this.form.controls.checkradio.value;
-    const state_cupon = this.form.controls.state_cupon.value;
+    const radioValue = this.form.get('checkradio').value;
     if (radioValue === 'enable') {
-      this.form.controls.cupon.enable();
-      this.form.controls.percentage.enable();
+      this.form.get('coupon').enable();
+      this.form.get('percentage').enable();
       this.form.get('state_cupon').setValue(1);
+      
+      // Agregar validadores cuando se habiliten
+      this.form.get('coupon').setValidators([Validators.required]);
+      this.form.get('percentage').setValidators([Validators.required, Validators.min(1), Validators.max(100)]);
     } else {
-      this.form.controls.cupon.disable();
-      this.form.controls.percentage.disable();
+      this.form.get('coupon').disable();
+      this.form.get('percentage').disable();
       this.form.get('state_cupon').setValue(0);
+      
+      // Remover validadores cuando se deshabiliten
+      this.form.get('coupon').clearValidators();
+      this.form.get('percentage').clearValidators();
     }
+  
+    // Actualizar validaciones
+    this.form.get('coupon').updateValueAndValidity();
+    this.form.get('percentage').updateValueAndValidity();
   }
+  
 
 }

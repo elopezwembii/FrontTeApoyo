@@ -1,5 +1,4 @@
 import {Gasto} from '@/interfaces/gastos';
-import {Ingreso} from '@/interfaces/ingresos';
 import {
     Categoria,
     ItemPresupuesto,
@@ -36,7 +35,9 @@ export class PresupuestoComponent implements OnInit {
     categorias: Categoria[] = [];
     presupuesto: Presupuesto = {} as Presupuesto;
     itemsPresupuesto: ItemPresupuesto[] = [];
+    itemsPresupuestoAnterior: ItemPresupuesto[] = [];
     presupuestoSelected: ItemPresupuesto = {} as ItemPresupuesto;
+    presupuestoAnterior: Presupuesto = {} as Presupuesto;
     @ViewChild('modalPresupuesto') modalPresupuesto: ModalPresupuestoComponent;
     loading: boolean = false;
     user = JSON.parse(sessionStorage.getItem('user')).user.id;
@@ -122,7 +123,6 @@ export class PresupuestoComponent implements OnInit {
     }
 
     constructor(
-        private renderer: Renderer2,
         private fb: FormBuilder,
         private presupuestoService: PresupuestoService,
         private gastoService: GastosService,
@@ -137,12 +137,9 @@ export class PresupuestoComponent implements OnInit {
         this.presupuestoService.obtenerCategoria().subscribe({
             next: (resp: any) => {
                 this.categorias = resp;
+                console.log(this.categorias)
             }
         });
-
-        console.log(this.user)
-
-        /* this.obtenerDatoGrafico(); */
       
         this.obtenerPresupuesto();
     }
@@ -165,6 +162,7 @@ export class PresupuestoComponent implements OnInit {
 
 
                 this.presupuesto = presupuesto;
+                console.log(this.presupuesto)
                 this.sumaTotalReal = presupuesto.presupuesto;
                 this.itemsPresupuesto = this.presupuesto.get_items;
                 this.presupuesto.get_items.map(
@@ -237,6 +235,52 @@ export class PresupuestoComponent implements OnInit {
         });
     }
 
+    async obtenerPresupuestoMesAnterior() {
+        this.loading = true;
+        this.presupuestoMonto = 0;
+        
+        // Si el mes actual es enero (0), cambiamos al mes de diciembre (11) del año anterior.
+        let previousMonth = this.selectionMonth - 1;
+        let previousYear = this.year;
+        if (previousMonth < 0) {
+            previousMonth = 11;
+            previousYear--;
+        }
+    
+        (await this.presupuestoService.getPresupuesto(previousMonth + 1, previousYear)).subscribe({
+            next: ({presupuesto}: {presupuesto: Presupuesto}) => {
+                this.presupuestoAnterior = presupuesto;
+                this.sumaTotalReal = presupuesto.presupuesto;
+                this.itemsPresupuestoAnterior = this.presupuestoAnterior.get_items;
+    
+                this.presupuestoAnterior.get_items.forEach(
+                    (item) => (this.presupuestoMonto += item.monto)
+                );
+    
+                // Mapeamos los ítems de presupuesto para generar el gráfico
+                this.graficoDonaPresupuesto = this.presupuestoAnterior.get_items.map(
+                    (item) => {
+                        return {
+                            name: this.categorias[item.tipo_gasto - 1].descripcion,
+                            value: item.monto
+                        };
+                    }
+                );
+    
+                this.loading = false;
+            },
+            complete: () => {
+                this.guia(false);
+            },
+            error: (error: any) => {
+                console.log(error);
+                this.loading = false;
+            }
+        });
+    }
+    
+      
+
     /* obtenerPresupuestoMensual() {
         this.presupuestoService
             .obtenerPresupuestoMensual(
@@ -259,6 +303,7 @@ export class PresupuestoComponent implements OnInit {
         this.month = this.arrayMonth[this.selectionMonth];
 
         this.obtenerPresupuesto();
+        this.obtenerPresupuestoMesAnterior();
         this.isAdding = false;
         /* this.obtenerDatoGrafico(); */
         if (this.chbMantener) {
@@ -275,6 +320,7 @@ export class PresupuestoComponent implements OnInit {
         this.month = this.arrayMonth[this.selectionMonth];
 
         this.obtenerPresupuesto();
+        this.obtenerPresupuestoMesAnterior();
         this.isAdding = false;
         /* this.obtenerDatoGrafico(); */
         if (this.chbMantener) {
@@ -282,18 +328,21 @@ export class PresupuestoComponent implements OnInit {
         }
     }
 
-    selectUser(itemPresupuesto: ItemPresupuesto) {
-        if (Object.keys(this.presupuestoSelected).length === 0) {
-            this.presupuestoSelected = itemPresupuesto;
+
+    selectUser(categoria: any) {
+        if (!this.presupuestoSelected || this.presupuestoSelected.id !== categoria.id) {
+            this.presupuestoSelected = categoria;
             this.isEditing = true;
             this.isAdding = true;
+            console.log(categoria)
             this.form.patchValue({
-                id: String(itemPresupuesto.id),
-                tipo_gasto: itemPresupuesto.tipo_gasto,
-                monto: String(itemPresupuesto.monto)
+                id: String(categoria.id),
+                tipo_gasto: categoria.id,
+                monto: String(this.getPresupuesto(categoria.id)?.monto || 0)
             });
         }
     }
+    
 
     async deleteUser(itemPresupuesto: ItemPresupuesto, index: number) {
         if (confirm('¿Estas seguro de eliminar el item?')) {
@@ -373,15 +422,6 @@ export class PresupuestoComponent implements OnInit {
     }
 
     cancel() {
-        // if (
-        //     !this.isEditing &&
-        //     confirm(
-        //         'All unsaved changes will be removed. Are you sure you want to cancel?'
-        //     )
-        // ) {
-        //     this.itemsPresupuesto.splice(0, 1);
-        // }
-
         if (localStorage.getItem('tourInicial') !== 'realizado') return;
 
         if (!this.isEditing) {
@@ -465,6 +505,11 @@ export class PresupuestoComponent implements OnInit {
             console.error('Error al obtener el estado del presupuesto:', error);
         }
     }
+
+    getPresupuesto(categoriaId: number) {
+        return this.itemsPresupuesto.find(presupuesto => presupuesto.tipo_gasto === categoriaId);
+      }
+      
 
     async guia(clic) {
        await this.validaTienePresupuesto();

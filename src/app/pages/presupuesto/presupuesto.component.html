@@ -1,255 +1,268 @@
 <div class="content-header">
-  <div class="container-fluid">
-    <div class="row mb-2">
-      <div class="col-sm-6">
-        <h1 class="m-0 text-main"><b> Mi presupuesto</b>
-        <button
-        type="button"
-        (click)="guia(true)"
-        class="btn btn-outline-info rounded-pill shadow-sm ml-3"
-    >
-        <i class="fas fa-map-signs mr-2"></i> Iniciar Guía
-    </button>
-  </h1>
-      </div>
-      <!-- /.col -->
-      <div class="col-sm-6">
-        <ol class="breadcrumb float-sm-right">
-          <li class="breadcrumb-item">
-            <a [routerLink]="['']">Inicio</a>
-          </li>
-          <li class="breadcrumb-item">Presupuesto</li>
-        </ol>
-      </div>
-      <!-- /.col -->
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-main">
+                    <b> Mi presupuesto</b>
+                    <button
+                        type="button"
+                        (click)="guia(true)"
+                        class="btn btn-outline-info rounded-pill shadow-sm ml-3"
+                    >
+                        <i class="fas fa-map-signs mr-2"></i> Iniciar Guía
+                    </button>
+                </h1>
+            </div>
+            <!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item">
+                        <a [routerLink]="['']">Inicio</a>
+                    </li>
+                    <li class="breadcrumb-item">Presupuesto</li>
+                </ol>
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
     </div>
-    <!-- /.row -->
-  </div>
-  <!-- /.container-fluid -->
+    <!-- /.container-fluid -->
 </div>
 <!-- /.content-header -->
 
 <!-- Main content -->
 <section class="content">
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-12 col-sm-8">
-        <div class="card card-presupuesto mb-3">
-          <div class="card-body">
-            <!-- Selector de mes -->
-            <ul class="pagination pagination-month justify-content-center align-items-center">
-              <li class="page-item">
-                <button (click)="removeMonth()" class="button-mes">
-                  <i class="fas fa-caret-left"></i>
-                </button>
-              </li>
-              <li class="page-item box-shadow-int mx-3">
-                <div class="box-shadow-int text-center">
-                  <p class="page-month pt-2">{{ month }}</p>
-                  <p class="page-year pb-2">{{ year }}</p>
-                </div>
-              </li>
-              <li class="page-item">
-                <button (click)="addMonth()" class="button-mes">
-                  <i class="fas fa-caret-right"></i>
-                </button>
-              </li>
-            </ul>
-            <!-- Tabla editable -->
-            <div class="text-center">
-              <div class="custom-box">
-                <div class="">
-                  <span class="custom-text-gray mx-3">Total ingresos:</span>
-                  <span class="custom-text-bold text-success">$ </span>
-                  <span class="custom-text-money text-success">{{sumaTotalReal | currency: 'CLP':''}}</span>
-                </div>
-                <div class="">
-                  <span class="custom-text-gray mx-3">Total presupuesto:</span>
-                  <span class="custom-text-bold text-danger">$ </span>
-                  <span class="custom-text-money text-danger">{{presupuestoMonto | currency: 'CLP':''}}</span>
-                </div>
-                <div class="">
-                  <span class="custom-text-gray mx-3">Disponible:</span>
-                  <span [class]="sumaTotalReal - presupuestoMonto > 0 ? 'custom-text-bold text-principal' : 'custom-text-bold text-danger'">$ </span>
-                  <span [class]="sumaTotalReal - presupuestoMonto > 0 ? 'custom-text-money text-principal' : 'custom-text-money text-danger'">{{sumaTotalReal - presupuestoMonto | currency: 'CLP':''}}</span>
-                </div>
-              </div>
-            </div>
-            
-          
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 col-sm-8">
+                <div class="card card-presupuesto mb-3">
+                    <div class="card-body">
+                        <!-- Selector de mes -->
+                        <ul
+                            class="pagination pagination-month justify-content-center align-items-center"
+                        >
+                            <li class="page-item">
+                                <button
+                                    (click)="removeMonth()"
+                                    class="button-mes"
+                                >
+                                    <i class="fas fa-caret-left"></i>
+                                </button>
+                            </li>
+                            <li class="page-item box-shadow-int mx-3">
+                                <div class="box-shadow-int text-center">
+                                    <p class="page-month pt-2">{{ month }}</p>
+                                    <p class="page-year pb-2">{{ year }}</p>
+                                </div>
+                            </li>
+                            <li class="page-item">
+                                <button (click)="addMonth()" class="button-mes">
+                                    <i class="fas fa-caret-right"></i>
+                                </button>
+                            </li>
+                        </ul>
+                        <!-- Tabla editable -->
+                        <div class="text-center">
+                            <div class="custom-box">
+                                <div class="">
+                                    <span class="custom-text-gray mx-3"
+                                        >Total ingresos:</span
+                                    >
+                                    <span class="custom-text-bold text-success"
+                                        >$
+                                    </span>
+                                    <span
+                                        class="custom-text-money text-success"
+                                        >{{
+                                            sumaTotalReal | currency: 'CLP':''
+                                        }}</span
+                                    >
+                                </div>
+                                <div class="">
+                                    <span class="custom-text-gray mx-3"
+                                        >Total presupuesto:</span
+                                    >
+                                    <span class="custom-text-bold text-danger"
+                                        >$
+                                    </span>
+                                    <span
+                                        class="custom-text-money text-danger"
+                                        >{{
+                                            presupuestoMonto
+                                                | currency: 'CLP':''
+                                        }}</span
+                                    >
+                                </div>
+                                <div class="">
+                                    <span class="custom-text-gray mx-3"
+                                        >Disponible:</span
+                                    >
+                                    <span
+                                        [class]="
+                                            sumaTotalReal - presupuestoMonto > 0
+                                                ? 'custom-text-bold text-principal'
+                                                : 'custom-text-bold text-danger'
+                                        "
+                                        >$
+                                    </span>
+                                    <span
+                                        [class]="
+                                            sumaTotalReal - presupuestoMonto > 0
+                                                ? 'custom-text-money text-principal'
+                                                : 'custom-text-money text-danger'
+                                        "
+                                        >{{
+                                            sumaTotalReal - presupuestoMonto
+                                                | currency: 'CLP':''
+                                        }}</span
+                                    >
+                                </div>
+                            </div>
+                        </div>
 
-            <form [formGroup]="form" (ngSubmit)="update()">
-              <div class="responsive">
-                <table class="table text-nowrap">
-                  <thead>
-                    <tr>
-                      <th scope="col">Categoría</th>
-                      <th></th>
-                      <th class="text-right">Monto</th>
-                    </tr>
-                  </thead>
-                  <tbody *ngIf="itemsPresupuesto.length > 0">
-                    <ng-container *ngFor="
-                                                let presupuesto of itemsPresupuesto;
+                        <form [formGroup]="form" (ngSubmit)="update()">
+                            <div class="responsive">
+                                <table class="table text-nowrap">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Categoría</th>
+                                            <th></th>
+                                            <th class="text-right">Monto</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <ng-container
+                                            *ngFor="
+                                                let categoria of categorias;
                                                 let i = index
-                                            ">
-                      <div class="separador"></div>
-                      <ng-container class="row-table">
-                        <tr class="row-table" *ngIf="
-                                                        presupuestoSelected !==
-                                                        presupuesto
-                                                    ">
-                          <td>
-                            <i [class]="
-                                                                categorias[
-                                                                    presupuesto.tipo_gasto -
-                                                                        1
-                                                                ].img
-                                                            " class="icono-categoria"></i>
-
-                            {{
-                                                            categorias[
-                                                                presupuesto.tipo_gasto -
-                                                                    1
-                                                            ].descripcion
-                                                        }}
-
-                          </td>
-                          <td [attr.data-tooltip]="opcionesSelect2[presupuesto.tipo_gasto]" data-flow="top">
-                            <span><i
-                              class="far fa-question-circle text-principal" style="font-size: small"></i>
-                            <small> <i>¿Qué abarca ésta categoría?</i></small>
-                          </span>
-                          </td>
-
-
-                          <ng-template #contenidoAlternativo>
-                            <td>-</td>
-                          </ng-template>
-
-                          <td class="text-right">
-                            $
-                            {{
-                                                            presupuesto.monto
-                                                                | currency
-                                                                    : 'CLP'
-                                                                    : ''
-                                                        }}
-                          </td>
-
-                          <td>
-                            <i class="fas fa-trash button-table mx-2" (click)="
-                                                                deleteUser(
-                                                                    presupuesto,
-                                                                    i
-                                                                )
-                                                            "></i>
-                            <i class="fas fa-pen button-table" (click)="
-                                                                selectUser(
-                                                                    presupuesto
-                                                                )
-                                                            "></i>
-                          </td>
-                        </tr>
-                    
-                        <tr [class.red]="i === itemsPresupuesto.length - 1" *ngIf="
-                                                        presupuestoSelected ===
-                                                        presupuesto
-                                                    ">
-                          <td>
-                            <select class="custom-select form-control-border" formControlName="tipo_gasto" [value]="
-                                                                presupuesto.tipo_gasto
-                                                            " title="Categoria">
-                              <option value="0">
-                                Seleccione una
-                                categoria
-                              </option>
-                              <option *ngFor="
-                                                                    let categoria of categorias
-                                                                " [value]="
-                                                                    categoria.id
-                                                                ">
-                                {{
-                                                                    categoria.descripcion
-                                                                }}
-                              </option>
-                            </select>
-                          </td>
-
-                          <td>
-                            <input type="number" placeholder="$ " inputmode="decimal"
-                              class="form-control form-control-border text-right" formControlName="monto" [value]="
-                                                                presupuesto.monto
-                                                            " title="Monto" />
-                          </td>
-
-                          <td>
-                            <span *ngIf="form.invalid" data-tooltip="Necesitas completar todos los campos"
-                              data-flow="left"><button class="boton-acept" type="submit" [disabled]="
-                                                                    form.invalid
-                                                                ">
-                                <i class="fas fa-check"></i></button></span>
-                            <span *ngIf="
-                                                                !form.invalid
-                                                            "><button class="boton-acept" type="submit" [disabled]="
-                                                                    form.invalid
-                                                                ">
-                                <i class="fas fa-check"></i></button></span>
-
-                            <button class="boton-acept mx-2" title="cancel" (click)="cancel()" type="button">
-                              <i class="fas fa-ban"></i>
+                                            "
+                                        >
+                                            <div class="separador"></div>
+                                            <ng-container class="row-table">
+                                                <tr class="row-table" *ngIf="presupuestoSelected?.id !== categoria.id">
+                                                    <td>
+                                                        <i [class]="categoria.img" class="icono-categoria"></i>
+                                                        {{ categoria.descripcion }}
+                                                    </td>
+                                                    <td [attr.data-tooltip]="opcionesSelect2[categoria.id]" data-flow="top">
+                                                        <span>
+                                                            <i class="far fa-question-circle text-principal" style="font-size: small;"></i>
+                                                            <small><i>¿Qué abarca ésta categoría?</i></small>
+                                                        </span>
+                                                    </td>
+                                                    <td class="text-right">
+                                                        <span *ngIf="getPresupuesto(categoria.id); else noPresupuesto">
+                                                            $ {{ getPresupuesto(categoria.id).monto | currency: 'CLP': '' }}
+                                                        </span>
+                                                        <ng-template #noPresupuesto>
+                                                            $ 0
+                                                        </ng-template>
+                                                    </td>
+                                                    <td>
+                                                        <i class="fas fa-trash button-table mx-2" (click)="deleteUser(presupuesto, i)"></i>
+                                                        <i class="fas fa-pen button-table" (click)="selectUser(categoria)"></i>
+                                                    </td>
+                                                </tr>
+                                                
+                                                <tr *ngIf="presupuestoSelected?.id === categoria.id">
+                                                    <td>
+                                                        <input type="number" placeholder="$ " inputmode="decimal" class="form-control form-control-border text-right" formControlName="monto" title="Monto" />
+                                                    </td>
+                                                    <td>
+                                                        <span *ngIf="form.invalid" data-tooltip="Necesitas completar todos los campos" data-flow="left">
+                                                            <button class="boton-acept" type="submit">
+                                                                <i class="fas fa-check"></i>
+                                                            </button>
+                                                        </span>
+                                                        <span *ngIf="!form.invalid">
+                                                            <button class="boton-acept" type="submit" [disabled]="form.invalid">
+                                                                <i class="fas fa-check"></i>
+                                                            </button>
+                                                        </span>
+                                                        <button class="boton-acept mx-2" title="cancel" (click)="cancel()" type="button">
+                                                            <i class="fas fa-ban"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                                
+                                            </ng-container>
+                                        </ng-container>
+                                    </tbody>
+                                </table>
+                                <div>
+                                    <input
+                                        class="mycheck"
+                                        type="checkbox"
+                                        [checked]="presupuesto.fijado === 1"
+                                        [disabled]="presupuesto.fijado === 1"
+                                        (click)="mantenerPresupuestoMes($event)"
+                                    />
+                                    <b
+                                        style="vertical-align: super"
+                                        class="text-principal px-3"
+                                        >Mantener presupuesto mes anterior</b
+                                    >
+                                </div>
+                            </div>
+                            <button
+                                [disabled]="isAdding"
+                                class="boton-add"
+                                (click)="addUser()"
+                                type="button"
+                            >
+                                <b>+ Agregar categoría al mes actual</b>
                             </button>
-                          </td>
-                        </tr>
-                      </ng-container>
-                    </ng-container>
-                  </tbody>
-                </table>
-                <div>
-                  <input class="mycheck" type="checkbox" [checked]="presupuesto.fijado === 1"
-                    [disabled]="presupuesto.fijado === 1" (click)="mantenerPresupuestoMes($event)" />
-                  <b style="vertical-align: super" class="text-principal px-3">Mantener presupuesto mes anterior</b>
+                            <button
+                                [disabled]="isAdding"
+                                class="boton-add"
+                                (click)="openModal()"
+                                type="button"
+                            >
+                                <b>Clonar desde un presupuesto anterior</b>
+                            </button>
+                        </form>
+                    </div>
                 </div>
-              </div>
-              <button [disabled]="isAdding" class="boton-add" (click)="addUser()" type="button">
-                <b>+ Agregar categoría al mes actual</b>
-              </button>
-              <button [disabled]="isAdding" class="boton-add" (click)="openModal()" type="button">
-                <b>Clonar desde un presupuesto anterior</b>
-              </button>
-            </form>
-          </div>
+            </div>
+            <div class="col-12 col-sm-4">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="text-main">
+                            <strong> Distribución de presupuesto</strong>
+                        </h5>
+                        <app-grafico-dona
+                            [data]="graficoDonaPresupuesto"
+                        ></app-grafico-dona>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-      <div class="col-12 col-sm-4">
-        <div class="card mb-3">
-          <div class="card-body">
-            <h5 class="text-main">
-              <strong> Distribución de presupuesto</strong>
-            </h5>
-            <app-grafico-dona [data]="graficoDonaPresupuesto"></app-grafico-dona>
-          </div>
-        </div>
-      </div>
-    </div>
 
-    <div class="row">
-      <div class="col-12 col-sm-12  mb-3">
-        <div class="card h-100">
-          <div class="card-body">
-            <h5 class="text-main">
-              <strong> Comparativa gastos vs presupuesto</strong>
-            </h5>
-            <app-grafico-barra [presupuesto]="graficoDonaPresupuesto" [gastoReal]="gastosGraficoBarra"
-              class="custom-chart"></app-grafico-barra>
-          </div>
-
+        <div class="row">
+            <div class="col-12 col-sm-12 mb-3">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="text-main">
+                            <strong> Comparativa gastos vs presupuesto</strong>
+                        </h5>
+                        <app-grafico-barra
+                            [presupuesto]="graficoDonaPresupuesto"
+                            [gastoReal]="gastosGraficoBarra"
+                            class="custom-chart"
+                        ></app-grafico-barra>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
 </section>
-<app-modal-presupuesto #modalPresupuesto
-   ></app-modal-presupuesto>
+<app-modal-presupuesto
+    #modalPresupuesto
+    [presupuestoActual]="presupuesto"
+    [presupuesto]="presupuestoAnterior"
+    [itemsPresupuesto]="itemsPresupuestoAnterior"
+    [presupuestoMonto]="presupuestoMonto"
+>
+    ></app-modal-presupuesto
+>
 <ngx-loading [show]="loading"></ngx-loading>
-
