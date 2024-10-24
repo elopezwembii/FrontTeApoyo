@@ -131,62 +131,37 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <ng-container
-                                            *ngFor="
-                                                let categoria of categorias;
-                                                let i = index
-                                            "
-                                        >
+                                        <ng-container *ngFor="let categoria of categorias; let i = index">
                                             <div class="separador"></div>
                                             <ng-container class="row-table">
-                                                <tr class="row-table" *ngIf="presupuestoSelected?.id !== categoria.id">
-                                                    <td>
-                                                        <i [class]="categoria.img" class="icono-categoria"></i>
-                                                        {{ categoria.descripcion }}
-                                                    </td>
-                                                    <td [attr.data-tooltip]="opcionesSelect2[categoria.id]" data-flow="top">
-                                                        <span>
-                                                            <i class="far fa-question-circle text-principal" style="font-size: small;"></i>
-                                                            <small><i>¿Qué abarca ésta categoría?</i></small>
-                                                        </span>
-                                                    </td>
-                                                    <td class="text-right">
-                                                        <span *ngIf="getPresupuesto(categoria.id); else noPresupuesto">
-                                                            $ {{ getPresupuesto(categoria.id).monto | currency: 'CLP': '' }}
-                                                        </span>
-                                                        <ng-template #noPresupuesto>
-                                                            $ 0
-                                                        </ng-template>
-                                                    </td>
-                                                    <td>
-                                                        <i class="fas fa-trash button-table mx-2" (click)="deleteUser(presupuesto, i)"></i>
-                                                        <i class="fas fa-pen button-table" (click)="selectUser(categoria)"></i>
-                                                    </td>
-                                                </tr>
-                                                
-                                                <tr *ngIf="presupuestoSelected?.id === categoria.id">
-                                                    <td>
-                                                        <input type="number" placeholder="$ " inputmode="decimal" class="form-control form-control-border text-right" formControlName="monto" title="Monto" />
-                                                    </td>
-                                                    <td>
-                                                        <span *ngIf="form.invalid" data-tooltip="Necesitas completar todos los campos" data-flow="left">
-                                                            <button class="boton-acept" type="submit">
-                                                                <i class="fas fa-check"></i>
-                                                            </button>
-                                                        </span>
-                                                        <span *ngIf="!form.invalid">
-                                                            <button class="boton-acept" type="submit" [disabled]="form.invalid">
-                                                                <i class="fas fa-check"></i>
-                                                            </button>
-                                                        </span>
-                                                        <button class="boton-acept mx-2" title="cancel" (click)="cancel()" type="button">
-                                                            <i class="fas fa-ban"></i>
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                                
+                                              <tr class="row-table" *ngIf="presupuestoSelected?.id !== categoria.id">
+                                                <td>
+                                                  <i [class]="categoria.img" class="icono-categoria"></i>
+                                                  {{ categoria.descripcion }}
+                                                </td>
+                                                <td [attr.data-tooltip]="opcionesSelect2[categoria.id]" data-flow="top">
+                                                  <span>
+                                                    <i class="far fa-question-circle text-principal" style="font-size: small;"></i>
+                                                    <small><i>¿Qué abarca ésta categoría?</i></small>
+                                                  </span>
+                                                </td>
+                                                <td class="text-right">
+                                                  <span *ngIf="getPresupuesto(categoria.id); else noPresupuesto">
+                                                    $ {{ getPresupuesto(categoria.id).monto | currency: 'CLP': '' }}
+                                                  </span>
+                                                  <ng-template #noPresupuesto>
+                                                    $ 0
+                                                  </ng-template>
+                                                </td>
+                                                <td>
+                                                  <i class="fas fa-trash button-table mx-2" (click)="deleteUser(presupuesto, i)"></i>
+                                                  <i class="fas fa-pen button-table" (click)="selectUser(categoria)"></i>
+                                                  <i class="fas fa-clone button-table mx-2" (click)="guardarPresupuesto(categoria, presupuesto)"></i>
+                                                </td>
+                                              </tr>
                                             </ng-container>
-                                        </ng-container>
+                                          </ng-container>
+                                          
                                     </tbody>
                                 </table>
                                 <div>

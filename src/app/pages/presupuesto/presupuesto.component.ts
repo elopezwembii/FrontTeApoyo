@@ -8,17 +8,15 @@ import {
     Component,
     ElementRef,
     OnInit,
-    Renderer2,
     ViewChild
 } from '@angular/core';
 import {Validators, FormBuilder} from '@angular/forms';
 import { ModalPresupuestoComponent } from '@components/modal-presupuesto/modal-presupuesto.component';
 import {GastosService} from '@services/gastos/gastos.service';
-import { ReplicateAll } from '@services/presupuesto/interfaces/presupuesto.interface';
+import { ReplicateAll, ReplicateOnly } from '@services/presupuesto/interfaces/presupuesto.interface';
 import {PresupuestoService} from '@services/presupuesto/presupuesto.service';
 import {ShepherdService} from 'angular-shepherd';
 import {ToastrService} from 'ngx-toastr';
-import {forkJoin} from 'rxjs';
 
 @Component({
     selector: 'app-presupuesto',
@@ -41,9 +39,10 @@ export class PresupuestoComponent implements OnInit {
     @ViewChild('modalPresupuesto') modalPresupuesto: ModalPresupuestoComponent;
     loading: boolean = false;
     user = JSON.parse(sessionStorage.getItem('user')).user.id;
+    presupuestoActual: Presupuesto = {} as Presupuesto;
 
+    selectedCategoryIds: number[] = [];
     sumaTotalReal: number = 0;
-
     isEditing: boolean = false;
     isAdding: boolean = false;
     graficoDonaPresupuesto: any;
@@ -133,7 +132,6 @@ export class PresupuestoComponent implements OnInit {
     async ngOnInit() {
         this.validaTienePresupuesto();
 
-
         this.presupuestoService.obtenerCategoria().subscribe({
             next: (resp: any) => {
                 this.categorias = resp;
@@ -160,7 +158,6 @@ export class PresupuestoComponent implements OnInit {
         ).subscribe({
             next: ({presupuesto}: {presupuesto: Presupuesto}) => {
 
-
                 this.presupuesto = presupuesto;
                 console.log(this.presupuesto)
                 this.sumaTotalReal = presupuesto.presupuesto;
@@ -168,7 +165,6 @@ export class PresupuestoComponent implements OnInit {
                 this.presupuesto.get_items.map(
                     (item) => (this.presupuestoMonto += item.monto)
                 );
-                //this.guia(false);
 
                 this.graficoDonaPresupuesto = this.presupuesto.get_items.map(
                     (item) => {
@@ -239,7 +235,6 @@ export class PresupuestoComponent implements OnInit {
         this.loading = true;
         this.presupuestoMonto = 0;
         
-        // Si el mes actual es enero (0), cambiamos al mes de diciembre (11) del año anterior.
         let previousMonth = this.selectionMonth - 1;
         let previousYear = this.year;
         if (previousMonth < 0) {
@@ -278,21 +273,6 @@ export class PresupuestoComponent implements OnInit {
             }
         });
     }
-    
-      
-
-    /* obtenerPresupuestoMensual() {
-        this.presupuestoService
-            .obtenerPresupuestoMensual(
-                this.selectionMonth + 1,
-                this.selectionYear
-            )
-            .subscribe({
-                next: (resp: any) => {
-                    this.presupuestoMonto = resp;
-                }
-            });
-    } */
 
     addMonth() {
         this.selectionMonth++;
@@ -413,7 +393,7 @@ export class PresupuestoComponent implements OnInit {
                 }
             } catch (error) {}
         }
-        // clean up
+
         this.presupuestoSelected = {} as ItemPresupuesto;
         this.isEditing = false;
         this.isAdding = false;
@@ -509,7 +489,6 @@ export class PresupuestoComponent implements OnInit {
     getPresupuesto(categoriaId: number) {
         return this.itemsPresupuesto.find(presupuesto => presupuesto.tipo_gasto === categoriaId);
       }
-      
 
     async guia(clic) {
        await this.validaTienePresupuesto();
@@ -645,4 +624,38 @@ export class PresupuestoComponent implements OnInit {
             this.shepherdService.cancel();
         }
     }
+
+    async guardarPresupuesto(categoria: any, presupuesto: any) {
+  // Calcular el mes y año anteriores
+  const previousMonth = this.presupuestoActual.mes === 1 ? 12 : this.presupuestoActual.mes - 1;
+  const previousYear = this.presupuestoActual.mes === 1 ? this.presupuestoActual.anio - 1 : this.presupuestoActual.anio;
+
+  
+
+  // Calcular el próximo mes y año
+  const nextMonth = this.presupuestoActual.mes === 12 ? 1 : this.presupuestoActual.mes + 1;
+  const nextYear = this.presupuestoActual.mes === 12 ? this.presupuestoActual.anio + 1 : this.presupuestoActual.anio;
+  const filteredItems = this.presupuesto.get_items.filter((item) => item.tipo_gasto === categoria.id)
+
+  // Construcción del objeto para duplicar la categoría en el próximo mes
+  const objetoGuardar: ReplicateOnly = {
+    currentMonth: presupuesto.mes + 1,
+    currentYear: presupuesto.anio, 
+    previousMonth: presupuesto.mes,
+    previousYear: presupuesto.anio,  
+    userId: 1, 
+    items: filteredItems.map((item) => item.id)
+  };
+
+  try {
+    const res = await this.presupuestoService.replicarUnPresupuesto(
+      objetoGuardar
+    );
+    return res;
+
+} catch (error) {
+    this.loading = false;
+}
+
+}
 }

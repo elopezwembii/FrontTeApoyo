@@ -48,11 +48,6 @@
               </tbody>
               
             </table>
-            <!-- <div>
-              <input class="mycheck" type="checkbox" [checked]="presupuesto.fijado === 1"
-                [disabled]="presupuesto.fijado === 1" (click)="mantenerPresupuestoMes($event)" />
-              <b style="vertical-align: super" class="text-principal px-3">Mantener presupuesto mes anterior</b>
-            </div> -->
           </div>
         </div>
         <div class="modal-footer">
@@ -63,7 +58,7 @@
             >
                 Cerrar
             </button>
-          <button type="submit" class="btn btn-primary" (click)="guardarPresupuesto()">
+          <button type="submit" class="btn btn-primary" (click)="duplicatePresupuesto()">
               Guardar
           </button>          
         </div>

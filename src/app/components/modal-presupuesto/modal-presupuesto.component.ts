@@ -110,9 +110,9 @@ export class ModalPresupuestoComponent {
   
   onCategoryChange(categoryId: number, isChecked: boolean): void {
     if (isChecked) {
-      this.selectedCategoryIds.push(categoryId); // Añadir ID si está seleccionado
+      this.selectedCategoryIds.push(categoryId);
     } else {
-      this.selectedCategoryIds = this.selectedCategoryIds.filter(id => id !== categoryId); // Quitar ID si se deselecciona
+      this.selectedCategoryIds = this.selectedCategoryIds.filter(id => id !== categoryId); 
     }
   }
 
@@ -126,7 +126,7 @@ export class ModalPresupuestoComponent {
     this.myModal.hide(); // Ocultar el modal
   }
 
-  async guardarPresupuesto() {
+  async duplicatePresupuesto() {
   // Calcular el mes y año anteriores
   const previousMonth = this.presupuestoActual.mes === 1 ? 12 : this.presupuestoActual.mes - 1;
   const previousYear = this.presupuestoActual.mes === 1 ? this.presupuestoActual.anio - 1 : this.presupuestoActual.anio;
