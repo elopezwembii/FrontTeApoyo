@@ -12,5 +12,10 @@ export interface ReplicateOnly {
   previousMonth: number;
   previousYear:  number;
   userId:        number;
-  items:         number[];
+  items:         ItemPresupuesto[];
+}
+
+interface ItemPresupuesto {
+  itemId: number;
+  spendType: number
 }

@@ -435,28 +435,30 @@ export class PresupuestoComponent implements OnInit {
         return Object.keys(obj).length === 0;
     }
 
-    async mantenerPresupuestoMes(event: any) {
-        const {checked} = event.target;
-        let mes_actual = this.selectionMonth + 1;
-        let anio_actual = this.selectionYear + 1;
-        let mes_anterior, anio_anterior;
-        if (mes_actual === 1) {
-            mes_anterior = 12;
-            anio_anterior = anio_actual - 1;
-        } else {
-            mes_anterior = mes_actual - 1;
-            anio_anterior = anio_actual;
-        }
+    async mantenerPresupuestoMes(event: any, presupuesto: any) {
+        let budgetYearCurrent = this.year
+    let budgetMonthCurrent = presupuesto.mes
+    let budgetMonthPrevious
+    let budgetYearPrevious = this.year
 
+    if(budgetMonthCurrent > 12) {
+        budgetMonthCurrent = 1
+        budgetYearCurrent = budgetYearCurrent + 1;
+    }
+
+    if (budgetMonthCurrent === 1) {
+        budgetMonthPrevious = 12;
+    } else {
+        budgetMonthPrevious = budgetMonthCurrent - 1;
+        budgetYearPrevious = budgetYearCurrent;
+    }
         const obj: ReplicateAll = {
-            currentMonth: mes_actual,
-            currentYear: anio_actual,
-            previousMonth: mes_anterior,
-            previousYear: anio_anterior,
+            currentMonth: budgetMonthCurrent,
+            currentYear: budgetYearCurrent, 
+            previousMonth: budgetMonthPrevious,
+            previousYear: budgetYearPrevious,  
             userId: this.user
         }
-        this.loading = true;
-        if (checked) {
             try {
                 const res = await this.presupuestoService.replicarPresupuesto(
                     obj
@@ -473,7 +475,6 @@ export class PresupuestoComponent implements OnInit {
                 this.toastr.error('Error al clonar presupuesto.');
                 this.loading = false;
             }
-        }
     }
   
     async validaTienePresupuesto() {
@@ -626,25 +627,36 @@ export class PresupuestoComponent implements OnInit {
     }
 
     async guardarPresupuesto(categoria: any, presupuesto: any) {
-  // Calcular el mes y año anteriores
-  const previousMonth = this.presupuestoActual.mes === 1 ? 12 : this.presupuestoActual.mes - 1;
-  const previousYear = this.presupuestoActual.mes === 1 ? this.presupuestoActual.anio - 1 : this.presupuestoActual.anio;
 
-  
+    let budgetYearCurrent = this.year
+    let budgetMonthCurrent = presupuesto.mes + 1
+    let budgetMonthPrevious
+    let budgetYearPrevious = this.year
 
-  // Calcular el próximo mes y año
-  const nextMonth = this.presupuestoActual.mes === 12 ? 1 : this.presupuestoActual.mes + 1;
-  const nextYear = this.presupuestoActual.mes === 12 ? this.presupuestoActual.anio + 1 : this.presupuestoActual.anio;
-  const filteredItems = this.presupuesto.get_items.filter((item) => item.tipo_gasto === categoria.id)
+    if(budgetMonthCurrent > 12) {
+        budgetMonthCurrent = 1
+        budgetYearCurrent = budgetYearCurrent + 1;
+    }
 
-  // Construcción del objeto para duplicar la categoría en el próximo mes
+    if (budgetMonthCurrent === 1) {
+        budgetMonthPrevious = 12;
+    } else {
+        budgetMonthPrevious = budgetMonthCurrent - 1;
+        budgetYearPrevious = budgetYearCurrent;
+    }
+
+    const filteredItems = presupuesto.get_items.find((item) => item.tipo_gasto === categoria.id)
+    
   const objetoGuardar: ReplicateOnly = {
-    currentMonth: presupuesto.mes + 1,
-    currentYear: presupuesto.anio, 
-    previousMonth: presupuesto.mes,
-    previousYear: presupuesto.anio,  
+    currentMonth: budgetMonthCurrent,
+    currentYear: budgetYearCurrent, 
+    previousMonth: budgetMonthPrevious,
+    previousYear: budgetYearPrevious,  
     userId: 1, 
-    items: filteredItems.map((item) => item.id)
+    items: [{
+        spendType: categoria.id,
+        itemId: filteredItems.id
+    }]
   };
 
   try {

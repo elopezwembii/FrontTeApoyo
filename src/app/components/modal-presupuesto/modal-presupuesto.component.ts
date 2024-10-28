@@ -126,33 +126,33 @@ export class ModalPresupuestoComponent {
     this.myModal.hide(); // Ocultar el modal
   }
 
-  async duplicatePresupuesto() {
-  // Calcular el mes y año anteriores
-  const previousMonth = this.presupuestoActual.mes === 1 ? 12 : this.presupuestoActual.mes - 1;
-  const previousYear = this.presupuestoActual.mes === 1 ? this.presupuestoActual.anio - 1 : this.presupuestoActual.anio;
+  // async duplicatePresupuesto() {
+  // // Calcular el mes y año anteriores
+  // const previousMonth = this.presupuestoActual.mes === 1 ? 12 : this.presupuestoActual.mes - 1;
+  // const previousYear = this.presupuestoActual.mes === 1 ? this.presupuestoActual.anio - 1 : this.presupuestoActual.anio;
 
-  // Construcción del objeto con los datos corregidos
-  const objetoGuardar = {
-    currentMonth: this.presupuestoActual.mes,  // El mes actual
-    currentYear: this.presupuestoActual.anio,  // El año actual
-    previousMonth: previousMonth,  // Mes anterior corregido
-    previousYear: previousYear,  // Año anterior corregido si el mes es enero
-    userId: 1,  // Aquí podrías agregar la lógica para obtener el ID de usuario real
-    items: this.selectedCategoryIds  // IDs seleccionados en el array
-  };
+  // // Construcción del objeto con los datos corregidos
+  // const objetoGuardar = {
+  //   currentMonth: this.presupuestoActual.mes,  // El mes actual
+  //   currentYear: this.presupuestoActual.anio,  // El año actual
+  //   previousMonth: previousMonth,  // Mes anterior corregido
+  //   previousYear: previousYear,  // Año anterior corregido si el mes es enero
+  //   userId: 1,  // Aquí podrías agregar la lógica para obtener el ID de usuario real
+  //   items: this.selectedCategoryIds  // IDs seleccionados en el array
+  // };
 
 
-    console.log(objetoGuardar)
+  //   console.log(objetoGuardar)
 
-      try {
-          const res = await this.presupuestoService.replicarUnPresupuesto(
-            objetoGuardar
-          );
-          return res;
+  //     try {
+  //         const res = await this.presupuestoService.replicarUnPresupuesto(
+  //           objetoGuardar
+  //         );
+  //         return res;
 
-      } catch (error) {
-          this.loading = false;
-      }
-  }
+  //     } catch (error) {
+  //         this.loading = false;
+  //     }
+  // }
 }
 
