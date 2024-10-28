@@ -33,6 +33,13 @@ export class AnalisisComponent implements OnInit {
     vecesRentaCorto: number = -1;
     vecesRentaLargo: number = -1;
 
+
+    opcionesSelect2 = {
+        1: [
+            'Un análisis financiero es una evaluación detallada de la situación económica de una empresa o proyecto para entender su estabilidad y rentabilidad. Este proceso incluye la revisión de estados financieros, como el balance general, el estado de resultados y el flujo de caja, que muestran el patrimonio, las ganancias y el movimiento de efectivo. '
+        ],
+    };
+
     constructor(
         private ingresoService: IngresosService,
         private deudaService: DeudasService,
