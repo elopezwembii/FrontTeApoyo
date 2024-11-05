@@ -98,6 +98,13 @@ export const MENU = [
         role: ['Usuario', 'Administrador','Administrativo Empresa']
         //role: 'Administrativo',
     },
+    {
+        name: 'Mis Bienes',
+        iconClasses: 'fas fa-home',
+        path: ['/bienes'],
+        role: ['Usuario', 'Administrador','Administrativo Empresa']
+        //role: 'Administrativo',
+    },
     /*
     {
         name: 'Promo cupones',

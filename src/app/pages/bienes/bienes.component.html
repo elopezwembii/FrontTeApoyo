@@ -1,0 +1,62 @@
+<div class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1 class="m-0 text-main"><b>Bienes</b></h1>
+        </div>
+        <!-- /.col -->
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item">
+              <a [routerLink]="['']">Inicio</a>
+            </li>
+            <li class="breadcrumb-item">Mis Bienes</li>
+          </ol>
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+  </div>
+
+<div class="mt-3 mx-3">
+    <div class="row">
+        <div class="col-12 col-sm-8 mb-3">
+          <h5 class="text-main">
+            <strong>Mis Bienes</strong>
+          </h5>
+          <app-crud-bien></app-crud-bien>
+        </div>
+        <div class="col-12 col-sm-4">
+          <div class="card mb-3">
+                  <div class="card-body text-center">
+              <h5 class="text-main">
+                <strong>Relación Patrimonial</strong>
+              </h5>
+              <div class="text-center">
+                <img width="100"
+                  [src]="relacionPat > 0 ? 'assets/img/relacionPositiva.svg':'assets/img/relacionNegativ.svg'" alt="" />
+              </div>
+              <div style="font-size: large">
+                <p *ngIf="relacionPat > 0">
+                  Tienes una relación patrimonial
+                  <b class="text-success">positiva</b>. Es decir,
+                  tus activos suman más que tus deudas, lo que
+                  favorece tu posición financiera.
+                </p>
+                <p *ngIf="relacionPat < 0">
+                  Tu relacion patrimonial es negativa, es decir, debes más de lo que tienes. En general esta relación se
+                  da cuando tienes mucha deuda de corto plazo (créditos de consumo/automotrices, líneas y tarjetas).
+                </p>
+                <p *ngIf="relacionPat === 0">
+                  Tu relación patrimonial es igual a cero, es decir, lo que tienes, lo debes.
+                </p>
+                <a class="text-center" href="javascript:void(0)" (click)="openModal(3,1,relacionPat)" class="nav-link">Nuestras
+                  recomendaciones <img src="assets/img/recomendaciones.svg" alt=""></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+</div>

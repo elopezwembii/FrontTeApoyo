@@ -1,6 +1,12 @@
 import {Ahorro, TipoAhorro} from '@/interfaces/ahorro';
 import {Gasto} from '@/interfaces/gastos';
-import {Component, ElementRef, OnInit, Renderer2, ViewChild} from '@angular/core';
+import {
+    Component,
+    ElementRef,
+    OnInit,
+    Renderer2,
+    ViewChild
+} from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
 import {ModalAhorroComponent} from '@components/modal-ahorro/modal-ahorro.component';
 import {AhorroService} from '@services/ahorro/ahorro.service';
@@ -17,10 +23,12 @@ export class AhorrosComponent implements OnInit {
     historial: any = [];
     loading: boolean = false;
     change: boolean = false;
-
     fechaActual = new Date();
+    ahorros2: any = [];
+    historial2: any = [];
     diasDelMesActual: number[] = [];
     selectedTipoAhorro: any;
+    user = JSON.parse(sessionStorage.getItem('user')).user.id;
     selectedTipoAhorroNombre: any;
     selectedTipoAhorroId: any;
 
@@ -102,11 +110,12 @@ export class AhorrosComponent implements OnInit {
         private toastr: ToastrService,
         private fb: FormBuilder,
         private gastoService: GastosService,
-        private renderer: Renderer2, 
+        private renderer: Renderer2,
         private el: ElementRef
     ) {}
     ngOnInit() {
         this.obtenerAhorros();
+        this.obtenerAhorros2()
         this.setDiasDelMesActual();
     }
 
@@ -115,20 +124,18 @@ export class AhorrosComponent implements OnInit {
         modal.style.display = 'none';
         modal.setAttribute('aria-hidden', 'true');
         modal.classList.remove('show');
-    
+
         // Elimina TODOS los fondos oscuros (backdrops)
         const backdrops = document.querySelectorAll('.modal-backdrop');
-        backdrops.forEach(backdrop => {
+        backdrops.forEach((backdrop) => {
             document.body.removeChild(backdrop);
         });
-    
+
         // Restaurar el scroll en el body si es necesario
         document.body.style.paddingRight = '0';
         document.body.classList.remove('modal-open');
     }
-    
-    
-    
+
     setTipoAhorro(tipo: any, nombre: any, id: any) {
         this.selectedTipoAhorro = tipo;
         this.selectedTipoAhorroNombre = nombre;
@@ -137,8 +144,6 @@ export class AhorrosComponent implements OnInit {
 
     async guardarAhorroEfectuado(): Promise<void> {
         if (this.ahorroForm.valid) {
-         
-
             const descripcion = this.ahorroForm.get('descripcion').value;
             const monto: number = +this.ahorroForm.get('monto').value;
             const dia = this.ahorroForm.get('fecha').value;
@@ -154,10 +159,13 @@ export class AhorrosComponent implements OnInit {
                 anio: this.fechaActual.getFullYear(),
                 monto: monto
             };
-                   
+
             this.actualizarMonto(this.selectedTipoAhorroId, monto);
 
-            const res = await this.gastoService.agregarGastoAsociandoAhorro(gasto,this.selectedTipoAhorroId);
+            const res = await this.gastoService.agregarGastoAsociandoAhorro(
+                gasto,
+                this.selectedTipoAhorroId
+            );
 
             if (res) {
                 this.cerrarModal();
@@ -182,6 +190,7 @@ export class AhorrosComponent implements OnInit {
     async obtenerAhorros() {
         this.change = !this.change;
         this.loading = true;
+
         (await this.ahorroService.obtenerAhorros()).subscribe({
             next: ({ahorros, historial}: {ahorros: any; historial: any}) => {
                 this.ahorros = ahorros;
@@ -190,7 +199,45 @@ export class AhorrosComponent implements OnInit {
             },
             error: (error: any) => {}
         });
+                        console.log({
+                            historial: this.historial,
+                            ahorros: this.ahorros
+                        });
     }
+
+    async obtenerAhorros2() {
+        this.change = !this.change;
+        this.loading = true;
+    
+        try {
+            const data: any = await this.ahorroService.getAhorros(this.user);
+    
+            const monthNames = [
+                "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+                "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+            ];
+    
+            this.ahorros2 = Object.keys(data).map((month) => {
+                const [year, monthIndex] = month.split('-');
+                const monthName = monthNames[parseInt(monthIndex) - 1];
+                return {
+                    year: monthName + ' ' + year,
+                    amount: data[month].recaudado
+                };
+            });
+            
+            // Asigna el array transformado a `historial`
+            this.historial2 = this.ahorros2;
+            this.loading = false;
+            console.log(this.historial2);
+        } catch (error) {
+            this.loading = false;
+            console.error('Error al obtener ahorros:', error);
+        }
+    }
+    
+    
+    
 
     async eliminarAhorro(ahorro: Ahorro) {
         if (confirm('¿Estás seguro de eliminar el ahorro?')) {
@@ -234,7 +281,7 @@ export class AhorrosComponent implements OnInit {
     actualizarMonto(id, monto) {
         this.ahorroService.actualizarMontoAhorro(id, monto).subscribe({
             next: (resp) => {
-                this.obtenerAhorros()
+                this.obtenerAhorros();
             }
         });
     }

@@ -1,0 +1,49 @@
+.icono-hucha {
+  font-size: 100px;
+  color:#bee0e4
+}
+
+/* CSS */
+.big-text {
+font-size: 1.5rem;
+}
+.medium-text {
+font-size: 1.2rem;
+}
+
+.progress-bar-custom {
+background-color: #FFD48F;
+}
+
+.progress {
+border-radius: 10px;
+height: 20px;
+}
+
+
+.progress-label {
+font-size: 0.9rem;
+}
+
+.edit{
+color: #bee0e4;
+font-size: 1.3rem
+}
+
+
+@media (max-width: 576px) {
+  .medium-text {
+      font-size: 13px;
+  }
+}
+
+
+.btn-verde-claro {
+  background-color: #8ed6d7; /* El color pastel principal que usas en las olas */
+  color: #fff; /* Texto en blanco */
+  border: none;
+}
+
+.btn-verde-claro:hover {
+  background-color: #68c0c1; /* Un poco más oscuro cuando pasas el ratón */
+}

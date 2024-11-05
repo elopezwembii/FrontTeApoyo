@@ -30,6 +30,7 @@ import { SuscriptoresComponent } from '@pages/suscriptores/suscriptores.componen
 
 import { TestsComponent } from '@modules/tests/tests.component';
 import { SubscripcionesComponent } from '@pages/subscripciones/subscripciones.component';
+import { BienesComponent } from '@pages/bienes/bienes.component';
 
 const routes: Routes = [
     {
@@ -77,6 +78,10 @@ const routes: Routes = [
             {
                 path: 'usuarios',
                 component: GestionUsuariosComponent
+            },
+            {
+                path: 'bienes',
+                component: BienesComponent
             },
             {
                 path: 'empresas',

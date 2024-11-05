@@ -75,6 +75,7 @@ import { TestsComponent } from './modules/tests/tests.component';
 import { ModalUserTestComponent } from './components/modal-user-test/modal-user-test.component';
 import { SubscripcionesComponent } from '@pages/subscripciones/subscripciones.component';
 import { ModalPresupuestoComponent } from '@components/modal-presupuesto/modal-presupuesto.component';
+import { BienesComponent } from '@pages/bienes/bienes.component';
 
 
 defineCustomElements();
@@ -110,6 +111,7 @@ registerLocaleData(localeEs);
         GraficoBarraComponent,
         GraficoGastoComponent,
         PresupuestoComponent,
+        BienesComponent,
         GraficoDonaComponent,
         GraficoBarraComponent,
         AhorrosComponent,

@@ -97,26 +97,49 @@ export class AhorroService {
             });
             this.ahorros = data;
             this.ahorros.forEach((ahorro) => {
-                const fecha = new Date(ahorro.fecha_limite).getFullYear();
-                const monto = ahorro.recaudado;
+                const year = new Date(ahorro.fecha_limite).getFullYear();
+                const month = new Date(ahorro.fecha_limite).getMonth();
+                const amount = ahorro.recaudado;
 
                 // Verificar si ya existe un objeto en el acumulador con la misma fecha
                 const objetoExistente = this.ahorroHistorial.find(
-                    (objeto) => objeto.year === fecha
+                    (objeto) => objeto.year === year
                 );
 
                 if (objetoExistente) {
-                    // Si ya existe, sumar el monto al objeto existente
-                    objetoExistente.amount += monto;
+                    objetoExistente.amount += amount;
                 } else {
-                    // Si no existe, crear un nuevo objeto y agregarlo al acumulador
-                    const nuevoObjeto = {year: fecha, amount: monto};
+                    const nuevoObjeto = {year, month, amount};
                     this.ahorroHistorial.push(nuevoObjeto);
                 }
             });
             return of({ahorros: this.ahorros, historial: this.ahorroHistorial});
         } catch (error) {}
     }
+
+    async getAhorros(user: any) {
+        try {
+            const data: any = await new Promise((resolve, reject) => {
+                this._http
+                    .get(environment.uri_api_v2 + `/savings?user=${user}`, {
+                        headers: {
+                            Authorization:
+                                'Bearer ' +
+                                'TAPY-259be469-9123-42be-b32e-0189999e43eb'
+                        }
+                    })
+                    .subscribe({
+                        next: (response) => resolve(response),
+                        error: (error) => reject(error)
+                    });
+            });
+            return data;
+        } catch (error) {
+            console.error("Error en getAhorros:", error);
+            throw error;
+        }
+    }
+    
 
     async eliminarAhorro(ahorro: Ahorro) {
         try {
@@ -236,9 +259,9 @@ export class AhorroService {
         return of(this.nivelUsuario);
     }
 
-    actualizarMontoAhorro(id,monto) {
+    actualizarMontoAhorro(id, monto) {
         return this._http.put(
-            `${environment.uri_api}ahorro/${id}/actualizar-monto` ,
+            `${environment.uri_api}ahorro/${id}/actualizar-monto`,
             {
                 recaudado: monto
             },
