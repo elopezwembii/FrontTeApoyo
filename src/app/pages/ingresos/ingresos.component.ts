@@ -371,7 +371,7 @@ export class IngresosComponent implements OnInit {
     }
 
     guia(clic) {
-        if (this.tieneIngreso === true && !clic) return; // en el caso que el usuario tenga ya un ingreso se salta el tutorial
+        if (this.tieneIngreso === true && !clic) return;
 
         this.shepherdService.defaultStepOptions = {
             scrollTo: true,
@@ -383,7 +383,6 @@ export class IngresosComponent implements OnInit {
         this.shepherdService.confirmCancel = false;
 
         if (window.innerWidth <= 768) {
-            // Verificar si la pantalla es de tamaño móvil
             this.tourMovil();
         } else {
             this.tourEscritorio();
@@ -393,8 +392,7 @@ export class IngresosComponent implements OnInit {
     }
 
     tourEscritorio() {
-        //let isTourInicial = localStorage.getItem('tourInicial') === 'realizado';
-        let cancelButtonClass = this.tieneIngreso //isTourInicial
+        let cancelButtonClass = this.tieneIngreso
             ? 'btn btn-light'
             : 'btn btn-light d-none';
 
