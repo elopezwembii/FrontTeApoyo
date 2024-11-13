@@ -503,3 +503,12 @@ color: white;
     text-align: justify !important;
 }
 
+.btn-custom-outline-info {
+    color:  $principalSidebar; /* Color del texto */
+    border-color:  $principalSidebar; /* Color del borde */
+}
+
+.btn-custom-outline-info:hover {
+    background-color: $principalSidebar; /* Color de fondo en hover */
+    color: #fff; /* Color del texto en hover */
+}

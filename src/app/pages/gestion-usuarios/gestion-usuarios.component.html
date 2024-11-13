@@ -61,18 +61,18 @@
 
                         <!-- <app-carga-masiva (OnReload)="obtenerUsuarios()" *ngIf="cupoDisponible || (rol==='Administrador')"  #modalCargaMasiva></app-carga-masiva> -->
                         
-                        <button routerLink="/planes" class="btn btn-info" title="Promo cupones" style="margin-right: 10px;">
+                        <button routerLink="/planes" class="btn btn-custom-outline-info" title="Promo cupones" style="margin-right: 10px;">
                             <i class="fas fa-plus-circle"></i> Planes de suscripción
                         </button>
                      
-                        <button [disabled]="!cupoDisponible && rol!=='Administrador'" class="btn btn-info" (click)="openModal()"
+                        <button [disabled]="!cupoDisponible && rol!=='Administrador'" class="btn btn-custom-outline-info" (click)="openModal()"
                             title="has alcanzo el limite de usuarios">
                             <i class="fas fa-plus-circle"></i> Agregar usuario
                         </button>
                     </div>
                     <div class="card-body">
                         <table *ngIf="usuarios.length > 0" datatable [dtOptions]="dtOptions" class="row-border hover">
-                            <thead style="background-color:#17a2b8; color: white">
+                            <thead style="background-color:#93278F; color: white">
                                 <tr>
                                     <th>Rut</th>
                                     <th>Nombres</th>
