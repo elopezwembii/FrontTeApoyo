@@ -1,0 +1,10 @@
+{
+  "routes": [
+    {
+      "route": "/presupuesto",
+      "methods": [
+        "get"
+      ]
+    }
+  ]
+}
