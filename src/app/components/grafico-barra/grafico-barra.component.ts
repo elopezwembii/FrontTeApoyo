@@ -167,7 +167,7 @@ export class GraficoBarraComponent implements OnChanges {
                             }
                         },
                         itemStyle: {
-                            color: '#bceaf3',
+                            color: '#00ffff',
                             borderRadius: [5, 5, 0, 0]
                         },
                         name: 'Presupuesto',
@@ -181,7 +181,7 @@ export class GraficoBarraComponent implements OnChanges {
                         data: arregloGasto,
                         z: 1,
                         itemStyle: {
-                            color: '#ffd48f',
+                            color: '#93278F',
                             borderRadius: [5, 5, 0, 0]
                         },
                         label: {

@@ -56,21 +56,17 @@
 }
 
 .pricing1 .btn-success-gradiant {
-  background: #2cdd9b;
-  background: -webkit-linear-gradient(legacy-direction(to right), #2cdd9b 0%, #1dc8cc 100%);
-  background: -webkit-gradient(linear, left top, right top, from(#2cdd9b), to(#1dc8cc));
-  background: -webkit-linear-gradient(left, #2cdd9b 0%, #1dc8cc 100%);
-  background: -o-linear-gradient(left, #2cdd9b 0%, #1dc8cc 100%);
-  background: linear-gradient(to right, #2cdd9b 0%, #1dc8cc 100%);
+  background: #93278F;
+  background: -webkit-linear-gradient(legacy-direction(to right), #93278F 0%, #93278F 100%);
+  background: -webkit-gradient(linear, left top, right top, from(#93278F), to(#93278F));
+  background: -webkit-linear-gradient(left, #93278F 0%, #93278F 100%);
+  background: -o-linear-gradient(left, #93278F 0%, #93278F 100%);
+  background: linear-gradient(to right, #93278F 0%, #93278F 100%);
 }
 
-.pricing1 .btn-success-gradiant:hover {
-  background: #1dc8cc;
-  background: -webkit-linear-gradient(legacy-direction(to right), #1dc8cc 0%, #2cdd9b 100%);
-  background: -webkit-gradient(linear, left top, right top, from(#1dc8cc), to(#2cdd9b));
-  background: -webkit-linear-gradient(left, #1dc8cc 0%, #2cdd9b 100%);
-  background: -o-linear-gradient(left, #1dc8cc 0%, #2cdd9b 100%);
-  background: linear-gradient(to right, #1dc8cc 0%, #2cdd9b 100%);
+.btn-plan-free {
+  background: gray;
+  
 }
 
 .pricing1 .btn-danger-gradiant {
