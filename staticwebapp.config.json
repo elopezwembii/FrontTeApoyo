@@ -1,12 +1,6 @@
 {
   "routes": [
     {
-      "route": "/presupuesto",
-      "methods": [
-        "get"
-      ]
-    },
-    {
       "route": "/**",
       "methods": [
         "get",
