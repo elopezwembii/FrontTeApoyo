@@ -1,20 +1,6 @@
 {
-  "routes": [
-    {
-      "route": "/*",
-      "methods": [
-        "get",
-        "head",
-        "post",
-        "put",
-        "delete",
-        "connect",
-        "options",
-        "trace",
-        "patch"
-      ],
-      "rewrite": "/index.html",
-      "statusCode": 200
+    "navigationFallback": {
+      "rewrite": "index.html",
+      "exclude": ["/*.{png,jpg,gif,ico}", "/*.{css,scss,js}"]
     }
-  ]
 }
