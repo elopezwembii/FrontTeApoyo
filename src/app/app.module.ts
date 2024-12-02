@@ -76,6 +76,7 @@ import { ModalUserTestComponent } from './components/modal-user-test/modal-user-
 import { SubscripcionesComponent } from '@pages/subscripciones/subscripciones.component';
 import { ModalPresupuestoComponent } from '@components/modal-presupuesto/modal-presupuesto.component';
 import { BienesComponent } from '@pages/bienes/bienes.component';
+import { PaymentSuccessComponent } from '@pages/payment-success/payment-success';
 
 
 defineCustomElements();
@@ -137,6 +138,7 @@ registerLocaleData(localeEs);
         PromoCuponesComponent,
         ModalAddcuponComponent,
         PlanesComponent,
+        PaymentSuccessComponent,
         ModalPlanesComponent,
         SubscripcionesComponent,
         SuscriptoresComponent,

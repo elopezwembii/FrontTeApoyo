@@ -3,6 +3,7 @@ import {ToggleSidebarMenu} from '@/store/ui/actions';
 import {UiState} from '@/store/ui/state';
 import {Component, HostBinding, OnInit, Renderer2} from '@angular/core';
 import {Store} from '@ngrx/store';
+import { PlanesService } from '@services/planes/planes.service';
 import {Observable} from 'rxjs';
 
 @Component({
@@ -18,9 +19,10 @@ export class MainComponent implements OnInit {
     @HostBinding('class') class = 'wrapper navbar-light';
     public ui: Observable<UiState>;
 
-    constructor(private renderer: Renderer2, private store: Store<AppState>) {}
+    constructor(private renderer: Renderer2, private store: Store<AppState>, private planService: PlanesService) {}
 
     ngOnInit() {
+        this.obtenerPlan();
         this.ui = this.store.select('ui');
         this.renderer.removeClass(
             document.querySelector('app-root'),
@@ -82,6 +84,14 @@ export class MainComponent implements OnInit {
                 }
             }
         );
+    }
+
+    obtenerPlan(){
+        this.planService.miPlan().subscribe({
+            next: (resp: any) => {
+                console.log(resp);
+            }
+        })
     }
 
     onToggleMenuSidebar() {

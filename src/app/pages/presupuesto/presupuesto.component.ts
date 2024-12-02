@@ -560,53 +560,6 @@ export class PresupuestoComponent implements OnInit {
                 classes: 'shepherd shepherd-open shepherd-theme-arrows',
                 text: ['Este es el panel donde se muestran los presupuesto que registras']
             },
-            {
-                id: 'intro4',
-                attachTo: {
-                    element: '.boton-add',
-                    on: 'top'
-                },
-                classes: 'shepherd shepherd-open shepherd-theme-arrows',
-                text: [
-                    'Comencemos agregando un presupuesto. Haz click aquí para poder agregarlo'
-                ]
-            },
-            {
-                id: 'intro5',
-                attachTo: {
-                    element: '.red',
-                    on: 'right'
-                },
-                beforeShowPromise: () => {
-                    return new Promise((resolve) => {
-                        setTimeout(resolve, 500);
-                    });
-                },
-                classes: 'shepherd shepherd-open shepherd-theme-arrows',
-                text: [
-                    'Completa los datos de tu presupuesto'
-                ]
-            },
-            {
-                id: 'intro6',
-                attachTo: {
-                    element: '.card-presupuesto',
-                    on: 'right'
-                },
-                buttons: [
-                    {
-                        classes: 'shepherd-button-primary',
-                        text: 'Terminar',
-                        action: () => {
-                           
-                            localStorage.setItem('tourInicial', 'realizado');
-                            this.shepherdService.complete();
-                        }
-                    }
-                ],
-                classes: 'shepherd shepherd-open shepherd-theme-arrows',
-                text: ['¡Listo! Tu ingreso ha sido registrado']
-            }
         ]);
     }
 
@@ -652,7 +605,7 @@ export class PresupuestoComponent implements OnInit {
     currentYear: budgetYearCurrent, 
     previousMonth: budgetMonthPrevious,
     previousYear: budgetYearPrevious,  
-    userId: 1, 
+    userId: this.user, 
     items: [{
         spendType: categoria.id,
         itemId: filteredItems.id

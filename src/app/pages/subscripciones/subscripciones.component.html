@@ -54,7 +54,7 @@
                             <small class="monthly">/mo</small>
                         </div>
                         <ul class="list-inline">
-                            <div *ngIf="item.reason === 'Gratis'">
+                            <div *ngIf="item.reason === 'Freemium'">
                                 <li class="d-block py-2">
                                     <i class="bi bi-check-circle"></i>Planifica
                                     y lleva tu presupuesto mensual
@@ -116,7 +116,7 @@
                         </button>
 
                         <!-- Botón para otros planes -->
-                        <div *ngIf="item.reason !== 'Gratis'">
+                        <div *ngIf="item.reason !== 'Freemium'">
                             <button
                                 (click)="vermercadopago(item.uid)"
                                 class="btn btn-success-gradiant btn-md text-white btn-block"
@@ -124,7 +124,7 @@
                                 Elegir plan
                             </button>
                         </div>
-                        <button class="btn btn-plan-free btn-md text-white btn-block" *ngIf="item.reason === 'Gratis'" disabled="true">
+                        <button class="btn btn-plan-free btn-md text-white btn-block" *ngIf="item.reason === 'Freemium'" disabled="true">
                           Ya posees este plan
                         </button>
                     </div>

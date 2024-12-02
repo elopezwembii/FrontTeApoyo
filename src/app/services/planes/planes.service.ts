@@ -38,6 +38,17 @@ export class PlanesService {
       );
   }
 
+  miPlan(): Observable<any> {
+    const idUsuario = JSON.parse(sessionStorage.getItem('user')).user.id;
+    const url = `${environment.uri_api_v2}/subscriptions/my-plan?userId=${idUsuario}`;
+    const headers = {
+      Authorization: 'Bearer ' + apiKey
+    };
+
+    return this._http.get(url, { headers });
+}
+
+
   async actualizarPlan(model: Planes, planId: number) {
 
     let headers = {

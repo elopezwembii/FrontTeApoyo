@@ -24,6 +24,17 @@ export class ModalPlanesComponent {
     user: any;
     promo: any = {};
     uid: any = {};
+    private fieldMappings = {
+      'auto_recurring.repetitions': 'Cantidad de cobros',
+      'auto_recurring.frequency': 'Frecuencia',
+      'auto_recurring.billing_day': 'Día de facturación',
+      'auto_recurring.free_trial.frequency': 'Dias de prueba',
+      'auto_recurring.transaction_amount': 'Monto de la transacción',
+      'reason': 'Nombre del plan',
+      'type': 'Tipo de plan',
+      'enterpriseId': 'Empresa asociada',
+    };
+    
     frequencyAll:any = [
       {id:1, type:"months", proportional:true, name:"Mensual"},
     ];
@@ -90,7 +101,7 @@ form: FormGroup = this.fb.group({
     transaction_amount: ['', [Validators.required]],
   }),
   coupon: '',
-  type: ['', [Validators.required]],
+  type: ['', []],
   promo: '',
   state_cupon: ['', [Validators.required]],
   percentage:'',
@@ -220,24 +231,37 @@ openModal(data: any = null) {
     });
   }
 
-  getFormErrors(){
-    let errors: string[] = [];
-    if (this.form.get('frequency_type').errors?.required)
-        errors.push('Tipo de frecuencia es requerida.');
-    if (this.form.get('frequency_free').errors?.required)
-        errors.push('Dias gratis es requerido.');
-    if (this.form.get('repetitions').errors?.required)
-        errors.push('Repeticion de factura es requerida.');
-    if (this.form.get('billing_day').errors?.required)
-        errors.push('Día de facturacion es requerido.');
-    if (this.form.get('transaction_amount').errors?.required)
-        errors.push('El precio es requerido.');
-    if (this.form.get('reason').errors?.required)
-        errors.push('El nombre del plan es requerido.');
-    if (this.form.get('radio').errors?.required)
-        errors.push('Seleccione duracion de la suscripcion.');
-    return errors;    
+  getFormErrors(): string[] {
+    const errors: string[] = [];
+    const recursiveCheck = (form: FormGroup, path: string = '') => {
+      Object.keys(form.controls).forEach(key => {
+        const control = form.get(key);
+        const fullPath = path ? `${path}.${key}` : key;
+        if (control instanceof FormGroup) {
+          recursiveCheck(control, fullPath);
+        } else if (control.errors) {
+          const readableField = this.fieldMappings[fullPath] || fullPath; // Traduce el nombre del campo
+          Object.keys(control.errors).forEach(errorKey => {
+            errors.push(`${readableField}: ${this.getErrorMessage(errorKey, control.errors[errorKey])}`);
+          });
+        }
+      });
+    };
+    recursiveCheck(this.form);
+    return errors;
   }
+  
+
+private getErrorMessage(errorKey: string, errorValue: any): string {
+    const errorMessages = {
+        required: 'Este campo es obligatorio',
+        min: `Debe ser al menos ${errorValue.min}`,
+        max: `No puede exceder ${errorValue.max}`,
+    };
+    return errorMessages[errorKey] || 'Error desconocido';
+}
+
+  
 
   onInputChange() {
     const radioValue = this.form.controls.radio.value;

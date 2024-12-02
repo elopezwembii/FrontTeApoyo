@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AppService} from '@services/app.service';
 import {PerfilService} from '@services/perfil/perfil.service';
+import { PlanesService } from '@services/planes/planes.service';
 import {ToastrService} from 'ngx-toastr';
 
 @Component({
@@ -14,6 +15,7 @@ export class ProfileComponent implements OnInit {
     rol: string;
     familia: any[] = [];
     loading: boolean = false;
+    plan: any
 
     familiaForm = this.fb.group({
         nombre: ['', Validators.required],
@@ -46,6 +48,7 @@ export class ProfileComponent implements OnInit {
     constructor(
         private appService: AppService,
         private perfilUsuario: PerfilService,
+        private planService: PlanesService,
         private fb: FormBuilder,
         private toastr: ToastrService
     ) {}
@@ -55,6 +58,7 @@ export class ProfileComponent implements OnInit {
         this.rol = JSON.parse(sessionStorage.getItem('user')).rol.nombre;
         this.obtenerPerfilUsuario();
         this.obtenerMiembrosFamilia();
+        this.obtenerPlan();
     }
 
     async obtenerPerfilUsuario() {
@@ -130,6 +134,14 @@ export class ProfileComponent implements OnInit {
                 this.familia = resp;
             }
         });
+    }
+
+    obtenerPlan(){
+        this.planService.miPlan().subscribe({
+            next: (resp: any) => {
+                this.plan = resp;
+            }
+        })
     }
 
     actuallizarClaves() {

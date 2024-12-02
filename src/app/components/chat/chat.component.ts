@@ -2,6 +2,7 @@ import {Component, QueryList} from '@angular/core';
 import {FormGroup, FormControl, AbstractControl} from '@angular/forms';
 import {ChatBotService} from '@services/chat-bot.service';
 import {ViewChild, ElementRef, ViewChildren} from '@angular/core';
+import { PlanesService } from '@services/planes/planes.service';
 
 @Component({
     selector: 'app-chat',
@@ -13,7 +14,10 @@ export class ChatComponent {
 
     showChat = false;
     chatForm: FormGroup;
+    plan: any;
     botIsWriting = false;
+    placeholderText = 'Escribe un mensaje...';
+
 
     toggleChat() {
         this.showChat = !this.showChat;
@@ -41,10 +45,11 @@ export class ChatComponent {
         }
     ];
 
-    constructor(private chatbotService: ChatBotService) {
+    constructor(private chatbotService: ChatBotService, private planService: PlanesService) {
         this.chatForm = new FormGroup({
-            message: new FormControl('')
+            message: new FormControl({ value: '', disabled: true })
         });
+        this.obtenerPlan();
     }
 
     sendMessage() {
@@ -113,4 +118,24 @@ export class ChatComponent {
             this.scrollToBottom();
         });
     }
+
+    obtenerPlan() {
+        this.planService.miPlan().subscribe({
+            next: (resp: any) => {
+                this.plan = resp;
+                if (resp && Object.keys(resp).length > 0) {
+                    this.chatForm.get('message')?.enable();
+                    this.placeholderText = 'Escribe un mensaje...';
+                } else {
+                    this.chatForm.get('message')?.disable();
+                    this.placeholderText = 'No puedes usar esta funcionalidad';
+                }
+            },
+            error: () => {
+                this.chatForm.get('message')?.disable();
+                this.placeholderText = 'Actualiza tu plan para enviar mensajes.';
+            }
+        });
+    }
+    
 }

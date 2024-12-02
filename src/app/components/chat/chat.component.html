@@ -37,15 +37,22 @@
                 <!-- <span class="msg_time">Escribiendo...</span> -->
             </div>
         </div>
-
     </div>
-    <div class="card-footer d-flex align-items-center">
-        <form [formGroup]="chatForm" (ngSubmit)="sendMessage()" style="display: flex; align-items: center; width: 100%;">
-            <input type="text" formControlName="message" class="form-control chat-input mr-2" placeholder="Escribe un mensaje..." style="flex-grow: 1;">
-            <button class="btn btn-light send-btn" type="submit">
+    <div class="card-footer d-flex flex-column align-items-center">
+        <a href="/subscripciones" class="text-sm">Actualiza a Premium para usar a Luca$</a>
+        <form [formGroup]="chatForm" (ngSubmit)="sendMessage()" style="display: flex; align-items: center; width: 100%; margin-top: 1rem;">
+            <input
+                type="text"
+                formControlName="message"
+                class="form-control chat-input mr-2"
+                [placeholder]="placeholderText"
+                style="flex-grow: 1;"
+            />
+            <button class="btn btn-light send-btn" type="submit" [disabled]="chatForm.get('message')?.disabled">
                 <i class="fa fa-paper-plane" aria-hidden="true"></i>
             </button>
-        </form>        
+        </form>
     </div>
+    
     
 </div>

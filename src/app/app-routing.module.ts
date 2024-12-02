@@ -31,6 +31,7 @@ import { SuscriptoresComponent } from '@pages/suscriptores/suscriptores.componen
 import { TestsComponent } from '@modules/tests/tests.component';
 import { SubscripcionesComponent } from '@pages/subscripciones/subscripciones.component';
 import { BienesComponent } from '@pages/bienes/bienes.component';
+import { PaymentSuccessComponent } from '@pages/payment-success/payment-success';
 
 const routes: Routes = [
     {
@@ -120,9 +121,13 @@ const routes: Routes = [
                 component: SuscriptoresComponent
             },
             {
+                path: 'payment-success',
+                component: PaymentSuccessComponent
+            },
+            {
                 path: '',
                 component: DashboardComponent
-            }
+            },
         ]
     },
     {

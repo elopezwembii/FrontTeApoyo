@@ -4,11 +4,11 @@
 
 export const environment = {
     production: true,
-    uri_api:
-        'https://www.plataformadeautogestionfinanciera.cl/api/public/api/v1/',
-    uri_api_v2: 'https://api-v2.te-apoyo.cl/v1',
-    api_key: 'TAPY-694c87e2-3626-4f69-a121-8f9b29328958'
-    // uri_api: 'http://127.0.0.1:8000/api/v1/',
+    // uri_api:
+    //     'https://www.plataformadeautogestionfinanciera.cl/api/public/api/v1/',
+    uri_api_v2: 'http://localhost:5040/v1',
+    api_key: 'TAPY-f8f631cb-fb1a-45ad-be19-030eed0442a3',
+    uri_api: 'http://127.0.0.1:8000/api/v1/',
     // url_api_chatbot:'https://api-chatbot-ta.azurewebsites.net/api/chatbot'
     //uri_api: 'https://www.plataformadeautogestionfinanciera.cl/api/public/api/v1/'
 };
