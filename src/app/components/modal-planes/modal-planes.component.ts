@@ -54,11 +54,16 @@ export class ModalPlanesComponent {
 
   ngOnInit(): void {
     this.obtenerEmpresas();
-
-    this.myModal = new bootstrap.Modal(
-      document.getElementById('modalPlanes'),
-      {}
-    );
+    const modalElement = document.getElementById('modalPlanes');
+    if (modalElement) {
+      modalElement.addEventListener('hidden.bs.modal', () => {
+        this.form.reset();
+        this.promo = {};
+        this.titulo = 'Agregar plan';
+      });
+    }
+  
+    this.myModal = new bootstrap.Modal(modalElement, {});
   }
   
 
@@ -70,12 +75,9 @@ export class ModalPlanesComponent {
 
     (await this.empresaService.getEmpresas()).subscribe({
         next: ({empresas}: {empresas: any}) => {
-          console.log(empresas)
-            // Si el rol es administrador (rol 3), mostrar todas las empresas
             if (rol === 'Administrador') {
                 this.listaEmpresa = empresas;
             } else {
-                // Filtrar la lista de empresas por su ID
                 this.listaEmpresa = empresas.filter(
                     (empresaItem: any) => empresaItem.id === empresa
                 );
@@ -98,7 +100,7 @@ form: FormGroup = this.fb.group({
       frequency: ['', [Validators.required]],
       frequency_type: ['', [Validators.required]],
     }),
-    transaction_amount: ['', [Validators.required]],
+    transaction_amount: ['', [Validators.required, Validators.minLength(950)]],
   }),
   coupon: '',
   type: ['', []],
@@ -111,7 +113,11 @@ form: FormGroup = this.fb.group({
 
 
 openModal(data: any = null) {
+  // Limpia la variable promo
+  this.promo = {};
+  
   if (data === null) {
+    // Reinicia el formulario para crear un nuevo plan
     this.form.reset({
       reason: '',
       auto_recurring: {
@@ -132,25 +138,32 @@ openModal(data: any = null) {
       status: 'active',
       enterpriseId: 0
     });
+    this.titulo = 'Agregar plan';
   } else {
+    // Rellena el formulario con los datos del plan para editar
     this.promo = data;
-    this.setFormValues(data);  // Asumo que setFormValues es un método que asigna los valores de data al formulario
+    this.setFormValues(data);
+    this.titulo = 'Editar plan';
   }
 
+  // Muestra el modal
   if (this.myModal) {
-    this.myModal.show(); // Mostrar el modal si está inicializado
+    this.myModal.show();
   } else {
     console.error('Modal not initialized');
   }
 }
 
+
   setFormValues(data: any) {
     this.titulo = 'Agregar plan';
     if (!data) {
         this.form.reset();
+        debugger;
     } else {
         this.titulo = 'Editar plan';
         this.form.patchValue(data);
+        debugger;
     }
   }
 
@@ -192,6 +205,9 @@ openModal(data: any = null) {
     } catch (error) {
        this.loading.emit(false);
     }
+    this.myModal.hide();
+this.form.reset(); // Limpia el formulario después de cerrar
+this.promo = {};   // Limpia cualquier referencia previa
   }
 
   async actualizarPlan(modelo:any, id: number){
@@ -217,6 +233,9 @@ openModal(data: any = null) {
     } catch (error) {
       this.loading.emit(false);
     }
+    this.myModal.hide();
+this.form.reset(); // Limpia el formulario después de cerrar
+this.promo = {};   // Limpia cualquier referencia previa
   }
 
   async getPlan() {

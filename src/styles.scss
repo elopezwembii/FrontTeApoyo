@@ -512,3 +512,10 @@ color: white;
     background-color: $principalSidebar; /* Color de fondo en hover */
     color: #fff; /* Color del texto en hover */
 }
+
+.alert-form {
+    background-color: $principalSidebar;
+    color: white;
+    border-radius: 0.2rem;
+    padding: 0.5rem;
+}

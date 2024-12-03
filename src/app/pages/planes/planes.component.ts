@@ -58,6 +58,7 @@ export class PlanesComponent {
 
   openModal(plan: any = null) {
     this.modalPlanes.openModal(plan);
+    debugger;
   }
 
   actualizarPlan(planMod: any[]) {
@@ -80,7 +81,6 @@ export class PlanesComponent {
   sincronizar() {
     this.loading = true;
     this.planesServices.sincronizar().subscribe(resp => {
-      console.log(resp)
       this.loading = false;
       this.getPlan();
     });      

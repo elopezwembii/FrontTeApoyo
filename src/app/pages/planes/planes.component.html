@@ -44,11 +44,6 @@
                             <i class="fas fa-plus-circle"></i> Sincronizar
                         </button>
 
-                        <button [disabled]="!cupoDisponible && rol!=='Administrador'" class="btn btn-custom-outline-info" routerLink="/suscriptores"
-                            title="" style="margin-right: 7px;">
-                            <i class="fas fa-plus-circle"></i> Suscriptores
-                        </button>
-
                         <button [disabled]="!cupoDisponible && rol!=='Administrador'" class="btn btn-custom-outline-info" (click)="openModal()"
                             title="">
                             <i class="fas fa-plus-circle"></i> Nuevo plan

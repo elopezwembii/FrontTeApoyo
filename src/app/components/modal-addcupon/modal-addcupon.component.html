@@ -51,7 +51,7 @@
                         </div>
                     </div>
 
-                    <div class="alert alert-info" *ngIf="form.invalid && form.dirty">
+                    <div class="alert-form" *ngIf="form.invalid && form.dirty">
                         <ul>
                             <li *ngFor="let error of getFormErrors()">{{ error }}</li>
                         </ul>
