@@ -36,7 +36,7 @@ export class AnalisisComponent implements OnInit {
 
     opcionesSelect2 = {
         1: [
-            'Un análisis financiero es una evaluación detallada de la situación económica de una empresa o proyecto para entender su estabilidad y rentabilidad. Este proceso incluye la revisión de estados financieros, como el balance general, el estado de resultados y el flujo de caja, que muestran el patrimonio, las ganancias y el movimiento de efectivo. '
+            'Si registraste tus ingresos y deudas, acá obtendrás un "diagnóstico de endeudamiento" a través de dos indicadores: Carga Financiera y Apalancamiento (veces renta). Estos son los mismos que analizan las instituciones financieras al momento de evaluarte. También podrás acceder a algunas recomendaciones para optimizar tus indicadores.'
         ],
     };
 

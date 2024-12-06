@@ -440,14 +440,13 @@ export class PresupuestoComponent implements OnInit {
     let budgetMonthCurrent = presupuesto.mes
     let budgetMonthPrevious
     let budgetYearPrevious = this.year
-
     if(budgetMonthCurrent > 12) {
         budgetMonthCurrent = 1
         budgetYearCurrent = budgetYearCurrent + 1;
     }
-
     if (budgetMonthCurrent === 1) {
         budgetMonthPrevious = 12;
+        budgetYearPrevious = budgetYearCurrent - 1;
     } else {
         budgetMonthPrevious = budgetMonthCurrent - 1;
         budgetYearPrevious = budgetYearCurrent;
@@ -475,6 +474,7 @@ export class PresupuestoComponent implements OnInit {
                 this.toastr.error('Error al clonar presupuesto.');
                 this.loading = false;
             }
+
     }
   
     async validaTienePresupuesto() {

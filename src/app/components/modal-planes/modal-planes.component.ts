@@ -159,11 +159,11 @@ openModal(data: any = null) {
     this.titulo = 'Agregar plan';
     if (!data) {
         this.form.reset();
-        debugger;
+        
     } else {
         this.titulo = 'Editar plan';
         this.form.patchValue(data);
-        debugger;
+        
     }
   }
 

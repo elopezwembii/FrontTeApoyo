@@ -39,7 +39,13 @@
         </div>
     </div>
     <div class="card-footer d-flex flex-column align-items-center">
-        <a href="/subscripciones" class="text-sm">Actualiza a Premium para usar a Luca$</a>
+        <a 
+        href="/subscripciones" 
+        class="text-sm" 
+        *ngIf="!plan || !plan.reason">
+        Actualiza a Premium para usar a Luca$
+      </a>
+      
         <form [formGroup]="chatForm" (ngSubmit)="sendMessage()" style="display: flex; align-items: center; width: 100%; margin-top: 1rem;">
             <input
                 type="text"

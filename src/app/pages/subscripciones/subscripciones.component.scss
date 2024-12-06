@@ -5,6 +5,33 @@
   font-weight: 300;
 }
 
+.subscription-class .row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.subscription-class .col-md-4 {
+  margin-bottom: 20px;
+}
+
+.card-body .pricing-monthly {
+  font-size: 24px;
+  color: #3e4555;
+}
+
+.card-body .btn {
+  border-radius: 25px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.btn-plan-free {
+  background-color: gray;
+  cursor: not-allowed;
+}
+
+
 .pricing1 h1,
 .pricing1 h2,
 .pricing1 h3,

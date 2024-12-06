@@ -58,7 +58,6 @@ export class PlanesComponent {
 
   openModal(plan: any = null) {
     this.modalPlanes.openModal(plan);
-    debugger;
   }
 
   actualizarPlan(planMod: any[]) {

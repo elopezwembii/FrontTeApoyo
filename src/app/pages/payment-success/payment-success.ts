@@ -7,7 +7,7 @@ import { PlanesService } from '@services/planes/planes.service';
     styleUrls: ['./payment-success.scss']
 })
 export class PaymentSuccessComponent implements OnInit{
-
+    loading: boolean = false;
     plan: any;
     
     constructor(

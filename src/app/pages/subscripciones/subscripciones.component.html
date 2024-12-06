@@ -1,18 +1,18 @@
 <div class="pricing1 py-5 bg-light">
     <div class="container">
+        <!-- Header -->
         <div class="row justify-content-center">
             <div class="col-md-8 text-center">
                 <h3 class="mt-3 font-weight-medium mb-1">
-                    Planes de subscripción
+                    Planes de suscripción
                 </h3>
                 <h6 class="subtitle">
-                    Elige el que mas se adapte a tus necesidades
+                    Elige el que más se adapte a tus necesidades
                 </h6>
             </div>
         </div>
-        <div
-            class="switcher-box mt-4 d-flex align-items-center justify-content-center"
-        >
+        <!-- Switcher -->
+        <div class="switcher-box mt-4 d-flex align-items-center justify-content-center">
             <span class="font-14 font-weight-medium">MES</span>
             <div class="onoffswitch position-relative mx-2">
                 <input
@@ -21,119 +21,105 @@
                     class="onoffswitch-checkbox d-none"
                     id="myonoffswitch1"
                 />
-                <label
-                    class="onoffswitch-label d-block overflow-hidden"
-                    for="myonoffswitch1"
-                >
+                <label class="onoffswitch-label d-block overflow-hidden" for="myonoffswitch1">
                     <span class="onoffswitch-inner d-block"></span>
-                    <span
-                        class="onoffswitch-switch d-block bg-white position-absolute"
-                    ></span>
+                    <span class="onoffswitch-switch d-block bg-white position-absolute"></span>
                 </label>
             </div>
             <span class="font-14 font-weight-medium">ANUAL</span>
         </div>
-        <!-- Row  -->
+        <!-- Plans Section -->
         <div class="subscription-class mt-5">
-            <!-- Column -->
-            <div class="" *ngFor="let item of planes">
-                <div
-                    class="card text-center card-shadow on-hover border-0 mb-4"
-                >
-                    <div class="card-body font-14">
-                        <h5 class="mt-3 mb-1 font-weight-medium">
-                            {{ item.reason }}
-                        </h5>
-                        <div class="pricing my-3">
-                            <span class="monthly pricing-monthly">{{
-                                item.reason === 'Empresa'
-                                    ? 'A COTIZAR'
-                                    : (item.transaction_amount
-                                      | currency: 'CLP':'symbol')
-                            }}</span>
-                            <small class="monthly">/mo</small>
-                        </div>
-                        <ul class="list-inline">
-                            <div *ngIf="item.reason === 'Freemium'">
-                                <li class="d-block py-2">
-                                    <i class="bi bi-check-circle"></i>Planifica
-                                    y lleva tu presupuesto mensual
-                                </li>
-                                <li class="d-block py-2">
-                                    <i class="bi bi-check-circle"></i
-                                    >Diagnostica tu endeudamiento.
-                                </li>
-                                <li class="d-block py-2">
-                                    <i class="bi bi-check-circle"></i>Crea tu
-                                    plan de ahorro y da el primer paso para
-                                    concretar tus sueños
-                                </li>
-                                <li class="d-block py-2">
-                                    <i class="bi bi-check-circle"></i>Accede a
-                                    un Blog de Finanzas Inteligentes, con
-                                    artículos prácticos y de rápida lectura.
-                                </li>
-                                <li class="d-block py-2">
-                                    <i class="bi bi-check-circle"></i>Agenda
-                                    sesiones 1 a 1 (*) con nuestros expertos
-                                    financieros por $69.990
-                                </li>
-                                <li class="d-block py-2">&nbsp;</li>
+            <div class="row">
+                <div class="col-md-4 col-sm-6" *ngFor="let item of planes">
+                    <div class="card text-center card-shadow on-hover border-0 mb-4">
+                        <div class="card-body font-14">
+                            <h5 class="mt-3 mb-1 font-weight-medium">{{ item.reason }}</h5>
+                            <div class="pricing my-3">
+                                <span class="monthly pricing-monthly">
+                                    {{
+                                        item.reason === 'Empresa'
+                                            ? 'A COTIZAR'
+                                            : (item.transaction_amount | currency: 'CLP':'symbol')
+                                    }}
+                                </span>
+                                <small class="monthly">/mo</small>
                             </div>
-                            <div *ngIf="item.reason === 'Premium'">
-                                <li class="d-block py-2">
-                                    <i class="bi bi-check-circle"></i>Planifica
-                                    y lleva tu presupuesto mensual
-                                </li>
-                                <li class="d-block py-2">
-                                    <i class="bi bi-check-circle"></i
-                                    >Diagnostica tu endeudamiento.
-                                </li>
-                                <li class="d-block py-2">
-                                    <i class="bi bi-check-circle"></i>Crea tu
-                                    plan de ahorro y da el primer paso para
-                                    concretar tus sueños
-                                </li>
-                                <li class="d-block py-2">
-                                    <i class="bi bi-check-circle"></i>Accede a
-                                    un Blog de Finanzas Inteligentes, con
-                                    artículos prácticos y de rápida lectura.
-                                </li>
-                                <li class="d-block py-2">
-                                    <i class="bi bi-check-circle"></i>Agenda
-                                    sesiones 1 a 1 (*) con nuestros expertos
-                                    financieros por $69.990
-                                </li>
-                                <li class="d-block py-2">&nbsp;</li>
-                            </div>
-                        </ul>
-                        <button
-                            *ngIf="item.reason === 'Empresa'"
-                            (click)="vermercadopago(item.uid)"
-                            class="btn btn-warning btn-md text-white btn-block"
-                        >
-                            Contactar
-                        </button>
+                            <ul class="list-inline">
+                                <li class="d-block py-2" *ngIf="item.reason === 'Free'">
+                                    
+                                        <i class="bi bi-check-circle"></i>* Planifica y lleva tu presupuesto mensual, controlando tus gastos mensuales.
+                                        <br/>
+                                    
+                                        <i class="bi bi-check-circle"></i
+                                        >* Diagnostica tu endeudamiento. Visualiza cómo te ven y analizan las instituciones financieras.
+                                        <br/>
+                                    
+                                        <i class="bi bi-check-circle"></i>* Crea tu plan de ahorro y da el primer paso para concretar tus sueños.
+                                        <br/>
+                                    
+                                        <i class="bi bi-check-circle"></i>* Accede a un Blog de Finanzas Inteligentes, con artículos prácticos y de rápida lectura.
+                                        <br/>
+                                    
+                                        <i class="bi bi-check-circle"></i>* Gestión de recordatorios: para que no olvides tus pagos recurrentes (créditos, servicios básicos, etc.)
+                                        <br/>
+                                    
+                                        <i class="bi bi-check-circle"></i>* Gestión de alertas: cuando tus gastos vayas consumiendo tu presupuesto, la plataforma te irá alertando cuánto te queda para gastar.
+                                        <br/>
+                                    
+                                        <i class="bi bi-check-circle"></i>* Newsletter mensual de educación financiera, para ti y tu familia.
+                                        <br/>
+                                    <li class="d-block py-2">&nbsp;</li>
+                                     
+                                    
 
-                        <!-- Botón para otros planes -->
-                        <div *ngIf="item.reason !== 'Freemium'">
+                                <li class="d-block py-2" *ngIf="item.reason === 'Premium'">
+                                    
+                                        <i class="bi bi-check-circle">* Planifica y lleva tu presupuesto mensual, controlando tus gastos mensuales.</i>
+                                        <br/>
+                                        <i class="bi bi-check-circle">* Diagnostica tu endeudamiento. Visualiza cómo te ven y analizan las instituciones financieras.</i
+                                        >
+                                        <br/>
+                                        <i class="bi bi-check-circle">* Crea tu plan de ahorro y da el primer paso para concretar tus sueños.</i>
+                                        <br/>
+                                        <i class="bi bi-check-circle">* Incluye a Luca$, nuestro asesor experto en finanzas personales con Inteligencia Artificial que, con toda la información financiera que registres, te irá entregando consejos, tips y recomendaciones personalizadas para que mejores la gestión de tu dinero, tus deudas y el ahorro.</i>
+                                        <br/>
+                                        <i class="bi bi-check-circle">* Gestión de recordatorios: para que no olvides tus pagos recurrentes (créditos, servicios básicos, etc.)</i>
+                                        <br/>
+                                        <i class="bi bi-check-circle">* Gestión de alertas: cuando tus gastos vayas consumiendo tu presupuesto, la plataforma te irá alertando cuánto te queda para gastar.</i>
+                                        <br/>
+                                        <i class="bi bi-check-circle">* Newsletter mensual de educación financiera, para ti y tu familia.
+                                            &nbsp;</i>
+                                <!-- Otros beneficios según el plan -->
+                            </ul>
                             <button
+                                *ngIf="item.reason === 'Empresa'"
+                                (click)="vermercadopago(item.uid)"
+                                class="btn btn-warning btn-md text-white btn-block"
+                            >
+                                Contactar
+                            </button>
+                            <button
+                                *ngIf="item.reason !== 'Free' && item.reason !== 'Empresa'"
                                 (click)="vermercadopago(item.uid)"
                                 class="btn btn-success-gradiant btn-md text-white btn-block"
                             >
                                 Elegir plan
                             </button>
+                            <button
+                                class="btn btn-plan-free btn-md text-white btn-block"
+                                *ngIf="item.reason === 'Free'"
+                                disabled
+                            >
+                                Ya posees este plan
+                            </button>
                         </div>
-                        <button class="btn btn-plan-free btn-md text-white btn-block" *ngIf="item.reason === 'Freemium'" disabled="true">
-                          Ya posees este plan
-                        </button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
 <app-modal-planes
     #modalPlanes
     [usuario]="usuarios"
