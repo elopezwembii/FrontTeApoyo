@@ -50,6 +50,7 @@ export class ChatComponent {
             message: new FormControl({ value: '', disabled: true })
         });
         this.obtenerPlan();
+        this.miHistorial();
     }
 
     sendMessage() {
@@ -92,6 +93,35 @@ export class ChatComponent {
             });
         }
     }
+
+    miHistorial() {
+        const userId = JSON.parse(sessionStorage.getItem('user')).user.id;
+    
+        this.chatbotService.obtenerHistorial(userId).subscribe({
+            next: (resp: any) => {
+                if (resp && resp.length > 0) {
+                    this.messages = resp.map((msg: any) => ({
+                        text: msg.message,
+                        time: this.formatToTime(msg.createdAt),
+                        sender: msg.isChatGpt ? 'bot' : 'me'
+                    }));
+                } else {
+                    this.messages = [
+                        {
+                            text: 'Hola, ¿cómo estás? En que te puedo ayudar?',
+                            time: this.getCurrentTime(),
+                            sender: 'other'
+                        }
+                    ];
+                }
+                this.scrollToBottom();
+            },
+            error: () => {
+                console.error('Error al obtener el historial.');
+            }
+        });
+    }
+    
 
     formatToTime = (fechaCompleta: string): string => {
         const fecha = new Date(fechaCompleta);
