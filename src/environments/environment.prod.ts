@@ -1,5 +1,6 @@
 export const environment = {
     production: true,
+    clarityId: 'pcy6xo2f2k',
     uri_api: 'https://api-php.te-apoyo.cl/api/v1/',
     uri_api_v2: 'https://api-v2.te-apoyo.cl/v1',
     //added a test cmy
