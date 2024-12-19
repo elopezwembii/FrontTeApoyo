@@ -151,9 +151,9 @@ registerLocaleData(localeEs);
         NgxLoadingModule.forRoot({
             animationType: ngxLoadingAnimationTypes.threeBounce,
             backdropBackgroundColour: 'rgba(255, 255, 255, 0.5)',
-            primaryColour: '#2c939e',
-            secondaryColour: '#2c939e',
-            tertiaryColour: '#2c939e'
+            primaryColour: '#93278F',
+            secondaryColour: '#93278F',
+            tertiaryColour: '#93278F'
         }),
         BrowserModule,
         DataTablesModule,
@@ -165,7 +165,8 @@ registerLocaleData(localeEs);
         ToastrModule.forRoot({
             timeOut: 3000,
             positionClass: 'toast-top-right',
-            preventDuplicates: true
+            preventDuplicates: true,
+
         }),
         ProfabricComponentsModule,
         NgxEchartsModule.forRoot({

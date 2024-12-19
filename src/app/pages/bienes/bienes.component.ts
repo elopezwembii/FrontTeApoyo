@@ -78,7 +78,8 @@ export class BienesComponent implements OnInit {
         this.apalancamientoCortoTarjetas = 0;
         this.relacionPat = 0;
         this.sumaValorados = 0;
-        //obtener ingresos formales
+    
+        // Obtener ingresos
         (
             await this.ingresoService.getIngreso(
                 new Date().getMonth() + 1,
@@ -87,12 +88,7 @@ export class BienesComponent implements OnInit {
         ).subscribe({
             next: ({ingresos}: {ingresos: Ingreso[]}) => {
                 ingresos.forEach((ingreso) => {
-                    if (
-                        ingreso.tipo_ingreso === 1 ||
-                        ingreso.tipo_ingreso === 2 ||
-                        ingreso.tipo_ingreso === 3 ||
-                        ingreso.tipo_ingreso === 4
-                    ) {
+                    if ([1, 2, 3, 4].includes(ingreso.tipo_ingreso)) {
                         this.ingresos += ingreso.monto_real;
                     }
                 });
@@ -100,7 +96,8 @@ export class BienesComponent implements OnInit {
             },
             error: (error: any) => {}
         });
-        //obtener tarjetas
+    
+        // Obtener tarjetas
         (await this.deudaService.getTarjeta()).subscribe({
             next: ({tarjeta}: {tarjeta: Tarjeta[]}) => {
                 tarjeta.forEach((t) => {
@@ -110,7 +107,8 @@ export class BienesComponent implements OnInit {
             },
             error: (error: any) => {}
         });
-        //obtener bienes
+    
+        // Obtener bienes
         (await this.bienService.getBien()).subscribe({
             next: ({deuda}: {deuda: any}) => {
                 deuda.forEach((bien) => {
@@ -119,11 +117,11 @@ export class BienesComponent implements OnInit {
             },
             error: (error: any) => {}
         });
-        //obtener deudas
+    
+        // Obtener deudas
         (await this.deudaService.getDeuda()).subscribe({
             next: ({deuda}: {deuda: any}) => {
                 deuda.forEach((d) => {
-                    console.log(d);
                     if (d.id_tipo_deuda === 2) {
                         this.hipotecarios += d.pago_mensual;
                         this.apalancamientoLargo += d.deuda_pendiente;
@@ -132,55 +130,24 @@ export class BienesComponent implements OnInit {
                         this.apalancamientoCorto += d.deuda_pendiente;
                     }
                 });
-                this.cargaCorto = [
-                    {
-                        name: 'Ingresos',
-                        value: this.ingresos - this.tarjetas - this.creditos
-                    },
-                    {name: 'Líneas y Tarjetas', value: this.tarjetas},
-                    {name: 'Créditos a corto plazo', value: this.creditos}
-                ];
-                this.cargaLargo = [
-                    {
-                        name: 'Ingresos',
-                        value: this.ingresos - this.hipotecarios
-                    },
-                    {name: 'Créditos hipotecarios', value: this.hipotecarios}
-                ];
-                this.cargaTotal = [
-                    {
-                        name: 'Ingresos',
-                        value:
-                            this.ingresos -
-                            this.tarjetas -
-                            this.creditos -
-                            this.hipotecarios
-                    },
-                    {name: 'Líneas y Tarjetas', value: this.tarjetas},
-                    {name: 'Créditos a corto plazo', value: this.creditos},
-                    {name: 'Créditos hipotecarios', value: this.hipotecarios}
-                ];
+    
+                this.relacionPat = this.sumaValorados - (this.apalancamientoLargo + this.apalancamientoCorto);
+    
+                // Calcular porcentajes
+                this.porcentajeCargaLarga = (this.hipotecarios / this.ingresos) * 100;
+                this.porcentajeCarga = ((this.tarjetas + this.creditos) / this.ingresos) * 100;
+                this.porcentajeTotal = ((this.tarjetas + this.creditos + this.hipotecarios) / this.ingresos) * 100;
+    
+                this.vecesRentaCorto = this.apalancamientoCorto / this.ingresos || 0;
+                this.vecesRentaLargo = this.apalancamientoLargo / this.ingresos || 0;
+    
+                console.log('relacion pat', this.relacionPat);
+                this.loading = false;
             },
-            error: (error: any) => {}
+            error: (error: any) => {
+                this.loading = false;
+            }
         });
-
-        this.porcentajeCargaLarga = (this.hipotecarios / this.ingresos) * 100;
-        this.porcentajeCarga =
-            ((this.tarjetas + this.creditos) / this.ingresos) * 100;
-        this.porcentajeTotal =
-            ((this.tarjetas + this.creditos + this.hipotecarios) /
-                this.ingresos) *
-            100;
-
-        this.vecesRentaCorto = this.apalancamientoCorto / this.ingresos;
-        this.vecesRentaLargo = this.apalancamientoLargo / this.ingresos;
-        this.relacionPat =
-            this.sumaValorados -
-            (this.apalancamientoLargo + this.apalancamientoCorto);
-        console.log('relacion pat', this.relacionPat);
-        if (this.apalancamientoCorto === 0) {
-            this.vecesRentaCorto = 0;
-        }
-        this.loading = false;
     }
+    
 }

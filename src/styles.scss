@@ -21,6 +21,12 @@
     src: url(../src/assets/fonts/ProductSans-Black.ttf);
   }
 
+  .toast-container .ngx-toastr {
+    background-color: #93278F !important; /* Cambia el color de fondo */
+    color: white !important; /* Cambia el color del texto */
+  }
+
+
 $principalSidebar: #93278F;
 $secondarySidebar: #00ffff;
 $colorClaro: lighten(
