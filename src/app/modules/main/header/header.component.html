@@ -7,9 +7,14 @@
 </ul>
 
 <div class="subscription">
-    <button type="button" class="btn btn-custom-outline-info rounded-pill shadow-sm ml-3" [routerLink]="'/subscripciones'">
-        Actualizar tu plan
-    </button>
+    <a type="button"  class="btn btn-custom-outline-info rounded-pill shadow-sm ml-3" [routerLink]="'/subscripciones'">
+        <i class="fa fa-user mx-2"></i>
+        Actualizar a Premium
+    </a>
+    <a type="button" class="btn btn-custom-outline-info rounded-pill shadow-sm ml-3" [href]="meetingUrl" target="_blank">
+        <i class="fa fa-calendar mx-2"></i>
+        Agendar reunión con nuestro equipo
+    </a>
 </div>
 
 <form class="form-inline ml-3" [formGroup]="searchForm" *ngIf="false">
@@ -21,7 +26,7 @@
             aria-label="Search"
         />
         <div class="input-group-append">
-            <button class="btn btn-navbar" type="submit">
+            <button class="btn btn-navbar">
                 <i class="fas fa-search"></i>
             </button>
         </div>

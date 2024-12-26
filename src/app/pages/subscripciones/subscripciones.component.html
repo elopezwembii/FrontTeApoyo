@@ -101,10 +101,12 @@
                             </button>
                             <button
                                 *ngIf="item.reason !== 'Free' && item.reason !== 'Empresa'"
+                                [disabled]="item.reason === 'Premium'"
                                 (click)="vermercadopago(item.uid)"
                                 class="btn btn-success-gradiant btn-md text-white btn-block"
                             >
-                                Elegir plan
+                                <p *ngIf="item.reason === 'Premium'">Ya posees este plan</p>
+                                <p *ngIf="item.reason === ''">Suscribirse</p>
                             </button>
                             <button
                                 class="btn btn-plan-free btn-md text-white btn-block"
