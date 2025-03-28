@@ -4,29 +4,29 @@
         <img style="max-width: 100%" src="assets/img/logo.png" alt="" />
       </div>
       <div class="col-12 col-lg-9">
-  
+
         <div class="container mt-5">
-          <div class="row">   
+          <div class="row">
           <div class="col-lg-12 text-lg-right text-center">
             <h1 class="h1 text-principal">
               Test de
-              <span class="mobile-break"><br></span> 
+              <span class="mobile-break"><br></span>
               <b>Personalidad Financiera</b>
           </h1>
           </div>
         </div>
-  
-          <div class="row">        
+
+          <div class="row">
             <div class="col-lg-12 text-lg-right text-center text-principal">
               <h5>
                 Contesta las siguientes preguntas para que obtengas tu personalidad financiera <b>TE-APOYO</b>
               </h5>
             </div>
           </div>
-        </div>      
-  
+        </div>
+
         <div class="row mt-3">
-          
+
           <div class="col-12 col-lg-12 mb-4">
             <div class="card glass">
               <div class="card-header text-center">
@@ -55,7 +55,7 @@
               <div class="text-right m-3" *ngIf="!verPersonalidad">
                 <button [type]="'button'" [routerLink]="['/login']" class="btn btn-normal">
                   <i class="fas fa-chevron-left"></i>
-                  Salir 
+                  Salir
                 </button>
 
                 <button [type]="'button'" (click)="openModal();" class="btn btn-normal" style="margin-left: 10px;">
@@ -68,7 +68,7 @@
 
         </div>
         <div class="row justify-content-end py-3">
-          <h5 class="w-100 text-right text-main">Te Apoyo es la plataforma ideal para volver a tomar el control sobre tus finanzas</h5>
+          <h5 class="w-100 text-right text-main">Finnovate es la plataforma ideal para volver a tomar el control sobre tus finanzas</h5>
           <h6 class="w-100 text-right text-main">¡Te contamos por qué!</h6>
         </div>
       </div>
@@ -83,27 +83,27 @@
     <div class="col-12 col-lg-9">
 
       <div class="container mt-5">
-        <div class="row">   
+        <div class="row">
         <div class="col-lg-12 text-lg-right text-center">
           <h1 class="h1 text-principal">
             Test de
-            <span class="mobile-break"><br></span> 
+            <span class="mobile-break"><br></span>
             <b>Personalidad Financiera</b>
         </h1>
         </div>
       </div>
 
-        <div class="row">        
+        <div class="row">
           <div class="col-lg-12 text-lg-right text-center text-principal">
             <h5>
               Contesta las siguientes preguntas para que obtengas tu personalidad financiera <b>TE-APOYO</b>
             </h5>
           </div>
         </div>
-      </div>      
+      </div>
 
       <div class="row mt-3">
-        
+
         <div class="col-12 col-lg-12 mb-4">
           <div class="card glass">
             <div class="card-header text-center">
@@ -111,7 +111,7 @@
             </div>
 
             <div class="card-body">
-              
+
               <form [formGroup]="form">
                 <ul formArrayName="fields" *ngFor="let field of fieldArray.controls; let i = index" style="list-style-type: none;">
                   <li [formGroupName]="i" style="text-align: justify" class="login-box-msg">
@@ -128,8 +128,8 @@
                 <div class="d-flex justify-content-center">
                   <button type="button" (click)="enviarRespuestas()" class="btn btn-normal">Enviar <i class="fas fa-check"></i></button>
                 </div>
-              </form>              
-              
+              </form>
+
             </div>
 
           </div>
@@ -137,7 +137,7 @@
 
       </div>
       <div class="row justify-content-end py-3">
-        <h5 class="w-100 text-right text-main">Te Apoyo es la plataforma ideal para tomar el control sobre tus finanzas</h5>
+        <h5 class="w-100 text-right text-main">Finnovate es la plataforma ideal para tomar el control sobre tus finanzas</h5>
       </div>
     </div>
   </div>

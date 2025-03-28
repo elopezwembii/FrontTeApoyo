@@ -26,7 +26,7 @@
                     <strong>Blog de Educación Financiera</strong>
                 </h1>
                 <p class="mb-4">
-                    En <strong class="text-main">Te Apoyo</strong> entregamos
+                    En <strong class="text-main">Finnovate</strong> entregamos
                     contenido actual, dinámico, simple y entretenido. <br />
                     Construimos 7 grandes temáticas: Finanzas Personales,
                     Presupuesto, Gastos Familiares, Endeudamiento, Créditos,
@@ -41,7 +41,7 @@
                     >
                     <br />
                     Esperamos te sea de mucha utilidad 😊. <br />
-                    <strong class="text-main"> El Equipo de Te Apoyo.</strong>
+                    <strong class="text-main"> El Equipo de Finnovate.</strong>
                 </p>
             </div>
             <div class="col-sm-6">
@@ -405,25 +405,25 @@
                     <div class="form-group">
                         <label for="content">imagen</label>
                         <div class="contenedor-imagenes">
-                      
+
                           <input type="file" #fileInput style="display: none;"(change)="onFileChange($event)"/>
-                      
+
                           <div class="image-card" (click)="openFileInput()">
                             <div class="image-upload-icon">
                               <i class="fa fa-plus"></i>
                             </div>
                           </div>
-                            
+
                           <div *ngFor="let url of listaImagenes" class="imagen-contenedor">
                             <img [src]="url" [ngClass]="{'image-selected': url === selectedImage}" (click)="selectImage(url)" width="100" />
                             <button type="button"  class="btn btn-danger" (click)="eliminarImage(url)">
                               <i class="fas fa-trash"></i>
                             </button>
                           </div>
-                      
+
                         </div>
                       </div>
-                      
+
                     <div class="form-group">
                         <label for="content">Contenido</label>
                         <textarea
