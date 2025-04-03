@@ -4,7 +4,7 @@ on:
   workflow_dispatch:  # También puedes ejecutarlo manualmente desde GitHub Actions UI
 
 env:
-  AZURE_WEBAPP_NAME: te-apoyo     # Nombre de la aplicación web en Azure
+  AZURE_WEBAPP_NAME: Finnovate     # Nombre de la aplicación web en Azure
   AZURE_WEBAPP_PACKAGE_PATH: '.'  # Ruta a tu proyecto de Node.js (por defecto la raíz del repo)
   NODE_VERSION: '20.x'           # Versión de Node.js a usar
 
