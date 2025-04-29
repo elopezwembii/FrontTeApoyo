@@ -40,44 +40,43 @@ import {NgxEchartsModule} from 'ngx-echarts';
 import {IngresosComponent} from './pages/ingresos/ingresos.component';
 import {GraficoComponent} from './components/grafico/grafico.component';
 import {GraficoGastoComponent} from './components/grafico-gasto/grafico-gasto.component';
-import { AhorrosComponent } from './pages/ahorros/ahorros.component';
+import {AhorrosComponent} from './pages/ahorros/ahorros.component';
 import localeEs from '@angular/common/locales/es'; // Importa la configuración regional para español
-import { PresupuestoComponent } from '@pages/presupuesto/presupuesto.component';
-import { GraficoDonaComponent } from '@components/grafico-dona/grafico-dona.component';
-import { GraficoBarraComponent } from '@components/grafico-barra/grafico-barra.component';
-import { CorsInterceptor } from './cors.interceptor';
-import { DeudasComponent } from './pages/deudas/deudas.component';
-import { GraficoLineaComponent } from './components/grafico-linea/grafico-linea.component';
-import { ModalAhorroComponent } from './components/modal-ahorro/modal-ahorro.component';
-import { GraficoDonaMayoresGastosComponent } from './components/grafico-dona-mayores-gastos/grafico-dona-mayores-gastos.component';
-import { AnalisisComponent } from './pages/analisis/analisis.component';
-import { CrudBienComponent } from './components/crud-bien/crud-bien.component';
-import { ModalAnalisisComponent } from './components/modal-analisis/modal-analisis.component';
-import { GestionUsuariosComponent } from './pages/gestion-usuarios/gestion-usuarios.component';
-import { GestionEmpresaComponent } from './pages/gestion-empresa/gestion-empresa.component';
-import { GestionColaboradorComponent } from './pages/gestion-colaborador/gestion-colaborador.component';
-import { DataTablesModule } from "angular-datatables";
-import { ModalUsuarioComponent } from './components/modal-usuario/modal-usuario.component';
-import { ModalEmpresaComponent } from './components/modal-empresa/modal-empresa.component';
-import { GastoHormigaComponent } from './components/gasto-hormiga/gasto-hormiga.component';
-import { ChatComponent } from './components/chat/chat.component';
-import { ConfiguracionComponent } from './pages/configuracion/configuracion.component';
-import { CargaMasivaComponent } from './components/carga-masiva/carga-masiva.component';
-import { AprendeComponent } from './pages/aprende/aprende.component';
-import { AprendeDetalleComponent } from './pages/aprende-detalle/aprende-detalle.component';
-import { NgxEditorModule } from "ngx-editor";
-import { PromoCuponesComponent } from './pages/promo-cupones/promo-cupones.component';
-import { ModalAddcuponComponent } from './components/modal-addcupon/modal-addcupon.component';
-import { PlanesComponent } from './pages/planes/planes.component';
-import { ModalPlanesComponent } from './components/modal-planes/modal-planes.component';
-import { SuscriptoresComponent } from './pages/suscriptores/suscriptores.component';
-import { TestsComponent } from './modules/tests/tests.component';
-import { ModalUserTestComponent } from './components/modal-user-test/modal-user-test.component';
-import { SubscripcionesComponent } from '@pages/subscripciones/subscripciones.component';
-import { ModalPresupuestoComponent } from '@components/modal-presupuesto/modal-presupuesto.component';
-import { BienesComponent } from '@pages/bienes/bienes.component';
-import { PaymentSuccessComponent } from '@pages/payment-success/payment-success';
-
+import {PresupuestoComponent} from '@pages/presupuesto/presupuesto.component';
+import {GraficoDonaComponent} from '@components/grafico-dona/grafico-dona.component';
+import {GraficoBarraComponent} from '@components/grafico-barra/grafico-barra.component';
+import {CorsInterceptor} from './cors.interceptor';
+import {DeudasComponent} from './pages/deudas/deudas.component';
+import {GraficoLineaComponent} from './components/grafico-linea/grafico-linea.component';
+import {ModalAhorroComponent} from './components/modal-ahorro/modal-ahorro.component';
+import {GraficoDonaMayoresGastosComponent} from './components/grafico-dona-mayores-gastos/grafico-dona-mayores-gastos.component';
+import {AnalisisComponent} from './pages/analisis/analisis.component';
+import {CrudBienComponent} from './components/crud-bien/crud-bien.component';
+import {ModalAnalisisComponent} from './components/modal-analisis/modal-analisis.component';
+import {GestionUsuariosComponent} from './pages/gestion-usuarios/gestion-usuarios.component';
+import {GestionEmpresaComponent} from './pages/gestion-empresa/gestion-empresa.component';
+import {GestionColaboradorComponent} from './pages/gestion-colaborador/gestion-colaborador.component';
+import {DataTablesModule} from 'angular-datatables';
+import {ModalUsuarioComponent} from './components/modal-usuario/modal-usuario.component';
+import {ModalEmpresaComponent} from './components/modal-empresa/modal-empresa.component';
+import {GastoHormigaComponent} from './components/gasto-hormiga/gasto-hormiga.component';
+import {ChatComponent} from './components/chat/chat.component';
+import {ConfiguracionComponent} from './pages/configuracion/configuracion.component';
+import {CargaMasivaComponent} from './components/carga-masiva/carga-masiva.component';
+import {AprendeComponent} from './pages/aprende/aprende.component';
+import {AprendeDetalleComponent} from './pages/aprende-detalle/aprende-detalle.component';
+import {NgxEditorModule} from 'ngx-editor';
+import {PromoCuponesComponent} from './pages/promo-cupones/promo-cupones.component';
+import {ModalAddcuponComponent} from './components/modal-addcupon/modal-addcupon.component';
+import {PlanesComponent} from './pages/planes/planes.component';
+import {ModalPlanesComponent} from './components/modal-planes/modal-planes.component';
+import {SuscriptoresComponent} from './pages/suscriptores/suscriptores.component';
+import {TestsComponent} from './modules/tests/tests.component';
+import {ModalUserTestComponent} from './components/modal-user-test/modal-user-test.component';
+import {SubscripcionesComponent} from '@pages/subscripciones/subscripciones.component';
+import {ModalPresupuestoComponent} from '@components/modal-presupuesto/modal-presupuesto.component';
+import {BienesComponent} from '@pages/bienes/bienes.component';
+import {PaymentSuccessComponent} from '@pages/payment-success/payment-success';
 
 defineCustomElements();
 registerLocaleData(localeEs);
@@ -144,7 +143,6 @@ registerLocaleData(localeEs);
         SuscriptoresComponent,
         TestsComponent,
         ModalUserTestComponent
-
     ],
     imports: [
         NgxEditorModule,
@@ -165,15 +163,18 @@ registerLocaleData(localeEs);
         ToastrModule.forRoot({
             timeOut: 3000,
             positionClass: 'toast-top-right',
-            preventDuplicates: true,
-
+            preventDuplicates: true
         }),
         ProfabricComponentsModule,
         NgxEchartsModule.forRoot({
             echarts: () => import('echarts')
         })
     ],
-    providers: [{provide: LOCALE_ID, useValue: 'ES_cl'},{ provide: HTTP_INTERCEPTORS, useClass: CorsInterceptor, multi: true },CurrencyPipe],
+    providers: [
+        {provide: LOCALE_ID, useValue: 'ES_cl'},
+        {provide: HTTP_INTERCEPTORS, useClass: CorsInterceptor, multi: true},
+        CurrencyPipe
+    ],
 
     bootstrap: [AppComponent]
 })

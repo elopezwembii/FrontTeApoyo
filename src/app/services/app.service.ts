@@ -121,7 +121,7 @@ export class AppService {
         }
     }
 
-    async submitTest(model:any) {
+    async submitTest(model: any) {
         try {
             return new Promise((resolve, reject) => {
                 this._http
@@ -142,4 +142,24 @@ export class AppService {
         }
     }
 
+    async register(payload) {
+        try {
+            const data: any = await new Promise((resolve, reject) => {
+                this._http
+                    .post(environment.uri_api + 'registrar', payload)
+                    .subscribe(
+                        (response) => {
+                            resolve(response);
+                        },
+                        (error) => {
+                            console.error(error);
+                            reject(error);
+                        }
+                    );
+            });
+            return data;
+        } catch (error) {
+            this.toastr.error('Usuario o contraseña no válida');
+        }
+    }
 }
