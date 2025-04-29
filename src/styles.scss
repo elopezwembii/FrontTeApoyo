@@ -19,24 +19,24 @@
 @font-face {
     font-family: ProductSans;
     src: url(../src/assets/fonts/ProductSans-Black.ttf);
-  }
+}
 
-  .toast-container .ngx-toastr {
-    background-color: #93278F !important; /* Cambia el color de fondo */
-    color: white !important; /* Cambia el color del texto */
-  }
+.toast-container .ngx-toastr {
+    background-color: #93278F !important;
+    /* Cambia el color de fondo */
+    color: white !important;
+    /* Cambia el color del texto */
+}
 
 
 $principalSidebar: #93278F;
 $secondarySidebar: #00ffff;
-$colorClaro: lighten(
-    $principalSidebar,
-    20%
-); /* Un tono más claro del color principal */
-$colorOscuro: darken(
-    $principalSidebar,
-    10%
-); /* Un tono más oscuro del color principal */
+$colorClaro: lighten($principalSidebar,
+        20%);
+/* Un tono más claro del color principal */
+$colorOscuro: darken($principalSidebar,
+        10%);
+/* Un tono más oscuro del color principal */
 
 $graficos: #00ffff;
 $filtros: #00ffff;
@@ -64,12 +64,15 @@ p {
 }
 
 ::-webkit-scrollbar-thumb {
-    background-color: gray; /* Color de la barra */
-    border-radius: 5px; /* Bordes redondeados para la barra */
+    background-color: gray;
+    /* Color de la barra */
+    border-radius: 5px;
+    /* Bordes redondeados para la barra */
 }
 
 ::-webkit-scrollbar-track {
-    background-color: transparent; /* Color del fondo */
+    background-color: transparent;
+    /* Color del fondo */
 }
 
 .content {
@@ -78,30 +81,31 @@ p {
 
 // Sidebar menu animation
 // Needed for open/close menu animation for menus with child nodes
-.nav .nav-item:not(.menu-open) > .ng-trigger-openClose,
-.nav .nav-item > .ng-trigger-openClose.ng-animating {
+.nav .nav-item:not(.menu-open)>.ng-trigger-openClose,
+.nav .nav-item>.ng-trigger-openClose.ng-animating {
     overflow: hidden;
     display: block;
 }
 
 // Override original AdminLTE transform
-.nav-sidebar .menu-is-opening > .nav-link i.right,
-.nav-sidebar .menu-is-opening > .nav-link svg.right,
-.nav-sidebar .menu-open > .nav-link i.right,
-.nav-sidebar .menu-open > .nav-link svg.right {
+.nav-sidebar .menu-is-opening>.nav-link i.right,
+.nav-sidebar .menu-is-opening>.nav-link svg.right,
+.nav-sidebar .menu-open>.nav-link i.right,
+.nav-sidebar .menu-open>.nav-link svg.right {
     transform: none;
 }
 
 .navbar-color {
-    background: $principalSidebar; /* Para navegadores que no soporten gradientes */
-    background: linear-gradient(
-        to right,
-        $colorOscuro,
-        $principalSidebar,
-        $colorClaro
-    ); /* Añadiendo un degradado de oscuro a claro */
+    background: $principalSidebar;
+    /* Para navegadores que no soporten gradientes */
+    background: linear-gradient(to right,
+            $colorOscuro,
+            $principalSidebar,
+            $colorClaro );
+    /* Añadiendo un degradado de oscuro a claro */
     //background: linear-gradient(to bottom, $colorOscuro, $principalSidebar, $colorClaro); /* Añadiendo un degradado de oscuro a claro */
 }
+
 .navbar-link-active {
     background-color: #fff;
     color: $principalSidebar !important;
@@ -126,6 +130,7 @@ app-root {
 .text-principal {
     color: $principalSidebar;
 }
+
 .text-main {
     color: $principalSidebar;
 }
@@ -133,6 +138,7 @@ app-root {
 .btn-normal {
     background-color: $principalSidebar;
     color: white;
+
     &:hover {
         color: white;
         background-color: rgba($color: $principalSidebar, $alpha: 0.8);
@@ -199,9 +205,12 @@ td {
 }
 
 .separador {
-    height: 10px; /* Establece la altura del separador */
-    background-color: white; /* Establece el color de fondo del separador */
-    border: none; /* Elimina cualquier borde en el separador */
+    height: 10px;
+    /* Establece la altura del separador */
+    background-color: white;
+    /* Establece el color de fondo del separador */
+    border: none;
+    /* Elimina cualquier borde en el separador */
 }
 
 .row-table {
@@ -298,7 +307,8 @@ input[type='number']::-webkit-inner-spin-button {
 }
 
 input[type='number'] {
-    -moz-appearance: textfield; /* Firefox */
+    -moz-appearance: textfield;
+    /* Firefox */
 }
 
 //tooltip
@@ -320,11 +330,13 @@ input[type='number'] {
     opacity: 0;
     box-shadow: 0.5em 0.5em 1em rgba(0, 0, 0, 0.5);
 }
+
 [data-tooltip]:before {
     content: '';
     border: 5px solid transparent;
     //z-index: 9999;
 }
+
 [data-tooltip]:after {
     content: attr(data-tooltip);
     text-align: center;
@@ -352,21 +364,25 @@ input[type='number'] {
         z-index: 9999;
     }
 }
+
 [data-tooltip]:hover:before,
 [data-tooltip]:hover:after {
     display: block;
     opacity: 1;
 }
+
 [data-tooltip]:not([data-flow])::before,
 [data-tooltip][data-flow='top']::before {
     bottom: 100%;
     border-bottom-width: 0;
     border-top-color: $principalSidebar;
 }
+
 [data-tooltip]:not([data-flow])::after,
 [data-tooltip][data-flow='top']::after {
     bottom: calc(100% + 5px);
 }
+
 [data-tooltip]:not([data-flow])::before,
 [tooltip]:not([data-flow])::after,
 [data-tooltip][data-flow='top']::before,
@@ -375,14 +391,17 @@ input[type='number'] {
     -webkit-transform: translate(-50%, -4px);
     transform: translate(-50%, -4px);
 }
+
 [data-tooltip][data-flow='bottom']::before {
     top: 100%;
     border-top-width: 0;
     border-bottom-color: $principalSidebar;
 }
+
 [data-tooltip][data-flow='bottom']::after {
     top: calc(100% + 5px);
 }
+
 [data-tooltip][data-flow='bottom']::before,
 [data-tooltip][data-flow='bottom']::after {
     left: 50%;
@@ -390,6 +409,7 @@ input[type='number'] {
     -webkit-transform: translate(-50%, 8px);
     transform: translate(-50%, 8px);
 }
+
 [data-tooltip][data-flow='left']::before {
     top: 50%;
     border-right-width: 0;
@@ -398,12 +418,14 @@ input[type='number'] {
     -webkit-transform: translate(-8px, -50%);
     transform: translate(-8px, -50%);
 }
+
 [data-tooltip][data-flow='left']::after {
     top: 50%;
     right: calc(100% + 5px);
     -webkit-transform: translate(-8px, -50%);
     transform: translate(-8px, -50%);
 }
+
 [data-tooltip][data-flow='right']::before {
     top: 50%;
     border-left-width: 0;
@@ -412,19 +434,23 @@ input[type='number'] {
     -webkit-transform: translate(8px, -50%);
     transform: translate(8px, -50%);
 }
+
 [data-tooltip][data-flow='right']::after {
     top: 50%;
     left: calc(100% + 5px);
     -webkit-transform: translate(8px, -50%);
     transform: translate(8px, -50%);
 }
+
 [data-tooltip='']::after,
 [data-tooltip='']::before {
     display: none !important;
 }
+
 [data-tooltip]:after {
     /* Ajuste de ancho y alineación del texto */
-    max-width: 20em; /* puedes ajustar esto a lo que mejor se ajuste a tus necesidades */
+    max-width: 20em;
+    /* puedes ajustar esto a lo que mejor se ajuste a tus necesidades */
     white-space: normal;
     word-wrap: break-word;
     text-align: justify;
@@ -454,26 +480,26 @@ input[type='number'] {
     max-height: 150px;
 }
 
-.parallax > use {
+.parallax>use {
     animation: move-forever 4s cubic-bezier(0.55, 0.5, 0.45, 0.5) infinite;
 }
 
-.parallax > use:nth-child(1) {
+.parallax>use:nth-child(1) {
     animation-delay: -2s;
     animation-duration: 7s;
 }
 
-.parallax > use:nth-child(2) {
+.parallax>use:nth-child(2) {
     animation-delay: -3s;
     animation-duration: 10s;
 }
 
-.parallax > use:nth-child(3) {
+.parallax>use:nth-child(3) {
     animation-delay: -4s;
     animation-duration: 14s;
 }
 
-.parallax > use:nth-child(4) {
+.parallax>use:nth-child(4) {
     animation-delay: -5s;
     animation-duration: 20s;
 }
@@ -482,41 +508,51 @@ input[type='number'] {
     0% {
         transform: translate3d(-90px, 0, 0);
     }
+
     100% {
         transform: translate3d(85px, 0, 0);
     }
 }
+
 body.modal-open {
     overflow: hidden;
 }
+
 // end wave
 
 text-center {
     text-align: center;
 }
+
 text-justify {
     text-align: justify;
 }
 
 
-.shepherd-arrow:before,.shepherd-content {
-    background-color: $principalSidebar !important; /* Cambiar el color de fondo a azul */
-color: white;
-  }
+.shepherd-arrow:before,
+.shepherd-content {
+    background-color: $principalSidebar !important;
+    /* Cambiar el color de fondo a azul */
+    color: white;
+}
 
-  .shepherd-text {
+.shepherd-text {
     color: white !important;
     text-align: justify !important;
 }
 
 .btn-custom-outline-info {
-    color:  $principalSidebar; /* Color del texto */
-    border-color:  $principalSidebar; /* Color del borde */
+    color: $principalSidebar;
+    /* Color del texto */
+    border-color: $principalSidebar;
+    /* Color del borde */
 }
 
 .btn-custom-outline-info:hover {
-    background-color: $principalSidebar; /* Color de fondo en hover */
-    color: #fff; /* Color del texto en hover */
+    background-color: $principalSidebar;
+    /* Color de fondo en hover */
+    color: #fff;
+    /* Color del texto en hover */
 }
 
 .alert-form {

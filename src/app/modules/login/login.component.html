@@ -1,104 +1,229 @@
 <div class="container mt-5">
-  <div class="row">
-    <div class="col-12 col-lg-3 text-center mb-4">
-      <img class="" style="max-width: 100%;" src="assets/icons/TeApoyo-White.png" alt="" />
-    </div>
-    <div class="col-12 col-lg-9">
-
-      <div class="container mt-5">
-        <div class="row">
-        <div class="col-lg-12 text-lg-right text-center">
-          <h1 class="h1 text-principal">
-            Bienvenido a
-            <span class="mobile-break"><br></span>
-            <b>TE-APOYO</b>
-        </h1>
+    <div class="row">
+        <div class="col-12 col-lg-3 text-center mb-4">
+            <img
+                class=""
+                style="max-width: 100%"
+                src="assets/icons/TeApoyo-White.png"
+                alt=""
+            />
         </div>
-      </div>
-
-        <div class="row">
-          <div class="col-lg-12 text-lg-right text-center text-principal">
-            <h5>
-              La plataforma experta en soluciones para lograr el control de tus finanzas.
-            </h5>
-          </div>
-        </div>
-      </div>
-
-      <div class="row mt-3">
-
-        <div class="col-12 col-lg-6 mb-4">
-          <div class="card glass">
-            <div class="card-header text-center">
-              <div class="h5"><b>¿Eres nuevo aquí?</b></div>
-            </div>
-            <div class="card-body">
-              <p class="login-box-msg"><b></b></p>
-              <p style="text-align: justify" class="login-box-msg">
-                Toma nuestro test completamente gratis y descubre tu tipo de personalidad financiera.
-                ¡Analicemos tus hábitos y mejoremos juntos tus fortalezas financieras!
-              </p>
-            </div>
-            <div class="text-right m-3">
-              <button [type]="'button'" [routerLink]="['/test']" class="btn btn-normal">
-                ¡Tomaré el test!
-                <i class="fas fa-chevron-right"></i>
-              </button>
-            </div>
-          </div>
-        </div>
-        <div class="col-12 col-lg-6 mb-4">
-          <div class="card glass">
-            <div class="card-header text-center">
-              <h5 [routerLink]="['/']" class="h5">
-                <b>¿Ya tienes un perfil?</b>
-              </h5>
-            </div>
-            <div class="card-body">
-              <p class="login-box-msg">
-                Inicia sesión con tus credenciales:
-              </p>
-              <form [formGroup]="loginForm" (ngSubmit)="loginByAuth()">
-                <div class="input-group mb-3">
-                  <input formControlName="email" type="email" class="form-control" placeholder="Email" />
-                  <div class="input-group-append">
-                    <div class="input-group-text">
-                      <span class="fas fa-envelope"></span>
-                    </div>
-                  </div>
-                </div>
-                <div class="input-group mb-3">
-                  <input formControlName="password" type="password" class="form-control" placeholder="Contraseña" />
-                  <div class="input-group-append">
-                    <div class="input-group-text">
-                      <span class="fas fa-lock"></span>
-                    </div>
-                  </div>
-                </div>
+        <div class="col-12 col-lg-9">
+            <div class="container mt-5">
                 <div class="row">
-                  <div class="col-12">
-                    <div class="icheck-primary"></div>
-                  </div>
-                  <div class="col-12">
-                    <button class="btn btn-normal w-100" [type]="'submit'">
-                      Inicia sesión
-                      <i class="fas fa-chevron-right"></i>
-                    </button>
-                  </div>
+                    <div class="col-lg-12 text-lg-right text-center">
+                        <h1 class="h1 text-principal">
+                            Bienvenido a
+                            <span class="mobile-break"><br /></span>
+                            <b>TE-APOYO</b>
+                        </h1>
+                    </div>
                 </div>
-              </form>
-              <p class="mb-1">
-                <a [routerLink]="['/forgot-password']" class="text-main">Recupera tu contraseña</a>
-              </p>
+
+                <div class="row">
+                    <div
+                        class="col-lg-12 text-lg-right text-center text-principal"
+                    >
+                        <h5>
+                            La plataforma experta en soluciones para lograr el
+                            control de tus finanzas.
+                        </h5>
+                    </div>
+                </div>
             </div>
-          </div>
+
+            <div class="row mt-3">
+                <div class="col-12 col-lg-6 mb-4">
+                    <div class="card glass">
+                        <div class="card-header text-center">
+                            <h5 [routerLink]="['/']" class="h5">
+                                <b>¿Ya tienes un perfil?</b>
+                            </h5>
+                        </div>
+                        <div class="card-body">
+                            <p class="login-box-msg">
+                                Inicia sesión con tus credenciales:
+                            </p>
+                            <form
+                                [formGroup]="loginForm"
+                                (ngSubmit)="loginByAuth()"
+                            >
+                                <div class="input-group mb-3">
+                                    <input
+                                        formControlName="email"
+                                        type="email"
+                                        class="form-control"
+                                        placeholder="Email"
+                                    />
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">
+                                            <span
+                                                class="fas fa-envelope"
+                                            ></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="input-group mb-3">
+                                    <input
+                                        formControlName="password"
+                                        type="password"
+                                        class="form-control"
+                                        placeholder="Contraseña"
+                                    />
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">
+                                            <span class="fas fa-lock"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="icheck-primary"></div>
+                                    </div>
+                                    <div class="col-12">
+                                        <button
+                                            [disabled]="loginForm.invalid"
+                                            class="btn btn-normal w-100"
+                                            [type]="'submit'"
+                                        >
+                                            Inicia sesión
+                                            <i class="fas fa-chevron-right"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                            <p class="mb-1">
+                                <a
+                                    [routerLink]="['/forgot-password']"
+                                    class="text-main"
+                                    >Recupera tu contraseña</a
+                                >
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-6 mb-4">
+                    <div class="card glass">
+                        <div class="card-header text-center">
+                            <h5 [routerLink]="['/']" class="h5">
+                                <b>¿Únete a nuestra comunidad?</b>
+                            </h5>
+                        </div>
+                        <div class="card-body">
+                            <p class="login-box-msg">
+                                Ingresa tus datos para crear tu cuenta:
+                            </p>
+                            <form
+                                [formGroup]="registerForm"
+                                (ngSubmit)="registerNewUser()"
+                            >
+                                <div class="input-group mb-3">
+                                    <input
+                                        formControlName="nombres"
+                                        type="text"
+                                        class="form-control"
+                                        placeholder="Nombres"
+                                    />
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">
+                                            <span class="fas fa-user"></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="input-group mb-3">
+                                    <input
+                                        formControlName="apellidos"
+                                        type="text"
+                                        class="form-control"
+                                        placeholder="apellidos"
+                                    />
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">
+                                            <span
+                                                class="fas fa-signature"
+                                            ></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="input-group mb-3">
+                                    <input
+                                        formControlName="rut"
+                                        type="text"
+                                        class="form-control"
+                                        placeholder="Rut"
+                                        maxlength="10"
+                                        minlength="9"
+                                        (input)="formatRut($event)"
+                                    />
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">
+                                            <span class="fas fa-id-card"></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="input-group mb-3">
+                                    <input
+                                        formControlName="email"
+                                        type="email"
+                                        class="form-control"
+                                        placeholder="Email"
+                                    />
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">
+                                            <span
+                                                class="fas fa-envelope"
+                                            ></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="input-group mb-3">
+                                    <input
+                                        formControlName="password"
+                                        type="password"
+                                        class="form-control"
+                                        placeholder="Contraseña"
+                                        minlength="6"
+                                    />
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">
+                                            <span class="fas fa-lock"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="icheck-primary"></div>
+                                    </div>
+                                    <div class="col-12">
+                                        <button
+                                            class="btn btn-normal w-100"
+                                            [type]="'submit'"
+                                            [disabled]="registerForm.invalid"
+                                        >
+                                            Crear usuario
+                                            <i class="fas fa-chevron-right"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-end py-3">
+                <h5 class="w-100 text-right text-main">
+                    Finnovate es la plataforma ideal para volver a tomar el
+                    control sobre tus finanzas
+                </h5>
+                <h6 class="w-100 text-right text-main">
+                    ¡Te contamos por qué!
+                </h6>
+            </div>
         </div>
-      </div>
-      <div class="row justify-content-end py-3">
-        <h5 class="w-100 text-right text-main">Finnovate es la plataforma ideal para volver a tomar el control sobre tus finanzas</h5>
-        <h6 class="w-100 text-right text-main">¡Te contamos por qué!</h6>
-      </div>
     </div>
-  </div>
 </div>
 <ngx-loading [show]="isAuthLoading"></ngx-loading>
