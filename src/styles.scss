@@ -561,15 +561,3 @@ text-justify {
     border-radius: 0.2rem;
     padding: 0.5rem;
 }
-
-
-// PARA CUBRIR TODA LA PANTALLA EN MOBILE
-ngx-loading {
-    height: 100%;
-    position: fixed;
-    z-index: 99;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100dvh;
-}
